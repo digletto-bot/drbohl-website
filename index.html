@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="description" content="Dr.Bohl — Kabarettist, Entertainer, Comedian." />
+  <title>Dr.Bohl</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+<div id="app">
+<div id="slider-track" role="region" aria-label="Dr.Bohl Navigation">
+
+  <nav class="progress-nav" aria-label="Slide navigation">
+    <button class="progress-nav__item is-active" aria-label="Home"              aria-current="true"  data-index="0"></button>
+    <button class="progress-nav__item"            aria-label="Kabarett"         aria-current="false" data-index="1"></button>
+    <button class="progress-nav__item"            aria-label="Social Media"     aria-current="false" data-index="2"></button>
+    <button class="progress-nav__item"            aria-label="Showtime"         aria-current="false" data-index="3"></button>
+    <button class="progress-nav__item"            aria-label="Musik"            aria-current="false" data-index="4"></button>
+    <button class="progress-nav__item"            aria-label="Podcast"          aria-current="false" data-index="5"></button>
+    <button class="progress-nav__item"            aria-label="Bohl100"          aria-current="false" data-index="6"></button>
+    <button class="progress-nav__item"            aria-label="Bohl Entertainment" aria-current="false" data-index="7"></button>
+    <button class="progress-nav__item"            aria-label="About"            aria-current="false" data-index="8"></button>
+    <button class="progress-nav__item"            aria-label="Schabernack"      aria-current="false" data-index="9"></button>
+  </nav>
+
+  <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="full-screen-menu">
+    <span class="menu-button__line"></span>
+    <span class="menu-button__line"></span>
+    <span class="menu-button__line"></span>
+  </button>
+
+  <!-- SLIDE 01 — HOME -->
+  <article class="title-card is-current" data-index="0" aria-label="Home">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/home-hero.jpg" alt="Dr.Bohl" loading="eager" style="object-position:center top"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">DR.BOHL</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openTourDates()">Alle Termine</button>
+        </div>
+      </div>
+      <div class="swipe-hint" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Swipe
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 02 — KABARETT -->
+  <article class="title-card is-next" data-index="1" aria-label="Kabarett">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/kabarett-hero.jpg" alt="Kabarett" loading="lazy" style="object-position:center top"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">KABARETT</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('Kabarett','Live auf der Bühne. Aktuelle Programme und Tickets.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 03 — SOCIAL MEDIA -->
+  <article class="title-card is-next" data-index="2" aria-label="Social Media">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/social-media-hero.jpg" alt="Social Media" loading="lazy" style="object-position:center center"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">SOCIAL MEDIA</span>
+        </div>
+        <div class="title-card__actions">
+          <div class="social-icons" style="margin-top:32px">
+            <a href="https://facebook.com"  target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/icons/facebook-neon.png"  alt="Facebook"  width="64" height="64"/></a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/instagram-neon.png" alt="Instagram" width="64" height="64"/></a>
+            <a href="https://tiktok.com"    target="_blank" rel="noopener" aria-label="TikTok"><img src="assets/icons/tiktok-neon.png"    alt="TikTok"    width="64" height="64"/></a>
+            <a href="https://youtube.com"   target="_blank" rel="noopener" aria-label="YouTube"><img src="assets/icons/youtube-neon.png"   alt="YouTube"   width="64" height="64"/></a>
+          </div>
+          <button class="ghost-button" onclick="openSubpage('Social Media','Dr.Bohl auf Instagram, TikTok, YouTube und Facebook.')">Follow</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 04 — SHOWTIME -->
+  <article class="title-card is-next" data-index="3" aria-label="Showtime">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/showtime-hero.jpg" alt="Showtime" loading="lazy" style="object-position:center top"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">SHOWTIME</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('Showtime','Alle Show-Termine und Tickets auf einen Blick.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 05 — MUSIK -->
+  <article class="title-card is-next" data-index="4" aria-label="Musik">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/musik-hero.jpg" alt="Musik" loading="lazy" style="object-position:center top"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">MUSIK</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('Musik','Releases, Playlists und Hörproben von Dr.Bohl.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 06 — PODCAST -->
+  <article class="title-card is-next" data-index="5" aria-label="Podcast">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/podcast-hero.jpg" alt="Podcast" loading="lazy" style="object-position:center top"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">PODCAST</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('Podcast','Der Dr.Bohl Podcast — neue Episoden regelmäßig.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 07 — BOHL100 -->
+  <article class="title-card is-next" data-index="6" aria-label="Bohl100">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/bohl100-hero.jpg" alt="Bohl100" loading="lazy" style="object-position:center center"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">BOHL100</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('Bohl100','100 Sekunden Wahrheit. Das Format.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 08 — BOHL ENTERTAINMENT -->
+  <article class="title-card is-next" data-index="7" aria-label="Bohl Entertainment">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/bohlentertainment-hero.jpg" alt="Bohl Entertainment" loading="lazy" style="object-position:center top"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">BOHL ENT.</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('Bohl Entertainment','Agentur und Produktionsfirma. Kooperationen und Buchungen.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 09 — ABOUT -->
+  <article class="title-card is-next" data-index="8" aria-label="About">
+    <div class="title-card__inner">
+      <img class="title-card__image" src="assets/images/about-hero.jpg" alt="About" loading="lazy" style="object-position:center top"/>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">ABOUT</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('About','Wer ist Dr.Bohl? Kabarettist, Entertainer, Comedian aus Wien.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- SLIDE 10 — SCHABERNACK -->
+  <article class="title-card is-next" data-index="9" aria-label="Schabernack">
+    <div class="title-card__inner">
+      <div class="title-card__image-placeholder"></div>
+      <div class="title-card__overlay"></div>
+      <div class="title-card__content">
+        <div class="title-card__headline-wrap">
+          <span class="title-card__headline-line" data-fit="true">SCHABERNACK</span>
+        </div>
+        <div class="title-card__actions">
+          <button class="ghost-button" onclick="openSubpage('Schabernack','Easter Eggs, Gags, Archivmaterial. Auf eigene Gefahr.')">More</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div><!-- /slider-track -->
+
+<!-- Desktop arrows -->
+<button id="arrow-prev" class="desktop-arrow desktop-arrow--prev" aria-label="Zurück">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<button id="arrow-next" class="desktop-arrow desktop-arrow--next" aria-label="Weiter">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div id="slide-counter" class="slide-counter">01 / 10</div>
+
+<!-- Netflix-style menu -->
+<div id="full-screen-menu" class="full-screen-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+  <div class="full-screen-menu__header">
+    <div class="full-screen-menu__title">Dr.Bohl</div>
+  </div>
+  <button id="menu-close" class="full-screen-menu__close" aria-label="Menü schließen">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+  <ul id="menu-list" class="full-screen-menu__list" role="list">
+    <!-- Spacer so first card can scroll to center -->
+    <li class="menu-spacer" aria-hidden="true"></li>
+
+    <li><button class="menu-card is-active" data-index="0">
+      <img class="menu-card__image" src="assets/images/home-hero.jpg" alt="" loading="lazy"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Home</span>
+      <span class="menu-card__number">01</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="1">
+      <img class="menu-card__image" src="assets/images/kabarett-hero.jpg" alt="" loading="lazy"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Kabarett</span>
+      <span class="menu-card__number">02</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="2">
+      <img class="menu-card__image" src="assets/images/social-media-hero.jpg" alt="" loading="lazy" style="object-position:center center"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Social Media</span>
+      <span class="menu-card__number">03</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="3">
+      <img class="menu-card__image" src="assets/images/showtime-hero.jpg" alt="" loading="lazy"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Showtime</span>
+      <span class="menu-card__number">04</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="4">
+      <img class="menu-card__image" src="assets/images/musik-hero.jpg" alt="" loading="lazy"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Musik</span>
+      <span class="menu-card__number">05</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="5">
+      <img class="menu-card__image" src="assets/images/podcast-hero.jpg" alt="" loading="lazy"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Podcast</span>
+      <span class="menu-card__number">06</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="6">
+      <img class="menu-card__image" src="assets/images/bohl100-hero.jpg" alt="" loading="lazy" style="object-position:center center"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Bohl100</span>
+      <span class="menu-card__number">07</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="7">
+      <img class="menu-card__image" src="assets/images/bohlentertainment-hero.jpg" alt="" loading="lazy"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Bohl Entertainment</span>
+      <span class="menu-card__number">08</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="8">
+      <img class="menu-card__image" src="assets/images/about-hero.jpg" alt="" loading="lazy"/>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">About</span>
+      <span class="menu-card__number">09</span>
+    </button></li>
+
+    <li><button class="menu-card" data-index="9">
+      <div style="position:absolute;inset:0;background:linear-gradient(160deg,#0e180d,#070707)"></div>
+      <div class="menu-card__overlay"></div>
+      <span class="menu-card__label">Schabernack</span>
+      <span class="menu-card__number">10</span>
+    </button></li>
+
+    <!-- Spacer so last card can scroll to center -->
+    <li class="menu-spacer" aria-hidden="true"></li>
+  </ul>
+</div>
+
+<!-- TOUR DATES SUBPAGE -->
+<div id="tour-overlay" class="subpage-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Tour Dates">
+  <div class="sp-topbar">
+    <div class="sp-logo">Dr.Bohl</div>
+    <button class="sp-close" onclick="closeTourDates()" aria-label="Schließen">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="sp-hero">
+    <div class="sp-eyebrow">Live Performances</div>
+    <div class="sp-title">
+      <span>TOUR</span>
+      <span class="accent">DATES</span>
+    </div>
+  </div>
+  <div class="td-list" id="tour-list">
+    <!-- Populated by JS from src/data/tourDates.js -->
+  </div>
+</div>
+
+<!-- GENERIC SUBPAGE -->
+<div id="subpage-overlay" class="subpage-overlay" aria-hidden="true">
+  <div class="subpage-overlay__bar"></div>
+  <button id="subpage-back" class="subpage-overlay__back">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Zurück
+  </button>
+  <div id="subpage-title" class="subpage-overlay__title"></div>
+  <div id="subpage-body"  class="subpage-overlay__body"></div>
+  <div class="subpage-overlay__cta">
+    <button class="ghost-button" onclick="closeSubpage()">Zurück</button>
+  </div>
+  <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+</div>
+
+</div><!-- /app -->
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

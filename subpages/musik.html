@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Dr.Bohl — Musik" />
+  <title>Dr.Bohl — Musik</title>
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <style>
+    body {
+      overflow-y: auto;
+      background: var(--black);
+      min-height: 100vh;
+    }
+    .hero-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--hero-yellow);
+    }
+    .subpage-hero {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      overflow: hidden;
+    }
+    .subpage-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .subpage-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.85) 100%);
+    }
+    .subpage-hero__placeholder {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+    }
+  </style>
+</head>
+<body>
+<div class="hero-bar"></div>
+
+<section class="subpage-hero">
+  <div class="subpage-hero__placeholder"></div>
+  <img
+    src="../assets/images/musik-hero.jpg"
+    alt="Musik"
+    onerror="this.style.display='none'"
+  />
+  <div class="subpage-hero__overlay"></div>
+</section>
+
+<main class="subpage-placeholder">
+  <a href="../index.html" class="subpage-placeholder__back">
+    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Zurück
+  </a>
+
+  <p class="subpage-placeholder__tag">Stream</p>
+  <h1 class="subpage-placeholder__title">Musik</h1>
+  <p class="subpage-placeholder__body">Musik von Dr.Bohl — irgendwo zwischen Comedy und Ernst. Alle Releases, Playlists und Hörproben gesammelt an einem Ort. Kopfhörer rein.</p>
+
+  <a href="../index.html" class="primary-button">Jetzt streamen</a>
+
+  <div style="margin-top: 48px; padding: 20px; border: 1px solid rgba(245,245,240,0.08); border-radius: 12px; margin-bottom: 48px;">
+    <p style="font-size:11px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--disabled-grey); margin-bottom:8px;">Placeholder</p>
+    <p style="font-size:14px; color:var(--caption-grey); line-height:1.6;">
+      Diese Seite ist ein Platzhalter. Inhalte werden in der nächsten Entwicklungsphase ergänzt.
+      Kontaktiere das Team für Zusammenarbeit oder Fragen.
+    </p>
+  </div>
+</main>
+</body>
+</html>
