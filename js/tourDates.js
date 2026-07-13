@@ -18,7 +18,8 @@ export async function fetchTourDates() {
     // Google wraps values in quotes — strip them
     const [day, month, year, venue, city, url] = row
       .split(",")
-      .map((v) => v.replace(/^"|"$/g, "").trim());
+      .map((v) => v.replace(/^"|"$/g, "").trim())
+      .map((v) => v.replace(";", ","));
     return [day, month, year, venue, city, url];
   });
 
