@@ -22,6 +22,7 @@ export async function fetchTourDates() {
     return [day, month, year, venue, city, url];
   });
 
+  if (!res.length) throw "No tour dates found";
   return res;
 }
 
@@ -33,28 +34,33 @@ export async function renderTourDates(container) {
   console.log("fetching tour dates");
   if (!container) return;
 
-  const tourDates = await fetchTourDates();
-  container.innerHTML = tourDates
-    .map(([day, mon, yr, venue, city, url]) => {
-      const isSoldOut = url === "sold-out";
-      const btnClass = isSoldOut ? "td-btn sold-out" : "td-btn";
-      const btnText = isSoldOut ? "Ausverkauft" : "Tickets";
-      const btnEl = isSoldOut
-        ? `<span class="${btnClass}">${btnText}</span>`
-        : `<a href="${url}" class="${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}">${btnText}</a>`;
+  try {
+    const tourDates = await fetchTourDates();
+    container.innerHTML = tourDates
+      .map(([day, mon, yr, venue, city, url]) => {
+        const isSoldOut = url === "sold-out";
+        const btnClass = isSoldOut ? "td-btn sold-out" : "td-btn";
+        const btnText = isSoldOut ? "Ausverkauft" : "Tickets";
+        const btnEl = isSoldOut
+          ? `<span class="${btnClass}">${btnText}</span>`
+          : `<a href="${url}" class="${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}">${btnText}</a>`;
 
-      return `
-    <div class="td-row">
-      <div class="td-date">
-        <span class="td-day">${day}</span>
-        <span class="td-mon">${mon} ${yr}</span>
-      </div>
-      <div class="td-info">
-        <div class="td-venue">${venue}</div>
-        <div class="td-city">${city}</div>
-      </div>
-      ${btnEl}
-    </div>`;
-    })
-    .join("");
+        return `
+        <div class="td-row">
+          <div class="td-date">
+            <span class="td-day">${day}</span>
+            <span class="td-mon">${mon} ${yr}</span>
+          </div>
+          <div class="td-info">
+            <div class="td-venue">${venue}</div>
+            <div class="td-city">${city}</div>
+          </div>
+          ${btnEl}
+        </div>`;
+      })
+      .join("");
+  } catch (error) {
+    // TODO: Implement error handling
+    console.error(error);
+  }
 }
