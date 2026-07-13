@@ -53,8 +53,11 @@ export async function renderTourDates(container) {
       })
       .join("");
   } catch (error) {
-    // TODO: Implement error handling
     console.error(error);
+    container.innerHTML = `
+      <div style="padding:40px 24px;color:#a0a09a;font-family:var(--fb);font-size:14px;letter-spacing:.04em">
+        Termine konnten nicht geladen werden.<br>Bitte später nochmal versuchen.
+      </div>`;
   }
 }
 
@@ -72,7 +75,7 @@ function parseCSVRow(row) {
     if (char === '"') {
       inQuotes = !inQuotes;
     } else if (char === "," && !inQuotes) {
-      result.push(current.trim());
+      result.push(current.trim().replace(/^"|"$/g, "").trim());
       current = "";
     } else {
       current += char;
