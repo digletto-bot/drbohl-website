@@ -6,7 +6,7 @@
  * Date format from Google Sheets CSV export: M/D/YYYY (e.g. "8/15/2026")
  */
 
-const SHEET_ID  = "1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk";
+const SHEET_ID = "1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
 /**
@@ -19,9 +19,9 @@ function parseSheetDate(dateStr) {
   const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
 
   return {
-    day:   new Intl.DateTimeFormat("de-DE", { day:   "numeric" }).format(date), // "15"
-    month: new Intl.DateTimeFormat("de-DE", { month: "short"   }).format(date), // "Aug."
-    year:  new Intl.DateTimeFormat("de-DE", { year:  "numeric" }).format(date), // "2026"
+    day: new Intl.DateTimeFormat("de-DE", { day: "numeric" }).format(date), // "15"
+    month: new Intl.DateTimeFormat("de-DE", { month: "short" }).format(date), // "Aug."
+    year: new Intl.DateTimeFormat("de-DE", { year: "numeric" }).format(date), // "2026"
   };
 }
 
@@ -30,7 +30,7 @@ function parseSheetDate(dateStr) {
  * @returns {Promise<Array>}
  */
 async function fetchTourDates() {
-  const res  = await fetch(SHEET_URL);
+  const res = await fetch(SHEET_URL);
   const text = await res.text();
 
   // Skip header row
@@ -73,7 +73,6 @@ export async function renderTourDates(container) {
         </div>`;
       })
       .join("");
-
   } catch (error) {
     console.error(error);
     container.innerHTML = `
@@ -90,7 +89,7 @@ export async function renderTourDates(container) {
  */
 function parseCSVRow(row) {
   const result = [];
-  let current  = "";
+  let current = "";
   let inQuotes = false;
 
   for (const char of row) {
