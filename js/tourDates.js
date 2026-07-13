@@ -6,14 +6,21 @@
  */
 
 export const TOUR_DATES = [
-  ["15", "Aug", "2026", "Stadtsaal Wien",                    "Wien, AT",              "#"],
-  ["22", "Aug", "2026", "Orpheum Graz",                      "Graz, AT",              "#"],
-  ["05", "Sep", "2026", "Posthof Linz",                      "Linz, AT",              "#"],
-  ["12", "Sep", "2026", "Kulisse Wien",                      "Wien, AT",              "#"],
-  ["19", "Sep", "2026", "Dornbirner Kulturhaus",             "Dornbirn, AT",          "#"],
-  ["26", "Sep", "2026", "Stadttheater Wiener Neustadt",      "Wiener Neustadt, AT",   "#"],
-  ["03", "Okt", "2026", "Bürgerhaus Stollwerck",             "Köln, DE",              "#"],
-  ["10", "Okt", "2026", "Laeiszhalle Hamburg",               "Hamburg, DE",           "#"],
+  ["15", "Aug", "2026", "Stadtsaal Wien", "Wien, AT", "#"],
+  ["22", "Aug", "2026", "Orpheum Graz", "Graz, AT", "#"],
+  ["05", "Sep", "2026", "Posthof Linz", "Linz, AT", "#"],
+  ["12", "Sep", "2026", "Kulisse Wien", "Wien, AT", "#"],
+  ["19", "Sep", "2026", "Dornbirner Kulturhaus", "Dornbirn, AT", "#"],
+  [
+    "26",
+    "Sep",
+    "2026",
+    "Stadttheater Wiener Neustadt",
+    "Wiener Neustadt, AT",
+    "#",
+  ],
+  ["03", "Okt", "2026", "Bürgerhaus Stollwerck", "Köln, DE", "#"],
+  ["10", "Okt", "2026", "Laeiszhalle Hamburg", "Hamburg, DE", "#"],
 ];
 
 /**
@@ -24,10 +31,10 @@ export function renderTourDates(container) {
   if (!container) return;
 
   container.innerHTML = TOUR_DATES.map(([day, mon, yr, venue, city, url]) => {
-    const isSoldOut = url === 'sold-out';
-    const btnClass  = isSoldOut ? 'td-btn sold-out' : 'td-btn';
-    const btnText   = isSoldOut ? 'Ausverkauft' : 'Tickets';
-    const btnEl     = isSoldOut
+    const isSoldOut = url === "sold-out";
+    const btnClass = isSoldOut ? "td-btn sold-out" : "td-btn";
+    const btnText = isSoldOut ? "Ausverkauft" : "Tickets";
+    const btnEl = isSoldOut
       ? `<span class="${btnClass}">${btnText}</span>`
       : `<a href="${url}" class="${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}">${btnText}</a>`;
 
@@ -43,5 +50,5 @@ export function renderTourDates(container) {
       </div>
       ${btnEl}
     </div>`;
-  }).join('');
+  }).join("");
 }

@@ -5,31 +5,33 @@
 
 /* ── Font faces ── */
 @font-face {
-  font-family: 'DrukCond';
-  src: url('../assets/fonts/DrukCond-Super.ttf') format('truetype');
+  font-family: "DrukCond";
+  src: url("../assets/fonts/DrukCond-Super.ttf") format("truetype");
   font-weight: 900;
   font-display: block;
 }
 
 @font-face {
-  font-family: 'NHaas';
-  src: url('../assets/fonts/NHaasGroteskDSPro-55Rg.otf') format('opentype');
+  font-family: "NHaas";
+  src: url("../assets/fonts/NHaasGroteskDSPro-55Rg.otf") format("opentype");
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'NHaas';
-  src: url('../assets/fonts/NHaasGroteskDSPro-65Md.otf') format('opentype');
+  font-family: "NHaas";
+  src: url("../assets/fonts/NHaasGroteskDSPro-65Md.otf") format("opentype");
   font-weight: 600;
   font-display: swap;
 }
 
 /* ── Reset ── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  margin:     0;
-  padding:    0;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -38,31 +40,42 @@ html {
 }
 
 body {
-  font-family:      var(--font-body);
+  font-family: var(--font-body);
   background-color: var(--black);
-  color:            var(--light-text);
-  overflow:         hidden;
+  color: var(--light-text);
+  overflow: hidden;
   overscroll-behavior: none;
-  -webkit-font-smoothing:  antialiased;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-img  { display: block; max-width: 100%; }
+img {
+  display: block;
+  max-width: 100%;
+}
 
 button {
-  cursor:     pointer;
-  border:     none;
-  outline:    none;
+  cursor: pointer;
+  border: none;
+  outline: none;
   background: transparent;
   font-family: var(--font-body);
 }
 
-a { color: inherit; text-decoration: none; }
-ul, ol { list-style: none; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul,
+ol {
+  list-style: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration:  0.01ms !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
 }
