@@ -1,8 +1,7 @@
 /**
  * DR.BOHL — TOUR DATES
- * Add, edit or remove shows here.
- * Each entry: [day, month, year, venue, city, ticketUrl]
- * Set ticketUrl to "#" for placeholder, "sold-out" to show sold out state.
+ * Tour dates are fetched from Google Sheet with the following headers:
+ * day | month | year | venue | city | ticket url
  */
 
 const SHEET_ID = "1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk";
