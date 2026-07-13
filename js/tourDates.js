@@ -1,22 +1,43 @@
 /**
  * DR.BOHL — TOUR DATES
- * Tour dates are fetched from Google Sheet with the following headers:
- * day | month | year | venue | city | ticket url
+ * Tour dates are fetched from a Google Sheet with the following headers:
+ * date | venue | city | url
+ *
+ * Date format from Google Sheets CSV export: M/D/YYYY (e.g. "8/15/2026")
  */
 
-const SHEET_ID = "1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk";
+const SHEET_ID  = "1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
+/**
+ * Parses a M/D/YYYY date string from Google Sheets into display parts.
+ * @param {string} dateStr - e.g. "8/15/2026"
+ * @returns {{ day: string, month: string, year: string }}
+ */
+function parseSheetDate(dateStr) {
+  const [month, day, year] = dateStr.split("/").map(Number);
+  const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
+
+  return {
+    day:   new Intl.DateTimeFormat("de-DE", { day:   "numeric" }).format(date), // "15"
+    month: new Intl.DateTimeFormat("de-DE", { month: "short"   }).format(date), // "Aug."
+    year:  new Intl.DateTimeFormat("de-DE", { year:  "numeric" }).format(date), // "2026"
+  };
+}
+
+/**
+ * Fetches and parses tour dates from Google Sheets CSV.
+ * @returns {Promise<Array>}
+ */
 async function fetchTourDates() {
-  const data = await fetch(SHEET_URL);
-  const text = await data.text();
+  const res  = await fetch(SHEET_URL);
+  const text = await res.text();
 
-  // Parse CSV — skip header row
+  // Skip header row
   const rows = text.trim().split("\n").slice(1);
-  const res = rows.map(parseCSVRow);
+  if (!rows.length) throw new Error("No tour dates found");
 
-  if (!res.length) throw "No tour dates found";
-  return res;
+  return rows.map(parseCSVRow);
 }
 
 /**
@@ -24,26 +45,25 @@ async function fetchTourDates() {
  * @param {HTMLElement} container
  */
 export async function renderTourDates(container) {
-  const start = performance.now();
-  console.log("fetching tour dates");
   if (!container) return;
 
   try {
     const tourDates = await fetchTourDates();
+
     container.innerHTML = tourDates
-      .map(([day, mon, yr, venue, city, url]) => {
+      .map(([dateStr, venue, city, url]) => {
+        const { day, month, year } = parseSheetDate(dateStr);
+
         const isSoldOut = url === "sold-out";
-        const btnClass = isSoldOut ? "td-btn sold-out" : "td-btn";
-        const btnText = isSoldOut ? "Ausverkauft" : "Tickets";
         const btnEl = isSoldOut
-          ? `<span class="${btnClass}">${btnText}</span>`
-          : `<a href="${url}" class="${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}">${btnText}</a>`;
+          ? `<span class="td-btn sold-out">Ausverkauft</span>`
+          : `<a href="${url}" class="td-btn" target="_blank" rel="noopener" aria-label="Tickets für ${venue}">Tickets</a>`;
 
         return `
         <div class="td-row">
           <div class="td-date">
             <span class="td-day">${day}</span>
-            <span class="td-mon">${mon} ${yr}</span>
+            <span class="td-mon">${month} ${year}</span>
           </div>
           <div class="td-info">
             <div class="td-venue">${venue}</div>
@@ -54,7 +74,6 @@ export async function renderTourDates(container) {
       })
       .join("");
 
-    console.log("fetched in", performance.now() - start, "milliseconds");
   } catch (error) {
     console.error(error);
     container.innerHTML = `
@@ -65,13 +84,13 @@ export async function renderTourDates(container) {
 }
 
 /**
- * Custom parser to convert from CSV while retaining commas
+ * Robust CSV row parser — handles commas inside quoted fields.
  * @param {string} row
- * @returns {string}
+ * @returns {string[]}
  */
 function parseCSVRow(row) {
   const result = [];
-  let current = "";
+  let current  = "";
   let inQuotes = false;
 
   for (const char of row) {
