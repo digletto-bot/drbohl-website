@@ -24,6 +24,7 @@ async function fetchTourDates() {
  * @param {HTMLElement} container
  */
 export async function renderTourDates(container) {
+  const start = performance.now();
   console.log("fetching tour dates");
   if (!container) return;
 
@@ -52,6 +53,8 @@ export async function renderTourDates(container) {
         </div>`;
       })
       .join("");
+
+    console.log("fetched in", performance.now() - start, "milliseconds");
   } catch (error) {
     console.error(error);
     container.innerHTML = `
