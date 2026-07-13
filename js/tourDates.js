@@ -8,20 +8,13 @@
 const SHEET_ID = "1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
-export async function fetchTourDates() {
+async function fetchTourDates() {
   const data = await fetch(SHEET_URL);
   const text = await data.text();
 
   // Parse CSV — skip header row
   const rows = text.trim().split("\n").slice(1);
-  const res = rows.map((row) => {
-    // Google wraps values in quotes — strip them
-    const [day, month, year, venue, city, url] = row
-      .split(",")
-      .map((v) => v.replace(/^"|"$/g, "").trim())
-      .map((v) => v.replace(";", ","));
-    return [day, month, year, venue, city, url];
-  });
+  const res = rows.map(parseCSVRow);
 
   if (!res.length) throw "No tour dates found";
   return res;
@@ -64,4 +57,28 @@ export async function renderTourDates(container) {
     // TODO: Implement error handling
     console.error(error);
   }
+}
+
+/**
+ * Custom parser to convert from CSV while retaining commas
+ * @param {string} row
+ * @returns {string}
+ */
+function parseCSVRow(row) {
+  const result = [];
+  let current = "";
+  let inQuotes = false;
+
+  for (const char of row) {
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      result.push(current.trim());
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim().replace(/^"|"$/g, "").trim());
+  return result;
 }

@@ -7,7 +7,7 @@
 
 import Slider from "./slider.js";
 import Menu from "./menu.js";
-import { renderTourDates, fetchTourDates } from "./tourDates.js";
+import { renderTourDates } from "./tourDates.js";
 import {
   fitText,
   updateProgressNav,
