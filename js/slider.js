@@ -27,7 +27,8 @@ class Slider {
     this._mdx = 0;
 
     // Animation frame throttling (preventing jittering on mobile IOS)
-    let rafPending = false;
+    this.rafPending = false;
+    this.touchEnded = false;
 
     this._applyPositions();
     this._bindTouch();
@@ -93,6 +94,7 @@ class Slider {
         this._tdx = 0;
         this._drag = true;
         this._isH = null;
+        this.touchEnded = false;
       },
       { passive: true },
     );
@@ -111,7 +113,7 @@ class Slider {
         if (!this.rafPending) {
           this.rafPending = true;
           requestAnimationFrame(() => {
-            this._applyDrag(dx);
+            if (!this.touchEnded) this._applyDrag(dx);
             this.rafPending = false;
           });
         }
@@ -120,6 +122,7 @@ class Slider {
     );
 
     this.track.addEventListener("touchend", () => {
+      this.touchEnded = true;
       if (!this._drag || !this._isH) {
         this._drag = false;
         return;
