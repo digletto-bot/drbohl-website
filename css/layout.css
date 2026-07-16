@@ -21,6 +21,9 @@
   height: 100%;
   overflow: hidden;
   touch-action: pan-y;
+  -webkit-overflow-scrolling: auto; /* kill momentum */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* ── Mobile: full viewport ── */
@@ -34,6 +37,11 @@
   will-change: transform;
   transition: transform var(--slide-duration) var(--slide-easing);
   user-select: none;
+  touch-action: pan-y;
+  transform: translateX(100%) translateZ(0);
+  -webkit-transform: translateX(100%) translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* ── Desktop: centered phone frame ── */
