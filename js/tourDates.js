@@ -10,22 +10,6 @@ const SHEET_ID = "1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
 /**
- * Parses a M/D/YYYY date string from Google Sheets into display parts.
- * @param {string} dateStr - e.g. "8/15/2026"
- * @returns {{ day: string, month: string, year: string }}
- */
-function parseSheetDate(dateStr) {
-  const [month, day, year] = dateStr.split("/").map(Number);
-  const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
-
-  return {
-    day: new Intl.DateTimeFormat("de-DE", { day: "numeric" }).format(date), // "15"
-    month: new Intl.DateTimeFormat("de-DE", { month: "short" }).format(date), // "Aug."
-    year: new Intl.DateTimeFormat("de-DE", { year: "numeric" }).format(date), // "2026"
-  };
-}
-
-/**
  * Fetches and parses tour dates from Google Sheets CSV.
  * @returns {Promise<Array>}
  */
@@ -45,9 +29,9 @@ async function fetchTourDates() {
  * @param {HTMLElement} container
  */
 export async function renderTourDates(container) {
-  if (!container) return;
-
   try {
+    if (!container) throw new Error("No valid container for dates found");
+
     const tourDates = await fetchTourDates();
 
     container.innerHTML = tourDates
@@ -62,8 +46,8 @@ export async function renderTourDates(container) {
         return `
         <div class="td-row">
           <div class="td-date">
-            <span class="td-day">${day}</span>
-            <span class="td-mon">${month} ${year}</span>
+            <span class="td-date">${day}.${month}.</span>
+            <span class="td-year">${year}</span>
           </div>
           <div class="td-info">
             <div class="td-venue">${venue}</div>
@@ -77,7 +61,7 @@ export async function renderTourDates(container) {
     console.error(error);
     container.innerHTML = `
       <div style="padding:40px 24px;color:#a0a09a;font-family:var(--fb);font-size:14px;letter-spacing:.04em">
-        Termine konnten nicht geladen werden.<br>Bitte später nochmal versuchen.
+        Termine konnten nicht geladen werden.<br>Bitte die Seite neu laden, oder später nochmal versuchen.
       </div>`;
   }
 }
@@ -104,4 +88,24 @@ function parseCSVRow(row) {
   }
   result.push(current.trim().replace(/^"|"$/g, "").trim());
   return result;
+}
+
+/**
+ * Parses a M/D/YYYY date string from Google Sheets into display parts.
+ * @param {string} dateStr - e.g. "8/15/2026"
+ * @returns {{ day: string, month: string, year: string }}
+ */
+function parseSheetDate(dateStr) {
+  const [month, day, year] = dateStr.split("/").map(Number);
+  const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
+
+  return {
+    day: new Intl.DateTimeFormat("de-DE", { day: "numeric" })
+      .format(date)
+      .padStart(2, "0"), // "15"
+    month: new Intl.DateTimeFormat("de-DE", { month: "numeric" })
+      .format(date)
+      .padStart(2, "0"), // "Aug."
+    year: new Intl.DateTimeFormat("de-DE", { year: "numeric" }).format(date), // "2026"
+  };
 }
