@@ -169,7 +169,7 @@ class Slider {
 
   /* ── Drag helpers ── */
   _applyDrag(dx) {
-    const d = dx * 0.65;
+    const d = dx * 0.85;
     if (this.cards[this.currentIndex])
       this.cards[this.currentIndex].style.transform = `translateX(${d}px)`;
     if (this.cards[this.currentIndex - 1])
