@@ -50,8 +50,8 @@ export async function renderTourDates(container) {
             <span class="td-year">${year}</span>
           </div>
           <div class="td-info">
-            <div class="td-venue">${venue}</div>
             <div class="td-city">${city}</div>
+            <div class="td-venue">${venue}</div>
           </div>
           ${btnEl}
         </div>`;

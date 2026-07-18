@@ -586,7 +586,7 @@
 .td-date {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 82px;
+  font-size: 62px;
   line-height: 1;
   color: var(--light-text);
   letter-spacing: 0.02em;
@@ -595,7 +595,7 @@
 .td-year {
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 10px;
+  font-size: 20px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--caption-grey);
@@ -604,13 +604,15 @@
 
 /* Venue */
 .td-info {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
 }
 
-.td-venue {
+.td-city {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 16px;
+  font-size: 62px;
   line-height: 1.15;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -618,10 +620,10 @@
   margin-bottom: 4px;
 }
 
-.td-city {
+.td-venue {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 11px;
+  font-size: 20px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--caption-grey);
@@ -668,7 +670,7 @@
 
 /* Past shows */
 .td-row.past .td-date,
-.td-row.past .td-venue {
+.td-row.past .td-city {
   color: var(--disabled-grey);
 }
 
