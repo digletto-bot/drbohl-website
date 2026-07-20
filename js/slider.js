@@ -176,18 +176,28 @@ class Slider {
 
   /* ── Routing ──  */
   _initializeRouting() {
+    // Build routes dynamically from slide labels
     this.cards.forEach((card, i) => {
       this.routes.push({
         title: card.ariaLabel,
         path: i != 0 ? this._convertToPathName(card.ariaLabel) : "",
       });
     });
+
     const url = new URL(window.location.href);
-    console.log("routes:", this.routes);
-    console.log("pathname:", url.pathname);
-    const index = this.routes.findIndex((e) => `/${e.path}` == url.pathname);
-    console.log("index:", index);
-    if (index) this.goTo(index);
+    const pathSplit = url.pathname.split("/");
+    if (split.length > 2) {
+      window.history.replaceState(null, "", url.origin);
+    } else {
+      const index = this.routes.findIndex(
+        (e) => e.path == pathSplit[pathSplit.length - 1],
+      );
+      if (index) this.goTo(index);
+
+      console.log("routes:", this.routes);
+      console.log("pathname:", [-1]);
+      console.log("index:", index);
+    }
   }
 
   _convertToPathName = (label) => label.replace(/\s/g, "-").toLowerCase();
