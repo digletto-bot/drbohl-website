@@ -9,7 +9,7 @@ class Slider {
   constructor(options = {}) {
     this.track = document.getElementById("slider-track");
     this.cards = Array.from(document.querySelectorAll(".title-card"));
-    this.paths = [];
+    this.routes = [];
     this.totalSlides = this.cards.length;
     this.currentIndex = 0;
     this.isAnimating = false;
@@ -49,18 +49,22 @@ class Slider {
     });
   }
 
-  /* ── Navigate to slide index t ── */
-  goTo(t) {
+  /**
+   * Navigate to slide index {idx}
+   * @param {number} idx
+   * @returns {void}
+   */
+  goTo(idx) {
     if (
       this.isAnimating ||
-      t === this.currentIndex ||
-      t < 0 ||
-      t >= this.totalSlides
+      idx === this.currentIndex ||
+      idx < 0 ||
+      idx >= this.totalSlides
     )
       return;
     this.isAnimating = true;
     const prev = this.currentIndex;
-    this.currentIndex = t;
+    this.currentIndex = idx;
     this._applyPositions();
 
     // Re-trigger Ken Burns on active image
@@ -74,6 +78,7 @@ class Slider {
 
     if (this.onSlideChange) this.onSlideChange(this.currentIndex, prev);
     setTimeout(() => (this.isAnimating = false), 460);
+    this._updateUrlPath(this.currentIndex);
   }
 
   next() {
@@ -172,10 +177,25 @@ class Slider {
   /* ── Routing ──  */
   _initializeRouting() {
     this.cards.forEach((card, i) => {
-      this.paths.push(card.ariaLabel.replace(/\s/g, "-").toLowerCase());
+      this.routes.push({
+        title: card.ariaLabel,
+        path: i != 0 ? this._convertToPathName(card.ariaLabel) : "",
+      });
     });
-    console.log(this.paths);
-    console.log(new URL(window.location.href).pathname);
+    const url = new URL(window.location.href);
+    console.log("routes:", this.routes);
+    console.log("pathname:", url.pathname);
+    const index = this.routes.findIndex((e) => `/${e.path}` == url.pathname);
+    console.log("index:", index);
+    if (index) this.goTo(index);
+  }
+
+  _convertToPathName = (label) => label.replace(/\s/g, "-").toLowerCase();
+
+  _updateUrlPath(idx) {
+    const newPath = `${window.location.origin}/${this.routes[idx].path}`;
+    window.history.replaceState(null, "", newPath);
+    console.log(newPath);
   }
 
   /* ── Drag helpers ── */
