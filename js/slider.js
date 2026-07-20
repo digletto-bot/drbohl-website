@@ -186,24 +186,25 @@ class Slider {
 
     const url = new URL(window.location.href);
     const pathSplit = url.pathname.split("/");
-    if (pathSplit.length > 2) {
-      window.history.replaceState(null, "", url.origin);
-    } else {
-      const index = this.routes.findIndex(
-        (e) => e.path == pathSplit[pathSplit.length - 1],
-      );
-      if (index) this.goTo(index);
+    const index = this.routes.findIndex(
+      (e) => e.path == pathSplit[pathSplit.length - 1],
+    );
+    if (index) this.goTo(index);
 
-      console.log("routes:", this.routes);
-      console.log("pathname:", [-1]);
-      console.log("index:", index);
-    }
+    console.log("routes:", this.routes);
+    console.log("pathname:", [-1]);
+    console.log("index:", index);
   }
 
   _convertToPathName = (label) => label.replace(/\s/g, "-").toLowerCase();
 
   _updateUrlPath(idx) {
-    const newPath = `${window.location.origin}/${this.routes[idx].path}`;
+    // Reinstate this version once hosting no longer happens on github.io
+    // const newPath = `${window.location.origin}/${this.routes[idx].path}`;
+
+    // This is the temporary value for github.io
+    const newPath = `${window.location.origin}/drbohl-website/${this.routes[idx].path}`;
+
     window.history.replaceState(null, "", newPath);
     console.log(newPath);
   }
