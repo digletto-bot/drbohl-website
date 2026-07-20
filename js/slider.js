@@ -9,6 +9,7 @@ class Slider {
   constructor(options = {}) {
     this.track = document.getElementById("slider-track");
     this.cards = Array.from(document.querySelectorAll(".title-card"));
+    this.paths = [];
     this.totalSlides = this.cards.length;
     this.currentIndex = 0;
     this.isAnimating = false;
@@ -34,6 +35,7 @@ class Slider {
     this._bindTouch();
     this._bindMouse();
     this._bindKeyboard();
+    this._initializeRouting();
   }
 
   /* ── Position all cards by index ── */
@@ -165,6 +167,15 @@ class Slider {
       if (e.key === "ArrowRight") this.next();
       if (e.key === "ArrowLeft") this.prev();
     });
+  }
+
+  /* ── Routing ──  */
+  _initializeRouting() {
+    this.cards.forEach((card, i) => {
+      this.paths.push(card.ariaLabel.replace(/\s/g, "-").toLowerCase());
+    });
+    console.log(this.paths);
+    console.log(new URL(window.location.href).pathname);
   }
 
   /* ── Drag helpers ── */
