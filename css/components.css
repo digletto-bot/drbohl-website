@@ -568,9 +568,9 @@
 
 .td-row {
   display: grid;
-  grid-template-columns: 125px 1fr auto;
+  grid-template-columns: 80px 1fr auto;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
   padding: 20px 0;
   border-bottom: 1px solid rgba(245, 245, 240, 0.08);
 }
@@ -586,7 +586,7 @@
 .td-date {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 62px;
+  font-size: 48px;
   line-height: 1;
   color: var(--light-text);
   letter-spacing: 0.02em;
@@ -595,7 +595,7 @@
 .td-year {
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 20px;
+  font-size: 9px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--caption-grey);
@@ -606,25 +606,25 @@
 .td-info {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  align-items: flex-start;
+  flex-shrink: 0;
 }
 
 .td-city {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 62px;
-  line-height: 1.15;
+  font-size: 48px;
+  line-height: 1;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   color: var(--light-text);
-  margin-bottom: 4px;
 }
 
 .td-venue {
   font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 20px;
-  letter-spacing: 0.1em;
+  font-weight: 600;
+  font-size: 9px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--caption-grey);
 }
