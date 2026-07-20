@@ -45,11 +45,11 @@ export async function renderTourDates(container) {
 
         return `
         <div class="td-row">
-          <div class="td-date">
+          <div class="td-time">
             <span class="td-date">${day}.${month}.</span>
             <span class="td-year">${year}</span>
           </div>
-          <div class="td-info">
+          <div class="td-location">
             <div class="td-city">${city}</div>
             <div class="td-venue">${venue}</div>
           </div>
