@@ -60,7 +60,7 @@ export async function renderTourDates(container) {
   } catch (error) {
     console.error(error);
     container.innerHTML = `
-      <div style="padding:40px 24px;color:#a0a09a;font-family:var(--fb);font-size:14px;letter-spacing:.04em">
+      <div style="padding:40px 24px;color:#a0a09a;font-family:var(--font-body);font-size:14px;letter-spacing:.04em">
         Termine konnten nicht geladen werden.<br>Bitte die Seite neu laden, oder später nochmal versuchen.
       </div>`;
   }
