@@ -186,7 +186,7 @@ class Slider {
 
     const url = new URL(window.location.href);
     const pathSplit = url.pathname.split("/");
-    if (split.length > 2) {
+    if (pathSplit.length > 2) {
       window.history.replaceState(null, "", url.origin);
     } else {
       const index = this.routes.findIndex(
