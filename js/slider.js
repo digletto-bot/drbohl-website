@@ -195,10 +195,6 @@ class Slider {
       (e) => e.path == pathSplit[pathSplit.length - 1],
     );
     if (index) this.goTo(index);
-
-    console.log("routes:", this.routes);
-    console.log("pathname:", [-1]);
-    console.log("index:", index);
   }
 
   _convertToPathName = (label) => label.replace(/\s/g, "-").toLowerCase();
@@ -214,7 +210,6 @@ class Slider {
     const newPath = `${window.location.origin}/drbohl-website${pathComponent}`;
 
     window.history.replaceState(null, "", newPath);
-    console.log(newPath);
   }
 
   /* ── Drag helpers ── */
