@@ -193,7 +193,7 @@ class Slider {
     const index = this.routes.findIndex(
       (e) => e.path == pathSplit[pathSplit.length - 1],
     );
-    if (index) this.goTo(index);
+    if (index) setTimeout(() => this.goTo(index), 50);
 
     console.log("routes:", this.routes);
     console.log("pathname:", [-1]);
