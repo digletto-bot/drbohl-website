@@ -13,6 +13,12 @@ class Slider {
     this.currentIndex = 0;
     this.isAnimating = false;
     this.onSlideChange = options.onSlideChange || null;
+    this.animationDuration = parseInt(
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--slide-duration")
+        .trim()
+        .replaceAll(/[a-zA-Z]/g, ""),
+    );
 
     // Touch state
     this._tx = 0;
@@ -71,7 +77,10 @@ class Slider {
     }
 
     if (this.onSlideChange) this.onSlideChange(this.currentIndex, prev);
-    setTimeout(() => (this.isAnimating = false), 460);
+    setTimeout(() => {
+      this.isAnimating = false;
+      this._resetDrag();
+    }, this.animationDuration + 10);
   }
 
   next() {
@@ -128,10 +137,12 @@ class Slider {
         return;
       }
       this._drag = false;
-      this._resetDrag();
       const thr = this.track.offsetWidth * 0.22;
-      if (this._tdx < -thr) this.next();
-      else if (this._tdx > thr) this.prev();
+      if (this._tdx < -thr && this.currentIndex < this.totalSlides - 1) {
+        this.next();
+      } else if (this._tdx > thr && this.currentIndex >= 1) {
+        this.prev();
+      } else this._resetDrag();
     });
   }
 
@@ -152,10 +163,12 @@ class Slider {
       if (!this._md) return;
       this._md = false;
       this.track.style.cursor = "";
-      this._resetDrag();
       const thr = this.track.offsetWidth * 0.2;
-      if (this._mdx < -thr) this.next();
-      else if (this._mdx > thr) this.prev();
+      if (this._mdx < -thr && this.currentIndex < this.totalSlides - 1) {
+        this.next();
+      } else if (this._mdx > thr && this.currentIndex >= 1) {
+        this.prev();
+      } else this._resetDrag();
     });
   }
 
@@ -181,6 +194,7 @@ class Slider {
   }
 
   _resetDrag() {
+    if (this.isAnimating || this._drag) return;
     this.cards.forEach((c) => {
       c.style.transition = "none";
       c.style.transform = "";
