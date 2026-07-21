@@ -204,11 +204,14 @@ class Slider {
   _convertToPathName = (label) => label.replace(/\s/g, "-").toLowerCase();
 
   _updateUrlPath(idx) {
+    const pathComponent = this.routes[idx].path
+      ? `/${this.routes[idx].path}`
+      : "";
     // Reinstate this version once hosting no longer happens on github.io
-    // const newPath = `${window.location.origin}/${this.routes[idx].path}`;
+    // const newPath = `${window.location.origin}${pathComponent}`;
 
     // This is the temporary value for github.io
-    const newPath = `${window.location.origin}/drbohl-website/${this.routes[idx].path}`;
+    const newPath = `${window.location.origin}/drbohl-website${pathComponent}`;
 
     window.history.replaceState(null, "", newPath);
     console.log(newPath);
