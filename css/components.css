@@ -82,6 +82,9 @@
 .menu-button.is-open .menu-button__line:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
+.full-screen-menu__close {
+  z-index: 100;
+}
 
 /* ── Headline: centered, sized by fitText ── */
 .title-card__headline-wrap {
