@@ -78,8 +78,9 @@ class Slider {
       img.style.animation = "";
     }
 
-    if (this.onSlideChange && this.initialized) {
-      this.onSlideChange(this.currentIndex, prev);
+    if (this.onSlideChange) {
+      if (this.initialized) this.onSlideChange(this.currentIndex, prev);
+      else setTimeout(() => this.onSlideChange(this.currentIndex, prev), 10);
     }
     setTimeout(() => (this.isAnimating = false), 460);
     this._updateUrlPath(this.currentIndex);
@@ -193,7 +194,7 @@ class Slider {
     const index = this.routes.findIndex(
       (e) => e.path == pathSplit[pathSplit.length - 1],
     );
-    if (index) setTimeout(() => this.goTo(index), 50);
+    if (index) this.goTo(index);
 
     console.log("routes:", this.routes);
     console.log("pathname:", [-1]);
