@@ -14,6 +14,7 @@ class Slider {
     this.currentIndex = 0;
     this.isAnimating = false;
     this.onSlideChange = options.onSlideChange || null;
+    this.initialized = false;
 
     // Touch state
     this._tx = 0;
@@ -36,6 +37,7 @@ class Slider {
     this._bindMouse();
     this._bindKeyboard();
     this._initializeRouting();
+    this.initialized = true;
   }
 
   /* ── Position all cards by index ── */
@@ -76,7 +78,9 @@ class Slider {
       img.style.animation = "";
     }
 
-    if (this.onSlideChange) this.onSlideChange(this.currentIndex, prev);
+    if (this.onSlideChange && this.initialized) {
+      this.onSlideChange(this.currentIndex, prev);
+    }
     setTimeout(() => (this.isAnimating = false), 460);
     this._updateUrlPath(this.currentIndex);
   }
