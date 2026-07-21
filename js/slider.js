@@ -15,6 +15,7 @@ class Slider {
     this.isAnimating = false;
     this.onSlideChange = options.onSlideChange || null;
     this.initialized = false;
+    this.isDemo = window.location.href.includes("github");
 
     // Touch state
     this._tx = 0;
@@ -36,7 +37,7 @@ class Slider {
     this._bindTouch();
     this._bindMouse();
     this._bindKeyboard();
-    this._initializeRouting();
+    if (this.isDemo) this._initializeRouting();
     this.initialized = true;
   }
 
@@ -64,6 +65,7 @@ class Slider {
       idx >= this.totalSlides
     )
       return;
+
     this.isAnimating = true;
     const prev = this.currentIndex;
     this.currentIndex = idx;
@@ -83,7 +85,7 @@ class Slider {
       else setTimeout(() => this.onSlideChange(this.currentIndex, prev), 10);
     }
     setTimeout(() => (this.isAnimating = false), 460);
-    this._updateUrlPath(this.currentIndex);
+    if (this.isDemo) this._updateUrlPath(this.currentIndex);
   }
 
   next() {
@@ -189,6 +191,7 @@ class Slider {
       });
     });
 
+    // Go to initial slide, based on URL
     const url = new URL(window.location.href);
     const pathSplit = url.pathname.split("/");
     const index = this.routes.findIndex(
