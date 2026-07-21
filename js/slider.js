@@ -194,7 +194,7 @@ class Slider {
   }
 
   _resetDrag() {
-    if (this.isAnimating || this._drag) return;
+    if (this.isAnimating || this._drag || this._md) return;
     this.cards.forEach((c) => {
       c.style.transition = "none";
       c.style.transform = "";
