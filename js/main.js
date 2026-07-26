@@ -33,26 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const menu = new Menu(slider);
   menu.onSlideChange(slider.index);
 
-  /* ── Menu spacers — allow first/last card to scroll to center ── */
-  function setMenuSpacers() {
-    const list    = document.getElementById("menu-list");
-    const spacers = list?.querySelectorAll(".menu-spacer");
-    const card    = list?.querySelector(".menu-card");
-    if (!list || !spacers?.length || !card) return;
-    const half = Math.max(0, (list.offsetHeight - card.offsetHeight) / 2);
-    spacers.forEach((s) => (s.style.height = half + "px"));
-  }
-
-  // Set spacers on open and resize
-  document.getElementById("full-screen-menu")?.addEventListener(
-    "transitionend",
-    (e) => {
-      if (e.propertyName === "transform") setMenuSpacers();
-    },
-    { once: false }
-  );
-  window.addEventListener("resize", setMenuSpacers);
-
   /* ── Progress nav clicks ── */
   document.querySelectorAll(".progress-nav__item").forEach((item, i) => {
     item.addEventListener("click", () => slider.goTo(i));
