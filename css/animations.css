@@ -104,25 +104,3 @@
 .full-screen-menu.is-open .menu-card:nth-child(9)  { animation-delay: 250ms; }
 .full-screen-menu.is-open .menu-card:nth-child(10) { animation-delay: 275ms; }
 
-/* ── Menu spacers (allow first/last card to center) ── */
-.menu-spacer {
-  display: block;
-  /* height set by JS to = (list height - card height) / 2 */
-  height: 0;
-  flex-shrink: 0;
-}
-
-/* ── Menu open entrance ── */
-.full-screen-menu.is-open .menu-card {
-  animation: fadeUp .5s var(--slide-easing) both;
-}
-.full-screen-menu.is-open li:nth-child(2)  .menu-card { animation-delay:  40ms; }
-.full-screen-menu.is-open li:nth-child(3)  .menu-card { animation-delay:  70ms; }
-.full-screen-menu.is-open li:nth-child(4)  .menu-card { animation-delay: 100ms; }
-.full-screen-menu.is-open li:nth-child(5)  .menu-card { animation-delay: 130ms; }
-.full-screen-menu.is-open li:nth-child(6)  .menu-card { animation-delay: 160ms; }
-.full-screen-menu.is-open li:nth-child(7)  .menu-card { animation-delay: 190ms; }
-.full-screen-menu.is-open li:nth-child(8)  .menu-card { animation-delay: 220ms; }
-.full-screen-menu.is-open li:nth-child(9)  .menu-card { animation-delay: 250ms; }
-.full-screen-menu.is-open li:nth-child(10) .menu-card { animation-delay: 280ms; }
-.full-screen-menu.is-open li:nth-child(11) .menu-card { animation-delay: 310ms; }

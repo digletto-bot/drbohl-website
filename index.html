@@ -218,90 +218,80 @@
 
 <!-- Netflix-style menu -->
 <div id="full-screen-menu" class="full-screen-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
-  <div class="full-screen-menu__header">
-    <div class="full-screen-menu__title">Dr.Bohl</div>
-  </div>
-  <button id="menu-close" class="full-screen-menu__close" aria-label="Menü schließen">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-  </button>
+  <div class="full-screen-menu__inner">
+    <div class="full-screen-menu__header">
+      <div class="full-screen-menu__title">Dr.Bohl</div>
+      <button id="menu-close" class="full-screen-menu__close" aria-label="Menü schließen">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
 
-  <ul id="menu-list" class="full-screen-menu__list" role="list">
-    <!-- Spacer so first card can scroll to center -->
-    <li class="menu-spacer" aria-hidden="true"></li>
-
-    <li><button class="menu-card is-active" data-index="0">
+    <!-- 3D carousel stage -->
+    <div id="menu-stage" class="full-screen-menu__stage">
+      <div id="menu-track" class="full-screen-menu__track">
+    <button class="menu-card is-active" data-index="0">
       <img class="menu-card__image" src="assets/images/home-hero.jpg" alt="" loading="lazy"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Home</span>
       <span class="menu-card__number">01</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="1">
+    </button>
+    <button class="menu-card" data-index="1">
       <img class="menu-card__image" src="assets/images/kabarett-hero.jpg" alt="" loading="lazy"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Kabarett</span>
       <span class="menu-card__number">02</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="2">
+    </button>
+    <button class="menu-card" data-index="2">
       <img class="menu-card__image" src="assets/images/social-media-hero.jpg" alt="" loading="lazy" style="object-position:center center"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Social Media</span>
       <span class="menu-card__number">03</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="3">
+    </button>
+    <button class="menu-card" data-index="3">
       <img class="menu-card__image" src="assets/images/showtime-hero.jpg" alt="" loading="lazy"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Showtime</span>
       <span class="menu-card__number">04</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="4">
+    </button>
+    <button class="menu-card" data-index="4">
       <img class="menu-card__image" src="assets/images/musik-hero.jpg" alt="" loading="lazy"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Musik</span>
       <span class="menu-card__number">05</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="5">
+    </button>
+    <button class="menu-card" data-index="5">
       <img class="menu-card__image" src="assets/images/podcast-hero.jpg" alt="" loading="lazy"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Podcast</span>
       <span class="menu-card__number">06</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="6">
+    </button>
+    <button class="menu-card" data-index="6">
       <img class="menu-card__image" src="assets/images/bohl100-hero.jpg" alt="" loading="lazy" style="object-position:center center"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Bohl100</span>
       <span class="menu-card__number">07</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="7">
+    </button>
+    <button class="menu-card" data-index="7">
       <img class="menu-card__image" src="assets/images/bohlentertainment-hero.jpg" alt="" loading="lazy"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Bohl Entertainment</span>
       <span class="menu-card__number">08</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="8">
+    </button>
+    <button class="menu-card" data-index="8">
       <img class="menu-card__image" src="assets/images/about-hero.jpg" alt="" loading="lazy"/>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">About</span>
       <span class="menu-card__number">09</span>
-    </button></li>
-
-    <li><button class="menu-card" data-index="9">
+    </button>
+    <button class="menu-card" data-index="9">
       <div style="position:absolute;inset:0;background:linear-gradient(160deg,#0e180d,#070707)"></div>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Schabernack</span>
       <span class="menu-card__number">10</span>
-    </button></li>
-
-    <!-- Spacer so last card can scroll to center -->
-    <li class="menu-spacer" aria-hidden="true"></li>
-  </ul>
+    </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- TOUR DATES SUBPAGE -->
