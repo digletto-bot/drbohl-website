@@ -200,7 +200,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow: hidden;
+  overflow-x: hidden;  /* clip horizontal card overflow */
+  overflow-y: visible; /* allow cards to show above/below stage */
   position: relative;
 }
 
@@ -247,28 +248,14 @@
   position: relative;
   perspective: 800px;
   perspective-origin: 50% 50%;
-  overflow: hidden;
+  /* overflow must be visible so 3D-transformed cards outside bounds show */
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
   touch-action: none;
   -webkit-user-select: none;
   user-select: none;
-  /* fade top/bottom edges */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 14%,
-    black 86%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 14%,
-    black 86%,
-    transparent 100%
-  );
 }
 
 /* ── Card track: absolute-positioned cards ── */

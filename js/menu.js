@@ -110,11 +110,15 @@ class Menu {
     window.addEventListener("resize", () => this._setCardHeight());
   }
 
-  // ── Set track height to match one card height ──
+  // ── Set track height + vertically centre it in the stage ──
   _setCardHeight() {
-    if (!this.cards[0]) return;
-    const h = this.cards[0].offsetWidth * (9 / 16);
-    this.track.style.height = h + "px";
+    if (!this.cards[0] || !this.stage) return;
+    const cardW = this.track.offsetWidth;
+    const cardH = cardW * (9 / 16);
+    this.track.style.height = cardH + "px";
+    // Centre the track in the stage — cards offset from this midpoint
+    const stageH = this.stage.offsetHeight;
+    this.track.style.marginTop = ((stageH - cardH) / 2) + "px";
   }
 
   // ── Open / Close ──────────────────────────────
@@ -127,11 +131,14 @@ class Menu {
     this.overlay.setAttribute("aria-hidden", "false");
     this.burger?.classList.add("is-open");
     this.burger?.setAttribute("aria-expanded", "true");
-    // Jump to active slide without animation
-    this._position  = this.slider.index;
-    this._activeIdx = this.slider.index;
-    this._applyTransforms(false);
-    this._updateActiveClass();
+    // Recalculate layout after menu slides in
+    requestAnimationFrame(() => {
+      this._setCardHeight();
+      this._position  = this.slider.index;
+      this._activeIdx = this.slider.index;
+      this._applyTransforms(false);
+      this._updateActiveClass();
+    });
   }
 
   close() {
@@ -206,45 +213,48 @@ class Menu {
   }
 
   // ── Core: compute and apply 3D transform to each card ──
+  // Cards are all position:absolute at top:0 inside the track.
+  // The track is exactly one card tall and centred in the stage.
+  // We translate each card from top:0 to its correct Y offset,
+  // then apply 3D tilt and scale.
   _applyTransforms(animated) {
-    const pos = this._position;
+    const pos     = this._position;
+    const cardH   = this.track.offsetHeight || (this.track.offsetWidth * 9 / 16);
 
     this.cards.forEach((card, i) => {
-      const offset = i - pos;            // float distance from active position
+      const offset = i - pos;            // float: 0 = active, ±1 = adjacent
       const absOff = Math.abs(offset);
 
-      // Hide cards too far away
+      // Hide cards beyond visible range
       if (absOff >= VISIBLE_RANGE) {
-        card.style.opacity   = "0";
+        card.style.opacity       = "0";
         card.style.pointerEvents = "none";
-        card.style.zIndex    = "0";
+        card.style.zIndex        = "0";
         return;
       }
 
       card.style.pointerEvents = "auto";
 
-      // ── Y translation — cards fan above and below center ──
+      // Each card offset is CARD_GAP px apart vertically
+      // offset=0 → translateY(0) → sits at top:0 = track centre (track = 1 card tall)
       const translateY = offset * CARD_GAP;
 
-      // ── 3D X rotation — cards tilt away from viewer ──
-      // Positive offset (below) tilts top-away: negative rotateX
-      // Negative offset (above) tilts bottom-away: positive rotateX
-      const rotateX = -offset * TILT_X;
+      // Tilt: cards above rotate positive X (top comes toward viewer)
+      //        cards below rotate negative X (top goes away)
+      const rotateX    = -offset * TILT_X;
 
-      // ── Scale — cards shrink with distance ──
-      const scale = Math.max(0.55, 1 - absOff * SCALE_STEP);
+      // Scale and opacity fall off with distance
+      const scale      = Math.max(0.55, 1 - absOff * SCALE_STEP);
+      const opacity    = Math.max(MIN_OPACITY, 1 - absOff * OPACITY_STEP);
 
-      // ── Opacity ──
-      const opacity = Math.max(MIN_OPACITY, 1 - absOff * OPACITY_STEP);
+      // Z depth — active card closest to viewer
+      const translateZ = -absOff * 50;
 
-      // ── Z — active card comes forward, others recede ──
-      const translateZ = Math.max(-120, -absOff * 40);
+      // Z-index so closer cards paint on top
+      const zIndex     = Math.round(100 - absOff * 10);
 
-      // ── Z-index for stacking order ──
-      const zIndex = Math.round(100 - absOff * 10);
-
-      card.style.zIndex   = zIndex;
-      card.style.opacity  = opacity.toFixed(3);
+      card.style.zIndex    = zIndex;
+      card.style.opacity   = opacity.toFixed(3);
       card.style.transform = [
         `translateY(${translateY.toFixed(2)}px)`,
         `translateZ(${translateZ.toFixed(2)}px)`,
