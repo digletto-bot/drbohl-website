@@ -13,7 +13,7 @@
 
 "use strict";
 
-const CARD_GAP = 250; // px between card centres
+const CARD_GAP = 16;  // px of visible gap between card edges (scale-aware)
 const TILT_X = 10; // deg rotateX per card offset
 const SCALE_STEP = 0.09; // scale reduction per offset step
 const BRIGHTNESS_STEP = 0.4; // brightness reduction per offset step
