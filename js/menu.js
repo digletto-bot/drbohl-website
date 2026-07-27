@@ -256,14 +256,35 @@ class Menu {
       } else {
         card.style.pointerEvents = "auto";
       }
-      const reduction = this._cardH * 0.1 * (offset - 1);
-      console.log(`Offset: ${offset}`);
-      console.log(`Vaue: ${reduction}`);
-      console.log(`--`);
-      const translateY = offset * CARD_GAP - reduction;
-      const rotateX = -offset * TILT_X;
-      // const scale = Math.max(0.5, 1 - absOff * SCALE_STEP);
       const scale = 1 - absOff * SCALE_STEP;
+
+      // Scale-aware translateY: instead of a fixed gap per step, we account
+      // for the fact that scaled-down cards take up less vertical space.
+      // For each integer step between active and this card, the gap between
+      // two adjacent cards = (outerCard.scaledHeight/2 + innerCard.scaledHeight/2 + CARD_GAP).
+      // We sum these cumulatively so visual gaps stay even across all cards.
+      const sign = offset >= 0 ? 1 : -1;
+      const absOffInt = Math.abs(offset);
+      let translateY = 0;
+      let prevTop = 0; // tracks cumulative Y of the previous step
+      for (let step = 1; step <= absOffInt; step++) {
+        const prevHalf = this._cardH * (1 - (step - 1) * SCALE_STEP) * 0.5;
+        const thisHalf = this._cardH * (1 - step * SCALE_STEP) * 0.5;
+        prevTop += prevHalf + thisHalf + CARD_GAP;
+      }
+      // Handle fractional offset (drag position between two integer steps)
+      const frac = absOffInt % 1;
+      if (frac > 0) {
+        const intStep  = Math.floor(absOffInt);
+        const prevHalf = this._cardH * (1 - intStep * SCALE_STEP) * 0.5;
+        const nextHalf = this._cardH * (1 - (intStep + 1) * SCALE_STEP) * 0.5;
+        const stepSize = prevHalf + nextHalf + CARD_GAP;
+        translateY = sign * (prevTop + frac * stepSize);
+      } else {
+        translateY = sign * prevTop;
+      }
+
+      const rotateX = -offset * TILT_X;
       const brightness = Math.max(MIN_BRIGHTNESS, 1 - absOff * BRIGHTNESS_STEP);
       const zIndex = Math.round(100 - absOff * 10);
 
