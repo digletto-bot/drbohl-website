@@ -13,33 +13,33 @@
 
 "use strict";
 
-const CARD_GAP      = 150;   // px between card centres
-const TILT_X        = 10;    // deg rotateX per card offset
-const SCALE_STEP    = 0.09;  // scale reduction per offset step
+const CARD_GAP = 180; // px between card centres
+const TILT_X = 10; // deg rotateX per card offset
+const SCALE_STEP = 0.09; // scale reduction per offset step
 const BRIGHTNESS_STEP = 0.28; // brightness reduction per offset step
-const MIN_BRIGHTNESS  = 0.25; // floor brightness
-const VISIBLE_RANGE = 3;     // cards shown above/below active
-const SNAP_MS       = 380;   // snap animation duration
+const MIN_BRIGHTNESS = 0.25; // floor brightness
+const VISIBLE_RANGE = 3; // cards shown above/below active
+const SNAP_MS = 380; // snap animation duration
 
 class Menu {
   constructor(slider) {
-    this.slider   = slider;
-    this.overlay  = document.getElementById("full-screen-menu");
-    this.burger   = document.querySelector(".menu-button");
+    this.slider = slider;
+    this.overlay = document.getElementById("full-screen-menu");
+    this.burger = document.querySelector(".menu-button");
     this.closeBtn = document.getElementById("menu-close");
-    this.stage    = document.getElementById("menu-stage");
-    this.track    = document.getElementById("menu-track");
-    this.cards    = [];
-    this.isOpen   = false;
+    this.stage = document.getElementById("menu-stage");
+    this.track = document.getElementById("menu-track");
+    this.cards = [];
+    this.isOpen = false;
 
-    this._pos       = 0;   // fractional active position
+    this._pos = 0; // fractional active position
     this._activeIdx = 0;
-    this._dragging  = false;
-    this._dragged   = false;
-    this._dragY     = 0;
-    this._dragPos   = 0;
+    this._dragging = false;
+    this._dragged = false;
+    this._dragY = 0;
+    this._dragPos = 0;
     this._snapTimer = null;
-    this._rafId     = null;
+    this._rafId = null;
 
     this._init();
   }
@@ -50,7 +50,10 @@ class Menu {
     // Card clicks
     this.cards.forEach((card, i) => {
       card.addEventListener("click", () => {
-        if (this._dragged) { this._dragged = false; return; }
+        if (this._dragged) {
+          this._dragged = false;
+          return;
+        }
         if (i !== this._activeIdx) {
           this._snapTo(i);
         } else {
@@ -60,35 +63,73 @@ class Menu {
       });
     });
 
-    this.burger  ?.addEventListener("click", () => this.toggle());
+    this.burger?.addEventListener("click", () => this.toggle());
     this.closeBtn?.addEventListener("click", () => this.close());
-    this.overlay  .addEventListener("click", (e) => {
+    this.overlay.addEventListener("click", (e) => {
       if (e.target === this.overlay) this.close();
     });
     document.addEventListener("keydown", (e) => {
       if (!this.isOpen) return;
-      if (e.key === "Escape")    { this.close(); return; }
-      if (e.key === "ArrowDown") { e.preventDefault(); this._snapTo(Math.min(this._activeIdx + 1, this.cards.length - 1)); }
-      if (e.key === "ArrowUp")   { e.preventDefault(); this._snapTo(Math.max(this._activeIdx - 1, 0)); }
-      if (e.key === "Enter")     { this.close(); setTimeout(() => this.slider.goTo(this._activeIdx), 80); }
+      if (e.key === "Escape") {
+        this.close();
+        return;
+      }
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        this._snapTo(Math.min(this._activeIdx + 1, this.cards.length - 1));
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        this._snapTo(Math.max(this._activeIdx - 1, 0));
+      }
+      if (e.key === "Enter") {
+        this.close();
+        setTimeout(() => this.slider.goTo(this._activeIdx), 80);
+      }
     });
 
     // Touch
-    this.stage.addEventListener("touchstart", (e) => this._dragStart(e.touches[0].clientY), { passive: true });
-    this.stage.addEventListener("touchmove",  (e) => { e.preventDefault(); this._dragMove(e.touches[0].clientY); }, { passive: false });
-    this.stage.addEventListener("touchend",   ()  => this._dragEnd());
+    this.stage.addEventListener(
+      "touchstart",
+      (e) => this._dragStart(e.touches[0].clientY),
+      { passive: true },
+    );
+    this.stage.addEventListener(
+      "touchmove",
+      (e) => {
+        e.preventDefault();
+        this._dragMove(e.touches[0].clientY);
+      },
+      { passive: false },
+    );
+    this.stage.addEventListener("touchend", () => this._dragEnd());
 
     // Mouse
-    this.stage.addEventListener("mousedown",  (e) => this._dragStart(e.clientY));
-    window    .addEventListener("mousemove",  (e) => { if (this._dragging) this._dragMove(e.clientY); });
-    window    .addEventListener("mouseup",    ()  => { if (this._dragging) this._dragEnd(); });
+    this.stage.addEventListener("mousedown", (e) => this._dragStart(e.clientY));
+    window.addEventListener("mousemove", (e) => {
+      if (this._dragging) this._dragMove(e.clientY);
+    });
+    window.addEventListener("mouseup", () => {
+      if (this._dragging) this._dragEnd();
+    });
 
     // Wheel
-    this.stage.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      this._snapTo(Math.max(0, Math.min(this.cards.length - 1,
-        this._activeIdx + (e.deltaY > 0 ? 1 : -1))));
-    }, { passive: false });
+    this.stage.addEventListener(
+      "wheel",
+      (e) => {
+        e.preventDefault();
+        this._snapTo(
+          Math.max(
+            0,
+            Math.min(
+              this.cards.length - 1,
+              this._activeIdx + (e.deltaY > 0 ? 1 : -1),
+            ),
+          ),
+        );
+      },
+      { passive: false },
+    );
 
     window.addEventListener("resize", () => this._layout());
   }
@@ -97,14 +138,14 @@ class Menu {
   _layout() {
     if (!this.stage || !this.cards[0]) return;
     const stageH = this.stage.offsetHeight;
-    const cardW  = this.track.offsetWidth;
-    const cardH  = cardW * (9 / 16);
+    const cardW = this.track.offsetWidth;
+    const cardH = cardW * (9 / 16);
     // Track origin = stage vertical centre
-    this.track.style.top = (stageH / 2) + "px";
+    this.track.style.top = stageH / 2 + "px";
     // Each card: top = -cardH/2 so its centre aligns with track origin
     // This means offset=0 card is centred in the stage
     const topPx = Math.round(-cardH / 2) + "px";
-    this.cards.forEach(card => {
+    this.cards.forEach((card) => {
       card.style.top = topPx;
     });
     // Store for use in transforms
@@ -112,7 +153,9 @@ class Menu {
   }
 
   // ── Open / Close ────────────────────────────────────────────
-  toggle() { this.isOpen ? this.close() : this.open(); }
+  toggle() {
+    this.isOpen ? this.close() : this.open();
+  }
 
   open() {
     if (this.isOpen) return;
@@ -124,7 +167,7 @@ class Menu {
     // Wait one frame for menu to be visible before measuring
     requestAnimationFrame(() => {
       this._layout();
-      this._pos       = this.slider.index;
+      this._pos = this.slider.index;
       this._activeIdx = this.slider.index;
       this._applyTransforms();
       this._updateActive();
@@ -142,27 +185,30 @@ class Menu {
 
   onSlideChange(index) {
     this._activeIdx = index;
-    this._pos       = index;
-    if (this.isOpen) { this._applyTransforms(); this._updateActive(); }
+    this._pos = index;
+    if (this.isOpen) {
+      this._applyTransforms();
+      this._updateActive();
+    }
   }
 
   // ── Drag ────────────────────────────────────────────────────
   _dragStart(y) {
     this._dragging = true;
-    this._dragged  = false;
-    this._dragY    = y;
-    this._dragPos  = this._pos;
-    this.cards.forEach(c => c.classList.remove("is-snapping"));
+    this._dragged = false;
+    this._dragY = y;
+    this._dragPos = this._pos;
+    this.cards.forEach((c) => c.classList.remove("is-snapping"));
     cancelAnimationFrame(this._rafId);
   }
 
   _dragMove(y) {
-    const dy    = y - this._dragY;
+    const dy = y - this._dragY;
     const delta = -dy / CARD_GAP;
-    let   pos   = this._dragPos + delta;
+    let pos = this._dragPos + delta;
     // Rubber band at edges
     const max = this.cards.length - 1;
-    if (pos < 0)   pos = -Math.pow(-pos, 0.6) * 0.5;
+    if (pos < 0) pos = -Math.pow(-pos, 0.6) * 0.5;
     if (pos > max) pos = max + Math.pow(pos - max, 0.6) * 0.5;
     this._pos = pos;
     if (Math.abs(dy) > 5) this._dragged = true;
@@ -172,19 +218,21 @@ class Menu {
 
   _dragEnd() {
     this._dragging = false;
-    this._snapTo(Math.max(0, Math.min(this.cards.length - 1, Math.round(this._pos))));
+    this._snapTo(
+      Math.max(0, Math.min(this.cards.length - 1, Math.round(this._pos))),
+    );
   }
 
   // ── Snap ────────────────────────────────────────────────────
   _snapTo(index) {
     this._activeIdx = index;
-    this._pos       = index;
-    this.cards.forEach(c => c.classList.add("is-snapping"));
+    this._pos = index;
+    this.cards.forEach((c) => c.classList.add("is-snapping"));
     this._applyTransforms();
     this._updateActive();
     clearTimeout(this._snapTimer);
     this._snapTimer = setTimeout(() => {
-      this.cards.forEach(c => c.classList.remove("is-snapping"));
+      this.cards.forEach((c) => c.classList.remove("is-snapping"));
     }, SNAP_MS + 50);
   }
 
@@ -199,26 +247,25 @@ class Menu {
       const absOff = Math.abs(offset);
 
       if (absOff >= VISIBLE_RANGE) {
-        card.style.opacity       = "0";
-        card.style.filter        = "none";
+        card.style.opacity = "0";
+        card.style.filter = "none";
         card.style.pointerEvents = "none";
-        card.style.zIndex        = "0";
+        card.style.zIndex = "0";
         return;
       }
 
       card.style.pointerEvents = "auto";
 
       const translateY = offset * CARD_GAP;
-      const rotateX    = -offset * TILT_X;
-      const scale      = Math.max(0.5, 1 - absOff * SCALE_STEP);
+      const rotateX = -offset * TILT_X;
+      const scale = Math.max(0.5, 1 - absOff * SCALE_STEP);
       const brightness = Math.max(MIN_BRIGHTNESS, 1 - absOff * BRIGHTNESS_STEP);
-      const zIndex     = Math.round(100 - absOff * 10);
+      const zIndex = Math.round(100 - absOff * 10);
 
-      card.style.zIndex    = zIndex;
-      card.style.opacity   = "1";
-      card.style.filter    = absOff < 0.05
-        ? "none"
-        : `brightness(${brightness.toFixed(3)})`;
+      card.style.zIndex = zIndex;
+      card.style.opacity = "1";
+      card.style.filter =
+        absOff < 0.05 ? "none" : `brightness(${brightness.toFixed(3)})`;
       // perspective() inline gives 3D tilt without needing preserve-3d
       card.style.transform = [
         `perspective(900px)`,
@@ -231,7 +278,7 @@ class Menu {
 
   _updateActive() {
     this.cards.forEach((card, i) =>
-      card.classList.toggle("is-active", i === this._activeIdx)
+      card.classList.toggle("is-active", i === this._activeIdx),
     );
   }
 }
