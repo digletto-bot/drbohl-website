@@ -13,11 +13,11 @@
 
 "use strict";
 
-const CARD_GAP = 180; // px between card centres
+const CARD_GAP = 250; // px between card centres
 const TILT_X = 10; // deg rotateX per card offset
 const SCALE_STEP = 0.09; // scale reduction per offset step
-const BRIGHTNESS_STEP = 0.28; // brightness reduction per offset step
-const MIN_BRIGHTNESS = 0.25; // floor brightness
+const BRIGHTNESS_STEP = 0.4; // brightness reduction per offset step
+const MIN_BRIGHTNESS = 0.2; // floor brightness
 const VISIBLE_RANGE = 3; // cards shown above/below active
 const SNAP_MS = 380; // snap animation duration
 
@@ -245,20 +245,25 @@ class Menu {
     this.cards.forEach((card, i) => {
       const offset = i - pos;
       const absOff = Math.abs(offset);
+      const isVisible = absOff >= VISIBLE_RANGE;
 
-      if (absOff >= VISIBLE_RANGE) {
+      if (isVisible) {
         card.style.opacity = "0";
         card.style.filter = "none";
         card.style.pointerEvents = "none";
         card.style.zIndex = "0";
-        return;
+        // return;
+      } else {
+        card.style.pointerEvents = "auto";
       }
-
-      card.style.pointerEvents = "auto";
-
-      const translateY = offset * CARD_GAP;
+      const reduction = this._cardH * 0.1 * (offset - 1);
+      console.log(`Offset: ${offset}`);
+      console.log(`Vaue: ${reduction}`);
+      console.log(`--`);
+      const translateY = offset * CARD_GAP - reduction;
       const rotateX = -offset * TILT_X;
-      const scale = Math.max(0.5, 1 - absOff * SCALE_STEP);
+      // const scale = Math.max(0.5, 1 - absOff * SCALE_STEP);
+      const scale = 1 - absOff * SCALE_STEP;
       const brightness = Math.max(MIN_BRIGHTNESS, 1 - absOff * BRIGHTNESS_STEP);
       const zIndex = Math.round(100 - absOff * 10);
 
@@ -276,11 +281,10 @@ class Menu {
     });
   }
 
-  _updateActive() {
+  _updateActive = () =>
     this.cards.forEach((card, i) =>
       card.classList.toggle("is-active", i === this._activeIdx),
     );
-  }
 }
 
 export default Menu;
