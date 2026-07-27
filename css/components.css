@@ -257,21 +257,28 @@
   touch-action: none;
   -webkit-user-select: none;
   user-select: none;
-  /* Top/bottom fade via mask */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 12%,
-    black 88%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 12%,
-    black 88%,
-    transparent 100%
-  );
+  /* No mask-image here — it kills preserve-3d in Chrome/Safari.
+     Fade is done via ::before/::after pseudo overlays instead. */
+}
+
+/* Top fade overlay */
+.full-screen-menu__stage::before,
+.full-screen-menu__stage::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 22%;
+  pointer-events: none;
+  z-index: 200;
+}
+.full-screen-menu__stage::before {
+  top: 0;
+  background: linear-gradient(to bottom, #070707 0%, transparent 100%);
+}
+.full-screen-menu__stage::after {
+  bottom: 0;
+  background: linear-gradient(to top, #070707 0%, transparent 100%);
 }
 
 /* ── Card track ──
@@ -283,7 +290,6 @@
   left: 7%;
   width: 86%;
   height: 0;
-  transform-style: preserve-3d;
 }
 
 /* ── Individual card ── */

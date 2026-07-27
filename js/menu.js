@@ -93,17 +93,22 @@ class Menu {
     window.addEventListener("resize", () => this._layout());
   }
 
-  // ── Layout: position track at stage centre ──────────────────
+  // ── Layout: position track at stage centre, cards at -cardH/2 ──
   _layout() {
     if (!this.stage || !this.cards[0]) return;
     const stageH = this.stage.offsetHeight;
-    const cardH  = this.track.offsetWidth * (9 / 16);
-    // Track top = stage centre, cards top = -cardH/2
-    // so card[offset=0] centre sits exactly at stage centre
+    const cardW  = this.track.offsetWidth;
+    const cardH  = cardW * (9 / 16);
+    // Track origin = stage vertical centre
     this.track.style.top = (stageH / 2) + "px";
+    // Each card: top = -cardH/2 so its centre aligns with track origin
+    // This means offset=0 card is centred in the stage
+    const topPx = Math.round(-cardH / 2) + "px";
     this.cards.forEach(card => {
-      card.style.top = (-cardH / 2) + "px";
+      card.style.top = topPx;
     });
+    // Store for use in transforms
+    this._cardH = cardH;
   }
 
   // ── Open / Close ────────────────────────────────────────────
@@ -184,6 +189,8 @@ class Menu {
   }
 
   // ── Core transform ──────────────────────────────────────────
+  // No preserve-3d context (mask-image breaks it).
+  // Instead we inline perspective() in each card's transform.
   _applyTransforms() {
     const pos = this._pos;
 
@@ -194,6 +201,7 @@ class Menu {
       if (absOff >= VISIBLE_RANGE) {
         card.style.opacity       = "0";
         card.style.pointerEvents = "none";
+        card.style.zIndex        = "0";
         return;
       }
 
@@ -203,14 +211,14 @@ class Menu {
       const rotateX    = -offset * TILT_X;
       const scale      = Math.max(0.5, 1 - absOff * SCALE_STEP);
       const opacity    = Math.max(MIN_OPACITY, 1 - absOff * OPACITY_STEP);
-      const translateZ = -absOff * 55;
       const zIndex     = Math.round(100 - absOff * 10);
 
       card.style.zIndex    = zIndex;
       card.style.opacity   = opacity.toFixed(3);
+      // perspective() inline gives 3D tilt without needing preserve-3d
       card.style.transform = [
+        `perspective(900px)`,
         `translateY(${translateY.toFixed(1)}px)`,
-        `translateZ(${translateZ.toFixed(1)}px)`,
         `rotateX(${rotateX.toFixed(1)}deg)`,
         `scale(${scale.toFixed(3)})`,
       ].join(" ");
