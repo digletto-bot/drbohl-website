@@ -193,15 +193,14 @@
   transform: translateX(0);
 }
 
-/* Width constraint — cards stay fully visible on tablets/desktop */
+/* Width constraint on wide screens */
 .full-screen-menu__inner {
   width: 100%;
   max-width: 480px;
   display: flex;
   flex-direction: column;
   flex: 1;
-  overflow-x: hidden;  /* clip horizontal card overflow */
-  overflow-y: visible; /* allow cards to show above/below stage */
+  overflow: hidden;
   position: relative;
 }
 
@@ -242,34 +241,56 @@
   background: rgba(245, 245, 240, 0.08);
 }
 
-/* ── 3D stage: perspective container ── */
+/* ── 3D stage ──
+   Stage fills all remaining space. Cards sit inside it with
+   top:50% so the active card (offset=0, translateY=0) is centred.
+   The stage uses perspective but keeps overflow:hidden — cards
+   never actually leave the stage bounds because they translateY
+   within it and fade out before reaching the edges.
+── */
 .full-screen-menu__stage {
   flex: 1;
   position: relative;
-  perspective: 800px;
+  perspective: 900px;
   perspective-origin: 50% 50%;
-  /* overflow must be visible so 3D-transformed cards outside bounds show */
-  overflow: visible;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
   touch-action: none;
   -webkit-user-select: none;
   user-select: none;
+  /* Top/bottom fade via mask */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 12%,
+    black 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 12%,
+    black 88%,
+    transparent 100%
+  );
 }
 
-/* ── Card track: absolute-positioned cards ── */
+/* ── Card track ──
+   Positioned by JS: top = stage centre.
+   height:0 so cards don't affect layout.
+── */
 .full-screen-menu__track {
-  position: relative;
+  position: absolute;
+  left: 7%;
   width: 86%;
+  height: 0;
   transform-style: preserve-3d;
-  /* height driven by JS (= card height) */
 }
 
 /* ── Individual card ── */
 .menu-card {
   position: absolute;
   left: 0;
+  /* top set by JS = -cardHeight/2 to centre on track origin */
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 14px;
@@ -282,7 +303,7 @@
   border: 1.5px solid rgba(245, 245, 240, 0.05);
   -webkit-tap-highlight-color: transparent;
   will-change: transform, opacity;
-  /* JS sets transform directly — no CSS transition during drag */
+  /* Transforms applied directly by JS, is-snapping adds transition */
 }
 
 /* Snap animation class — added by JS after drag ends */
