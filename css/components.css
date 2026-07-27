@@ -315,10 +315,10 @@
 /* Snap animation class — added by JS after drag ends */
 .menu-card.is-snapping {
   transition:
-    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity   400ms ease,
-    border-color 280ms ease,
-    box-shadow   280ms ease;
+    transform     400ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter        400ms ease,
+    border-color  280ms ease,
+    box-shadow    280ms ease;
 }
 
 /* Active card */

@@ -13,11 +13,11 @@
 
 "use strict";
 
-const CARD_GAP      = 110;   // px between card centres
-const TILT_X        = 22;    // deg rotateX per card offset
+const CARD_GAP      = 150;   // px between card centres
+const TILT_X        = 10;    // deg rotateX per card offset
 const SCALE_STEP    = 0.09;  // scale reduction per offset step
-const OPACITY_STEP  = 0.25;  // opacity reduction per offset step
-const MIN_OPACITY   = 0.20;  // floor opacity
+const BRIGHTNESS_STEP = 0.28; // brightness reduction per offset step
+const MIN_BRIGHTNESS  = 0.25; // floor brightness
 const VISIBLE_RANGE = 3;     // cards shown above/below active
 const SNAP_MS       = 380;   // snap animation duration
 
@@ -200,6 +200,7 @@ class Menu {
 
       if (absOff >= VISIBLE_RANGE) {
         card.style.opacity       = "0";
+        card.style.filter        = "none";
         card.style.pointerEvents = "none";
         card.style.zIndex        = "0";
         return;
@@ -210,11 +211,14 @@ class Menu {
       const translateY = offset * CARD_GAP;
       const rotateX    = -offset * TILT_X;
       const scale      = Math.max(0.5, 1 - absOff * SCALE_STEP);
-      const opacity    = Math.max(MIN_OPACITY, 1 - absOff * OPACITY_STEP);
+      const brightness = Math.max(MIN_BRIGHTNESS, 1 - absOff * BRIGHTNESS_STEP);
       const zIndex     = Math.round(100 - absOff * 10);
 
       card.style.zIndex    = zIndex;
-      card.style.opacity   = opacity.toFixed(3);
+      card.style.opacity   = "1";
+      card.style.filter    = absOff < 0.05
+        ? "none"
+        : `brightness(${brightness.toFixed(3)})`;
       // perspective() inline gives 3D tilt without needing preserve-3d
       card.style.transform = [
         `perspective(900px)`,
