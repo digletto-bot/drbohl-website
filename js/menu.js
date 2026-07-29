@@ -25,7 +25,7 @@ class Menu {
   constructor(slider) {
     this.slider = slider;
     this.overlay = document.getElementById("full-screen-menu");
-    this.burger = document.querySelector(".menu-button");
+    this.burgers = document.querySelectorAll(".menu-button");
     this.closeBtn = document.getElementById("menu-close");
     this.stage = document.getElementById("menu-stage");
     this.track = document.getElementById("menu-track");
@@ -38,6 +38,8 @@ class Menu {
     this._dragged = false;
     this._dragY = 0;
     this._dragPos = 0;
+    this.slider = slider;
+    this.isOpen = false;
     this._snapTimer = null;
     this._rafId = null;
 
@@ -46,6 +48,16 @@ class Menu {
 
   _init() {
     this.cards = Array.from(this.track.querySelectorAll(".menu-card"));
+    this.burgers.forEach((b) =>
+      b.addEventListener("click", () => this.toggle()),
+    );
+    this.closeBtn?.addEventListener("click", () => this.close());
+    this.overlay.addEventListener("click", (e) => {
+      if (e.target === this.overlay) this.close();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && this.isOpen) this.close();
+    });
 
     // Card clicks
     this.cards.forEach((card, i) => {
@@ -162,16 +174,13 @@ class Menu {
     this.isOpen = true;
     this.overlay.classList.add("is-open");
     this.overlay.setAttribute("aria-hidden", "false");
-    this.burger?.classList.add("is-open");
-    this.burger?.setAttribute("aria-expanded", "true");
-    // Wait one frame for menu to be visible before measuring
-    requestAnimationFrame(() => {
-      this._layout();
-      this._pos = this.slider.index;
-      this._activeIdx = this.slider.index;
-      this._applyTransforms();
-      this._updateActive();
+    this.burgers.forEach((b) => {
+      b.classList.add("is-open");
+      b.setAttribute("aria-expanded", "true");
     });
+    this._updateActive(this.slider.index);
+    // Scroll to active card after open animation
+    setTimeout(() => this._scrollToCard(this.slider.index, "auto"), 60);
   }
 
   close() {
@@ -179,8 +188,10 @@ class Menu {
     this.isOpen = false;
     this.overlay.classList.remove("is-open");
     this.overlay.setAttribute("aria-hidden", "true");
-    this.burger?.classList.remove("is-open");
-    this.burger?.setAttribute("aria-expanded", "false");
+    this.burgers.forEach((b) => {
+      b.classList.remove("is-open");
+      b.setAttribute("aria-expanded", "false");
+    });
   }
 
   onSlideChange(index) {

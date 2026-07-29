@@ -7,8 +7,10 @@
 
 class Slider {
   constructor(options = {}) {
-    this.track = document.getElementById("slider-track");
-    this.cards = Array.from(document.querySelectorAll(".title-card"));
+    this.track = document.getElementById(options.trackId || "slider-track");
+    this.cards = Array.from(
+      this.track.querySelectorAll(options.cardSelector || ".title-card"),
+    );
     this.totalSlides = this.cards.length;
     this.currentIndex = 0;
     this.isAnimating = false;
@@ -39,7 +41,7 @@ class Slider {
     this._applyPositions();
     this._bindTouch();
     this._bindMouse();
-    this._bindKeyboard();
+    if (options.bindKeyboard !== false) this._bindKeyboard();
   }
 
   /* ── Position all cards by index ── */

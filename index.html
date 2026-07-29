@@ -45,7 +45,7 @@
           <span class="title-card__headline-line" data-fit="true">DR.BOHL</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openTourDates()">Alle Termine</button>
+          <button class="ghost-button" onclick="openSubpage()">Alle Termine</button>
         </div>
       </div>
       <div class="swipe-hint" aria-hidden="true">
@@ -65,7 +65,7 @@
           <span class="title-card__headline-line" data-fit="true">KABARETT</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('Kabarett','Live auf der Bühne. Aktuelle Programme und Tickets.')">More</button>
+          <button class="ghost-button" onclick="openSubpage()">More</button>
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@
             <a href="https://tiktok.com"    target="_blank" rel="noopener" aria-label="TikTok"><img src="assets/icons/tiktok-neon.png"    alt="TikTok"    width="64" height="64"/></a>
             <a href="https://youtube.com"   target="_blank" rel="noopener" aria-label="YouTube"><img src="assets/icons/youtube-neon.png"   alt="YouTube"   width="64" height="64"/></a>
           </div>
-          <button class="ghost-button" onclick="openSubpage('Social Media','Dr.Bohl auf Instagram, TikTok, YouTube und Facebook.')">Follow</button>
+          <button class="ghost-button" onclick="openSubpage()">Follow</button>
         </div>
       </div>
     </div>
@@ -103,7 +103,7 @@
           <span class="title-card__headline-line" data-fit="true">SHOWTIME</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('Showtime','Alle Show-Termine und Tickets auf einen Blick.')">More</button>
+          <button class="ghost-button" onclick="openSubpage()">More</button>
         </div>
       </div>
     </div>
@@ -119,7 +119,7 @@
           <span class="title-card__headline-line" data-fit="true">MUSIK</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('Musik','Releases, Playlists und Hörproben von Dr.Bohl.')">More</button>
+          <button class="ghost-button" onclick="openSubpage()">More</button>
         </div>
       </div>
     </div>
@@ -135,7 +135,7 @@
           <span class="title-card__headline-line" data-fit="true">PODCAST</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('Podcast','Der Dr.Bohl Podcast — neue Episoden regelmäßig.')">More</button>
+          <button class="ghost-button" onclick="openSubpage()">More</button>
         </div>
       </div>
     </div>
@@ -151,7 +151,7 @@
           <span class="title-card__headline-line" data-fit="true">BOHL100</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('Bohl100','100 Sekunden Wahrheit. Das Format.')">More</button>
+          <button class="ghost-button" onclick="openSubpage()">More</button>
         </div>
       </div>
     </div>
@@ -167,7 +167,7 @@
           <span class="title-card__headline-line" data-fit="true">BOHL ENT.</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('Bohl Entertainment','Agentur und Produktionsfirma. Kooperationen und Buchungen.')">More</button>
+          <button class="ghost-button" onclick="openSubpage()">More</button>
         </div>
       </div>
     </div>
@@ -205,7 +205,7 @@
           <span class="title-card__headline-line" data-fit="true">SCHABERNACK</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('Schabernack','Easter Eggs, Gags, Archivmaterial. Auf eigene Gefahr.')">More</button>
+          <button class="ghost-button" onclick="openSubpage()">More</button>
         </div>
       </div>
     </div>
@@ -310,82 +310,224 @@
   </div>
 </div>
 
-<!-- TOUR DATES SUBPAGE -->
-<div id="tour-overlay" class="subpage-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Tour Dates">
-  <div class="sp-topbar">
-    <div class="sp-logo">Dr.Bohl</div>
-    <button class="sp-close" onclick="closeTourDates()" aria-label="Schließen">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-  <div class="sp-hero">
-    <div class="sp-eyebrow">Live Performances</div>
-    <div class="sp-title">
-      <span>TOUR</span>
-      <span class="accent">DATES</span>
-    </div>
-  </div>
-  <div class="td-list" id="tour-list">
-    <!-- Populated by JS from src/data/tourDates.js -->
-  </div>
-</div>
-
-<!-- GENERIC SUBPAGE -->
+<!-- UNIFIED SUBPAGE OVERLAY — one inner slider track, synced to the outer one -->
 <div id="subpage-overlay" class="subpage-overlay" aria-hidden="true">
-  <div class="subpage-overlay__bar"></div>
-  <button id="subpage-back" class="subpage-overlay__back">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Zurück
-  </button>
-  <div id="subpage-title" class="subpage-overlay__title"></div>
-  <div id="subpage-body"  class="subpage-overlay__body"></div>
-  <div class="subpage-overlay__cta">
-    <button class="ghost-button" onclick="closeSubpage()">Zurück</button>
-  </div>
-  <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
-</div>
 
-<!-- CONTACT FORM SUBPAGE -->
-<div id="contact-overlay" class="subpage-overlay" aria-hidden="true">
   <div class="subpage-overlay__bar"></div>
-  <button id="contact-back" class="subpage-overlay__back" onclick="closeContactForm()">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Zurück
-  </button>
-  <div class="subpage-overlay__title">Contact</div>
-  <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
-  <form id="contact-form" class="contact-form" novalidate>
-    <label class="contact-form__field">
-      <span>Email</span>
-      <input type="email" name="email" placeholder="deine@email.com" required />
-    </label>
-    <label class="contact-form__field">
-      <span>Betreff</span>
-      <input type="text" name="subject" placeholder="Worum geht's?" required />
-    </label>
-    <label class="contact-form__field">
-      <span>Nachricht</span>
-      <textarea name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
-    </label>
-    <div class="subpage-overlay__cta">
-      <button type="submit" class="ghost-button">Senden</button>
-    </div>
-  </form>
-  <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Das Formular ist noch nicht mit einem Postfach verbunden — Nachrichten werden aktuell nicht übermittelt.</div>
-</div>
 
-<!-- ABOUT SUBPAGE -->
-<div id="about-overlay" class="subpage-overlay about-overlay" aria-hidden="true">
-  <div class="subpage-overlay__bar"></div>
-  <div class="about-overlay__scroll" id="about-scroll">
-    <div class="about-overlay__header">
-      <h1 class="about-overlay__title">ABOUT</h1>
-    </div>
-    <div class="about-overlay__body" id="about-body"></div>
-    <div class="about-overlay__cta">
-      <button class="ghost-button" onclick="closeAboutPage();openContactForm();">Contact</button>
-      <button class="ghost-button" onclick="closeAboutPage()">Zurück</button>
-    </div>
+  <nav class="progress-nav" aria-label="Slide navigation">
+    <button class="progress-nav__item" aria-label="Home" data-index="0"></button>
+    <button class="progress-nav__item" aria-label="Kabarett" data-index="1"></button>
+    <button class="progress-nav__item" aria-label="Social Media" data-index="2"></button>
+    <button class="progress-nav__item" aria-label="Showtime" data-index="3"></button>
+    <button class="progress-nav__item" aria-label="Musik" data-index="4"></button>
+    <button class="progress-nav__item" aria-label="Podcast" data-index="5"></button>
+    <button class="progress-nav__item" aria-label="Bohl100" data-index="6"></button>
+    <button class="progress-nav__item" aria-label="Bohl Entertainment" data-index="7"></button>
+    <button class="progress-nav__item" aria-label="Contact" data-index="8"></button>
+    <button class="progress-nav__item" aria-label="Schabernack" data-index="9"></button>
+  </nav>
+
+  <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="full-screen-menu">
+    <span class="menu-button__line"></span>
+    <span class="menu-button__line"></span>
+    <span class="menu-button__line"></span>
+  </button>
+
+  <div id="subpage-slider-track" class="subpage-slider-track" role="region" aria-label="Subpage Navigation">
+
+    <!-- CARD 0 — TOUR DATES -->
+    <article class="subpage-card is-current" data-index="0" aria-label="Tour Dates">
+      <div class="sp-hero">
+        <div class="sp-eyebrow">Live Performances</div>
+        <div class="sp-title">
+          <span>TOUR</span>
+          <span class="accent">DATES</span>
+        </div>
+      </div>
+      <div class="td-list" id="tour-list">
+        <!-- Populated by JS from src/data/tourDates.js -->
+      </div>
+    </article>
+
+    <!-- CARD 1 — KABARETT -->
+    <article class="subpage-card is-next" data-index="1" aria-label="Kabarett">
+      <div class="subpage-overlay__title">Kabarett</div>
+      <div class="subpage-overlay__body">Live auf der Bühne. Aktuelle Programme und Tickets.</div>
+      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+    </article>
+
+    <!-- CARD 2 — SOCIAL MEDIA -->
+    <article class="subpage-card is-next" data-index="2" aria-label="Social Media">
+      <div class="subpage-overlay__title">Social Media</div>
+      <div class="subpage-overlay__body">Dr.Bohl auf Instagram, TikTok, YouTube und Facebook.</div>
+      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+    </article>
+
+    <!-- CARD 3 — SHOWTIME -->
+    <article class="subpage-card is-next" data-index="3" aria-label="Showtime">
+      <div class="subpage-overlay__title">Showtime</div>
+      <div class="subpage-overlay__body">Alle Show-Termine und Tickets auf einen Blick.</div>
+      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+    </article>
+
+    <!-- CARD 4 — MUSIK -->
+    <article class="subpage-card is-next" data-index="4" aria-label="Musik">
+      <div class="subpage-overlay__title">Musik</div>
+      <div class="subpage-overlay__body">Releases, Playlists und Hörproben von Dr.Bohl.</div>
+      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+    </article>
+
+    <!-- CARD 5 — PODCAST -->
+    <article class="subpage-card is-next" data-index="5" aria-label="Podcast">
+      <div class="subpage-overlay__title">Podcast</div>
+      <div class="subpage-overlay__body">Der Dr.Bohl Podcast — neue Episoden regelmäßig.</div>
+      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+    </article>
+
+    <!-- CARD 6 — BOHL100 -->
+    <article class="subpage-card is-next" data-index="6" aria-label="Bohl100">
+      <div class="subpage-overlay__title">Bohl100</div>
+      <div class="subpage-overlay__body">100 Sekunden Wahrheit. Das Format.</div>
+      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+    </article>
+
+    <!-- CARD 7 — BOHL ENTERTAINMENT -->
+    <article class="subpage-card is-next" data-index="7" aria-label="Bohl Entertainment">
+
+      <section class="be-section be-cover">
+        <div class="be-cover__angle"></div>
+        <div class="be-cover__inner">
+          <p class="be-label be-reveal">Entertainment · Produktion · Kreation</p>
+          <h1 class="be-h1 be-reveal">Bohl<br>Entertainment</h1>
+          <img class="be-cover__image be-reveal" src="assets/images/brochure/hero-duo.jpg" alt="Bohl Entertainment Gründerduo" loading="lazy" />
+          <p class="be-cover__sub be-reveal">Wir produzieren Unterhaltung, die bleibt.<br>Von der Idee bis zur Bühne — alles aus einer Hand.</p>
+        </div>
+      </section>
+
+      <section class="be-section">
+        <span class="be-number">02</span>
+        <p class="be-label be-reveal">Leistungen</p>
+        <h2 class="be-h1 be-reveal">Was wir machen</h2>
+        <p class="be-body be-reveal">Sechs Disziplinen, ein Anspruch: Unterhaltung mit Substanz. Jedes Projekt wird inhouse konzipiert, produziert und veredelt.</p>
+
+        <div class="be-grid">
+          <div class="be-card be-reveal"><span class="be-card__num">01</span><h3 class="be-card__title">Kabarett</h3><p class="be-card__text">Bühnenprogramme mit Haltung — geschrieben, geprobt, getourt.</p></div>
+          <div class="be-card be-reveal"><span class="be-card__num">02</span><h3 class="be-card__title">Musik</h3><p class="be-card__text">Von der Studio-Produktion bis zum Live-Set. Eigene Releases, eigene Handschrift.</p></div>
+          <div class="be-card be-reveal"><span class="be-card__num">03</span><h3 class="be-card__title">Podcast</h3><p class="be-card__text">Formate mit Stimme und Standpunkt. Konzeption, Aufnahme, Distribution.</p></div>
+          <div class="be-card be-reveal"><span class="be-card__num">04</span><h3 class="be-card__title">Social Media</h3><p class="be-card__text">Content mit Reichweite. Plattformgerecht produziert, konsequent bespielt.</p></div>
+          <div class="be-card be-reveal"><span class="be-card__num">05</span><h3 class="be-card__title">Showtime</h3><p class="be-card__text">TV- und Streaming-Auftritte. Vor und hinter der Kamera zuhause.</p></div>
+          <div class="be-card be-reveal"><span class="be-card__num">06</span><h3 class="be-card__title">Bohl100</h3><p class="be-card__text">Das Eventformat. 100 Minuten Programm, null Kompromisse.</p></div>
+        </div>
+
+        <div class="be-refs">
+          <img class="be-reveal" src="assets/images/brochure/ref-arnautovic-bts.jpg" alt="Behind the scenes: Arnautovic x Hyundai" loading="lazy" />
+          <img class="be-reveal" src="assets/images/brochure/ref-weinco.jpg" alt="Kampagne: WEIN&amp;CO" loading="lazy" />
+          <img class="be-reveal" src="assets/images/brochure/ref-bipa.jpg" alt="Kampagne: BIPA" loading="lazy" />
+        </div>
+      </section>
+
+      <section class="be-section">
+        <span class="be-number">03</span>
+        <p class="be-label be-reveal">Prozess &amp; Haltung</p>
+        <h2 class="be-h1 be-reveal">Warum Bohl<br>Entertainment?</h2>
+
+        <div class="be-steps">
+          <div class="be-step be-reveal"><h3 class="be-step__title">Konzept</h3><p class="be-step__text">Wir hören zu, denken quer und entwickeln die Idee, die trägt.</p></div>
+          <div class="be-step be-reveal"><h3 class="be-step__title">Produktion</h3><p class="be-step__text">Eigene Technik, eigenes Team, eigener Anspruch. Kein Outsourcing der Verantwortung.</p></div>
+          <div class="be-step be-reveal"><h3 class="be-step__title">Veredelung</h3><p class="be-step__text">Schnitt, Sound, Feinschliff — bis es sitzt. Und dann noch eine Runde.</p></div>
+          <div class="be-step be-reveal"><h3 class="be-step__title">Premiere</h3><p class="be-step__text">Bühne, Stream oder Feed: Wir liefern dort ab, wo das Publikum ist.</p></div>
+        </div>
+
+        <div class="be-diffs">
+          <p class="be-label be-reveal">Was uns unterscheidet</p>
+          <div class="be-diff be-reveal"><h3 class="be-diff__title">Alles inhouse</h3><p class="be-diff__text">Idee, Produktion und Vermarktung unter einem Dach — kurze Wege, volle Kontrolle.</p></div>
+          <div class="be-diff be-reveal"><h3 class="be-diff__title">Echte Handschrift</h3><p class="be-diff__text">Kein Content von der Stange. Jedes Format trägt eine erkennbare Signatur.</p></div>
+          <div class="be-diff be-reveal"><h3 class="be-diff__title">Publikum zuerst</h3><p class="be-diff__text">Wir produzieren nicht für Algorithmen, sondern für Menschen, die wiederkommen.</p></div>
+        </div>
+      </section>
+
+      <section class="be-section">
+        <span class="be-number">04</span>
+        <p class="be-label be-reveal">Kontakt</p>
+        <h2 class="be-h1 be-reveal">Lass uns<br>reden.</h2>
+
+        <div class="be-contact__layout">
+          <div>
+            <p class="be-body be-reveal">Ob Bühne, Stream oder Kampagne — erzähl uns, was du vorhast. Wir melden uns innerhalb von 48 Stunden.</p>
+            <ul class="be-contact__list be-reveal">
+              <li><span class="be-contact__key">E-Mail</span><a class="be-contact__val" href="mailto:hello@bohl-entertainment.at">hello@bohl-entertainment.at</a></li>
+              <li><span class="be-contact__key">Telefon</span><a class="be-contact__val" href="tel:+430000000000">+43 000 0000000</a></li>
+              <li><span class="be-contact__key">Web</span><span class="be-contact__val">www.bohl-entertainment.at</span></li>
+            </ul>
+            <a class="be-cta be-reveal" href="mailto:hello@bohl-entertainment.at">Projekt anfragen</a>
+          </div>
+          <img class="be-contact__img be-reveal" src="assets/images/brochure/ref-arnautovic-final.jpg" alt="Arnautovic x Hyundai — Produktion von Bohl Entertainment" loading="lazy" />
+        </div>
+      </section>
+
+      <div class="be-footer">@drbohl &nbsp;·&nbsp; @bohlentertainment &nbsp;·&nbsp; YouTube / Spotify / Instagram / TikTok</div>
+    </article>
+
+    <!-- CARD 8 — CONTACT (with nested About view) -->
+    <article id="subpage-card-contact" class="subpage-card is-next" data-index="8" aria-label="Contact">
+      <div id="contact-view" class="subpage-card__view is-active">
+        <div class="subpage-overlay__title">Contact</div>
+        <div class="view-toggle" role="tablist" aria-label="Contact or About">
+          <button type="button" class="view-toggle__item is-active" data-view="contact" role="tab" aria-selected="true" onclick="showContactView()">Contact</button>
+          <button type="button" class="view-toggle__item" data-view="about" role="tab" aria-selected="false" onclick="showAboutView()">About</button>
+        </div>
+        <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
+        <form id="contact-form" class="contact-form" novalidate>
+          <label class="contact-form__field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="deine@email.com" required />
+          </label>
+          <label class="contact-form__field">
+            <span>Betreff</span>
+            <input type="text" name="subject" placeholder="Worum geht's?" required />
+          </label>
+          <label class="contact-form__field">
+            <span>Nachricht</span>
+            <textarea name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
+          </label>
+          <div class="subpage-overlay__cta">
+            <button type="submit" class="ghost-button">Senden</button>
+          </div>
+        </form>
+        <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Das Formular ist noch nicht mit einem Postfach verbunden — Nachrichten werden aktuell nicht übermittelt.</div>
+      </div>
+      <div id="about-view" class="subpage-card__view">
+        <div class="about-overlay__header">
+          <h1 class="about-overlay__title">ABOUT</h1>
+          <div class="view-toggle" role="tablist" aria-label="Contact or About">
+            <button type="button" class="view-toggle__item" data-view="contact" role="tab" aria-selected="false" onclick="showContactView()">Contact</button>
+            <button type="button" class="view-toggle__item is-active" data-view="about" role="tab" aria-selected="true" onclick="showAboutView()">About</button>
+          </div>
+        </div>
+        <div class="about-overlay__body" id="about-body"></div>
+      </div>
+    </article>
+
+    <!-- CARD 9 — SCHABERNACK -->
+    <article class="subpage-card is-next" data-index="9" aria-label="Schabernack">
+      <div class="subpage-overlay__title">Schabernack</div>
+      <div class="subpage-overlay__body">Easter Eggs, Gags, Archivmaterial. Auf eigene Gefahr.</div>
+      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+    </article>
+
+  </div><!-- /subpage-slider-track -->
+
+  <div class="subpage-bottombar">
+    <button class="ghost-button" onclick="closeSubpage()">Close</button>
+    <button class="subpage-bottombar__ticket" onclick="goToTickets()" aria-label="Tickets">
+      <svg viewBox="-180 -75 360 150" fill="none" aria-hidden="true">
+        <rect x="-170" y="-65" width="340" height="130" rx="10" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M-170,-18 a18,18 0 0 1 0,36" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        <path d="M170,-18 a18,18 0 0 0 0,36" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        <line x1="95" y1="-53" x2="95" y2="53" stroke="currentColor" stroke-width="5" stroke-dasharray="7,6" stroke-linecap="round"/>
+      </svg>
+    </button>
   </div>
 </div>
 
