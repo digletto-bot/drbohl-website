@@ -146,6 +146,49 @@
   transform: scale(0.95);
 }
 
+/* ── View toggle (Contact / About segmented switch) ── */
+.view-toggle {
+  display: inline-flex;
+  margin: 12px var(--side-pad) 0;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.5);
+  border: 2px solid var(--hero-yellow);
+  box-shadow: 0 0 10px rgba(242, 193, 46, 0.35);
+}
+.view-toggle__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hero-yellow);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--btn-duration) ease,
+    color var(--btn-duration) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.view-toggle__item.is-active {
+  background: var(--hero-yellow);
+  color: var(--dark-text);
+}
+/* Ancestor header already provides horizontal padding */
+.about-overlay__header .view-toggle {
+  margin-left: 0;
+  margin-right: 0;
+}
+
 /* ── Hero cutout image (Contact slide) ── */
 .hero-cutout-image-wrap {
   position: absolute;
@@ -165,9 +208,11 @@
   object-position: center top;
   pointer-events: none;
   transform-origin: 50% 62%;
+  border: 2px solid transparent;
   transition:
     transform var(--btn-duration) ease,
-    filter var(--btn-duration) ease;
+    border-color var(--btn-duration) ease,
+    box-shadow var(--btn-duration) ease;
 }
 
 /* ── Hero cutout button — invisible hit-box, sized to hug him ── */
@@ -193,10 +238,12 @@
 .hero-cutout-button:focus-visible ~ .hero-cutout-image-wrap .hero-cutout-image,
 .hero-cutout-button:active ~ .hero-cutout-image-wrap .hero-cutout-image {
   transform: scale(1.02);
-  filter:
-    drop-shadow(0 0 1px #fcf4e3)
-    drop-shadow(0 0 1.5px #fcf4e3)
-    drop-shadow(0 0 8px rgba(242, 193, 46, 0.55));
+  border-color: var(--tap-yellow);
+  box-shadow:
+    0 0 0 1px var(--hero-yellow),
+    0 0 20px rgba(242, 193, 46, 0.38),
+    0 0 25px rgba(242, 193, 46, 0.14),
+    0 24px 64px rgba(0, 0, 0, 0.85);
 }
 .hero-cutout-button:hover ~ .hero-cutout-cta,
 .hero-cutout-button:focus-visible ~ .hero-cutout-cta,
@@ -266,23 +313,6 @@
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-top: 1px solid rgba(245, 245, 240, 0.08);
-}
-.subpage-bottombar__back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--light-text);
-  -webkit-tap-highlight-color: transparent;
-}
-.subpage-bottombar__back svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
 }
 .subpage-bottombar__cta {
   height: 36px;
@@ -570,25 +600,12 @@
   display: block;
 }
 .subpage-overlay__bar {
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 4px;
   background: var(--hero-yellow);
-}
-.subpage-overlay__back {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 24px var(--side-pad) 0;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--hero-yellow);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.subpage-overlay__back:hover {
-  opacity: 0.7;
 }
 .subpage-overlay__title {
   padding: 20px var(--side-pad) 0;
@@ -655,10 +672,10 @@
   margin: 0;
 }
 .about-overlay__body {
-  padding: 0 var(--side-pad) 8px;
-  color: var(--caption-grey);
-  font-size: 15px;
-  line-height: 1.7;
+  padding: 0 var(--side-pad) 48px;
+  color: var(--light-text);
+  font-size: 20px;
+  line-height: 1.5;
   max-width: 480px;
 }
 .about-overlay__body p {
@@ -677,11 +694,6 @@
   text-transform: uppercase;
   color: var(--hero-yellow);
   margin-bottom: 24px;
-}
-.about-overlay__cta {
-  display: flex;
-  gap: 12px;
-  padding: 8px var(--side-pad) 56px;
 }
 .about-overlay__body .word {
   display: inline-block;

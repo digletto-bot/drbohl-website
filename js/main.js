@@ -76,13 +76,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.goToTickets = () => subpageSlider.goTo(0);
 
+  function setViewToggle(activeView) {
+    document.querySelectorAll(".view-toggle__item").forEach((btn) => {
+      const isActive = btn.dataset.view === activeView;
+      btn.classList.toggle("is-active", isActive);
+      btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    });
+  }
+
   window.showContactView = () => {
     document.getElementById("contact-view")?.classList.add("is-active");
     document.getElementById("about-view")?.classList.remove("is-active");
+    setViewToggle("contact");
   };
   window.showAboutView = () => {
     document.getElementById("about-view")?.classList.add("is-active");
     document.getElementById("contact-view")?.classList.remove("is-active");
+    setViewToggle("about");
     const card = document.getElementById("subpage-card-contact");
     if (card) card.scrollTop = 0;
     // Was measured while display:none (zero geometry); re-measure now it's visible.
