@@ -119,7 +119,7 @@
   border-radius: 999px;
   background: rgba(242, 193, 46, 0.18);
   color: var(--hero-yellow);
-  border: 1.5px solid var(--hero-yellow);
+  border: 2px solid var(--hero-yellow);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
