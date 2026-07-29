@@ -322,11 +322,11 @@
 
 /* Active card */
 .menu-card.is-active {
-  border-color: var(--hero-yellow);
+  border-color: var(--tap-yellow);
   box-shadow:
     0 0 0 1px var(--hero-yellow),
-    0 0 32px rgba(242, 193, 46, 0.38),
-    0 0 80px rgba(242, 193, 46, 0.14),
+    0 0 20px rgba(242, 193, 46, 0.38),
+    0 0 25px rgba(242, 193, 46, 0.14),
     0 24px 64px rgba(0, 0, 0, 0.85);
 }
 
@@ -339,11 +339,13 @@
   object-fit: cover;
   object-position: center;
   pointer-events: none;
-  transition: transform 6s ease, filter 400ms ease;
+  transition:
+    transform 6s ease,
+    filter 400ms ease;
 }
 .menu-card.is-active .menu-card__image {
   transform: scale(1.03);
-  filter: brightness(0.45);
+  filter: brightness(0.5);
 }
 
 /* Gradient overlay */
@@ -373,7 +375,9 @@
   line-height: 1;
   color: rgba(245, 245, 240, 0.3);
   opacity: 1;
-  transition: opacity 220ms ease, color 220ms ease;
+  transition:
+    opacity 220ms ease,
+    color 220ms ease;
 }
 .menu-card.is-active .menu-card__label {
   opacity: 0;
@@ -389,7 +393,7 @@
   justify-content: center;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(42px, 12vw, 64px);
+  font-size: clamp(42px, 22vw, 160px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1;
@@ -397,7 +401,7 @@
   color: var(--hero-yellow);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 320ms ease 80ms;
+  transition: opacity 300ms ease 80ms;
 }
 .menu-card.is-active .menu-card__label-big {
   opacity: 1;
