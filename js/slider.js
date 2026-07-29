@@ -76,6 +76,16 @@ class Slider {
       img.style.animation = "";
     }
 
+    // Re-trigger Ken Burns on active hero cutout (Contact slide)
+    const cutoutWrap = this.cards[this.currentIndex].querySelector(
+      ".hero-cutout-image-wrap",
+    );
+    if (cutoutWrap) {
+      cutoutWrap.style.animation = "none";
+      void cutoutWrap.offsetWidth;
+      cutoutWrap.style.animation = "";
+    }
+
     if (this.onSlideChange) this.onSlideChange(this.currentIndex, prev);
     setTimeout(() => {
       this.isAnimating = false;

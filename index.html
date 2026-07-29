@@ -25,7 +25,7 @@
     <button class="progress-nav__item"            aria-label="Podcast"          aria-current="false" data-index="5"></button>
     <button class="progress-nav__item"            aria-label="Bohl100"          aria-current="false" data-index="6"></button>
     <button class="progress-nav__item"            aria-label="Bohl Entertainment" aria-current="false" data-index="7"></button>
-    <button class="progress-nav__item"            aria-label="About"            aria-current="false" data-index="8"></button>
+    <button class="progress-nav__item"            aria-label="Contact"          aria-current="false" data-index="8"></button>
     <button class="progress-nav__item"            aria-label="Schabernack"      aria-current="false" data-index="9"></button>
   </nav>
 
@@ -173,17 +173,23 @@
     </div>
   </article>
 
-  <!-- SLIDE 09 — ABOUT -->
-  <article class="title-card is-next" data-index="8" aria-label="About">
+  <!-- SLIDE 09 — CONTACT -->
+  <article class="title-card is-next" data-index="8" aria-label="Contact">
     <div class="title-card__inner">
-      <img class="title-card__image" src="assets/images/about-hero.jpg" alt="About" loading="lazy" style="object-position:center top"/>
+      <img class="title-card__image" src="assets/images/about-hero-bg.jpg" alt="Contact" loading="lazy" style="object-position:center top"/>
       <div class="title-card__overlay"></div>
+      <button class="hero-cutout-button" type="button" aria-label="Über Dr.Bohl" onclick="openAboutPage()"></button>
+      <div class="hero-cutout-image-wrap">
+        <img class="hero-cutout-image" src="assets/images/about-hero-cutout.png" alt="" loading="lazy" style="object-position:center top"/>
+      </div>
+      <p class="hero-cutout-cta">KLICK MICH DU GIERIGER<span>(ABOUT)</span></p>
+      <div class="hero-cutout-cta__line" aria-hidden="true"></div>
       <div class="title-card__content">
         <div class="title-card__headline-wrap">
-          <span class="title-card__headline-line" data-fit="true">ABOUT</span>
+          <span class="title-card__headline-line" data-fit="true">CONTACT</span>
         </div>
         <div class="title-card__actions">
-          <button class="ghost-button" onclick="openSubpage('About','Wer ist Dr.Bohl? Kabarettist, Entertainer, Comedian aus Wien.')">More</button>
+          <button class="ghost-button" onclick="openContactForm()">More</button>
         </div>
       </div>
     </div>
@@ -337,6 +343,50 @@
     <button class="ghost-button" onclick="closeSubpage()">Zurück</button>
   </div>
   <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+</div>
+
+<!-- CONTACT FORM SUBPAGE -->
+<div id="contact-overlay" class="subpage-overlay" aria-hidden="true">
+  <div class="subpage-overlay__bar"></div>
+  <button id="contact-back" class="subpage-overlay__back" onclick="closeContactForm()">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 4L6 8l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Zurück
+  </button>
+  <div class="subpage-overlay__title">Contact</div>
+  <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
+  <form id="contact-form" class="contact-form" novalidate>
+    <label class="contact-form__field">
+      <span>Email</span>
+      <input type="email" name="email" placeholder="deine@email.com" required />
+    </label>
+    <label class="contact-form__field">
+      <span>Betreff</span>
+      <input type="text" name="subject" placeholder="Worum geht's?" required />
+    </label>
+    <label class="contact-form__field">
+      <span>Nachricht</span>
+      <textarea name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
+    </label>
+    <div class="subpage-overlay__cta">
+      <button type="submit" class="ghost-button">Senden</button>
+    </div>
+  </form>
+  <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Das Formular ist noch nicht mit einem Postfach verbunden — Nachrichten werden aktuell nicht übermittelt.</div>
+</div>
+
+<!-- ABOUT SUBPAGE -->
+<div id="about-overlay" class="subpage-overlay about-overlay" aria-hidden="true">
+  <div class="subpage-overlay__bar"></div>
+  <div class="about-overlay__scroll" id="about-scroll">
+    <div class="about-overlay__header">
+      <h1 class="about-overlay__title">ABOUT</h1>
+    </div>
+    <div class="about-overlay__body" id="about-body"></div>
+    <div class="about-overlay__cta">
+      <button class="ghost-button" onclick="closeAboutPage();openContactForm();">Contact</button>
+      <button class="ghost-button" onclick="closeAboutPage()">Zurück</button>
+    </div>
+  </div>
 </div>
 
 </div><!-- /app -->
