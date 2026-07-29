@@ -26,9 +26,11 @@ export function fitText() {
 }
 
 export function updateProgressNav(index) {
-  document.querySelectorAll('.progress-nav__item').forEach((item, i) => {
-    item.classList.toggle('is-active', i === index);
-    item.setAttribute('aria-current', i === index ? 'true' : 'false');
+  document.querySelectorAll('.progress-nav').forEach(nav => {
+    nav.querySelectorAll('.progress-nav__item').forEach((item, i) => {
+      item.classList.toggle('is-active', i === index);
+      item.setAttribute('aria-current', i === index ? 'true' : 'false');
+    });
   });
 }
 

@@ -83,6 +83,45 @@
   transform: translateX(100%);
 }
 
+/* ── Subpage inner slider (mirrors #slider-track / .title-card, kept in sync via JS) ── */
+.subpage-slider-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: auto;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.subpage-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  will-change: transform;
+  transition: transform var(--slide-duration) var(--slide-easing);
+  user-select: none;
+  touch-action: pan-y;
+  background: var(--black);
+  transform: translateX(100%) translateZ(0);
+  -webkit-transform: translateX(100%) translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.subpage-card.is-prev {
+  transform: translateX(-100%);
+}
+.subpage-card.is-current {
+  transform: translateX(0);
+}
+.subpage-card.is-next {
+  transform: translateX(100%);
+}
+
 /* ── Card inner stacking ── */
 .title-card__inner {
   position: relative;
