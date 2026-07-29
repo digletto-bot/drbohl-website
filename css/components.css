@@ -339,10 +339,11 @@
   object-fit: cover;
   object-position: center;
   pointer-events: none;
+  transition: transform 6s ease, filter 400ms ease;
 }
 .menu-card.is-active .menu-card__image {
   transform: scale(1.03);
-  transition: transform 6s ease;
+  filter: brightness(0.45);
 }
 
 /* Gradient overlay */
@@ -357,24 +358,13 @@
     rgba(5, 5, 5, 0.92) 100%
   );
   pointer-events: none;
-  transition: background 400ms ease;
-}
-.menu-card.is-active .menu-card__overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(5, 5, 5, 0.45) 0%,
-    rgba(5, 5, 5, 0.35) 30%,
-    rgba(5, 5, 5, 0.60) 70%,
-    rgba(5, 5, 5, 0.95) 100%
-  );
 }
 
-/* Card label */
+/* Small label — visible by default, fades out when active */
 .menu-card__label {
   position: absolute;
   bottom: 12px;
   left: 16px;
-  right: 16px;
   font-family: var(--font-display);
   font-weight: 900;
   font-size: clamp(20px, 5.5vw, 26px);
@@ -383,33 +373,34 @@
   line-height: 1;
   color: rgba(245, 245, 240, 0.3);
   opacity: 1;
-  text-align: left;
-  transform-origin: bottom left;
-  transition:
-    color 380ms ease 60ms,
-    opacity 380ms ease 60ms,
-    font-size 380ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
-    bottom 380ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
-    left 380ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
-    text-align 0ms;
+  transition: opacity 220ms ease, color 220ms ease;
 }
 .menu-card.is-active .menu-card__label {
+  opacity: 0;
   color: var(--hero-yellow);
-  opacity: 1;
+}
+
+/* Big label — hidden by default, fades in when active */
+.menu-card__label-big {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(42px, 12vw, 64px);
-  bottom: 50%;
-  left: 50%;
-  right: auto;
-  transform: translate(-50%, 50%);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
   text-align: center;
-  white-space: nowrap;
-  transition:
-    color 380ms ease 60ms,
-    opacity 380ms ease 60ms,
-    font-size 380ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
-    bottom 380ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
-    left 380ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
-    transform 380ms cubic-bezier(0.22, 1, 0.36, 1) 60ms;
+  color: var(--hero-yellow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease 80ms;
+}
+.menu-card.is-active .menu-card__label-big {
+  opacity: 1;
 }
 
 /* Number */
