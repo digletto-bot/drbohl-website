@@ -62,12 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTourDates(document.getElementById("tour-list"));
 
   /* ── Contact form (subpage card 8) ── */
-  document
-    .getElementById("contact-form")
-    ?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      closeSubpage();
-    });
+  document.getElementById("contact-form")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    closeSubpage();
+  });
 
   /* ── About view (nested inside subpage card 8) ── */
   buildAboutContent();

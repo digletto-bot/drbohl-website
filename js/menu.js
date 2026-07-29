@@ -38,8 +38,6 @@ class Menu {
     this._dragged = false;
     this._dragY = 0;
     this._dragPos = 0;
-    this.slider = slider;
-    this.isOpen = false;
     this._snapTimer = null;
     this._rafId = null;
 
@@ -48,16 +46,6 @@ class Menu {
 
   _init() {
     this.cards = Array.from(this.track.querySelectorAll(".menu-card"));
-    this.burgers.forEach((b) =>
-      b.addEventListener("click", () => this.toggle()),
-    );
-    this.closeBtn?.addEventListener("click", () => this.close());
-    this.overlay.addEventListener("click", (e) => {
-      if (e.target === this.overlay) this.close();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && this.isOpen) this.close();
-    });
 
     // Card clicks
     this.cards.forEach((card, i) => {
@@ -75,7 +63,9 @@ class Menu {
       });
     });
 
-    this.burger?.addEventListener("click", () => this.toggle());
+    this.burgers.forEach((b) =>
+      b.addEventListener("click", () => this.toggle()),
+    );
     this.closeBtn?.addEventListener("click", () => this.close());
     this.overlay.addEventListener("click", (e) => {
       if (e.target === this.overlay) this.close();
@@ -178,9 +168,14 @@ class Menu {
       b.classList.add("is-open");
       b.setAttribute("aria-expanded", "true");
     });
-    this._updateActive(this.slider.index);
-    // Scroll to active card after open animation
-    setTimeout(() => this._scrollToCard(this.slider.index, "auto"), 60);
+    // Wait one frame for menu to be visible before measuring
+    requestAnimationFrame(() => {
+      this._layout();
+      this._pos = this.slider.index;
+      this._activeIdx = this.slider.index;
+      this._applyTransforms();
+      this._updateActive();
+    });
   }
 
   close() {
@@ -316,6 +311,58 @@ class Menu {
     this.cards.forEach((card, i) =>
       card.classList.toggle("is-active", i === this._activeIdx),
     );
+
+  _updateActiveFromScroll() {
+    if (!this.list) return;
+    const centerY = this.list.scrollTop + this.list.offsetHeight / 2;
+    const cards = Array.from(this.list.querySelectorAll(".menu-card"));
+    let closest = 0;
+    let closestDist = Infinity;
+
+    cards.forEach((card, i) => {
+      const cardCenter = card.offsetTop + card.offsetHeight / 2;
+      const dist = Math.abs(cardCenter - centerY);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = i;
+      }
+    });
+
+    cards.forEach((card, i) =>
+      card.classList.toggle("is-active", i === closest),
+    );
+  }
+
+  _snapToCenter() {
+    if (!this.list) return;
+    const centerY = this.list.scrollTop + this.list.offsetHeight / 2;
+    const cards = Array.from(this.list.querySelectorAll(".menu-card"));
+    let closest = cards[0];
+    let closestDist = Infinity;
+
+    cards.forEach((card) => {
+      const cardCenter = card.offsetTop + card.offsetHeight / 2;
+      const dist = Math.abs(cardCenter - centerY);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = card;
+      }
+    });
+
+    const targetScroll =
+      closest.offsetTop + closest.offsetHeight / 2 - this.list.offsetHeight / 2;
+    this.list.scrollTo({ top: targetScroll, behavior: "smooth" });
+  }
+
+  _scrollToCard(index, behavior = "smooth") {
+    if (!this.list) return;
+    const cards = this.list.querySelectorAll(".menu-card");
+    const card = cards[index];
+    if (!card) return;
+    const targetScroll =
+      card.offsetTop + card.offsetHeight / 2 - this.list.offsetHeight / 2;
+    this.list.scrollTo({ top: targetScroll, behavior });
+  }
 }
 
 export default Menu;
