@@ -349,18 +349,6 @@
   filter: brightness(var(--dim, 0.5));
 }
 
-.menu-card.b-100.is-active .menu-card__image {
-  filter: brightness(0.2);
-}
-
-.menu-card.b-ent.is-active .menu-card__image {
-  filter: brightness(0.3);
-}
-
-.menu-card.b-pod.is-active .menu-card__image {
-  filter: brightness(0.3);
-}
-
 /* Gradient overlay */
 .menu-card__overlay {
   position: absolute;
