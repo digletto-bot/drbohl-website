@@ -13,7 +13,7 @@
 
 "use strict";
 
-const CARD_GAP = 16;  // px of visible gap between card edges (scale-aware)
+const CARD_GAP = 16; // px of visible gap between card edges (scale-aware)
 const TILT_X = 10; // deg rotateX per card offset
 const SCALE_STEP = 0.09; // scale reduction per offset step
 const BRIGHTNESS_STEP = 0.4; // brightness reduction per offset step
@@ -204,7 +204,7 @@ class Menu {
 
   _dragMove(y) {
     const dy = y - this._dragY;
-    const delta = -dy / CARD_GAP;
+    const delta = -dy / (CARD_GAP + this._cardH);
     let pos = this._dragPos + delta;
     // Rubber band at edges
     const max = this.cards.length - 1;
@@ -252,7 +252,6 @@ class Menu {
         card.style.filter = "none";
         card.style.pointerEvents = "none";
         card.style.zIndex = "0";
-        // return;
       } else {
         card.style.pointerEvents = "auto";
       }
@@ -275,7 +274,7 @@ class Menu {
       // Handle fractional offset (drag position between two integer steps)
       const frac = absOffInt % 1;
       if (frac > 0) {
-        const intStep  = Math.floor(absOffInt);
+        const intStep = Math.floor(absOffInt);
         const prevHalf = this._cardH * (1 - intStep * SCALE_STEP) * 0.5;
         const nextHalf = this._cardH * (1 - (intStep + 1) * SCALE_STEP) * 0.5;
         const stepSize = prevHalf + nextHalf + CARD_GAP;
