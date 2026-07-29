@@ -250,10 +250,7 @@
   pointer-events: none;
 }
 
-/* ── Subpage: sticky bottom bar ── */
-.subpage-placeholder {
-  padding-bottom: 104px;
-}
+/* ── Subpage overlay: sticky bottom bar ── */
 .subpage-bottombar {
   position: fixed;
   left: 0;
@@ -262,8 +259,8 @@
   z-index: 25;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: center;
+  gap: 18px;
   padding: 12px var(--side-pad);
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(14px);
@@ -291,6 +288,33 @@
   height: 36px;
   padding: 0 20px;
   font-size: 12px;
+}
+.subpage-bottombar__ticket {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--hero-yellow);
+  color: var(--dark-text);
+  box-shadow: 0 0 10px rgba(242, 193, 46, 0.35);
+  transition:
+    transform var(--btn-duration) ease,
+    box-shadow var(--btn-duration) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.subpage-bottombar__ticket:hover {
+  transform: scale(1.08);
+}
+.subpage-bottombar__ticket:active {
+  transform: scale(0.92);
+}
+.subpage-bottombar__ticket svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 /* ── Social icons ── */
@@ -326,7 +350,7 @@
 .full-screen-menu {
   position: fixed;
   inset: 0;
-  z-index: 30;
+  z-index: 50;
   background: #070707;
   display: flex;
   flex-direction: column;
@@ -358,6 +382,7 @@
   position: absolute;
   top: 24px;
   right: 18px;
+  z-index: 3;
   width: 48px;
   height: 48px;
   display: flex;
@@ -526,12 +551,23 @@
   inset: 0;
   z-index: 40;
   background: var(--black);
-  overflow-y: auto;
   transform: translateY(100%);
   transition: transform var(--slide-duration) var(--slide-easing);
 }
 .subpage-overlay.is-open {
   transform: translateY(0);
+}
+/* Room for the embedded progress-nav/menu-button up top and the sticky bottom bar */
+#subpage-overlay {
+  padding-top: 80px;
+  padding-bottom: 100px;
+}
+/* Nested Contact/About toggle within subpage card 8 */
+.subpage-card__view {
+  display: none;
+}
+.subpage-card__view.is-active {
+  display: block;
 }
 .subpage-overlay__bar {
   width: 100%;
@@ -571,6 +607,9 @@
   max-width: 480px;
 }
 .subpage-overlay__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   padding: 28px var(--side-pad) 48px;
 }
 .subpage-overlay__note {
@@ -583,19 +622,7 @@
   line-height: 1.6;
 }
 
-/* ── About overlay ── */
-.about-overlay {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-.about-overlay__scroll {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-}
+/* ── About view (nested inside subpage card 8) ── */
 .about-overlay__header {
   position: sticky;
   top: 0;
@@ -752,46 +779,6 @@
 /* ══════════════════════════════════════════════════════════
    TOUR DATES SUBPAGE
    ══════════════════════════════════════════════════════════ */
-
-/* Sticky top bar */
-.sp-topbar {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: var(--black);
-  border-bottom: 1px solid rgba(242, 193, 46, 0.2);
-  padding: 20px var(--side-pad) 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.sp-logo {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 22px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--hero-yellow);
-}
-
-.sp-close {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--light-text);
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.sp-close:hover {
-  background: rgba(245, 245, 240, 0.08);
-}
 
 /* Hero */
 .sp-hero {

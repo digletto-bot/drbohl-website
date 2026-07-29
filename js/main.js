@@ -16,13 +16,23 @@ import {
 } from "./animations.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  /* ── Slider ── */
+  /* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
   const slider = new Slider({
     onSlideChange: (index) => {
       updateProgressNav(index);
       updateSlideCounter(index, slider.totalSlides);
       menu.onSlideChange(index);
       dismissSwipeHint();
+      subpageSlider.goTo(index);
+    },
+  });
+
+  const subpageSlider = new Slider({
+    trackId: "subpage-slider-track",
+    cardSelector: ".subpage-card",
+    bindKeyboard: false,
+    onSlideChange: (index) => {
+      slider.goTo(index);
     },
   });
 
@@ -33,9 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const menu = new Menu(slider);
   menu.onSlideChange(slider.index);
 
-  /* ── Progress nav clicks ── */
-  document.querySelectorAll(".progress-nav__item").forEach((item, i) => {
-    item.addEventListener("click", () => slider.goTo(i));
+  /* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ── */
+  document.querySelectorAll(".progress-nav").forEach((nav) => {
+    nav.querySelectorAll(".progress-nav__item").forEach((item, i) => {
+      item.addEventListener("click", () => slider.goTo(i));
+    });
   });
 
   /* ── Desktop arrows ── */
@@ -46,40 +58,44 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("arrow-next")
     ?.addEventListener("click", () => slider.next());
 
-  /* ── Tour Dates ── */
+  /* ── Tour Dates (subpage card 0) ── */
   renderTourDates(document.getElementById("tour-list"));
 
-  /* ── Tour overlay open/close ── */
-  window.openTourDates = async () => {
-    const overlay = document.getElementById("tour-overlay");
-    overlay.classList.add("is-open");
-    overlay.setAttribute("aria-hidden", "false");
-    overlay.scrollTop = 0;
-  };
-
-  window.closeTourDates = () => {
-    const overlay = document.getElementById("tour-overlay");
-    overlay.classList.remove("is-open");
-    overlay.setAttribute("aria-hidden", "true");
-  };
-
-  /* ── Generic subpage ── */
-  document
-    .getElementById("subpage-back")
-    ?.addEventListener("click", closeSubpage);
-
-  /* ── Contact form ── */
+  /* ── Contact form (subpage card 8) ── */
   document
     .getElementById("contact-form")
     ?.addEventListener("submit", (e) => {
       e.preventDefault();
-      closeContactForm();
+      closeSubpage();
     });
 
-  /* ── About page ── */
+  /* ── About view (nested inside subpage card 8) ── */
   buildAboutContent();
   initAboutScroll();
   initAboutWordReveal();
+
+  window.goToTickets = () => subpageSlider.goTo(0);
+
+  window.showContactView = () => {
+    document.getElementById("contact-view")?.classList.add("is-active");
+    document.getElementById("about-view")?.classList.remove("is-active");
+  };
+  window.showAboutView = () => {
+    document.getElementById("about-view")?.classList.add("is-active");
+    document.getElementById("contact-view")?.classList.remove("is-active");
+    const card = document.getElementById("subpage-card-contact");
+    if (card) card.scrollTop = 0;
+    // Was measured while display:none (zero geometry); re-measure now it's visible.
+    requestAnimationFrame(updateAboutFade);
+  };
+  window.openContactForm = () => {
+    showContactView();
+    openSubpage();
+  };
+  window.openAboutPage = () => {
+    showAboutView();
+    openSubpage();
+  };
 
   /* ── fitText ── */
   document.fonts.ready.then(() => {
@@ -93,53 +109,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key !== "Escape") return;
     menu.close();
     closeSubpage();
-    window.closeContactForm?.();
-    window.closeAboutPage?.();
-    window.closeTourDates?.();
   });
 });
 
-/* ── Generic subpage (called from inline onclick) ── */
-window.openSubpage = function (title, body) {
+/* ── Subpage overlay (single unified container; called from inline onclick) ── */
+window.openSubpage = function () {
   const sp = document.getElementById("subpage-overlay");
-  document.getElementById("subpage-title").textContent = title;
-  document.getElementById("subpage-body").textContent = body;
   sp.classList.add("is-open");
   sp.setAttribute("aria-hidden", "false");
-  sp.scrollTop = 0;
+  document.querySelector(".subpage-card.is-current")?.scrollTo(0, 0);
 };
 
 window.closeSubpage = function () {
   const sp = document.getElementById("subpage-overlay");
-  sp.classList.remove("is-open");
-  sp.setAttribute("aria-hidden", "true");
-};
-
-/* ── Contact form (called from inline onclick) ── */
-window.openContactForm = function () {
-  const sp = document.getElementById("contact-overlay");
-  sp.classList.add("is-open");
-  sp.setAttribute("aria-hidden", "false");
-  sp.scrollTop = 0;
-};
-
-window.closeContactForm = function () {
-  const sp = document.getElementById("contact-overlay");
-  sp.classList.remove("is-open");
-  sp.setAttribute("aria-hidden", "true");
-};
-
-/* ── About page (called from inline onclick) ── */
-window.openAboutPage = function () {
-  const sp = document.getElementById("about-overlay");
-  sp.classList.add("is-open");
-  sp.setAttribute("aria-hidden", "false");
-  const scroll = document.getElementById("about-scroll");
-  if (scroll) scroll.scrollTop = 0;
-};
-
-window.closeAboutPage = function () {
-  const sp = document.getElementById("about-overlay");
   sp.classList.remove("is-open");
   sp.setAttribute("aria-hidden", "true");
 };
@@ -178,10 +160,10 @@ function buildAboutContent() {
   body.dataset.filled = "true";
 }
 
-/* ── About page: stagger-reveal each paragraph's words as it scrolls into view ── */
+/* ── About view: stagger-reveal each paragraph's words as it scrolls into view ── */
 function initAboutWordReveal() {
   const body = document.getElementById("about-body");
-  const scrollEl = document.getElementById("about-scroll");
+  const scrollEl = document.getElementById("subpage-card-contact");
   if (!body || !scrollEl || !("IntersectionObserver" in window)) return;
 
   const observer = new IntersectionObserver(
@@ -200,9 +182,11 @@ function initAboutWordReveal() {
   body.querySelectorAll("p").forEach((p) => observer.observe(p));
 }
 
-/* ── About page scroll: paragraphs fade/scale into the sticky header's vignette ── */
+/* ── About view scroll: paragraphs fade/scale into the sticky header's vignette ── */
+let updateAboutFade = () => {};
+
 function initAboutScroll() {
-  const scrollEl = document.getElementById("about-scroll");
+  const scrollEl = document.getElementById("subpage-card-contact");
   const header = document.querySelector(".about-overlay__header");
   const body = document.getElementById("about-body");
   if (!scrollEl || !header || !body) return;
@@ -224,6 +208,7 @@ function initAboutScroll() {
     });
     ticking = false;
   }
+  updateAboutFade = update;
 
   scrollEl.addEventListener(
     "scroll",

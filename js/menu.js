@@ -10,7 +10,7 @@ class Menu {
   constructor(slider) {
     this.slider   = slider;
     this.overlay  = document.getElementById('full-screen-menu');
-    this.burger   = document.querySelector('.menu-button');
+    this.burgers  = document.querySelectorAll('.menu-button');
     this.closeBtn = document.getElementById('menu-close');
     this.list     = document.getElementById('menu-list');
     this.isOpen   = false;
@@ -19,7 +19,7 @@ class Menu {
   }
 
   _init() {
-    this.burger  ?.addEventListener('click', () => this.toggle());
+    this.burgers.forEach(b => b.addEventListener('click', () => this.toggle()));
     this.closeBtn?.addEventListener('click', () => this.close());
     this.overlay  .addEventListener('click', e => { if (e.target === this.overlay) this.close(); });
     document       .addEventListener('keydown', e => { if (e.key === 'Escape' && this.isOpen) this.close(); });
@@ -47,8 +47,10 @@ class Menu {
     this.isOpen = true;
     this.overlay.classList.add('is-open');
     this.overlay.setAttribute('aria-hidden', 'false');
-    this.burger?.classList.add('is-open');
-    this.burger?.setAttribute('aria-expanded', 'true');
+    this.burgers.forEach(b => {
+      b.classList.add('is-open');
+      b.setAttribute('aria-expanded', 'true');
+    });
     this._updateActive(this.slider.index);
     // Scroll to active card after open animation
     setTimeout(() => this._scrollToCard(this.slider.index, 'auto'), 60);
@@ -59,8 +61,10 @@ class Menu {
     this.isOpen = false;
     this.overlay.classList.remove('is-open');
     this.overlay.setAttribute('aria-hidden', 'true');
-    this.burger?.classList.remove('is-open');
-    this.burger?.setAttribute('aria-expanded', 'false');
+    this.burgers.forEach(b => {
+      b.classList.remove('is-open');
+      b.setAttribute('aria-expanded', 'false');
+    });
   }
 
   onSlideChange(index) { this._updateActive(index); }
