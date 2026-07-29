@@ -117,9 +117,10 @@
   height: 44px;
   padding: 0 32px;
   border-radius: 999px;
-  background: rgba(242, 193, 46, 0.18);
+  background: rgba(20, 20, 20, 0.5);
   color: var(--hero-yellow);
   border: 2px solid var(--hero-yellow);
+  box-shadow: 0 0 10px rgba(242, 193, 46, 0.35);
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 13px;
@@ -129,19 +130,167 @@
   white-space: nowrap;
   transition:
     background var(--btn-duration) ease,
-    transform var(--btn-duration) ease,
-    box-shadow var(--btn-duration) ease;
+    color var(--btn-duration) ease,
+    border-color var(--btn-duration) ease,
+    border-width var(--btn-duration) ease,
+    box-shadow var(--btn-duration) ease,
+    transform var(--btn-duration) ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
 .ghost-button:hover {
-  background: rgba(242, 193, 46, 0.3);
-  transform: scale(1.04);
-  box-shadow: 0 6px 24px rgba(242, 193, 46, 0.25);
+  background: rgba(20, 20, 20, 0.5);
+  transform: scale(1.08);
 }
 .ghost-button:active {
-  background: rgba(242, 193, 46, 0.38);
-  transform: scale(0.96);
+  transform: scale(0.95);
+}
+
+/* ── Hero cutout image (Contact slide) ── */
+.hero-cutout-image-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.title-card.is-current .hero-cutout-image-wrap {
+  animation: slowZoom 9s ease-in-out both;
+}
+.hero-cutout-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  pointer-events: none;
+  transform-origin: 50% 62%;
+  transition:
+    transform var(--btn-duration) ease,
+    filter var(--btn-duration) ease;
+}
+
+/* ── Hero cutout button — invisible hit-box, sized to hug him ── */
+.hero-cutout-button {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 43%;
+  bottom: 19%;
+  z-index: 5;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-cutout-button:focus-visible {
+  outline: 2px solid var(--hero-yellow);
+  outline-offset: 6px;
+}
+.hero-cutout-button:hover ~ .hero-cutout-image-wrap .hero-cutout-image,
+.hero-cutout-button:focus-visible ~ .hero-cutout-image-wrap .hero-cutout-image,
+.hero-cutout-button:active ~ .hero-cutout-image-wrap .hero-cutout-image {
+  transform: scale(1.02);
+  filter:
+    drop-shadow(0 0 1px #fcf4e3)
+    drop-shadow(0 0 1.5px #fcf4e3)
+    drop-shadow(0 0 8px rgba(242, 193, 46, 0.55));
+}
+.hero-cutout-button:hover ~ .hero-cutout-cta,
+.hero-cutout-button:focus-visible ~ .hero-cutout-cta,
+.hero-cutout-button:active ~ .hero-cutout-cta {
+  transform: scale(1.1);
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.65),
+    0 0 10px rgba(242, 193, 46, 0.3);
+}
+
+/* ── "Klick mich" call-to-action ── */
+.hero-cutout-cta {
+  position: absolute;
+  z-index: 3;
+  top: calc(30% + 74px);
+  left: calc(8% - 8px);
+  width: 50%;
+  margin: 0;
+  pointer-events: none;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 19px;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--hero-yellow);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+  transition:
+    transform var(--btn-duration) ease,
+    text-shadow var(--btn-duration) ease;
+}
+.hero-cutout-cta span {
+  display: block;
+  margin-top: 2px;
+  color: var(--hero-yellow);
+}
+
+/* ── Solid line connecting the CTA text to the cutout ── */
+.hero-cutout-cta__line {
+  position: absolute;
+  z-index: 3;
+  top: calc(38% + 60px);
+  left: 34%;
+  width: 68px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--hero-yellow);
+  transform: rotate(32deg);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* ── Subpage: sticky bottom bar ── */
+.subpage-placeholder {
+  padding-bottom: 104px;
+}
+.subpage-bottombar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px var(--side-pad);
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(245, 245, 240, 0.08);
+}
+.subpage-bottombar__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--light-text);
+  -webkit-tap-highlight-color: transparent;
+}
+.subpage-bottombar__back svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.subpage-bottombar__cta {
+  height: 36px;
+  padding: 0 20px;
+  font-size: 12px;
 }
 
 /* ── Social icons ── */
@@ -432,6 +581,137 @@
   font-size: 12px;
   color: var(--disabled-grey);
   line-height: 1.6;
+}
+
+/* ── About overlay ── */
+.about-overlay {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.about-overlay__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+.about-overlay__header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--black);
+  padding: 20px var(--side-pad) 24px;
+}
+.about-overlay__header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 60px;
+  background: linear-gradient(
+    to bottom,
+    var(--black) 0%,
+    rgba(10, 10, 10, 0.85) 45%,
+    rgba(10, 10, 10, 0) 100%
+  );
+  pointer-events: none;
+}
+.about-overlay__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(58px, 18vw, 82px);
+  line-height: 0.88;
+  text-transform: uppercase;
+  color: var(--hero-yellow);
+  margin: 0;
+}
+.about-overlay__body {
+  padding: 0 var(--side-pad) 8px;
+  color: var(--caption-grey);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 480px;
+}
+.about-overlay__body p {
+  margin: 0 0 18px;
+  transform-origin: top center;
+  transition:
+    opacity 80ms linear,
+    transform 80ms linear;
+  will-change: transform, opacity;
+}
+.about-overlay__body p.about-overlay__lead {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--hero-yellow);
+  margin-bottom: 24px;
+}
+.about-overlay__cta {
+  display: flex;
+  gap: 12px;
+  padding: 8px var(--side-pad) 56px;
+}
+.about-overlay__body .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+.about-overlay__body .word.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Contact form ── */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px var(--side-pad) 0;
+}
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.contact-form__field span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--caption-grey);
+}
+.contact-form__field input,
+.contact-form__field textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(245, 245, 240, 0.14);
+  background: var(--surface-dark);
+  color: var(--light-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  resize: vertical;
+  transition: border-color var(--btn-duration) ease;
+}
+.contact-form__field input::placeholder,
+.contact-form__field textarea::placeholder {
+  color: var(--disabled-grey);
+}
+.contact-form__field input:focus,
+.contact-form__field textarea:focus {
+  outline: none;
+  border-color: var(--hero-yellow);
+}
+.contact-form .subpage-overlay__cta {
+  padding: 8px var(--side-pad) 0;
 }
 
 /* ── Social icons (PNG version) ── */
