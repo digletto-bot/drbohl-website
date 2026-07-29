@@ -232,3 +232,34 @@ function initAboutScroll() {
   );
   update();
 }
+
+/* ── Bohl Entertainment brochure: scroll-reveal (subpage card 7) ── */
+function initBrochureReveal() {
+  const card = document.querySelector('.subpage-card[data-index="7"]');
+  if (!card) return;
+  const els = card.querySelectorAll(".be-reveal");
+  if (!els.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    els.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { root: card, threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+  );
+
+  els.forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 4) * 60}ms`;
+    io.observe(el);
+  });
+}
+initBrochureReveal();
