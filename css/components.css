@@ -1339,3 +1339,20 @@ a.be-contact__val:hover { color: var(--hero-yellow); }
   display: block;
   margin-top: 10px;
 }
+
+/* ── Hero cutout: periodic shine sweeping around silhouette ── */
+@keyframes cutoutShine {
+  0%    { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0)); }
+  4%    { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0.95)); }
+  11%   { filter: drop-shadow(9px 0 10px rgba(242, 193, 46, 0.9)); }
+  18%   { filter: drop-shadow(0 9px 10px rgba(255, 255, 230, 0.95)); }
+  25%   { filter: drop-shadow(-9px 0 10px rgba(242, 193, 46, 0.9)); }
+  32%   { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0)); }
+  100%  { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0)); }
+}
+.title-card.is-current .hero-cutout-image {
+  animation: cutoutShine 3s linear infinite 1.4s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-card.is-current .hero-cutout-image { animation: none; }
+}
