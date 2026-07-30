@@ -193,10 +193,17 @@
 }
 
 /* ── Hero cutout image (Contact slide) ── */
-.hero-cutout-image-wrap {
+.hero-cutout-group {
   position: absolute;
   inset: 0;
   z-index: 2;
+  pointer-events: none;
+  transform-origin: 50% 62%;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-cutout-image-wrap {
+  position: absolute;
+  inset: 0;
   pointer-events: none;
 }
 .title-card.is-current .hero-cutout-image-wrap {
@@ -211,11 +218,6 @@
   object-position: center top;
   pointer-events: none;
   transform-origin: 50% 62%;
-  border: 2px solid transparent;
-  transition:
-    transform var(--btn-duration) ease,
-    border-color var(--btn-duration) ease,
-    box-shadow var(--btn-duration) ease;
 }
 
 /* ── Hero cutout button — invisible hit-box, sized to hug him ── */
@@ -237,39 +239,23 @@
   outline: 2px solid var(--hero-yellow);
   outline-offset: 6px;
 }
-.hero-cutout-button:hover ~ .hero-cutout-image-wrap .hero-cutout-image,
-.hero-cutout-button:focus-visible ~ .hero-cutout-image-wrap .hero-cutout-image,
-.hero-cutout-button:active ~ .hero-cutout-image-wrap .hero-cutout-image {
-  transform: scale(1.02);
-  border-color: var(--tap-yellow);
-  box-shadow:
-    0 0 0 1px var(--hero-yellow),
-    0 0 20px rgba(242, 193, 46, 0.38),
-    0 0 25px rgba(242, 193, 46, 0.14),
-    0 24px 64px rgba(0, 0, 0, 0.85);
-}
-.hero-cutout-button:hover ~ .hero-cutout-cta,
-.hero-cutout-button:focus-visible ~ .hero-cutout-cta,
-.hero-cutout-button:active ~ .hero-cutout-cta {
-  transform: scale(1.1);
-  text-shadow:
-    0 2px 10px rgba(0, 0, 0, 0.65),
-    0 0 10px rgba(242, 193, 46, 0.3);
-}
 
 /* ── "Klick mich" call-to-action ── */
 .hero-cutout-cta {
   position: absolute;
   z-index: 3;
-  top: calc(30% + 74px);
-  left: calc(8% - 8px);
+  top: 39%;
+  left: 7%;
   width: 50%;
   margin: 0;
+  padding: 1.2vh 1.5vw;
+  border: 2px solid transparent;
+  border-radius: 6px;
   pointer-events: none;
   text-align: center;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 19px;
+  font-size: clamp(15px, 4.6vw, 21px);
   line-height: 1.15;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -289,9 +275,9 @@
 .hero-cutout-cta__line {
   position: absolute;
   z-index: 3;
-  top: calc(38% + 60px);
+  top: 45.5%;
   left: 34%;
-  width: 68px;
+  width: clamp(48px, 8.5vw, 72px);
   height: 3px;
   border-radius: 2px;
   background: var(--hero-yellow);
@@ -1431,19 +1417,57 @@ a.be-contact__val:hover {
   margin-top: 10px;
 }
 
-/* ── Hero cutout: periodic shine sweeping around silhouette ── */
-@keyframes cutoutShine {
-  0%    { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0)); }
-  4%    { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0.95)); }
-  11%   { filter: drop-shadow(9px 0 10px rgba(242, 193, 46, 0.9)); }
-  18%   { filter: drop-shadow(0 9px 10px rgba(255, 255, 230, 0.95)); }
-  25%   { filter: drop-shadow(-9px 0 10px rgba(242, 193, 46, 0.9)); }
-  32%   { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0)); }
-  100%  { filter: drop-shadow(0 -9px 9px rgba(255, 255, 230, 0)); }
+
+/* ── Hero cutout group: periodic + interactive border glow ── */
+@keyframes cutoutGlowPulse {
+  0%, 84%, 100% {
+    border-color: transparent;
+    box-shadow:
+      0 0 0 1px rgba(242, 193, 46, 0),
+      0 0 20px rgba(242, 193, 46, 0),
+      0 0 25px rgba(242, 193, 46, 0),
+      0 24px 64px rgba(0, 0, 0, 0);
+  }
+  92% {
+    border-color: var(--tap-yellow);
+    box-shadow:
+      0 0 0 1px var(--hero-yellow),
+      0 0 20px rgba(242, 193, 46, 0.38),
+      0 0 25px rgba(242, 193, 46, 0.14),
+      0 24px 64px rgba(0, 0, 0, 0.85);
+  }
 }
-.title-card.is-current .hero-cutout-image {
-  animation: cutoutShine 3s linear infinite 1.4s;
+.hero-cutout-image,
+.hero-cutout-cta {
+  border: 2px solid transparent;
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+.title-card.is-current .hero-cutout-image,
+.title-card.is-current .hero-cutout-cta {
+  animation: cutoutGlowPulse 2.5s ease-in-out infinite 1.2s;
+}
+.hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-image,
+.hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-image,
+.hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-image,
+.hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-cta,
+.hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-cta,
+.hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-cta {
+  animation: none;
+  border-color: var(--tap-yellow);
+  box-shadow:
+    0 0 0 1px var(--hero-yellow),
+    0 0 20px rgba(242, 193, 46, 0.38),
+    0 0 25px rgba(242, 193, 46, 0.14),
+    0 24px 64px rgba(0, 0, 0, 0.85);
+}
+.hero-cutout-button:hover ~ .hero-cutout-group,
+.hero-cutout-button:focus-visible ~ .hero-cutout-group,
+.hero-cutout-button:active ~ .hero-cutout-group {
+  transform: scale(1.03);
 }
 @media (prefers-reduced-motion: reduce) {
-  .title-card.is-current .hero-cutout-image { animation: none; }
+  .title-card.is-current .hero-cutout-image,
+  .title-card.is-current .hero-cutout-cta {
+    animation: none;
+  }
 }
