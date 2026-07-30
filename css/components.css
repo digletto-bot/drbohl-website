@@ -244,13 +244,10 @@
 .hero-cutout-cta {
   position: absolute;
   z-index: 3;
-  top: 39%;
+  top: 44%;
   left: 7%;
   width: 50%;
   margin: 0;
-  padding: 1.2vh 1.5vw;
-  border: 2px solid transparent;
-  border-radius: 6px;
   pointer-events: none;
   text-align: center;
   font-family: var(--font-display);
@@ -275,8 +272,8 @@
 .hero-cutout-cta__line {
   position: absolute;
   z-index: 3;
-  top: 45.5%;
-  left: 34%;
+  top: 50.5%;
+  left: 41%;
   width: clamp(48px, 8.5vw, 72px);
   height: 3px;
   border-radius: 2px;
@@ -1418,47 +1415,64 @@ a.be-contact__val:hover {
 }
 
 
-/* ── Hero cutout group: periodic + interactive border glow ── */
-@keyframes cutoutGlowPulse {
+/* ── Hero cutout group: periodic + interactive glow (text + silhouette) ── */
+@keyframes cutoutImgGlow {
   0%, 84%, 100% {
-    border-color: transparent;
-    box-shadow:
-      0 0 0 1px rgba(242, 193, 46, 0),
-      0 0 20px rgba(242, 193, 46, 0),
-      0 0 25px rgba(242, 193, 46, 0),
-      0 24px 64px rgba(0, 0, 0, 0);
+    filter:
+      drop-shadow(0 0 1px rgba(242, 193, 46, 0))
+      drop-shadow(0 0 10px rgba(242, 193, 46, 0))
+      drop-shadow(0 0 18px rgba(242, 193, 46, 0));
   }
   92% {
-    border-color: var(--tap-yellow);
-    box-shadow:
-      0 0 0 1px var(--hero-yellow),
-      0 0 20px rgba(242, 193, 46, 0.38),
-      0 0 25px rgba(242, 193, 46, 0.14),
-      0 24px 64px rgba(0, 0, 0, 0.85);
+    filter:
+      drop-shadow(0 0 1px var(--hero-yellow))
+      drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
+      drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
   }
 }
-.hero-cutout-image,
-.hero-cutout-cta {
-  border: 2px solid transparent;
-  transition: border-color 250ms ease, box-shadow 250ms ease;
+@keyframes cutoutTextGlow {
+  0%, 84%, 100% {
+    text-shadow:
+      0 0 1px rgba(242, 193, 46, 0),
+      0 0 20px rgba(242, 193, 46, 0),
+      0 0 25px rgba(242, 193, 46, 0);
+  }
+  92% {
+    text-shadow:
+      0 0 1px var(--hero-yellow),
+      0 0 20px rgba(242, 193, 46, 0.38),
+      0 0 25px rgba(242, 193, 46, 0.14);
+  }
 }
-.title-card.is-current .hero-cutout-image,
+.hero-cutout-image {
+  transition: filter 250ms ease;
+}
+.hero-cutout-cta {
+  transition: text-shadow 250ms ease;
+}
+.title-card.is-current .hero-cutout-image {
+  animation: cutoutImgGlow 2.5s ease-in-out infinite 1.2s;
+}
 .title-card.is-current .hero-cutout-cta {
-  animation: cutoutGlowPulse 2.5s ease-in-out infinite 1.2s;
+  animation: cutoutTextGlow 2.5s ease-in-out infinite 1.2s;
 }
 .hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-image,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-image,
-.hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-image,
+.hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-image {
+  animation: none;
+  filter:
+    drop-shadow(0 0 1px var(--hero-yellow))
+    drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
+    drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
+}
 .hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-cta,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-cta,
 .hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-cta {
   animation: none;
-  border-color: var(--tap-yellow);
-  box-shadow:
-    0 0 0 1px var(--hero-yellow),
+  text-shadow:
+    0 0 1px var(--hero-yellow),
     0 0 20px rgba(242, 193, 46, 0.38),
-    0 0 25px rgba(242, 193, 46, 0.14),
-    0 24px 64px rgba(0, 0, 0, 0.85);
+    0 0 25px rgba(242, 193, 46, 0.14);
 }
 .hero-cutout-button:hover ~ .hero-cutout-group,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group,
