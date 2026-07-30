@@ -200,7 +200,7 @@ function initAboutScroll() {
   const body = document.getElementById("about-body");
   if (!scrollEl || !header || !body) return;
 
-  const fadeZone = 60;
+  const fadeZone = 36;
   let ticking = false;
 
   function update() {
