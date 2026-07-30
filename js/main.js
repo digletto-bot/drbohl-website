@@ -262,3 +262,37 @@ function initBrochureReveal() {
   });
 }
 initBrochureReveal();
+
+/* ── Musik: discography accordion with lazy embeds ── */
+function initDiscography() {
+  const items = document.querySelectorAll(".disco__item");
+  items.forEach((item) => {
+    const bar = item.querySelector(".disco__bar");
+    bar.addEventListener("click", () => {
+      const open = item.classList.toggle("is-open");
+      bar.setAttribute("aria-expanded", open);
+
+      // lazy-inject iframes on first open
+      if (open && !item.dataset.loaded) {
+        const yt = item.dataset.yt;
+        const sp = item.dataset.sp;
+        item.querySelector(".disco__video").innerHTML =
+          `<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+        item.querySelector(".disco__spotify").innerHTML =
+          `<iframe src="https://open.spotify.com/embed/track/${sp}?theme=0" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+        item.dataset.loaded = "true";
+      }
+
+      // close others
+      if (open) {
+        items.forEach((other) => {
+          if (other !== item && other.classList.contains("is-open")) {
+            other.classList.remove("is-open");
+            other.querySelector(".disco__bar").setAttribute("aria-expanded", "false");
+          }
+        });
+      }
+    });
+  });
+}
+initDiscography();
