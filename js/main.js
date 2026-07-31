@@ -75,6 +75,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initAboutWordReveal();
 
   window.goToTickets = () => subpageSlider.goTo(0);
+  window.subpagePrev = () => {
+    const n = subpageSlider.totalSlides;
+    subpageSlider.goTo((subpageSlider.currentIndex - 1 + n) % n);
+  };
+  window.subpageNext = () => {
+    const n = subpageSlider.totalSlides;
+    subpageSlider.goTo((subpageSlider.currentIndex + 1) % n);
+  };
 
   function setViewToggle(activeView) {
     document.querySelectorAll(".view-toggle__item").forEach((btn) => {
