@@ -130,6 +130,7 @@ window.openSubpage = function () {
 
 window.closeSubpage = function () {
   const sp = document.getElementById("subpage-overlay");
+  document.activeElement.blur();
   sp.classList.remove("is-open");
   sp.setAttribute("aria-hidden", "true");
 };

@@ -186,6 +186,7 @@ class Menu {
   close() {
     if (!this.isOpen) return;
     this.isOpen = false;
+    document.activeElement.blur();
     this.overlay.classList.remove("is-open");
     this.overlay.setAttribute("aria-hidden", "true");
     this.burgers.forEach((b) => {
