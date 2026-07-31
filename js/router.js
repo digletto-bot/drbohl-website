@@ -35,10 +35,10 @@ class Router {
       : "";
 
     // Reinstate this version once hosting no longer happens on github.io
-    // const newPath = `${window.location.origin}/${pathComponent}`;
+    // const newPath = `${window.location.origin}${pathComponent}`;
 
     // This is the temporary value for github.io
-    const newPath = `${window.location.origin}/drbohl-website/${pathComponent}`;
+    const newPath = `${window.location.origin}/drbohl-website${pathComponent}`;
 
     window.history.replaceState(null, "", newPath);
     console.log(newPath);
