@@ -392,6 +392,9 @@
   transform: translateX(100%);
   transition: transform var(--slide-duration) var(--slide-easing);
   overflow: hidden;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .full-screen-menu.is-open {
   transform: translateX(0);
