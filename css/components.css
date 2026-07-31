@@ -1613,3 +1613,12 @@ a.be-contact__val:hover {
   .be-card:hover { transform: none; border-color: #2e2e2e; }
   .disco__bar:hover { background: none; }
 }
+
+/* ── FOUT guard: hide fitted headlines until fonts ready + fitText ran ── */
+.title-card__headline-wrap,
+.hero-bar + * .title-card__headline-wrap {
+  transition: opacity 240ms ease;
+}
+html.fonts-loading .title-card__headline-wrap {
+  opacity: 0;
+}

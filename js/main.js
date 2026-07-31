@@ -114,10 +114,14 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* ── fitText ── */
+  const revealHeadlines = () =>
+    document.documentElement.classList.remove("fonts-loading");
   document.fonts.ready.then(() => {
     fitText();
+    requestAnimationFrame(revealHeadlines);
     setTimeout(fitText, 120);
   });
+  setTimeout(revealHeadlines, 2500); /* safety: never stay hidden */
   window.addEventListener("resize", fitText);
 
   /* ── ESC closes everything ── */
