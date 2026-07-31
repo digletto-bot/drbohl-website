@@ -341,41 +341,46 @@
 /* ── Sticky ticket button (top right, subpage overlay) ── */
 .subpage-ticket-btn {
   position: fixed;
-  top: 84px;
+  /* overlay 80px + title padding 20px + half of title first line (lh 0.88), minus half button (26px) */
+  top: calc(74px + clamp(58px, 18vw, 82px) * 0.44);
   right: var(--side-pad);
   z-index: 26;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 52px;
-  height: 44px;
+  height: 52px;
   border: 2px solid var(--hero-yellow);
-  border-radius: 8px;
+  border-radius: 50%;
   background: rgba(10, 10, 10, 0.7);
+  color: var(--hero-yellow);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   cursor: pointer;
   transition:
     background var(--btn-duration) ease,
+    color var(--btn-duration) ease,
     border-color var(--btn-duration) ease,
     box-shadow var(--btn-duration) ease,
     transform var(--btn-duration) ease;
   -webkit-tap-highlight-color: transparent;
 }
-.subpage-ticket-btn img {
-  width: 30px;
-  height: 30px;
+.subpage-ticket-btn svg {
+  width: 28px;
+  height: 28px;
   display: block;
 }
 .subpage-ticket-btn:hover {
-  background: rgba(242, 193, 46, 0.12);
-  border-color: var(--tap-yellow);
-  box-shadow: 0 0 14px rgba(242, 193, 46, 0.35);
+  background: var(--hero-yellow);
+  color: var(--dark-text);
+  box-shadow: 0 0 14px rgba(242, 193, 46, 0.4);
   transform: scale(1.06);
 }
 .subpage-ticket-btn:active {
   transform: scale(0.92);
-  background: rgba(242, 193, 46, 0.25);
+  background: var(--tap-yellow);
+  border-color: var(--tap-yellow);
+  color: var(--dark-text);
 }
 
 /* ── Social icons ── */
