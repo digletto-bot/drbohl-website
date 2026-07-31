@@ -82,6 +82,9 @@
 .menu-button.is-open .menu-button__line:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
+.full-screen-menu__close {
+  z-index: 100;
+}
 
 /* ── Headline: centered, sized by fitText ── */
 .title-card__headline-wrap {
@@ -408,7 +411,8 @@
 }
 
 /* ══════════════════════════════════════════════════════════
-   NETFLIX-STYLE MENU OVERLAY
+/* ══════════════════════════════════════════════════════════
+   3D CARD CAROUSEL MENU OVERLAY
    ══════════════════════════════════════════════════════════ */
 .full-screen-menu {
   position: fixed;
@@ -417,20 +421,36 @@
   background: #070707;
   display: flex;
   flex-direction: column;
+  align-items: center;
   transform: translateX(100%);
   transition: transform var(--slide-duration) var(--slide-easing);
   overflow: hidden;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .full-screen-menu.is-open {
   transform: translateX(0);
 }
 
-/* Top bar with title + close */
+/* Width constraint on wide screens */
+.full-screen-menu__inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Top bar */
 .full-screen-menu__header {
   position: relative;
   padding: 28px var(--side-pad) 20px;
   flex-shrink: 0;
   z-index: 2;
+  width: 100%;
 }
 .full-screen-menu__title {
   font-family: var(--font-display);
@@ -456,93 +476,105 @@
   border: none;
   border-radius: 10px;
   transition: background 0.2s ease;
+  z-index: 10;
 }
 .full-screen-menu__close:hover {
   background: rgba(245, 245, 240, 0.08);
 }
 
-/* ── Scroll container ── */
-.full-screen-menu__list {
-  flex: 1;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  /* padding top/bottom = half height so first/last card can center */
-  padding: 0 20px;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+/* ── 3D stage ──
+   Stage fills all remaining space. Cards sit inside it with
+   top:50% so the active card (offset=0, translateY=0) is centred.
+   The stage uses perspective but keeps overflow:hidden — cards
+   never actually leave the stage bounds because they translateY
+   within it and fade out before reaching the edges.
+── */
+.full-screen-menu__stage {
+  /* flex: 1; */
+  max-width: 600px;
+  width: 100%;
   position: relative;
-  scroll-behavior: auto; /* JS handles smooth */
-}
-.full-screen-menu__list::-webkit-scrollbar {
-  display: none;
+  perspective: 900px;
+  perspective-origin: 50% 50%;
+  overflow: hidden;
+  touch-action: none;
+  flex-grow: 1;
+  -webkit-user-select: none;
+  user-select: none;
+  /* No mask-image here — it kills preserve-3d in Chrome/Safari.
+     Fade is done via ::before/::after pseudo overlays instead. */
 }
 
-/* Top/bottom vignette over the scroll list */
-.full-screen-menu__list::before,
-.full-screen-menu__list::after {
+/* Top fade overlay */
+.full-screen-menu__stage::before,
+.full-screen-menu__stage::after {
   content: "";
-  position: sticky;
-  display: block;
+  position: absolute;
   left: 0;
   right: 0;
-  height: 120px;
+  height: 22%;
   pointer-events: none;
-  z-index: 3;
-  flex-shrink: 0;
+  z-index: 200;
 }
-.full-screen-menu__list::before {
+.full-screen-menu__stage::before {
   top: 0;
   background: linear-gradient(to bottom, #070707 0%, transparent 100%);
-  margin-bottom: -120px;
 }
-.full-screen-menu__list::after {
+.full-screen-menu__stage::after {
   bottom: 0;
   background: linear-gradient(to top, #070707 0%, transparent 100%);
-  margin-top: -120px;
 }
 
-/* ── Individual menu card ── */
+/* ── Card track ──
+   Positioned by JS: top = stage centre.
+   height:0 so cards don't affect layout.
+── */
+.full-screen-menu__track {
+  position: absolute;
+  left: 7%;
+  width: 86%;
+  height: 0;
+}
+
+/* ── Individual card ── */
 .menu-card {
-  position: relative;
+  position: absolute;
+  left: 0;
+  /* top set by JS = -cardHeight/2 to centre on track origin */
   width: 100%;
-  /* 16:9 */
   aspect-ratio: 16 / 9;
-  border-radius: 16px;
   overflow: hidden;
-  margin-bottom: 14px;
   cursor: pointer;
   display: block;
   padding: 0;
   text-align: left;
   background: #111;
-  border: 2px solid transparent;
+  border: 1.5px solid rgba(245, 245, 240, 0.05);
   -webkit-tap-highlight-color: transparent;
-  /* Scale inactive cards down slightly */
-  transform: scale(0.88);
-  opacity: 0.55;
-  transition:
-    transform 400ms var(--slide-easing),
-    opacity 400ms var(--slide-easing),
-    border-color 300ms ease,
-    box-shadow 300ms ease;
+  will-change: transform, opacity;
+  /* Transforms applied directly by JS, is-snapping adds transition */
 }
 
-/* Active / centered card */
+/* Snap animation class — added by JS after drag ends */
+.menu-card.is-snapping {
+  transition:
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 400ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+/* Active card */
 .menu-card.is-active {
-  transform: scale(1);
-  opacity: 1;
-  border-color: var(--hero-yellow);
+  border-color: var(--tap-yellow);
   box-shadow:
     0 0 0 1px var(--hero-yellow),
-    0 0 40px rgba(242, 193, 46, 0.3),
-    0 20px 60px rgba(0, 0, 0, 0.7);
+    0 0 20px rgba(242, 193, 46, 0.38),
+    0 0 25px rgba(242, 193, 46, 0.14),
+    0 24px 64px rgba(0, 0, 0, 0.85);
 }
 
-.menu-card:hover:not(.is-active) {
-  transform: scale(0.92);
-  opacity: 0.75;
-}
-
+/* Image */
 .menu-card__image {
   position: absolute;
   inset: 0;
@@ -550,62 +582,90 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 6s ease;
-}
-.menu-card.is-active .menu-card__image {
-  transform: scale(1.03);
+  pointer-events: none;
+  transition:
+    transform 6s ease,
+    filter 400ms ease;
 }
 
-/* Gradient overlay darkening bottom */
+.menu-card.is-active .menu-card__image {
+  transform: scale(1.03);
+  filter: brightness(var(--dim, 0.5));
+}
+
+/* Gradient overlay */
 .menu-card__overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(5, 5, 5, 0.1) 0%,
-    rgba(5, 5, 5, 0.05) 40%,
-    rgba(5, 5, 5, 0.55) 75%,
-    rgba(5, 5, 5, 0.9) 100%
+    rgba(5, 5, 5, 0.08) 0%,
+    rgba(5, 5, 5, 0.04) 40%,
+    rgba(5, 5, 5, 0.58) 76%,
+    rgba(5, 5, 5, 0.92) 100%
   );
+  pointer-events: none;
 }
 
-/* Card label — fades in on active */
+/* Small label — visible by default, fades out when active */
 .menu-card__label {
   position: absolute;
-  bottom: 14px;
-  left: 18px;
+  bottom: 12px;
+  left: 16px;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(22px, 6.5vw, 30px);
+  font-size: clamp(20px, 5.5vw, 26px);
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 1;
-  color: var(--light-text);
-  opacity: 0;
-  transform: translateY(6px);
+  color: rgba(245, 245, 240, 0.3);
+  opacity: 1;
   transition:
-    opacity 350ms ease 100ms,
-    transform 350ms var(--slide-easing) 100ms;
+    opacity 220ms ease,
+    color 220ms ease;
 }
 .menu-card.is-active .menu-card__label {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  color: var(--hero-yellow);
 }
 
+/* Big label — hidden by default, fades in when active */
+.menu-card__label-big {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(42px, 22vw, 140px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-align: center;
+  color: var(--hero-yellow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease 80ms;
+}
+.menu-card.is-active .menu-card__label-big {
+  opacity: 1;
+}
+
+/* Number */
 .menu-card__number {
   position: absolute;
-  top: 12px;
-  right: 14px;
+  top: 10px;
+  right: 12px;
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   letter-spacing: 0.14em;
-  color: rgba(245, 245, 240, 0.4);
-  opacity: 0;
-  transition: opacity 300ms ease 200ms;
+  color: rgba(245, 245, 240, 0.2);
+  transition: color 280ms ease;
 }
 .menu-card.is-active .menu-card__number {
-  opacity: 1;
+  color: rgba(242, 193, 46, 0.55);
 }
 
 /* ── Subpage overlay ── */
@@ -1042,13 +1102,18 @@
 .be-reveal {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 600ms ease,
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .be-reveal.is-visible {
   opacity: 1;
   transform: none;
 }
-.be-cover { padding-top: 32px; padding-bottom: 72px; }
+.be-cover {
+  padding-top: 32px;
+  padding-bottom: 72px;
+}
 .be-cover__angle {
   position: absolute;
   top: 0;
@@ -1069,7 +1134,10 @@
   height: 4px;
   background: var(--hero-yellow);
 }
-.be-cover__inner { position: relative; z-index: 1; }
+.be-cover__inner {
+  position: relative;
+  z-index: 1;
+}
 .be-cover__image {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -1098,7 +1166,9 @@
   border: 1px solid #2e2e2e;
   border-top: 3px solid #cd5f29;
   padding: 20px 18px 22px;
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms ease;
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 240ms ease;
 }
 .be-card:hover {
   transform: translateY(-4px);
@@ -1141,10 +1211,16 @@
   transition: filter 240ms ease;
   filter: grayscale(0.25);
 }
-.be-refs img:hover { filter: grayscale(0); }
+.be-refs img:hover {
+  filter: grayscale(0);
+}
 @media (max-width: 560px) {
-  .be-refs { grid-template-columns: 1fr; }
-  .be-refs img { aspect-ratio: 16 / 9; }
+  .be-refs {
+    grid-template-columns: 1fr;
+  }
+  .be-refs img {
+    aspect-ratio: 16 / 9;
+  }
 }
 .be-steps {
   margin-top: 44px;
@@ -1160,8 +1236,13 @@
   width: 1.5px;
   background: #2e2e2e;
 }
-.be-step { position: relative; padding-bottom: 34px; }
-.be-step:last-child { padding-bottom: 0; }
+.be-step {
+  position: relative;
+  padding-bottom: 34px;
+}
+.be-step:last-child {
+  padding-bottom: 0;
+}
 .be-step::before {
   content: "";
   position: absolute;
@@ -1186,7 +1267,9 @@
   color: var(--caption-grey);
   max-width: 520px;
 }
-.be-diffs { margin-top: 52px; }
+.be-diffs {
+  margin-top: 52px;
+}
 .be-diff {
   background: #1f1f1f;
   border: 1px solid #2e2e2e;
@@ -1215,7 +1298,9 @@
   margin-top: 8px;
 }
 @media (max-width: 680px) {
-  .be-contact__layout { grid-template-columns: 1fr; }
+  .be-contact__layout {
+    grid-template-columns: 1fr;
+  }
 }
 .be-contact__img {
   width: 100%;
@@ -1229,7 +1314,9 @@
   padding: 0;
   margin: 26px 0 34px;
 }
-.be-contact__list li { margin-bottom: 18px; }
+.be-contact__list li {
+  margin-bottom: 18px;
+}
 .be-contact__key {
   display: block;
   font-size: 10px;
@@ -1244,7 +1331,9 @@
   color: var(--light-text);
   text-decoration: none;
 }
-a.be-contact__val:hover { color: var(--hero-yellow); }
+a.be-contact__val:hover {
+  color: var(--hero-yellow);
+}
 .be-cta {
   display: inline-block;
   background: var(--hero-yellow);
@@ -1255,7 +1344,9 @@ a.be-contact__val:hover { color: var(--hero-yellow); }
   letter-spacing: 0.08em;
   text-decoration: none;
   padding: 14px 34px;
-  transition: background var(--btn-duration) ease, transform var(--btn-duration) ease;
+  transition:
+    background var(--btn-duration) ease,
+    transform var(--btn-duration) ease;
 }
 .be-cta:hover {
   background: var(--hover-yellow);
