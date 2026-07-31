@@ -17,6 +17,13 @@ import {
 } from "./animations.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  /* ── fitText ── */
+  document.fonts.ready.then(() => {
+    fitText();
+    setTimeout(fitText, 120);
+  });
+  window.addEventListener("resize", fitText);
+
   /* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
   const slider = new Slider({
     onSlideChange: (index) => {
@@ -118,13 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showAboutView();
     openSubpage();
   };
-
-  /* ── fitText ── */
-  document.fonts.ready.then(() => {
-    fitText();
-    setTimeout(fitText, 120);
-  });
-  window.addEventListener("resize", fitText);
 
   /* ── ESC closes everything ── */
   document.addEventListener("keydown", (e) => {
