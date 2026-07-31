@@ -1376,13 +1376,13 @@ a.be-contact__val:hover { color: var(--hero-yellow); }
 
 /* ── Hero cutout group: periodic + interactive glow (text + silhouette) ── */
 @keyframes cutoutImgGlow {
-  0%, 73.3%, 100% {
+  0%, 26.7%, 100% {
     filter:
       drop-shadow(0 0 1px rgba(242, 193, 46, 0))
       drop-shadow(0 0 10px rgba(242, 193, 46, 0))
       drop-shadow(0 0 18px rgba(242, 193, 46, 0));
   }
-  86.7% {
+  13.3% {
     filter:
       drop-shadow(0 0 1px var(--hero-yellow))
       drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
@@ -1390,13 +1390,13 @@ a.be-contact__val:hover { color: var(--hero-yellow); }
   }
 }
 @keyframes cutoutTextGlow {
-  0%, 73.3%, 100% {
+  0%, 26.7%, 100% {
     text-shadow:
       0 0 1px rgba(242, 193, 46, 0),
       0 0 20px rgba(242, 193, 46, 0),
       0 0 25px rgba(242, 193, 46, 0);
   }
-  86.7% {
+  13.3% {
     text-shadow:
       0 0 1px var(--hero-yellow),
       0 0 20px rgba(242, 193, 46, 0.38),
@@ -1410,10 +1410,10 @@ a.be-contact__val:hover { color: var(--hero-yellow); }
   transition: text-shadow 250ms ease;
 }
 .title-card.is-current .hero-cutout-image {
-  animation: cutoutImgGlow 4.5s ease-in-out infinite 1.2s;
+  animation: cutoutImgGlow 4.5s ease-in-out infinite 1s;
 }
 .title-card.is-current .hero-cutout-cta {
-  animation: cutoutTextGlow 4.5s ease-in-out infinite 1.2s;
+  animation: cutoutTextGlow 4.5s ease-in-out infinite 1s;
 }
 .hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-image,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-image,
