@@ -130,7 +130,7 @@ class Slider {
         const dy = e.touches[0].clientY - this._ty;
         if (this._isH === null) this._isH = Math.abs(dx) > Math.abs(dy);
         if (!this._isH) return;
-        e.preventDefault();
+        // e.preventDefault();
         this._tdx = dx;
 
         if (!this.rafPending) {
