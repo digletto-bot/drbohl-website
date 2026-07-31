@@ -568,15 +568,17 @@
 
   </div><!-- /subpage-slider-track -->
 
+  <button class="subpage-ticket-btn" onclick="goToTickets()" aria-label="Tickets">
+    <img src="assets/icons/ticket.svg" alt="" aria-hidden="true" />
+  </button>
+
   <div class="subpage-bottombar">
+    <button class="subpage-nav-btn" onclick="subpagePrev()" aria-label="Vorherige Seite">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3.5L5.5 8l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <button class="ghost-button" onclick="closeSubpage()">Close</button>
-    <button class="subpage-bottombar__ticket" onclick="goToTickets()" aria-label="Tickets">
-      <svg viewBox="-180 -75 360 150" fill="none" aria-hidden="true">
-        <rect x="-170" y="-65" width="340" height="130" rx="10" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
-        <path d="M-170,-18 a18,18 0 0 1 0,36" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-        <path d="M170,-18 a18,18 0 0 0 0,36" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-        <line x1="95" y1="-53" x2="95" y2="53" stroke="currentColor" stroke-width="5" stroke-dasharray="7,6" stroke-linecap="round"/>
-      </svg>
+    <button class="subpage-nav-btn" onclick="subpageNext()" aria-label="Nächste Seite">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 </div>
