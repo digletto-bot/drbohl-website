@@ -317,27 +317,6 @@ class Menu {
     this.cards.forEach((card, i) =>
       card.classList.toggle("is-active", i === this._activeIdx),
     );
-
-  _updateActiveFromScroll() {
-    if (!this.list) return;
-    const centerY = this.list.scrollTop + this.list.offsetHeight / 2;
-    const cards = Array.from(this.list.querySelectorAll(".menu-card"));
-    let closest = 0;
-    let closestDist = Infinity;
-
-    cards.forEach((card, i) => {
-      const cardCenter = card.offsetTop + card.offsetHeight / 2;
-      const dist = Math.abs(cardCenter - centerY);
-      if (dist < closestDist) {
-        closestDist = dist;
-        closest = i;
-      }
-    });
-
-    cards.forEach((card, i) =>
-      card.classList.toggle("is-active", i === closest),
-    );
-  }
 }
 
 export default Menu;
