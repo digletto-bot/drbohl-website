@@ -306,7 +306,7 @@
   font-size: 12px;
 }
 .subpage-nav-btn {
-  display: inline-flex;
+  display: none; /* desktop only — shown via media query below */
   align-items: center;
   justify-content: center;
   width: 40px;
@@ -336,6 +336,9 @@
 .subpage-nav-btn:active {
   transform: scale(0.9);
   background: rgba(242, 193, 46, 0.15);
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .subpage-nav-btn { display: inline-flex; }
 }
 
 /* ── Sticky ticket button (top right, subpage overlay) ── */
