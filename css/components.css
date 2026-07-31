@@ -1538,3 +1538,78 @@ a.be-contact__val:hover {
     animation: none;
   }
 }
+
+/* ══════════════════════════════════════════════
+   DESKTOP / LARGE SCREEN PASS (mobile-first base)
+   ══════════════════════════════════════════════ */
+@media (min-width: 900px) {
+  :root {
+    --side-pad: 48px;
+  }
+
+  /* Subpage overlay: constrain and center content columns */
+  .subpage-overlay__title {
+    max-width: 1080px;
+    margin: 0 auto;
+    font-size: clamp(72px, 7vw, 110px);
+  }
+  .subpage-overlay__body,
+  .subpage-overlay__note {
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* About: wider readable column, centered */
+  .about-overlay__header { 
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .about-overlay__body {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 21px;
+  }
+  .about-overlay__body p.about-overlay__lead {
+    font-size: 28px;
+  }
+
+  /* Discography: roomier bars */
+  .disco { max-width: 840px; }
+  .disco__thumb { width: 128px; }
+  .disco__title { font-size: 24px; }
+  .disco__panel-inner {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 14px;
+    align-items: start;
+  }
+  .disco__item.is-open .disco__panel-inner { padding: 8px 14px 16px; }
+  .disco__spotify iframe { margin-top: 0; height: 152px; }
+
+  /* Bohl Entertainment brochure: scale up section rhythm */
+  .be-section { padding: 88px var(--side-pad); }
+  .be-h1 { font-size: clamp(56px, 6vw, 96px); }
+  .be-body { font-size: 17px; max-width: 640px; }
+  .be-grid { grid-template-columns: repeat(3, 1fr); }
+  .be-number { font-size: 96px; }
+
+  /* Bottom bar: keep controls together, centered */
+  .subpage-bottombar {
+    gap: 18px;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --side-pad: 64px;
+  }
+  .subpage-overlay__title { font-size: clamp(96px, 6.5vw, 128px); }
+}
+
+/* Hover-capable devices only: prevent sticky-hover artifacts on touch */
+@media (hover: none) {
+  .be-card:hover { transform: none; border-color: #2e2e2e; }
+  .disco__bar:hover { background: none; }
+}
