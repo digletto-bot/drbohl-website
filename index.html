@@ -82,9 +82,9 @@
         </div>
         <div class="title-card__actions" style="justify-content: space-between; flex-grow: 1;">
           <div class="social-icons" style="margin-top:5px">
-            <a href="https://facebook.com"  target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/icons/facebook-neon.png"  alt="Facebook"  width="64" height="64"/></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/instagram-neon.png" alt="Instagram" width="64" height="64"/></a>
-            <a href="https://tiktok.com"    target="_blank" rel="noopener" aria-label="TikTok"><img src="assets/icons/tiktok-neon.png"    alt="TikTok"    width="64" height="64"/></a>
+            <a href="https://www.facebook.com/share/1D3Cdf1hv9/"  target="_blank" rel="noopener" aria-label="Facebook"><img src="assets/icons/facebook-neon.png"  alt="Facebook"  width="64" height="64"/></a>
+            <a href="https://www.instagram.com/dr.bohl/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/instagram-neon.png" alt="Instagram" width="64" height="64"/></a>
+            <a href="https://www.tiktok.com/@dr.bohl"    target="_blank" rel="noopener" aria-label="TikTok"><img src="assets/icons/tiktok-neon.png"    alt="TikTok"    width="64" height="64"/></a>
             <a href="https://youtube.com"   target="_blank" rel="noopener" aria-label="YouTube"><img src="assets/icons/youtube-neon.png"   alt="YouTube"   width="64" height="64"/></a>
           </div>
           <button class="ghost-button" onclick="openSubpage()">Follow</button>
@@ -179,11 +179,13 @@
       <img class="title-card__image" src="assets/images/about-hero-bg.jpg" alt="Contact" loading="lazy" style="object-position:center top"/>
       <div class="title-card__overlay"></div>
       <button class="hero-cutout-button" type="button" aria-label="Über Dr.Bohl" onclick="openAboutPage()"></button>
-      <div class="hero-cutout-image-wrap">
-        <img class="hero-cutout-image" src="assets/images/about-hero-cutout.png" alt="" loading="lazy" style="object-position:center top"/>
+      <div class="hero-cutout-group">
+        <div class="hero-cutout-image-wrap">
+          <img class="hero-cutout-image" src="assets/images/about-hero-cutout.png" alt="" loading="lazy" style="object-position:center top"/>
+        </div>
+        <p class="hero-cutout-cta">KLICK MICH DU GIERIGER<span>(ABOUT)</span></p>
+        <div class="hero-cutout-cta__line" aria-hidden="true"></div>
       </div>
-      <p class="hero-cutout-cta">KLICK MICH DU GIERIGER<span>(ABOUT)</span></p>
-      <div class="hero-cutout-cta__line" aria-hidden="true"></div>
       <div class="title-card__content">
         <div class="title-card__headline-wrap">
           <span class="title-card__headline-line" data-fit="true">CONTACT</span>
@@ -375,7 +377,55 @@
     <article class="subpage-card is-next" data-index="4" aria-label="Musik">
       <div class="subpage-overlay__title">Musik</div>
       <div class="subpage-overlay__body">Releases, Playlists und Hörproben von Dr.Bohl.</div>
-      <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+
+      <section class="disco">
+        <p class="disco__label">Discography</p>
+
+        <div class="disco__item" data-yt="FZHPy-TDQGs" data-sp="3ygDjNYM0iOebN99xnmcLf">
+          <button class="disco__bar" aria-expanded="false">
+            <img class="disco__thumb" src="https://img.youtube.com/vi/FZHPy-TDQGs/mqdefault.jpg" alt="" loading="lazy" />
+            <span class="disco__title">Schnitzel <em>(all night long)</em></span>
+            <span class="disco__year">2026</span>
+            <span class="disco__chevron" aria-hidden="true"></span>
+          </button>
+          <div class="disco__panel">
+            <div class="disco__panel-inner">
+              <div class="disco__video"></div>
+              <div class="disco__spotify"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="disco__item" data-yt="iA3T5BsK59w" data-sp="7w4lRwN9v1mMw5TXU5Z208">
+          <button class="disco__bar" aria-expanded="false">
+            <img class="disco__thumb" src="https://img.youtube.com/vi/iA3T5BsK59w/mqdefault.jpg" alt="" loading="lazy" />
+            <span class="disco__title">Weisser Spritzer</span>
+            <span class="disco__year">2025</span>
+            <span class="disco__chevron" aria-hidden="true"></span>
+          </button>
+          <div class="disco__panel">
+            <div class="disco__panel-inner">
+              <div class="disco__video"></div>
+              <div class="disco__spotify"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="disco__item" data-yt="xkx6l-3OYb8" data-sp="5fKVrbQJzzMlQba234Y5JP">
+          <button class="disco__bar" aria-expanded="false">
+            <img class="disco__thumb" src="https://img.youtube.com/vi/xkx6l-3OYb8/mqdefault.jpg" alt="" loading="lazy" />
+            <span class="disco__title">Du Dummer</span>
+            <span class="disco__year">2025</span>
+            <span class="disco__chevron" aria-hidden="true"></span>
+          </button>
+          <div class="disco__panel">
+            <div class="disco__panel-inner">
+              <div class="disco__video"></div>
+              <div class="disco__spotify"></div>
+            </div>
+          </div>
+        </div>
+      </section>
     </article>
 
     <!-- CARD 5 — PODCAST -->
@@ -518,15 +568,23 @@
 
   </div><!-- /subpage-slider-track -->
 
+  <button class="subpage-ticket-btn" onclick="goToTickets()" aria-label="Tickets">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" aria-hidden="true">
+      <path d="M37.9623,14.9245a3.4555,3.4555,0,0,1-4.8868-4.8868L28.5377,5.5,5.5,28.5377l4.5377,4.5378a3.4555,3.4555,0,0,1,4.8868,4.8868L19.4623,42.5,42.5,19.4623Z"/>
+      <line x1="21.9057" y1="12.1321" x2="24" y2="14.2264"/>
+      <line x1="25.8616" y1="16.0881" x2="27.956" y2="18.1824"/>
+      <line x1="29.8176" y1="20.044" x2="31.9119" y2="22.1384"/>
+      <line x1="33.7736" y1="24" x2="35.8679" y2="26.0943"/>
+    </svg>
+  </button>
+
   <div class="subpage-bottombar">
+    <button class="subpage-nav-btn" onclick="subpagePrev()" aria-label="Vorherige Seite">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3.5L5.5 8l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <button class="ghost-button" onclick="closeSubpage()">Close</button>
-    <button class="subpage-bottombar__ticket" onclick="goToTickets()" aria-label="Tickets">
-      <svg viewBox="-180 -75 360 150" fill="none" aria-hidden="true">
-        <rect x="-170" y="-65" width="340" height="130" rx="10" stroke="currentColor" stroke-width="7" stroke-linejoin="round"/>
-        <path d="M-170,-18 a18,18 0 0 1 0,36" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-        <path d="M170,-18 a18,18 0 0 0 0,36" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-        <line x1="95" y1="-53" x2="95" y2="53" stroke="currentColor" stroke-width="5" stroke-dasharray="7,6" stroke-linecap="round"/>
-      </svg>
+    <button class="subpage-nav-btn" onclick="subpageNext()" aria-label="Nächste Seite">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 </div>
