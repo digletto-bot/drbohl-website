@@ -104,7 +104,7 @@ class Menu {
     this.stage.addEventListener(
       "touchmove",
       (e) => {
-        e.preventDefault();
+        if (this._dragging) e.preventDefault();
         this._dragMove(e.touches[0].clientY);
       },
       { passive: false },
