@@ -64,7 +64,10 @@ class Menu {
     });
 
     this.burgers.forEach((b) =>
-      b.addEventListener("click", () => this.toggle()),
+      b.addEventListener("click", () => {
+        this.toggle();
+        document.activeElement.blur();
+      }),
     );
     this.closeBtn?.addEventListener("click", () => this.close());
     this.overlay.addEventListener("click", (e) => {
@@ -79,6 +82,7 @@ class Menu {
       if (e.key === "ArrowDown") {
         e.preventDefault();
         this._snapTo(Math.min(this._activeIdx + 1, this.cards.length - 1));
+        console.log(this._activeIdx);
       }
       if (e.key === "ArrowUp") {
         e.preventDefault();
@@ -86,6 +90,7 @@ class Menu {
       }
       if (e.key === "Enter") {
         this.close();
+        console.log(this._activeIdx);
         setTimeout(() => this.slider.goTo(this._activeIdx), 80);
       }
     });
