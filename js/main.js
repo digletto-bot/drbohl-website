@@ -6,6 +6,7 @@
 "use strict";
 
 import Slider from "./slider.js";
+import Router from "./router.js";
 import Menu from "./menu.js";
 import { renderTourDates } from "./tourDates.js";
 import {
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateProgressNav(index);
       updateSlideCounter(index, slider.totalSlides);
       menu.onSlideChange(index);
+      if (window.router) router.onSlideChange(index);
       dismissSwipeHint();
       subpageSlider.goTo(index);
     },
@@ -42,6 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ── Menu ── */
   const menu = new Menu(slider);
   menu.onSlideChange(slider.index);
+
+  /* ── Router ── */
+  const router = new Router(slider);
+  window.router = router;
 
   /* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ── */
   document.querySelectorAll(".progress-nav").forEach((nav) => {
@@ -296,7 +302,9 @@ function initDiscography() {
         items.forEach((other) => {
           if (other !== item && other.classList.contains("is-open")) {
             other.classList.remove("is-open");
-            other.querySelector(".disco__bar").setAttribute("aria-expanded", "false");
+            other
+              .querySelector(".disco__bar")
+              .setAttribute("aria-expanded", "false");
           }
         });
       }
