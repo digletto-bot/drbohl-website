@@ -338,37 +338,6 @@ class Menu {
       card.classList.toggle("is-active", i === closest),
     );
   }
-
-  // _snapToCenter() {
-  //   if (!this.list) return;
-  //   const centerY = this.list.scrollTop + this.list.offsetHeight / 2;
-  //   const cards = Array.from(this.list.querySelectorAll(".menu-card"));
-  //   let closest = cards[0];
-  //   let closestDist = Infinity;
-
-  //   cards.forEach((card) => {
-  //     const cardCenter = card.offsetTop + card.offsetHeight / 2;
-  //     const dist = Math.abs(cardCenter - centerY);
-  //     if (dist < closestDist) {
-  //       closestDist = dist;
-  //       closest = card;
-  //     }
-  //   });
-
-  //   const targetScroll =
-  //     closest.offsetTop + closest.offsetHeight / 2 - this.list.offsetHeight / 2;
-  //   this.list.scrollTo({ top: targetScroll, behavior: "smooth" });
-  // }
-
-  // _scrollToCard(index, behavior = "smooth") {
-  //   if (!this.list) return;
-  //   const cards = this.list.querySelectorAll(".menu-card");
-  //   const card = cards[index];
-  //   if (!card) return;
-  //   const targetScroll =
-  //     card.offsetTop + card.offsetHeight / 2 - this.list.offsetHeight / 2;
-  //   this.list.scrollTo({ top: targetScroll, behavior });
-  // }
 }
 
 export default Menu;
