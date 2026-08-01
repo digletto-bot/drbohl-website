@@ -20,24 +20,35 @@
   position: relative;
   flex: 1;
   max-width: 28px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: max-width 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.progress-nav__item.is-active {
+  max-width: 38px;
+}
+.progress-nav__bar {
+  width: 100%;
   height: 6px;
   border-radius: 999px;
   background: var(--progress-inactive);
-  cursor: pointer;
-  border: none;
+  pointer-events: none;
   transition:
     background 0.25s ease,
-    transform 0.2s ease,
-    max-width 0.3s ease;
-  -webkit-tap-highlight-color: transparent;
+    transform 0.2s ease;
 }
-.progress-nav__item:hover {
+.progress-nav__item:hover .progress-nav__bar {
   background: rgba(245, 245, 240, 0.6);
   transform: scaleY(1.4);
 }
-.progress-nav__item.is-active {
+.progress-nav__item.is-active .progress-nav__bar {
   background: var(--progress-active);
-  max-width: 38px;
 }
 
 /* ── Tooltip: slide title, shown below the item on hover/focus ── */

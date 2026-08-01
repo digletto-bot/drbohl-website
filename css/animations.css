@@ -62,7 +62,7 @@
 }
 
 /* ── Progress bar pulse on activation ── */
-.progress-nav__item.is-active {
+.progress-nav__item.is-active .progress-nav__bar {
   animation: barPulse 1.2s ease 620ms 1;
 }
 
