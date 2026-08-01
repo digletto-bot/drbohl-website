@@ -261,10 +261,10 @@ class Menu {
 
   _dragEnd() {
     this._dragging = false;
-    const max = this.cards.length - 1;
     if (Math.abs(this._velocity) > FLING_MIN_VELOCITY) {
       this._startInertia(this._velocity);
     } else {
+      const max = this.cards.length - 1;
       const target = Math.max(0, Math.min(max, Math.round(this._pos)));
       this._startSettle(target, this._velocity);
     }
