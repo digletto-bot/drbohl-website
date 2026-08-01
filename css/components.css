@@ -17,6 +17,7 @@
   z-index: 20;
 }
 .progress-nav__item {
+  position: relative;
   flex: 1;
   max-width: 28px;
   height: 6px;
@@ -37,6 +38,63 @@
 .progress-nav__item.is-active {
   background: var(--progress-active);
   max-width: 38px;
+}
+
+/* ── Tooltip: slide title, shown below the item on hover/focus ── */
+.progress-nav__item::after {
+  content: attr(aria-label);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 12px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid var(--hero-yellow);
+  box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
+  color: var(--hero-yellow);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 0s 180ms;
+  z-index: 30;
+}
+.progress-nav__item:first-child::after {
+  left: 0;
+  transform: translate(0, -4px);
+}
+.progress-nav__item:last-child::after {
+  left: auto;
+  right: 0;
+  transform: translate(0, -4px);
+}
+.progress-nav__item:hover::after,
+.progress-nav__item:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 0s;
+}
+.progress-nav__item:first-child:hover::after,
+.progress-nav__item:first-child:focus-visible::after {
+  transform: translate(0, 0);
+}
+.progress-nav__item:last-child:hover::after,
+.progress-nav__item:last-child:focus-visible::after {
+  transform: translate(0, 0);
 }
 
 /* ── Burger ── */
