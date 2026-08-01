@@ -57,7 +57,6 @@
   position: absolute;
   top: 100%;
   left: 50%;
-  margin-top: 12px;
   padding: 5px 10px;
   border-radius: 6px;
   background: rgba(20, 20, 20, 0.92);
@@ -1468,7 +1467,9 @@ a.be-contact__val:hover {
   color: var(--light-text);
   transition: background 200ms ease;
 }
-.disco__bar:hover { background: #1f1f1f; }
+.disco__bar:hover {
+  background: #1f1f1f;
+}
 .disco__thumb {
   width: 88px;
   aspect-ratio: 16 / 9;
@@ -1504,20 +1505,26 @@ a.be-contact__val:hover {
   flex: 0 0 auto;
   margin: -4px 4px 0 2px;
 }
-.disco__item.is-open .disco__chevron { transform: rotate(225deg) translate(-2px, -2px); }
+.disco__item.is-open .disco__chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
 
 .disco__panel {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.disco__item.is-open .disco__panel { grid-template-rows: 1fr; }
+.disco__item.is-open .disco__panel {
+  grid-template-rows: 1fr;
+}
 .disco__panel-inner {
   min-height: 0;
   overflow: hidden;
   padding: 0 10px;
 }
-.disco__item.is-open .disco__panel-inner { padding: 4px 10px 12px; }
+.disco__item.is-open .disco__panel-inner {
+  padding: 4px 10px 12px;
+}
 .disco__video iframe {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -1533,24 +1540,25 @@ a.be-contact__val:hover {
   margin-top: 10px;
 }
 
-
 /* ── Hero cutout group: periodic + interactive glow (text + silhouette) ── */
 @keyframes cutoutImgGlow {
-  0%, 26.7%, 100% {
-    filter:
-      drop-shadow(0 0 1px rgba(242, 193, 46, 0))
+  0%,
+  26.7%,
+  100% {
+    filter: drop-shadow(0 0 1px rgba(242, 193, 46, 0))
       drop-shadow(0 0 10px rgba(242, 193, 46, 0))
       drop-shadow(0 0 18px rgba(242, 193, 46, 0));
   }
   13.3% {
-    filter:
-      drop-shadow(0 0 1px var(--hero-yellow))
+    filter: drop-shadow(0 0 1px var(--hero-yellow))
       drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
       drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
   }
 }
 @keyframes cutoutTextGlow {
-  0%, 26.7%, 100% {
+  0%,
+  26.7%,
+  100% {
     text-shadow:
       0 0 1px rgba(242, 193, 46, 0),
       0 0 20px rgba(242, 193, 46, 0),
@@ -1579,8 +1587,7 @@ a.be-contact__val:hover {
 .hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-image,
 .hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-image {
   animation: none;
-  filter:
-    drop-shadow(0 0 1px var(--hero-yellow))
+  filter: drop-shadow(0 0 1px var(--hero-yellow))
     drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
     drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
 }
