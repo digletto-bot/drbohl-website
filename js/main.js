@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ── fitText ── */
   document.fonts.ready.then(() => {
     fitText();
+    hideLoadingScreen();
     setTimeout(fitText, 120);
   });
   window.addEventListener("resize", fitText);
@@ -133,6 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
     closeSubpage();
   });
 });
+
+/* ── Loading screen: fades out once fonts are ready and fitText has run ── */
+function hideLoadingScreen() {
+  document.getElementById("loading-screen")?.classList.add("is-hidden");
+}
 
 /* ── Subpage overlay (single unified container; called from inline onclick) ── */
 window.openSubpage = function () {
