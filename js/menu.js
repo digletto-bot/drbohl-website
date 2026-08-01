@@ -19,7 +19,11 @@ const SCALE_STEP = 0.09; // scale reduction per offset step
 const BRIGHTNESS_STEP = 0.4; // brightness reduction per offset step
 const MIN_BRIGHTNESS = 0.2; // floor brightness
 const VISIBLE_RANGE = 3; // cards shown above/below active
-const SNAP_MS = 380; // snap animation duration
+const SNAP_MS = 380; // base snap animation duration
+const SNAP_MS_PER_CARD = 70; // extra duration per extra card the snap travels
+const SNAP_MS_MAX = 760; // cap so long flings don't feel sluggish
+const VELOCITY_SAMPLE_MS = 80; // window used to measure release velocity
+const MOMENTUM_MS = 180; // "coast" time projected past the release point
 
 class Menu {
   constructor(slider) {
@@ -38,6 +42,7 @@ class Menu {
     this._dragged = false;
     this._dragY = 0;
     this._dragPos = 0;
+    this._velSamples = [];
     this._snapTimer = null;
     this._rafId = null;
 
@@ -210,6 +215,7 @@ class Menu {
     this._dragged = false;
     this._dragY = y;
     this._dragPos = this._pos;
+    this._velSamples = [{ t: performance.now(), y }];
     this.cards.forEach((c) => c.classList.remove("is-snapping"));
     cancelAnimationFrame(this._rafId);
   }
@@ -224,28 +230,68 @@ class Menu {
     if (pos > max) pos = max + Math.pow(pos - max, 0.6) * 0.5;
     this._pos = pos;
     if (Math.abs(dy) > 5) this._dragged = true;
+
+    // Keep a rolling window of recent samples to measure release velocity
+    // (using only the last ~80ms avoids stale, slow parts of a long drag
+    // skewing the fling if the finger pauses before lifting).
+    const now = performance.now();
+    this._velSamples.push({ t: now, y });
+    const cutoff = now - VELOCITY_SAMPLE_MS;
+    while (this._velSamples.length > 2 && this._velSamples[0].t < cutoff) {
+      this._velSamples.shift();
+    }
+
     cancelAnimationFrame(this._rafId);
     this._rafId = requestAnimationFrame(() => this._applyTransforms());
   }
 
   _dragEnd() {
     this._dragging = false;
-    this._snapTo(
-      Math.max(0, Math.min(this.cards.length - 1, Math.round(this._pos))),
-    );
+
+    // Project the release velocity forward so a fast flick carries past
+    // the nearest card instead of always snapping back to where the
+    // pointer happened to lift.
+    let target = this._pos;
+    const samples = this._velSamples;
+    if (samples && samples.length >= 2) {
+      const first = samples[0];
+      const last = samples[samples.length - 1];
+      const dt = last.t - first.t;
+      if (dt > 0) {
+        const pxPerMs = (last.y - first.y) / dt;
+        const posPerMs = -pxPerMs / (CARD_GAP + this._cardH);
+        target = this._pos + posPerMs * MOMENTUM_MS;
+      }
+    }
+    this._velSamples = [];
+
+    const max = this.cards.length - 1;
+    target = Math.max(0, Math.min(max, Math.round(target)));
+    this._snapTo(target);
   }
 
   // ── Snap ────────────────────────────────────────────────────
   _snapTo(index) {
+    // Longer travel gets a (capped) longer, easier deceleration so a
+    // multi-card flick reads as coasting to a stop rather than teleporting.
+    const distance = Math.abs(index - this._pos);
+    const duration = Math.min(
+      SNAP_MS_MAX,
+      SNAP_MS + Math.max(0, distance - 1) * SNAP_MS_PER_CARD,
+    );
+
     this._activeIdx = index;
     this._pos = index;
-    this.cards.forEach((c) => c.classList.add("is-snapping"));
+    this.cards.forEach((c) => {
+      c.style.setProperty("--menu-snap-ms", duration + "ms");
+      c.classList.add("is-snapping");
+    });
     this._applyTransforms();
     this._updateActive();
     clearTimeout(this._snapTimer);
     this._snapTimer = setTimeout(() => {
       this.cards.forEach((c) => c.classList.remove("is-snapping"));
-    }, SNAP_MS + 50);
+    }, duration + 50);
   }
 
   // ── Core transform ──────────────────────────────────────────

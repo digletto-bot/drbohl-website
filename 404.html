@@ -522,11 +522,7 @@
     <!-- CARD 8 — CONTACT (with nested About view) -->
     <article id="subpage-card-contact" class="subpage-card is-next" data-index="8" aria-label="Contact">
       <div id="contact-view" class="subpage-card__view is-active">
-        <div class="subpage-overlay__title">Contact</div>
-        <div class="view-toggle" role="tablist" aria-label="Contact or About">
-          <button type="button" class="view-toggle__item is-active" data-view="contact" role="tab" aria-selected="true" onclick="showContactView()">Contact</button>
-          <button type="button" class="view-toggle__item" data-view="about" role="tab" aria-selected="false" onclick="showAboutView()">About</button>
-        </div>
+        <div class="subpage-overlay__title view-switch" role="tablist" aria-label="Contact or About"><button type="button" class="view-switch__item is-active" data-view="contact" role="tab" aria-selected="true" onclick="showContactView()">Contact</button><span class="view-switch__sep" aria-hidden="true">|</span><button type="button" class="view-switch__item" data-view="about" role="tab" aria-selected="false" onclick="showAboutView()">About</button></div>
         <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
         <form id="contact-form" class="contact-form" novalidate>
           <label class="contact-form__field">
@@ -549,11 +545,7 @@
       </div>
       <div id="about-view" class="subpage-card__view">
         <div class="about-overlay__header">
-          <h1 class="about-overlay__title">ABOUT</h1>
-          <div class="view-toggle" role="tablist" aria-label="Contact or About">
-            <button type="button" class="view-toggle__item" data-view="contact" role="tab" aria-selected="false" onclick="showContactView()">Contact</button>
-            <button type="button" class="view-toggle__item is-active" data-view="about" role="tab" aria-selected="true" onclick="showAboutView()">About</button>
-          </div>
+          <div class="about-overlay__title view-switch" role="tablist" aria-label="Contact or About"><button type="button" class="view-switch__item" data-view="contact" role="tab" aria-selected="false" onclick="showContactView()">Contact</button><span class="view-switch__sep" aria-hidden="true">|</span><button type="button" class="view-switch__item is-active" data-view="about" role="tab" aria-selected="true" onclick="showAboutView()">About</button></div>
         </div>
         <div class="about-overlay__body" id="about-body"></div>
       </div>
@@ -578,15 +570,7 @@
     </svg>
   </button>
 
-  <div class="subpage-bottombar">
-    <button class="subpage-nav-btn" onclick="subpagePrev()" aria-label="Vorherige Seite">
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3.5L5.5 8l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <button class="ghost-button" onclick="closeSubpage()">Close</button>
-    <button class="subpage-nav-btn" onclick="subpageNext()" aria-label="Nächste Seite">
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3.5L10.5 8L6 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
+  <button class="ghost-button subpage-close-btn" onclick="closeSubpage()">Close</button>
 </div>
 
 </div><!-- /app -->

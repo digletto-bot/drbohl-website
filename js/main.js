@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function setViewToggle(activeView) {
-    document.querySelectorAll(".view-toggle__item").forEach((btn) => {
+    document.querySelectorAll(".view-switch__item").forEach((btn) => {
       const isActive = btn.dataset.view === activeView;
       btn.classList.toggle("is-active", isActive);
       btn.setAttribute("aria-selected", isActive ? "true" : "false");
@@ -162,11 +162,11 @@ const ABOUT_PARAGRAPHS = [
 function buildAboutContent() {
   const body = document.getElementById("about-body");
   if (!body || body.dataset.filled) return;
-  const maxSpreadMs = 480;
+  const maxSpreadMs = 620;
 
   function splitWords(text) {
     const words = text.split(/\s+/).filter(Boolean);
-    const step = Math.min(24, maxSpreadMs / words.length);
+    const step = Math.min(30, maxSpreadMs / words.length);
     return words
       .map(
         (w, j) =>
@@ -205,33 +205,221 @@ function initAboutWordReveal() {
   body.querySelectorAll("p").forEach((p) => observer.observe(p));
 }
 
-/* ── About view scroll: paragraphs fade/scale into the sticky header's vignette ── */
+/* ── About view scroll: each rendered LINE contracts/fades toward BOTH
+   the sticky header at top AND the fixed bottom bar, as a single unit,
+   gradually. Fade (opacity) and scale are two INDEPENDENT effects with
+   their own zone sizes — scale starts much earlier/subtler
+   (maxScaleZone), fade only kicks in right at the edge (maxFadeZone) —
+   so a line visibly shrinks for a while before it also starts vanishing.
+   Scale additionally eases in exponentially (slow at first, ramping up
+   fast right at the edge) rather than linearly.
+   Crucially, the breakpoint where a line STARTS any effect is clamped to
+   that line's own resting distance from whichever edge, captured at the
+   moment the view opens (scrollTop is always 0 then — see
+   showAboutView()) — so nothing can ever appear mid-fade/scale before
+   the user has actually scrolled. A line already sitting inside what
+   would be a zone at rest gets that zone shrunk to its actual resting
+   gap instead of borrowing distance that doesn't exist yet; a line not
+   yet visible (below the bottom bar) keeps the full zone so it animates
+   in properly once scrolled to.
+   Each paragraph's .word spans get wrapped into one block-level
+   .about-line span per detected line — that's what makes a line scale
+   together instead of every word shrinking around its own center.
+   Perf notes (this runs on every scroll frame on mobile, so it stays cheap):
+   - Line-wrapping (and each line's zones) requires a full reflow pass,
+     so it only happens when the view opens or the viewport resizes,
+     never mid-scroll.
+   - Each scroll frame reads one getBoundingClientRect() per LINE (not per
+     word) — line count is much smaller than word count.
+   - A line that's fully clear of both edges' zones "settles" and is
+     skipped (no style write) on subsequent frames until that changes, so
+     only lines actually inside a zone get touched.
+   - will-change is toggled only on lines currently inside a zone, instead
+     of living permanently on every line/word, avoiding stray compositor
+     layers on mobile GPUs.
+   - Word-level opacity (the fade-in reveal) and line-level opacity (this
+     scroll effect) live on different elements and simply multiply
+     together visually, so a not-yet-revealed word can never be forced
+     visible by the line's scroll state. ── */
 let updateAboutFade = () => {};
 
 function initAboutScroll() {
   const scrollEl = document.getElementById("subpage-card-contact");
   const header = document.querySelector(".about-overlay__header");
+  const bottomBar = document.querySelector(".subpage-bottombar");
   const body = document.getElementById("about-body");
   if (!scrollEl || !header || !body) return;
 
-  const fadeZone = 36;
+  const maxFadeZoneTop = 40; // upper bound on how early a line may start fading (top)
+  const maxScaleZoneTop = 150; // upper bound on how early a line may start scaling (top)
+  const maxFadeZoneBottom = 140; // same, but as a line enters from the bottom
+  const maxScaleZoneBottom = 220; // same, but as a line enters from the bottom
   let ticking = false;
+  // flat list of { el, fadeZoneTop, scaleZoneTop, fadeZoneBottom,
+  // scaleZoneBottom, maxZoneTop, maxZoneBottom, settled }
+  let lines = [];
+
+  // Exponential ease-in: barely moves for most of the approach, then
+  // ramps up sharply right at the edge. t: 1 = at rest, 0 = fully at edge.
+  function easeScale(t) {
+    const p = 1 - t;
+    const eased = p <= 0 ? 0 : p >= 1 ? 1 : Math.pow(2, 10 * (p - 1));
+    return 1 - eased;
+  }
+
+  function applyLine(el, tFade, tScale) {
+    el.style.opacity = tFade;
+    el.style.transform = `scale(${(0.85 + tScale * 0.15).toFixed(3)})`;
+  }
+
+  // A zone shrinks to the line's actual resting distance from an edge if
+  // that distance is smaller than the max (preventing pre-trigger at
+  // rest); otherwise it keeps the full max — including when the line
+  // isn't visible yet at rest (negative/undefined distance), so it still
+  // animates in properly once scrolled into range.
+  function clampZone(maxZone, restingGap) {
+    return restingGap >= 0 && restingGap < maxZone ? restingGap : maxZone;
+  }
+
+  // Wrap each paragraph's words into one block span per rendered line, so
+  // a line contracts as a single cohesive unit rather than each word
+  // scaling around its own center. Re-run only on view-open/resize —
+  // both of those always happen at scrollTop 0, which is what lets us
+  // safely capture each line's resting gap from each edge below.
+  function rebuildLines() {
+    lines = [];
+    const headerBottom = header.getBoundingClientRect().bottom;
+    const bottomEdge = bottomBar
+      ? bottomBar.getBoundingClientRect().top
+      : scrollEl.getBoundingClientRect().bottom;
+
+    body.querySelectorAll("p").forEach((p) => {
+      const words = Array.from(p.querySelectorAll(".word"));
+      if (!words.length) return;
+
+      // Flatten first (undoes any previous line-wrapping) so natural
+      // reflow can be re-measured accurately.
+      const flat = document.createDocumentFragment();
+      words.forEach((w, i) => {
+        flat.appendChild(w);
+        if (i < words.length - 1) flat.appendChild(document.createTextNode(" "));
+      });
+      p.replaceChildren(flat);
+
+      // Detect line breaks from the now-flat natural flow, tracking each
+      // line's top and bottom edge as we go.
+      const groups = [];
+      let lastTop = null;
+      words.forEach((w) => {
+        const rect = w.getBoundingClientRect();
+        if (lastTop === null || Math.abs(rect.top - lastTop) > 2) {
+          groups.push({ words: [], top: Infinity, bottom: 0 });
+          lastTop = rect.top;
+        }
+        const group = groups[groups.length - 1];
+        group.words.push(w);
+        group.top = Math.min(group.top, rect.top);
+        group.bottom = Math.max(group.bottom, rect.bottom);
+      });
+
+      // Rebuild as one block wrapper per detected line.
+      const wrapped = document.createDocumentFragment();
+      groups.forEach((group) => {
+        const lineEl = document.createElement("span");
+        lineEl.className = "about-line";
+        group.words.forEach((w, i) => {
+          lineEl.appendChild(w);
+          if (i < group.words.length - 1)
+            lineEl.appendChild(document.createTextNode(" "));
+        });
+        wrapped.appendChild(lineEl);
+
+        const restingGapTop = group.bottom - headerBottom;
+        const restingGapBottom = bottomEdge - group.top;
+        const fadeZoneTop = clampZone(maxFadeZoneTop, restingGapTop);
+        const scaleZoneTop = clampZone(maxScaleZoneTop, restingGapTop);
+        const fadeZoneBottom = clampZone(maxFadeZoneBottom, restingGapBottom);
+        const scaleZoneBottom = clampZone(maxScaleZoneBottom, restingGapBottom);
+        lines.push({
+          el: lineEl,
+          fadeZoneTop,
+          scaleZoneTop,
+          fadeZoneBottom,
+          scaleZoneBottom,
+          maxZoneTop: Math.max(fadeZoneTop, scaleZoneTop),
+          maxZoneBottom: Math.max(fadeZoneBottom, scaleZoneBottom),
+          settled: undefined,
+        });
+      });
+      p.replaceChildren(wrapped);
+    });
+  }
 
   function update() {
     const headerBottom = header.getBoundingClientRect().bottom;
-    const threshold = headerBottom + fadeZone;
-    body.querySelectorAll("p").forEach((p) => {
-      const bottom = p.getBoundingClientRect().bottom;
-      let t;
-      if (bottom >= threshold) t = 1;
-      else if (bottom <= headerBottom) t = 0;
-      else t = (bottom - headerBottom) / fadeZone;
-      p.style.opacity = t;
-      p.style.transform = `scale(${0.92 + t * 0.08})`;
+    const bottomEdge = bottomBar
+      ? bottomBar.getBoundingClientRect().top
+      : scrollEl.getBoundingClientRect().bottom;
+
+    lines.forEach((line) => {
+      const rect = line.el.getBoundingClientRect();
+      const topGap = rect.bottom - headerBottom;
+      const bottomGap = bottomEdge - rect.top;
+
+      const atRestTop = line.maxZoneTop <= 0 || topGap >= line.maxZoneTop;
+      const atRestBottom =
+        line.maxZoneBottom <= 0 || bottomGap >= line.maxZoneBottom;
+
+      // Fully clear of both edges' zones: snap to rest once, then skip
+      // this line entirely until its state changes again.
+      if (atRestTop && atRestBottom) {
+        if (line.settled !== 1) {
+          applyLine(line.el, 1, 1);
+          line.el.style.willChange = "auto";
+          line.settled = 1;
+        }
+        return;
+      }
+      // Fully behind the header, or not yet scrolled up past the bottom
+      // bar: fully hidden either way.
+      if (topGap <= 0 || bottomGap <= 0) {
+        if (line.settled !== 0) {
+          applyLine(line.el, 0, 0);
+          line.el.style.willChange = "auto";
+          line.settled = 0;
+        }
+        return;
+      }
+
+      if (line.settled !== null) line.el.style.willChange = "transform, opacity";
+      line.settled = null;
+
+      const tFadeTop =
+        line.fadeZoneTop <= 0 ? 1 : Math.min(1, topGap / line.fadeZoneTop);
+      const tFadeBottom =
+        line.fadeZoneBottom <= 0 ? 1 : Math.min(1, bottomGap / line.fadeZoneBottom);
+      const tScaleTop =
+        line.scaleZoneTop <= 0
+          ? 1
+          : easeScale(Math.min(1, topGap / line.scaleZoneTop));
+      const tScaleBottom =
+        line.scaleZoneBottom <= 0
+          ? 1
+          : easeScale(Math.min(1, bottomGap / line.scaleZoneBottom));
+
+      applyLine(
+        line.el,
+        Math.min(tFadeTop, tFadeBottom),
+        Math.min(tScaleTop, tScaleBottom),
+      );
     });
     ticking = false;
   }
-  updateAboutFade = update;
+
+  updateAboutFade = () => {
+    rebuildLines();
+    update();
+  };
 
   scrollEl.addEventListener(
     "scroll",
@@ -243,7 +431,16 @@ function initAboutScroll() {
     },
     { passive: true },
   );
-  update();
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (document.getElementById("about-view")?.classList.contains("is-active")) {
+        updateAboutFade();
+      }
+    }, 150);
+  });
 }
 
 /* ── Bohl Entertainment brochure: scroll-reveal (subpage card 7) ── */

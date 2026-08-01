@@ -21,6 +21,9 @@
 
   /* ── Spacing ── */
   --side-pad: 24px;
+  /* Reserved band at the bottom of the subpage overlay for the floating
+     Close button — .subpage-close-btn centers itself within this. */
+  --subpage-bottom-pad: 55px;
 
   /* ── Typography ── */
   --font-display: "DrukCond", "Impact", "Arial Black", sans-serif;
@@ -28,6 +31,7 @@
 
   /* ── Motion ── */
   --slide-duration: 300ms;
+  --subpage-slide-duration: 450ms;
   --slide-easing: cubic-bezier(0.22, 1, 0.36, 1);
   --btn-duration: 180ms;
 

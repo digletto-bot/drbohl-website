@@ -117,16 +117,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 44px;
-  padding: 0 32px;
-  border-radius: 999px;
-  background: rgba(20, 20, 20, 0.5);
+  padding: 6px 18px;
+  border-radius: 8px;
+  background: rgba(20, 20, 20, 0.9);
   color: var(--hero-yellow);
-  border: 2px solid var(--hero-yellow);
+  border: 1.9px solid var(--hero-yellow);
   box-shadow: 0 0 10px rgba(242, 193, 46, 0.35);
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 19px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
@@ -147,49 +146,79 @@
 }
 .ghost-button:active {
   transform: scale(0.95);
+  background: rgba(242, 193, 46, 0.40);
 }
 
-/* ── View toggle (Contact / About segmented switch) ── */
-.view-toggle {
+/* ── View switch: the title itself is the Contact/About toggle.
+   Both words read as clickable at rest (medium-contrast, pointer cursor);
+   the active one is yellow with an underline that grows in/out on
+   change, the inactive one brightens to off-white on hover/focus so
+   neither side ever reads as "disabled". Real <button role="tab"> markup
+   with aria-selected inside a role="tablist" wrapper (see index.html)
+   carries the actual tab semantics — this is just the visual layer. ── */
+.view-switch {
   display: inline-flex;
-  margin: 12px var(--side-pad) 0;
-  padding: 3px;
-  gap: 2px;
-  border-radius: 999px;
-  background: rgba(20, 20, 20, 0.5);
-  border: 2px solid var(--hero-yellow);
-  box-shadow: 0 0 10px rgba(242, 193, 46, 0.35);
+  align-items: baseline;
+  flex-wrap: wrap;
 }
-.view-toggle__item {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 34px;
-  padding: 0 18px;
+.view-switch__item {
+  position: relative;
+  display: inline;
+  padding: 0;
+  margin: 0;
   border: none;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--hero-yellow);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  background: none;
+  font: inherit;
+  color: var(--caption-grey);
   cursor: pointer;
-  white-space: nowrap;
-  transition:
-    background var(--btn-duration) ease,
-    color var(--btn-duration) ease;
   -webkit-tap-highlight-color: transparent;
+  transition: color 220ms ease;
 }
-.view-toggle__item.is-active {
+/* Underline: hidden/collapsed at rest, grows in from the center when the
+   item becomes active, shrinks back out when it stops being active. */
+.view-switch__item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.12em;
+  height: 4px;
+  border-radius: 2px;
   background: var(--hero-yellow);
-  color: var(--dark-text);
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease;
 }
-/* Ancestor header already provides horizontal padding */
-.about-overlay__header .view-toggle {
-  margin-left: 0;
-  margin-right: 0;
+.view-switch__item.is-active {
+  color: var(--hero-yellow);
+}
+.view-switch__item.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.view-switch__item:hover:not(.is-active),
+.view-switch__item:focus-visible:not(.is-active) {
+  color: var(--light-text);
+}
+.view-switch__item:focus-visible {
+  outline: 2px solid var(--hero-yellow);
+  outline-offset: 4px;
+}
+.view-switch__sep {
+  padding: 0 0.12em;
+  font-weight: 400;
+  color: var(--disabled-grey);
+  opacity: 0.5;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .view-switch__item,
+  .view-switch__item::after {
+    transition: none;
+  }
 }
 
 /* ── Hero cutout image (Contact slide) ── */
@@ -283,66 +312,36 @@
   pointer-events: none;
 }
 
-/* ── Subpage overlay: sticky bottom bar ── */
-.subpage-bottombar {
+/* ── Subpage overlay: floating Close button — same treatment and
+   position as the "More" ghost-button in title cards (bottom-center,
+   36px up from the edge), just pinned to the viewport since the subpage
+   overlay's content scrolls underneath it. ── */
+.subpage-close-btn {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 25;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  padding: 12px var(--side-pad);
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid rgba(245, 245, 240, 0.08);
+  left: 50%;
+  /* Sit at the vertical midpoint of #subpage-overlay's reserved bottom
+     padding band, then shift down by half its own height (via the 50%
+     translateY below) so it's truly centered regardless of the button's
+     actual rendered height. Stays centered automatically if
+     --subpage-bottom-pad changes. */
+  bottom: calc(var(--subpage-bottom-pad) / 2);
+  z-index: 26;
+  transform: translate(-50%, 50%);
 }
-.subpage-bottombar__cta {
-  height: 36px;
-  padding: 0 20px;
-  font-size: 12px;
+.subpage-close-btn:hover {
+  transform: translate(-50%, 50%) scale(1.08);
 }
-.subpage-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  border: 1px solid rgba(245, 245, 240, 0.25);
-  background: transparent;
-  color: var(--light-text);
-  cursor: pointer;
-  transition:
-    border-color var(--btn-duration) ease,
-    color var(--btn-duration) ease,
-    background var(--btn-duration) ease,
-    transform var(--btn-duration) ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.subpage-nav-btn svg {
-  width: 16px;
-  height: 16px;
-}
-.subpage-nav-btn:hover {
-  border-color: var(--hero-yellow);
-  color: var(--hero-yellow);
-  transform: scale(1.08);
-}
-.subpage-nav-btn:active {
-  transform: scale(0.9);
-  background: rgba(242, 193, 46, 0.15);
+.subpage-close-btn:active {
+  transform: translate(-50%, 50%) scale(0.95);
+  background: rgba(242, 193, 46, 0.4);
 }
 
 /* ── Sticky ticket button (top right, subpage overlay) ── */
 .subpage-ticket-btn {
   position: fixed;
-  /* overlay 80px + title padding 20px + half of title first line (lh 0.88), minus half button (26px) */
-  top: calc(74px + clamp(58px, 18vw, 82px) * 0.44);
+  /* overlay 70px + half of title first line (clamp) minus half button (26px) */
+  top: calc(70px + clamp(58px, 18vw, 82px) * 0.5 - 26px);
+
   right: var(--side-pad);
   z-index: 26;
   display: inline-flex;
@@ -558,7 +557,7 @@
 /* Snap animation class — added by JS after drag ends */
 .menu-card.is-snapping {
   transition:
-    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform var(--menu-snap-ms, 380ms) cubic-bezier(0.22, 1, 0.36, 1),
     filter 400ms ease,
     border-color 280ms ease,
     box-shadow 280ms ease;
@@ -675,7 +674,7 @@
   z-index: 40;
   background: var(--black);
   transform: translateY(100%);
-  transition: transform var(--slide-duration) var(--slide-easing);
+  transition: transform var(--subpage-slide-duration) var(--slide-easing);
 }
 .subpage-overlay.is-open {
   transform: translateY(0);
@@ -683,7 +682,7 @@
 /* Room for the embedded progress-nav/menu-button up top and the sticky bottom bar */
 #subpage-overlay {
   padding-top: 80px;
-  padding-bottom: 100px;
+  padding-bottom: var(--subpage-bottom-pad);
 }
 /* Nested Contact/About toggle within subpage card 8 */
 .subpage-card__view {
@@ -701,7 +700,7 @@
   background: var(--hero-yellow);
 }
 .subpage-overlay__title {
-  padding: 20px var(--side-pad) 0;
+  padding: 0px var(--side-pad) 0px;
   font-family: var(--font-display);
   font-weight: 900;
   font-size: clamp(58px, 18vw, 82px);
@@ -720,7 +719,29 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  padding: 28px var(--side-pad) 48px;
+  padding: 20px var(--side-pad) 48px;
+}
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 6px;
+  background: var(--hero-yellow);
+  color: var(--dark-text);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 .subpage-overlay__note {
   margin: 0 var(--side-pad) 48px;
@@ -738,7 +759,7 @@
   top: 0;
   z-index: 2;
   background: var(--black);
-  padding: 20px var(--side-pad) 24px;
+  padding: 0px var(--side-pad) 26px;
 }
 .about-overlay__header::after {
   content: "";
@@ -746,7 +767,7 @@
   left: 0;
   right: 0;
   top: 100%;
-  height: 36px;
+  height: px;
   background: linear-gradient(
     to bottom,
     var(--black) 0%,
@@ -767,34 +788,38 @@
 .about-overlay__body {
   padding: 20px var(--side-pad) 48px;
   color: var(--light-text);
-  font-size: 20px;
+  font-size: 19px;
   line-height: 1.5;
   max-width: 480px;
 }
 .about-overlay__body p {
   margin: 0 0 18px;
-  transform-origin: top center;
-  transition:
-    opacity 80ms linear,
-    transform 80ms linear;
-  will-change: transform, opacity;
 }
 .about-overlay__body p.about-overlay__lead {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 22px;
+  font-size: 32px;
   line-height: 1.2;
   text-transform: uppercase;
   color: var(--hero-yellow);
   margin-bottom: 24px;
+}
+/* Each detected line is wrapped (in JS, initAboutScroll) in one of these
+   so the whole line contracts as a single unit toward the sticky header,
+   instead of every word shrinking around its own center. will-change is
+   toggled in JS only on lines currently inside the fade zone, so idle
+   lines don't sit on their own compositor layer. */
+.about-overlay__body .about-line {
+  display: block;
+  transform-origin: top center;
 }
 .about-overlay__body .word {
   display: inline-block;
   opacity: 0;
   transform: translateY(14px);
   transition:
-    opacity 500ms ease,
-    transform 500ms ease;
+    opacity 600ms ease,
+    transform 600ms ease;
 }
 .about-overlay__body .word.is-in {
   opacity: 1;
@@ -843,7 +868,8 @@
   border-color: var(--hero-yellow);
 }
 .contact-form .subpage-overlay__cta {
-  padding: 8px var(--side-pad) 0;
+  padding: 0px 0px 48px;
+  justify-content: end;
 }
 
 /* ── Social icons (PNG version) ── */
@@ -1399,7 +1425,7 @@ a.be-contact__val:hover {
   color: var(--light-text);
   transition: background 200ms ease;
 }
-.disco__bar:hover { background: #1f1f1f; }
+.disco__bar:hover { background: #000000; }
 .disco__thumb {
   width: 88px;
   aspect-ratio: 16 / 9;
