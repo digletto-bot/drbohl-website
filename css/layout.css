@@ -46,7 +46,8 @@
 
 /* ── Desktop: centered phone frame ── */
 @media (min-width: 600px) {
-  .title-card__image {
+  .title-card__image,
+  .hero-cutout-image {
     left: 50% !important;
     transform: translateX(-50%) !important;
     width: auto !important;
