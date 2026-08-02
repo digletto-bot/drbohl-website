@@ -533,32 +533,34 @@
 
     <!-- CARD 8 — CONTACT (with nested About view) -->
     <article id="subpage-card-contact" class="subpage-card is-next" data-index="8" aria-label="Contact">
-      <div id="contact-view" class="subpage-card__view is-active">
-        <div class="subpage-overlay__title view-switch" role="tablist" aria-label="Contact or About"><button type="button" class="view-switch__item is-active" data-view="contact" role="tab" aria-selected="true" onclick="showContactView()">Contact</button><span class="view-switch__sep" aria-hidden="true">|</span><button type="button" class="view-switch__item" data-view="about" role="tab" aria-selected="false" onclick="showAboutView()">About</button></div>
-        <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
-        <form id="contact-form" class="contact-form" novalidate>
-          <label class="contact-form__field">
-            <span>Email</span>
-            <input type="email" name="email" placeholder="deine@email.com" required />
-          </label>
-          <label class="contact-form__field">
-            <span>Betreff</span>
-            <input type="text" name="subject" placeholder="Worum geht's?" required />
-          </label>
-          <label class="contact-form__field">
-            <span>Nachricht</span>
-            <textarea name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
-          </label>
-          <div class="subpage-overlay__cta">
-            <button type="submit" class="submit-button">Senden</button>
-          </div>
-        </form>
-      </div>
-      <div id="about-view" class="subpage-card__view">
-        <div class="about-overlay__header">
-          <div class="about-overlay__title view-switch" role="tablist" aria-label="Contact or About"><button type="button" class="view-switch__item" data-view="contact" role="tab" aria-selected="false" onclick="showContactView()">Contact</button><span class="view-switch__sep" aria-hidden="true">|</span><button type="button" class="view-switch__item is-active" data-view="about" role="tab" aria-selected="true" onclick="showAboutView()">About</button></div>
+      <div class="subpage-card-inner">
+        <div id="contact-view" class="subpage-card__view is-active">
+          <div class="subpage-overlay__title view-switch" role="tablist" aria-label="Contact or About"><button type="button" class="view-switch__item is-active" data-view="contact" role="tab" aria-selected="true" onclick="showContactView()">Contact</button><span class="view-switch__sep" aria-hidden="true">|</span><button type="button" class="view-switch__item" data-view="about" role="tab" aria-selected="false" onclick="showAboutView()">About</button></div>
+          <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
+          <form id="contact-form" class="contact-form" novalidate>
+            <label class="contact-form__field">
+              <span>Email</span>
+              <input type="email" name="email" placeholder="deine@email.com" required />
+            </label>
+            <label class="contact-form__field">
+              <span>Betreff</span>
+              <input type="text" name="subject" placeholder="Worum geht's?" required />
+            </label>
+            <label class="contact-form__field">
+              <span>Nachricht</span>
+              <textarea name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
+            </label>
+            <div class="subpage-overlay__cta">
+              <button type="submit" class="submit-button">Senden</button>
+            </div>
+          </form>
         </div>
-        <div class="about-overlay__body" id="about-body"></div>
+        <div id="about-view" class="subpage-card__view">
+          <div class="about-overlay__header">
+            <div class="about-overlay__title view-switch" role="tablist" aria-label="Contact or About"><button type="button" class="view-switch__item" data-view="contact" role="tab" aria-selected="false" onclick="showContactView()">Contact</button><span class="view-switch__sep" aria-hidden="true">|</span><button type="button" class="view-switch__item is-active" data-view="about" role="tab" aria-selected="true" onclick="showAboutView()">About</button></div>
+          </div>
+          <div class="about-overlay__body" id="about-body"></div>
+        </div>
       </div>
     </article>
 
