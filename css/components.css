@@ -984,6 +984,9 @@
   line-height: 0.84;
   text-transform: uppercase;
   color: var(--light-text);
+  display: flex;
+  position: relative;
+  gap: 10px;
 }
 
 .sp-title span {
@@ -991,7 +994,7 @@
   position: relative;
 }
 
-.sp-title span.accent::after {
+.sp-title::after {
   content: "";
   position: absolute;
   left: 0;
@@ -1000,6 +1003,13 @@
   height: 5px;
   background: var(--hero-yellow);
   border-radius: 2px;
+}
+
+@media (max-width: 720px) {
+  .sp-title {
+    flex-direction: column;
+    gap: 0px;
+  }
 }
 
 /* Tour list */
