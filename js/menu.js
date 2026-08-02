@@ -17,13 +17,22 @@ const CARD_GAP = 16; // px of visible gap between card edges (scale-aware)
 const TILT_X = 10; // deg rotateX per card offset
 const SCALE_STEP = 0.09; // scale reduction per offset step
 const BRIGHTNESS_STEP = 0.4; // brightness reduction per offset step
-const MIN_BRIGHTNESS = 0.2; // floor brightness
+const MIN_BRIGHTNESS = 0.4; // floor brightness
 const VISIBLE_RANGE = 3; // cards shown above/below active
-const SNAP_MS = 380; // base snap animation duration
-const SNAP_MS_PER_CARD = 70; // extra duration per extra card the snap travels
-const SNAP_MS_MAX = 760; // cap so long flings don't feel sluggish
-const VELOCITY_SAMPLE_MS = 80; // window used to measure release velocity
-const MOMENTUM_MS = 180; // "coast" time projected past the release point
+const SNAP_MS = 380; // snap animation duration
+
+const FRICTION = 0.008; // exponential velocity decay per ms (higher = stops sooner)
+const FLING_MIN_VELOCITY = 0.00035; // pos/ms: below this, snap immediately instead of coasting
+const MAX_VELOCITY = 0.12; // pos/ms clamp on input velocity to avoid extreme flicks
+
+// Final settle: a critically-damped spring (no overshoot) that picks up
+// wherever the coast/drag left off, so there's no velocity discontinuity
+// at handoff and the stop reads as crisp rather than a slow CSS ease-out.
+const SETTLE_STIFFNESS = 1400; // pos/s² per pos-unit of displacement
+const SETTLE_DAMPING = 2 * Math.sqrt(SETTLE_STIFFNESS); // critical damping
+const SETTLE_SUB_DT = 1 / 240; // physics substep (s), for stability at low fps
+const SETTLE_STOP_POS = 0.02; // pos-units from target to consider settled
+const SETTLE_STOP_VEL = 0.25; // pos/s to consider settled
 
 class Menu {
   constructor(slider) {
@@ -42,7 +51,8 @@ class Menu {
     this._dragged = false;
     this._dragY = 0;
     this._dragPos = 0;
-    this._velSamples = [];
+    this._velocity = 0; // pos units per ms, smoothed
+    this._lastMoveTime = 0;
     this._snapTimer = null;
     this._rafId = null;
 
@@ -215,12 +225,15 @@ class Menu {
     this._dragged = false;
     this._dragY = y;
     this._dragPos = this._pos;
-    this._velSamples = [{ t: performance.now(), y }];
+    this._velocity = 0;
+    this._lastMoveTime = performance.now();
     this.cards.forEach((c) => c.classList.remove("is-snapping"));
+    clearTimeout(this._snapTimer);
     cancelAnimationFrame(this._rafId);
   }
 
   _dragMove(y) {
+    const now = performance.now();
     const dy = y - this._dragY;
     const delta = -dy / (CARD_GAP + this._cardH);
     let pos = this._dragPos + delta;
@@ -228,70 +241,131 @@ class Menu {
     const max = this.cards.length - 1;
     if (pos < 0) pos = -Math.pow(-pos, 0.6) * 0.5;
     if (pos > max) pos = max + Math.pow(pos - max, 0.6) * 0.5;
+
+    // Smoothed velocity, in position-units per ms, for inertia on release
+    const dt = now - this._lastMoveTime;
+    if (dt > 0) {
+      const instVel = Math.max(
+        -MAX_VELOCITY,
+        Math.min(MAX_VELOCITY, (pos - this._pos) / dt),
+      );
+      this._velocity = this._velocity * 0.7 + instVel * 0.3;
+    }
+    this._lastMoveTime = now;
+
     this._pos = pos;
     if (Math.abs(dy) > 5) this._dragged = true;
-
-    // Keep a rolling window of recent samples to measure release velocity
-    // (using only the last ~80ms avoids stale, slow parts of a long drag
-    // skewing the fling if the finger pauses before lifting).
-    const now = performance.now();
-    this._velSamples.push({ t: now, y });
-    const cutoff = now - VELOCITY_SAMPLE_MS;
-    while (this._velSamples.length > 2 && this._velSamples[0].t < cutoff) {
-      this._velSamples.shift();
-    }
-
     cancelAnimationFrame(this._rafId);
     this._rafId = requestAnimationFrame(() => this._applyTransforms());
   }
 
   _dragEnd() {
     this._dragging = false;
-
-    // Project the release velocity forward so a fast flick carries past
-    // the nearest card instead of always snapping back to where the
-    // pointer happened to lift.
-    let target = this._pos;
-    const samples = this._velSamples;
-    if (samples && samples.length >= 2) {
-      const first = samples[0];
-      const last = samples[samples.length - 1];
-      const dt = last.t - first.t;
-      if (dt > 0) {
-        const pxPerMs = (last.y - first.y) / dt;
-        const posPerMs = -pxPerMs / (CARD_GAP + this._cardH);
-        target = this._pos + posPerMs * MOMENTUM_MS;
-      }
+    if (Math.abs(this._velocity) > FLING_MIN_VELOCITY) {
+      this._startInertia(this._velocity);
+    } else {
+      const max = this.cards.length - 1;
+      const target = Math.max(0, Math.min(max, Math.round(this._pos)));
+      this._startSettle(target, this._velocity);
     }
-    this._velSamples = [];
+  }
 
+  // ── Inertia ─────────────────────────────────────────────────
+  // Coasts the fractional position forward using the release velocity,
+  // decaying it exponentially (frame-rate independent) until it drops
+  // below threshold, then hands off to the settle spring.
+  _startInertia(velocity) {
+    clearTimeout(this._snapTimer);
+    cancelAnimationFrame(this._rafId);
+    this.cards.forEach((c) => c.classList.remove("is-snapping"));
+
+    let vel = velocity;
+    let lastTime = performance.now();
     const max = this.cards.length - 1;
-    target = Math.max(0, Math.min(max, Math.round(target)));
-    this._snapTo(target);
+
+    const step = (now) => {
+      const dt = Math.min(now - lastTime, 48); // clamp for tab-switch/jank
+      lastTime = now;
+      vel *= Math.exp(-FRICTION * dt);
+
+      let pos = this._pos + vel * dt;
+      if (pos < 0 || pos > max) {
+        // Same rubber-band curve as drag, plus extra damping once past the ends
+        vel *= 0.82;
+        const overshoot = pos < 0 ? -pos : pos - max;
+        pos =
+          pos < 0
+            ? -Math.pow(overshoot, 0.6) * 0.5
+            : max + Math.pow(overshoot, 0.6) * 0.5;
+      }
+      this._pos = pos;
+      this._applyTransforms();
+
+      if (Math.abs(vel) < FLING_MIN_VELOCITY) {
+        const target = Math.max(0, Math.min(max, Math.round(this._pos)));
+        this._startSettle(target, vel);
+        return;
+      }
+      this._rafId = requestAnimationFrame(step);
+    };
+    this._rafId = requestAnimationFrame(step);
+  }
+
+  // ── Settle ──────────────────────────────────────────────────
+  // Critically-damped spring from the current fractional position/velocity
+  // to the target card. Continues the incoming velocity (no discontinuity)
+  // and, being critically damped, never overshoots — it just decelerates
+  // straight into the target, which reads as a crisp, positive stop.
+  _startSettle(target, velocityPosPerMs) {
+    clearTimeout(this._snapTimer);
+    cancelAnimationFrame(this._rafId);
+    this.cards.forEach((c) => c.classList.remove("is-snapping"));
+    this._activeIdx = target;
+
+    let pos = this._pos;
+    let vel = velocityPosPerMs * 1000; // pos/ms -> pos/s
+    let lastTime = performance.now();
+
+    const step = (now) => {
+      const dt = Math.min((now - lastTime) / 1000, 0.032);
+      lastTime = now;
+      const steps = Math.max(1, Math.round(dt / SETTLE_SUB_DT));
+      const sub = dt / steps;
+      for (let i = 0; i < steps; i++) {
+        const accel = -SETTLE_STIFFNESS * (pos - target) - SETTLE_DAMPING * vel;
+        vel += accel * sub;
+        pos += vel * sub;
+      }
+      this._pos = pos;
+      this._applyTransforms();
+
+      if (
+        Math.abs(pos - target) < SETTLE_STOP_POS &&
+        Math.abs(vel) < SETTLE_STOP_VEL
+      ) {
+        this._pos = target;
+        this._applyTransforms();
+        this._updateActive();
+        return;
+      }
+      this._rafId = requestAnimationFrame(step);
+    };
+    this._updateActive();
+    this._rafId = requestAnimationFrame(step);
   }
 
   // ── Snap ────────────────────────────────────────────────────
   _snapTo(index) {
-    // Longer travel gets a (capped) longer, easier deceleration so a
-    // multi-card flick reads as coasting to a stop rather than teleporting.
-    const distance = Math.abs(index - this._pos);
-    const duration = Math.min(
-      SNAP_MS_MAX,
-      SNAP_MS + Math.max(0, distance - 1) * SNAP_MS_PER_CARD,
-    );
-
+    cancelAnimationFrame(this._rafId);
     this._activeIdx = index;
     this._pos = index;
-    this.cards.forEach((c) => {
-      c.style.setProperty("--menu-snap-ms", duration + "ms");
-      c.classList.add("is-snapping");
-    });
+    this.cards.forEach((c) => c.classList.add("is-snapping"));
     this._applyTransforms();
     this._updateActive();
     clearTimeout(this._snapTimer);
     this._snapTimer = setTimeout(() => {
       this.cards.forEach((c) => c.classList.remove("is-snapping"));
-    }, duration + 50);
+    }, SNAP_MS + 50);
   }
 
   // ── Core transform ──────────────────────────────────────────
