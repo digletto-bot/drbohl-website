@@ -1126,6 +1126,10 @@
 /* ══════════════════════════════════════════════
    BOHL ENTERTAINMENT — Brochure (subpage card 7)
    ══════════════════════════════════════════════ */
+.subpage-card[data-index="7"] img,
+.subpage-card[data-index="7"] a {
+  -webkit-user-drag: none;
+}
 .be-section {
   position: relative;
   padding: 56px var(--side-pad);

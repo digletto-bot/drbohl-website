@@ -256,6 +256,7 @@ function initAboutScroll() {
 function initBrochureReveal() {
   const card = document.querySelector('.subpage-card[data-index="7"]');
   if (!card) return;
+  card.addEventListener("dragstart", (e) => e.preventDefault());
   const els = card.querySelectorAll(".be-reveal");
   if (!els.length) return;
 
