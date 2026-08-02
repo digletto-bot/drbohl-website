@@ -13,20 +13,29 @@
   <link rel="stylesheet" href="css/animations.css" />
 </head>
 <body>
+<div id="loading-screen" class="loading-screen" aria-hidden="true">
+  <div class="loading-screen__mark">
+    <svg class="loading-screen__spinner" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true">
+      <circle class="loading-screen__spinner-track" cx="24" cy="24" r="20" fill="none" stroke-width="3"/>
+      <circle class="loading-screen__spinner-arc" cx="24" cy="24" r="20" fill="none" stroke-width="3"/>
+    </svg>
+    <span class="loading-screen__word">DR.BOHL</span>
+  </div>
+</div>
 <div id="app">
 <div id="slider-track" role="region" aria-label="Dr.Bohl Navigation">
 
   <nav class="progress-nav" aria-label="Slide navigation">
-    <button class="progress-nav__item is-active"  aria-label="Home"             aria-current="true"  data-index="0"></button>
-    <button class="progress-nav__item"            aria-label="Kabarett"         aria-current="false" data-index="1"></button>
-    <button class="progress-nav__item"            aria-label="Social Media"     aria-current="false" data-index="2"></button>
-    <button class="progress-nav__item"            aria-label="Showtime"         aria-current="false" data-index="3"></button>
-    <button class="progress-nav__item"            aria-label="Musik"            aria-current="false" data-index="4"></button>
-    <button class="progress-nav__item"            aria-label="Podcast"          aria-current="false" data-index="5"></button>
-    <button class="progress-nav__item"            aria-label="Bohl100"          aria-current="false" data-index="6"></button>
-    <button class="progress-nav__item"            aria-label="Bohl Entertainment" aria-current="false" data-index="7"></button>
-    <button class="progress-nav__item"            aria-label="Contact"          aria-current="false" data-index="8"></button>
-    <button class="progress-nav__item"            aria-label="Schabernack"      aria-current="false" data-index="9"></button>
+    <button class="progress-nav__item is-active"  aria-label="Home"             aria-current="true"  data-index="0"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Kabarett"         aria-current="false" data-index="1"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Social Media"     aria-current="false" data-index="2"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Showtime"         aria-current="false" data-index="3"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Musik"            aria-current="false" data-index="4"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Podcast"          aria-current="false" data-index="5"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Bohl100"          aria-current="false" data-index="6"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Bohl Entertainment" aria-current="false" data-index="7"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Contact"          aria-current="false" data-index="8"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item"            aria-label="Schabernack"      aria-current="false" data-index="9"><span class="progress-nav__bar"></span></button>
   </nav>
 
   <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="full-screen-menu">
@@ -38,7 +47,7 @@
   <!-- SLIDE 01 — HOME -->
   <article class="title-card is-current" data-index="0" aria-label="Home">
     <div class="title-card__inner">
-      <img class="title-card__image" src="assets/images/home-hero.jpg" alt="Dr.Bohl" loading="eager" style="object-position:center top"/>
+      <img class="title-card__image" src="assets/images/home-hero.jpg" alt="Dr.Bohl" loading="eager"/>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
         <div class="title-card__headline-wrap">
@@ -222,7 +231,7 @@
 <button id="arrow-next" class="desktop-arrow desktop-arrow--next" aria-label="Weiter">
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
-<div id="slide-counter" class="slide-counter">01 / 10</div>
+<!-- <div id="slide-counter" class="slide-counter">01 / 10</div> -->
 
 <!-- Netflix-style menu -->
 <div id="full-screen-menu" class="full-screen-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" draggable="false">
@@ -318,16 +327,16 @@
   <div class="subpage-overlay__bar"></div>
 
   <nav class="progress-nav" aria-label="Slide navigation">
-    <button class="progress-nav__item" aria-label="Home" data-index="0"></button>
-    <button class="progress-nav__item" aria-label="Kabarett" data-index="1"></button>
-    <button class="progress-nav__item" aria-label="Social Media" data-index="2"></button>
-    <button class="progress-nav__item" aria-label="Showtime" data-index="3"></button>
-    <button class="progress-nav__item" aria-label="Musik" data-index="4"></button>
-    <button class="progress-nav__item" aria-label="Podcast" data-index="5"></button>
-    <button class="progress-nav__item" aria-label="Bohl100" data-index="6"></button>
-    <button class="progress-nav__item" aria-label="Bohl Entertainment" data-index="7"></button>
-    <button class="progress-nav__item" aria-label="Contact" data-index="8"></button>
-    <button class="progress-nav__item" aria-label="Schabernack" data-index="9"></button>
+    <button class="progress-nav__item" aria-label="Home" data-index="0"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Kabarett" data-index="1"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Social Media" data-index="2"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Showtime" data-index="3"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Musik" data-index="4"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Podcast" data-index="5"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Bohl100" data-index="6"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Bohl Entertainment" data-index="7"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Contact" data-index="8"><span class="progress-nav__bar"></span></button>
+    <button class="progress-nav__item" aria-label="Schabernack" data-index="9"><span class="progress-nav__bar"></span></button>
   </nav>
 
   <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="full-screen-menu">
@@ -344,7 +353,7 @@
         <div class="sp-eyebrow">Live Performances</div>
         <div class="sp-title">
           <span>TOUR</span>
-          <span class="accent">DATES</span>
+          <span>DATES</span>
         </div>
       </div>
       <div class="td-list" id="tour-list">

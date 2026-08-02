@@ -12,7 +12,7 @@ import { renderTourDates } from "./tourDates.js";
 import {
   fitText,
   updateProgressNav,
-  updateSlideCounter,
+  // updateSlideCounter,
   dismissSwipeHint,
 } from "./animations.js";
 
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const slider = new Slider({
     onSlideChange: (index) => {
       updateProgressNav(index);
-      updateSlideCounter(index, slider.totalSlides);
+      // updateSlideCounter(index, slider.totalSlides);
       menu.onSlideChange(index);
       if (window.router) router.onSlideChange(index);
       dismissSwipeHint();
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   updateProgressNav(slider.index);
-  updateSlideCounter(slider.index, slider.totalSlides);
+  // updateSlideCounter(slider.index, slider.totalSlides);
 
   /* ── Menu ── */
   const menu = new Menu(slider);
