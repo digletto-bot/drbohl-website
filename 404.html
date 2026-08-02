@@ -533,6 +533,35 @@
 
     <!-- CARD 8 — CONTACT (with nested About view) -->
     <article id="subpage-card-contact" class="subpage-card is-next" data-index="8" aria-label="Contact">
+      <div id="contact-view" class="subpage-card__view is-active">
+        <div class="subpage-overlay__title">Contact</div>
+        <div class="view-toggle" role="tablist" aria-label="Contact or About">
+          <button type="button" class="view-toggle__item is-active" data-view="contact" role="tab" aria-selected="true" onclick="showContactView()">Contact</button>
+          <button type="button" class="view-toggle__item" data-view="about" role="tab" aria-selected="false" onclick="showAboutView()">About</button>
+        </div>
+        <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
+        <form id="contact-form" class="contact-form" novalidate>
+          <label class="contact-form__field">
+            <span>Email</span>
+            <input type="email" name="email" placeholder="deine@email.com" autocomplete="email" required />
+          </label>
+          <label class="contact-form__field">
+            <span>Betreff</span>
+            <input type="text" name="subject" placeholder="Worum geht's?" required />
+          </label>
+          <label class="contact-form__field">
+            <span>Nachricht</span>
+            <textarea name="message" rows="5" placeholder="Deine Nachricht..." required></textarea>
+          </label>
+          <div class="subpage-overlay__cta">
+            <button type="submit" class="ghost-button">Senden</button>
+          </div>
+        </form>
+        <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Das Formular ist noch nicht mit einem Postfach verbunden — Nachrichten werden aktuell nicht übermittelt.</div>
+      </div>
+      <div id="about-view" class="subpage-card__view">
+        <div class="about-overlay__header">
+          <h1 class="about-overlay__title">ABOUT</h1>
       <div class="subpage-card-inner">
         <div id="contact-view" class="subpage-card__view is-active">
           <div class="subpage-overlay__title">Contact</div>
