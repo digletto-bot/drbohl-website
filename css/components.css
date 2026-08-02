@@ -17,26 +17,109 @@
   z-index: 20;
 }
 .progress-nav__item {
+  position: relative;
   flex: 1;
-  max-width: 28px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--progress-inactive);
-  cursor: pointer;
+  /* max-width: 28px; */
+  max-width: clamp(28px, 8vw, 48px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  background: transparent;
   border: none;
-  transition:
-    background 0.25s ease,
-    transform 0.2s ease,
-    max-width 0.3s ease;
+  padding: 0;
+  cursor: pointer;
+  transition: max-width 0.3s ease;
   -webkit-tap-highlight-color: transparent;
 }
-.progress-nav__item:hover {
+.progress-nav__item.is-active {
+  max-width: 38px;
+  max-width: clamp(38px, 10vw, 60px);
+}
+.progress-nav__bar {
+  width: 100%;
+  height: clamp(6px, 1.33vw, 8px);
+  border-radius: 999px;
+  background: var(--progress-inactive);
+  pointer-events: none;
+  transition:
+    background 0.25s ease,
+    transform 0.2s ease;
+}
+.progress-nav__item:hover .progress-nav__bar {
   background: rgba(245, 245, 240, 0.6);
   transform: scaleY(1.4);
 }
-.progress-nav__item.is-active {
+.progress-nav__item.is-active .progress-nav__bar {
   background: var(--progress-active);
-  max-width: 38px;
+}
+
+/* ── Tooltip: slide title, shown below the item on hover/focus ── */
+.progress-nav__item::after {
+  content: attr(aria-label);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: rgba(20, 20, 20, 0.92);
+  border: 1px solid var(--hero-yellow);
+  box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
+  color: var(--hero-yellow);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -4px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 0s 180ms;
+  z-index: 30;
+}
+.progress-nav__item:first-child::after {
+  left: 0;
+  transform: translate(0, -4px);
+}
+.progress-nav__item:last-child::after {
+  left: auto;
+  right: 0;
+  transform: translate(0, -4px);
+}
+.progress-nav__item:hover::after,
+.progress-nav__item:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 0s;
+}
+.progress-nav__item:first-child:hover::after,
+.progress-nav__item:first-child:focus-visible::after {
+  transform: translate(0, 0);
+}
+.progress-nav__item:last-child:hover::after,
+.progress-nav__item:last-child:focus-visible::after {
+  transform: translate(0, 0);
+}
+
+@media (min-width: 400px) {
+  .progress-nav {
+    padding: 0 calc(var(--side-pad) + 48px) 0 var(--side-pad);
+    justify-content: center;
+  }
+}
+@media (min-width: 600px) {
+  .progress-nav {
+    padding: 0 calc(var(--side-pad) + 48px);
+    gap: 8px;
+  }
 }
 
 /* ── Burger ── */
@@ -146,7 +229,7 @@
 }
 .ghost-button:active {
   transform: scale(0.95);
-  background: rgba(242, 193, 46, 0.40);
+  background: rgba(242, 193, 46, 0.4);
 }
 
 /* ── View switch: the title itself is the Contact/About toggle.
@@ -942,6 +1025,9 @@
   line-height: 0.84;
   text-transform: uppercase;
   color: var(--light-text);
+  display: flex;
+  position: relative;
+  gap: 10px;
 }
 
 .sp-title span {
@@ -949,7 +1035,7 @@
   position: relative;
 }
 
-.sp-title span.accent::after {
+.sp-title::after {
   content: "";
   position: absolute;
   left: 0;
@@ -958,6 +1044,13 @@
   height: 5px;
   background: var(--hero-yellow);
   border-radius: 2px;
+}
+
+@media (max-width: 720px) {
+  .sp-title {
+    flex-direction: column;
+    gap: 0px;
+  }
 }
 
 /* Tour list */
@@ -1084,6 +1177,10 @@
 /* ══════════════════════════════════════════════
    BOHL ENTERTAINMENT — Brochure (subpage card 7)
    ══════════════════════════════════════════════ */
+.subpage-card[data-index="7"] img,
+.subpage-card[data-index="7"] a {
+  -webkit-user-drag: none;
+}
 .be-section {
   position: relative;
   padding: 56px var(--side-pad);
@@ -1425,7 +1522,9 @@ a.be-contact__val:hover {
   color: var(--light-text);
   transition: background 200ms ease;
 }
-.disco__bar:hover { background: #000000; }
+.disco__bar:hover {
+  background: #000000;
+}
 .disco__thumb {
   width: 88px;
   aspect-ratio: 16 / 9;
@@ -1461,20 +1560,26 @@ a.be-contact__val:hover {
   flex: 0 0 auto;
   margin: -4px 4px 0 2px;
 }
-.disco__item.is-open .disco__chevron { transform: rotate(225deg) translate(-2px, -2px); }
+.disco__item.is-open .disco__chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
 
 .disco__panel {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.disco__item.is-open .disco__panel { grid-template-rows: 1fr; }
+.disco__item.is-open .disco__panel {
+  grid-template-rows: 1fr;
+}
 .disco__panel-inner {
   min-height: 0;
   overflow: hidden;
   padding: 0 10px;
 }
-.disco__item.is-open .disco__panel-inner { padding: 4px 10px 12px; }
+.disco__item.is-open .disco__panel-inner {
+  padding: 4px 10px 12px;
+}
 .disco__video iframe {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -1490,24 +1595,25 @@ a.be-contact__val:hover {
   margin-top: 10px;
 }
 
-
 /* ── Hero cutout group: periodic + interactive glow (text + silhouette) ── */
 @keyframes cutoutImgGlow {
-  0%, 26.7%, 100% {
-    filter:
-      drop-shadow(0 0 1px rgba(242, 193, 46, 0))
+  0%,
+  26.7%,
+  100% {
+    filter: drop-shadow(0 0 1px rgba(242, 193, 46, 0))
       drop-shadow(0 0 10px rgba(242, 193, 46, 0))
       drop-shadow(0 0 18px rgba(242, 193, 46, 0));
   }
   13.3% {
-    filter:
-      drop-shadow(0 0 1px var(--hero-yellow))
+    filter: drop-shadow(0 0 1px var(--hero-yellow))
       drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
       drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
   }
 }
 @keyframes cutoutTextGlow {
-  0%, 26.7%, 100% {
+  0%,
+  26.7%,
+  100% {
     text-shadow:
       0 0 1px rgba(242, 193, 46, 0),
       0 0 20px rgba(242, 193, 46, 0),
@@ -1536,8 +1642,7 @@ a.be-contact__val:hover {
 .hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-image,
 .hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-image {
   animation: none;
-  filter:
-    drop-shadow(0 0 1px var(--hero-yellow))
+  filter: drop-shadow(0 0 1px var(--hero-yellow))
     drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
     drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
 }

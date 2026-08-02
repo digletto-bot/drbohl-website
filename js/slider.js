@@ -5,6 +5,8 @@
 
 "use strict";
 
+const MAX_SCROLL_THRESHOLD = 200;
+
 class Slider {
   constructor(options = {}) {
     this.track = document.getElementById(options.trackId || "slider-track");
@@ -36,7 +38,7 @@ class Slider {
 
     // Animation frame throttling (preventing jittering on mobile IOS)
     this.rafPending = false;
-    this.touchEnded = false;
+    this.tapEnded = false;
 
     this._applyPositions();
     this._bindTouch();
@@ -115,7 +117,7 @@ class Slider {
         this._tdx = 0;
         this._drag = true;
         this._isH = null;
-        this.touchEnded = false;
+        this.tapEnded = false;
       },
       { passive: true },
     );
@@ -128,13 +130,13 @@ class Slider {
         const dy = e.touches[0].clientY - this._ty;
         if (this._isH === null) this._isH = Math.abs(dx) > Math.abs(dy);
         if (!this._isH) return;
-        e.preventDefault();
+        // e.preventDefault();
         this._tdx = dx;
 
         if (!this.rafPending) {
           this.rafPending = true;
           requestAnimationFrame(() => {
-            if (!this.touchEnded) this._applyDrag(dx);
+            if (!this.tapEnded) this._applyDrag(dx);
             this.rafPending = false;
           });
         }
@@ -143,13 +145,13 @@ class Slider {
     );
 
     this.track.addEventListener("touchend", () => {
-      this.touchEnded = true;
+      this.tapEnded = true;
       if (!this._drag || !this._isH) {
         this._drag = false;
         return;
       }
       this._drag = false;
-      const thr = this.track.offsetWidth * 0.22;
+      const thr = Math.min(MAX_SCROLL_THRESHOLD, this.track.offsetWidth * 0.2);
       if (this._tdx < -thr && this.currentIndex < this.totalSlides - 1) {
         this.next();
       } else if (this._tdx > thr && this.currentIndex >= 1) {
@@ -165,17 +167,26 @@ class Slider {
       this._mx = e.clientX;
       this._mdx = 0;
       this.track.style.cursor = "grabbing";
+      this.tapEnded = false;
     });
     window.addEventListener("mousemove", (e) => {
       if (!this._md) return;
       this._mdx = e.clientX - this._mx;
-      this._applyDrag(this._mdx);
+
+      if (!this.rafPending) {
+        this.rafPending = true;
+        requestAnimationFrame(() => {
+          if (!this.tapEnded) this._applyDrag(this._mdx);
+          this.rafPending = false;
+        });
+      }
     });
     window.addEventListener("mouseup", () => {
+      this.tapEnded = true;
       if (!this._md) return;
       this._md = false;
       this.track.style.cursor = "";
-      const thr = this.track.offsetWidth * 0.2;
+      const thr = Math.min(MAX_SCROLL_THRESHOLD, this.track.offsetWidth * 0.2);
       if (this._mdx < -thr && this.currentIndex < this.totalSlides - 1) {
         this.next();
       } else if (this._mdx > thr && this.currentIndex >= 1) {

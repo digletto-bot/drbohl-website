@@ -12,16 +12,24 @@ import { renderTourDates } from "./tourDates.js";
 import {
   fitText,
   updateProgressNav,
-  updateSlideCounter,
+  // updateSlideCounter,
   dismissSwipeHint,
 } from "./animations.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  /* ── fitText ── */
+  document.fonts.ready.then(() => {
+    fitText();
+    hideLoadingScreen();
+    setTimeout(fitText, 120);
+  });
+  window.addEventListener("resize", fitText);
+
   /* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
   const slider = new Slider({
     onSlideChange: (index) => {
       updateProgressNav(index);
-      updateSlideCounter(index, slider.totalSlides);
+      // updateSlideCounter(index, slider.totalSlides);
       menu.onSlideChange(index);
       if (window.router) router.onSlideChange(index);
       dismissSwipeHint();
@@ -39,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   updateProgressNav(slider.index);
-  updateSlideCounter(slider.index, slider.totalSlides);
+  // updateSlideCounter(slider.index, slider.totalSlides);
 
   /* ── Menu ── */
   const menu = new Menu(slider);
@@ -119,13 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
     openSubpage();
   };
 
-  /* ── fitText ── */
-  document.fonts.ready.then(() => {
-    fitText();
-    setTimeout(fitText, 120);
-  });
-  window.addEventListener("resize", fitText);
-
   /* ── ESC closes everything ── */
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape") return;
@@ -133,6 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
     closeSubpage();
   });
 });
+
+/* ── Loading screen: fades out once fonts are ready and fitText has run ── */
+function hideLoadingScreen() {
+  document.getElementById("loading-screen")?.classList.add("is-hidden");
+}
 
 /* ── Subpage overlay (single unified container; called from inline onclick) ── */
 window.openSubpage = function () {
@@ -447,6 +453,7 @@ function initAboutScroll() {
 function initBrochureReveal() {
   const card = document.querySelector('.subpage-card[data-index="7"]');
   if (!card) return;
+  card.addEventListener("dragstart", (e) => e.preventDefault());
   const els = card.querySelectorAll(".be-reveal");
   if (!els.length) return;
 
