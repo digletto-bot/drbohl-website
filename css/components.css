@@ -1711,7 +1711,7 @@ a.be-contact__val:hover {
 .kab-banner__title {
 	font-family: var(--font-display);
 	font-weight: 900;
-	font-size: clamp(36px, 14vw, 150px);
+	font-size: clamp(31px, 12vw, 125px);
 	line-height: 0.9;
 	text-transform: uppercase;
 	color: var(--hero-yellow);
@@ -1725,7 +1725,7 @@ a.be-contact__val:hover {
 	padding: 14% var(--side-pad) 9%;
 }
 .kab-banner__title[data-fs='large'] {
-	font-size: clamp(54px, 21vw, 225px);
+	font-size: clamp(48px, 18vw, 180px);
 }
 
 .kab-banner__cta {
