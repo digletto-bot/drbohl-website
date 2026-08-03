@@ -162,7 +162,7 @@
 .title-card__image-placeholder {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(160deg, #0e180d 0%, #0a0a0a 100%);
+	background: linear-gradient(160deg, #18150d 0%, #0a0a0a 100%);
 	z-index: 1;
 }
 
