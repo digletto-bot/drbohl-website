@@ -3,212 +3,206 @@
  * App entry point. Wires Slider, Menu, fitText, Tour Dates, and UI helpers.
  */
 
-"use strict";
+'use strict';
 
-import Slider from "./slider.js";
-import Router from "./router.js";
-import Menu from "./menu.js";
-import { renderTourDates } from "./tourDates.js";
+import Slider from './slider.js';
+import Router from './router.js';
+import Menu from './menu.js';
+import { renderTourDates } from './tourDates.js';
 import {
-  fitText,
-  updateProgressNav,
-  // updateSlideCounter,
-  dismissSwipeHint,
-} from "./animations.js";
+	fitText,
+	updateProgressNav,
+	// updateSlideCounter,
+	dismissSwipeHint,
+} from './animations.js';
 
-document.addEventListener("DOMContentLoaded", () => {
-  /* ── fitText ── */
-  document.fonts.ready.then(() => {
-    fitText();
-    hideLoadingScreen();
-    setTimeout(fitText, 120);
-  });
-  window.addEventListener("resize", fitText);
+document.addEventListener('DOMContentLoaded', () => {
+	/* ── fitText ── */
+	document.fonts.ready.then(() => {
+		fitText();
+		hideLoadingScreen();
+		setTimeout(fitText, 120);
+	});
+	window.addEventListener('resize', fitText);
 
-  /* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
-  const slider = new Slider({
-    onSlideChange: (index) => {
-      updateProgressNav(index);
-      // updateSlideCounter(index, slider.totalSlides);
-      menu.onSlideChange(index);
-      if (window.router) router.onSlideChange(index);
-      dismissSwipeHint();
-      subpageSlider.goTo(index);
-    },
-  });
+	/* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
+	const slider = new Slider({
+		onSlideChange: (index) => {
+			updateProgressNav(index);
+			// updateSlideCounter(index, slider.totalSlides);
+			menu.onSlideChange(index);
+			if (window.router) router.onSlideChange(index);
+			dismissSwipeHint();
+			subpageSlider.goTo(index);
+		},
+	});
 
-  const subpageSlider = new Slider({
-    trackId: "subpage-slider-track",
-    cardSelector: ".subpage-card",
-    bindKeyboard: false,
-    onSlideChange: (index) => {
-      slider.goTo(index);
-    },
-  });
+	const subpageSlider = new Slider({
+		trackId: 'subpage-slider-track',
+		cardSelector: '.subpage-card',
+		bindKeyboard: false,
+		onSlideChange: (index) => {
+			slider.goTo(index);
+		},
+	});
 
-  updateProgressNav(slider.index);
-  // updateSlideCounter(slider.index, slider.totalSlides);
+	updateProgressNav(slider.index);
+	// updateSlideCounter(slider.index, slider.totalSlides);
 
-  /* ── Menu ── */
-  const menu = new Menu(slider);
-  menu.onSlideChange(slider.index);
+	/* ── Menu ── */
+	const menu = new Menu(slider);
+	menu.onSlideChange(slider.index);
 
-  /* ── Router ── */
-  const router = new Router(slider);
-  window.router = router;
+	/* ── Router ── */
+	const router = new Router(slider);
+	window.router = router;
 
-  /* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ── */
-  document.querySelectorAll(".progress-nav").forEach((nav) => {
-    nav.querySelectorAll(".progress-nav__item").forEach((item, i) => {
-      item.addEventListener("click", () => slider.goTo(i));
-    });
-  });
+	/* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ── */
+	document.querySelectorAll('.progress-nav').forEach((nav) => {
+		nav.querySelectorAll('.progress-nav__item').forEach((item, i) => {
+			item.addEventListener('click', () => slider.goTo(i));
+		});
+	});
 
-  /* ── Desktop arrows ── */
-  document
-    .getElementById("arrow-prev")
-    ?.addEventListener("click", () => slider.prev());
-  document
-    .getElementById("arrow-next")
-    ?.addEventListener("click", () => slider.next());
+	/* ── Desktop arrows ── */
+	document.getElementById('arrow-prev')?.addEventListener('click', () => slider.prev());
+	document.getElementById('arrow-next')?.addEventListener('click', () => slider.next());
 
-  /* ── Tour Dates (subpage card 0) ── */
-  renderTourDates(document.getElementById("tour-list"));
+	/* ── Tour Dates (subpage card 0) ── */
+	renderTourDates(document.getElementById('tour-list'));
 
-  /* ── Contact form (subpage card 8) ── */
-  document.getElementById("contact-form")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    closeSubpage();
-  });
+	/* ── Contact form (subpage card 8) ── */
+	document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+		e.preventDefault();
+		closeSubpage();
+	});
 
-  /* ── About view (nested inside subpage card 8) ── */
-  buildAboutContent();
-  initAboutScroll();
-  initAboutWordReveal();
+	/* ── About view (nested inside subpage card 8) ── */
+	buildAboutContent();
+	initAboutScroll();
+	initAboutWordReveal();
 
-  window.goToTickets = () => subpageSlider.goTo(0);
-  window.subpagePrev = () => {
-    const n = subpageSlider.totalSlides;
-    subpageSlider.goTo((subpageSlider.currentIndex - 1 + n) % n);
-  };
-  window.subpageNext = () => {
-    const n = subpageSlider.totalSlides;
-    subpageSlider.goTo((subpageSlider.currentIndex + 1) % n);
-  };
+	window.goToTickets = () => subpageSlider.goTo(0);
+	window.subpagePrev = () => {
+		const n = subpageSlider.totalSlides;
+		subpageSlider.goTo((subpageSlider.currentIndex - 1 + n) % n);
+	};
+	window.subpageNext = () => {
+		const n = subpageSlider.totalSlides;
+		subpageSlider.goTo((subpageSlider.currentIndex + 1) % n);
+	};
 
-  function setViewToggle(activeView) {
-    document.querySelectorAll(".view-switch__item").forEach((btn) => {
-      const isActive = btn.dataset.view === activeView;
-      btn.classList.toggle("is-active", isActive);
-      btn.setAttribute("aria-selected", isActive ? "true" : "false");
-    });
-  }
+	function setViewToggle(activeView) {
+		document.querySelectorAll('.view-switch__item').forEach((btn) => {
+			const isActive = btn.dataset.view === activeView;
+			btn.classList.toggle('is-active', isActive);
+			btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+		});
+	}
 
-  window.showContactView = () => {
-    document.getElementById("contact-view")?.classList.add("is-active");
-    document.getElementById("about-view")?.classList.remove("is-active");
-    setViewToggle("contact");
-  };
-  window.showAboutView = () => {
-    document.getElementById("about-view")?.classList.add("is-active");
-    document.getElementById("contact-view")?.classList.remove("is-active");
-    setViewToggle("about");
-    const card = document.getElementById("subpage-card-contact");
-    if (card) card.scrollTop = 0;
-    // Was measured while display:none (zero geometry); re-measure now it's visible.
-    requestAnimationFrame(updateAboutFade);
-  };
-  window.openContactForm = () => {
-    showContactView();
-    openSubpage();
-  };
-  window.openAboutPage = () => {
-    showAboutView();
-    openSubpage();
-  };
+	window.showContactView = () => {
+		document.getElementById('contact-view')?.classList.add('is-active');
+		document.getElementById('about-view')?.classList.remove('is-active');
+		setViewToggle('contact');
+	};
+	window.showAboutView = () => {
+		document.getElementById('about-view')?.classList.add('is-active');
+		document.getElementById('contact-view')?.classList.remove('is-active');
+		setViewToggle('about');
+		const card = document.getElementById('subpage-card-contact');
+		if (card) card.scrollTop = 0;
+		// Was measured while display:none (zero geometry); re-measure now it's visible.
+		requestAnimationFrame(updateAboutFade);
+	};
+	window.openContactForm = () => {
+		showContactView();
+		openSubpage();
+	};
+	window.openAboutPage = () => {
+		showAboutView();
+		openSubpage();
+	};
 
-  /* ── ESC closes everything ── */
-  document.addEventListener("keydown", (e) => {
-    if (e.key !== "Escape") return;
-    menu.close();
-    closeSubpage();
-  });
+	/* ── ESC closes everything ── */
+	document.addEventListener('keydown', (e) => {
+		if (e.key !== 'Escape') return;
+		menu.close();
+		closeSubpage();
+	});
 });
 
 /* ── Loading screen: fades out once fonts are ready and fitText has run ── */
 function hideLoadingScreen() {
-  document.getElementById("loading-screen")?.classList.add("is-hidden");
+	document.getElementById('loading-screen')?.classList.add('is-hidden');
 }
 
 /* ── Subpage overlay (single unified container; called from inline onclick) ── */
 window.openSubpage = function () {
-  const sp = document.getElementById("subpage-overlay");
-  sp.classList.add("is-open");
-  sp.setAttribute("aria-hidden", "false");
-  document.querySelector(".subpage-card.is-current")?.scrollTo(0, 0);
+	const sp = document.getElementById('subpage-overlay');
+	sp.classList.add('is-open');
+	sp.setAttribute('aria-hidden', 'false');
+	document.querySelector('.subpage-card.is-current')?.scrollTo(0, 0);
 };
 
 window.closeSubpage = function () {
-  const sp = document.getElementById("subpage-overlay");
-  document.activeElement.blur();
-  sp.classList.remove("is-open");
-  sp.setAttribute("aria-hidden", "true");
+	const sp = document.getElementById('subpage-overlay');
+	document.activeElement.blur();
+	sp.classList.remove('is-open');
+	sp.setAttribute('aria-hidden', 'true');
 };
 
 /* ── About page copy ── */
-const ABOUT_LEAD = "Vom gelben Pfannenwender zum Whackofatz";
+const ABOUT_LEAD = 'Vom gelben Pfannenwender zum Whackofatz';
 const ABOUT_PARAGRAPHS = [
-  `Die Karriere von Dr.Bohl begann fernab großer Bühnen. Für ein Geburtstagsvideo erfand Paulus Bohl verschiedene Wiener Charaktere, während sein Bruder Benjamin die Interviews führte – mit einem gelben Pfannenwender als improvisiertem Mikrofon. Aus dem privaten Scherz entwickelte sich ein unverwechselbares Comedy-Format. Spätestens mit dem viralen Video „Studenten in den Sommerferien“ erreichten die Brüder ein größeres Publikum auf Facebook, Instagram, YouTube und später TikTok.`,
-  `Im Jänner 2020 wagten Paulus und Benjamin den Schritt auf die Bühne. Vor Familie, Freunden und Wegbegleitern spielten sie ihr erstes Programm „Dr.Bohl – Live!“ im Keller ihrer ehemaligen Schule. Aus dem Experiment wurden ausverkaufte Vorstellungen. Noch im selben Jahr starteten sie den Podcast „Bohlmobil“, in dem ihre persönliche Dynamik und ihr spontaner Humor stärker in den Mittelpunkt rückten.`,
-  `Mit „ANABOHLIKA“, das 2023 im Wiener Stadtsaal Premiere feierte, gelang der Sprung auf größere Kabarettbühnen. Die bekannten Figuren wurden weiterentwickelt, die Inszenierung aufwendiger und Dr.Bohl zunehmend zu einer eigenständigen Unterhaltungsmarke. Auftritte bei Ö3, ORF, FM4 und PULS 4 erweiterten die Reichweite über Social Media hinaus.`,
-  `2025 präsentierte Paulus mit „SOLO“ sein drittes Kabarettprogramm und erstmals einen Abend ohne Benjamin als Bühnenpartner. Seine Teilnahme bei „Dancing Stars“, wo er den zweiten Platz erreichte, machte ihn schließlich einem breiten österreichischen Fernsehpublikum bekannt.`,
-  `Mit Bohl Entertainment folgte der nächste konsequente Schritt: Aus Kurzvideos, Podcast und Kabarett entstand ein Unternehmen für Medien, Social Content, Markenkooperationen und eigene Entertainment-Formate. Dr.Bohl steht heute für den erfolgreichen Übergang von digitaler Kreativität zu professioneller Medienproduktion.`,
+	`Die Karriere von Dr.Bohl begann fernab großer Bühnen. Für ein Geburtstagsvideo erfand Paulus Bohl verschiedene Wiener Charaktere, während sein Bruder Benjamin die Interviews führte – mit einem gelben Pfannenwender als improvisiertem Mikrofon. Aus dem privaten Scherz entwickelte sich ein unverwechselbares Comedy-Format. Spätestens mit dem viralen Video „Studenten in den Sommerferien“ erreichten die Brüder ein größeres Publikum auf Facebook, Instagram, YouTube und später TikTok.`,
+	`Im Jänner 2020 wagten Paulus und Benjamin den Schritt auf die Bühne. Vor Familie, Freunden und Wegbegleitern spielten sie ihr erstes Programm „Dr.Bohl – Live!“ im Keller ihrer ehemaligen Schule. Aus dem Experiment wurden ausverkaufte Vorstellungen. Noch im selben Jahr starteten sie den Podcast „Bohlmobil“, in dem ihre persönliche Dynamik und ihr spontaner Humor stärker in den Mittelpunkt rückten.`,
+	`Mit „ANABOHLIKA“, das 2023 im Wiener Stadtsaal Premiere feierte, gelang der Sprung auf größere Kabarettbühnen. Die bekannten Figuren wurden weiterentwickelt, die Inszenierung aufwendiger und Dr.Bohl zunehmend zu einer eigenständigen Unterhaltungsmarke. Auftritte bei Ö3, ORF, FM4 und PULS 4 erweiterten die Reichweite über Social Media hinaus.`,
+	`2025 präsentierte Paulus mit „SOLO“ sein drittes Kabarettprogramm und erstmals einen Abend ohne Benjamin als Bühnenpartner. Seine Teilnahme bei „Dancing Stars“, wo er den zweiten Platz erreichte, machte ihn schließlich einem breiten österreichischen Fernsehpublikum bekannt.`,
+	`Mit Bohl Entertainment folgte der nächste konsequente Schritt: Aus Kurzvideos, Podcast und Kabarett entstand ein Unternehmen für Medien, Social Content, Markenkooperationen und eigene Entertainment-Formate. Dr.Bohl steht heute für den erfolgreichen Übergang von digitaler Kreativität zu professioneller Medienproduktion.`,
 ];
 
 function buildAboutContent() {
-  const body = document.getElementById("about-body");
-  if (!body || body.dataset.filled) return;
-  const maxSpreadMs = 620;
+	const body = document.getElementById('about-body');
+	if (!body || body.dataset.filled) return;
+	const maxSpreadMs = 620;
 
-  function splitWords(text) {
-    const words = text.split(/\s+/).filter(Boolean);
-    const step = Math.min(30, maxSpreadMs / words.length);
-    return words
-      .map(
-        (w, j) =>
-          `<span class="word" style="transition-delay:${Math.round(j * step)}ms">${w}</span>`,
-      )
-      .join(" ");
-  }
+	function splitWords(text) {
+		const words = text.split(/\s+/).filter(Boolean);
+		const step = Math.min(30, maxSpreadMs / words.length);
+		return words
+			.map(
+				(w, j) =>
+					`<span class="word" style="transition-delay:${Math.round(j * step)}ms">${w}</span>`
+			)
+			.join(' ');
+	}
 
-  let html = `<p class="about-overlay__lead">${splitWords(ABOUT_LEAD)}</p>`;
-  ABOUT_PARAGRAPHS.forEach((para) => {
-    html += `<p>${splitWords(para)}</p>`;
-  });
-  body.innerHTML = html;
-  body.dataset.filled = "true";
+	let html = `<p class="about-overlay__lead">${splitWords(ABOUT_LEAD)}</p>`;
+	ABOUT_PARAGRAPHS.forEach((para) => {
+		html += `<p>${splitWords(para)}</p>`;
+	});
+	body.innerHTML = html;
+	body.dataset.filled = 'true';
 }
 
 /* ── About view: stagger-reveal each paragraph's words as it scrolls into view ── */
 function initAboutWordReveal() {
-  const body = document.getElementById("about-body");
-  const scrollEl = document.getElementById("subpage-card-contact");
-  if (!body || !scrollEl || !("IntersectionObserver" in window)) return;
+	const body = document.getElementById('about-body');
+	const scrollEl = document.getElementById('subpage-card-contact');
+	if (!body || !scrollEl || !('IntersectionObserver' in window)) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target
-          .querySelectorAll(".word")
-          .forEach((w) => w.classList.add("is-in"));
-        observer.unobserve(entry.target);
-      });
-    },
-    { root: scrollEl, rootMargin: "0px 0px -10% 0px", threshold: 0.15 },
-  );
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (!entry.isIntersecting) return;
+				entry.target.querySelectorAll('.word').forEach((w) => w.classList.add('is-in'));
+				observer.unobserve(entry.target);
+			});
+		},
+		{ root: scrollEl, rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
+	);
 
-  body.querySelectorAll("p").forEach((p) => observer.observe(p));
+	body.querySelectorAll('p').forEach((p) => observer.observe(p));
 }
 
 /* ── About view scroll: each rendered LINE contracts/fades toward BOTH
@@ -250,269 +244,268 @@ function initAboutWordReveal() {
 let updateAboutFade = () => {};
 
 function initAboutScroll() {
-  const scrollEl = document.getElementById("subpage-card-contact");
-  const header = document.querySelector(".about-overlay__header");
-  const bottomBar = document.querySelector(".subpage-bottombar");
-  const body = document.getElementById("about-body");
-  if (!scrollEl || !header || !body) return;
+	const scrollEl = document.getElementById('subpage-card-contact');
+	const header = document.querySelector('.about-overlay__header');
+	const bottomBar = document.querySelector('.subpage-bottombar');
+	const body = document.getElementById('about-body');
+	if (!scrollEl || !header || !body) return;
 
-  const maxFadeZoneTop = 40; // upper bound on how early a line may start fading (top)
-  const maxScaleZoneTop = 150; // upper bound on how early a line may start scaling (top)
-  const maxFadeZoneBottom = 140; // same, but as a line enters from the bottom
-  const maxScaleZoneBottom = 220; // same, but as a line enters from the bottom
-  let ticking = false;
-  // flat list of { el, fadeZoneTop, scaleZoneTop, fadeZoneBottom,
-  // scaleZoneBottom, maxZoneTop, maxZoneBottom, settled }
-  let lines = [];
+	const maxFadeZoneTop = 40; // upper bound on how early a line may start fading (top)
+	const maxScaleZoneTop = 150; // upper bound on how early a line may start scaling (top)
+	const maxFadeZoneBottom = 140; // same, but as a line enters from the bottom
+	const maxScaleZoneBottom = 220; // same, but as a line enters from the bottom
+	let ticking = false;
+	// flat list of { el, fadeZoneTop, scaleZoneTop, fadeZoneBottom,
+	// scaleZoneBottom, maxZoneTop, maxZoneBottom, settled }
+	let lines = [];
 
-  // Exponential ease-in: barely moves for most of the approach, then
-  // ramps up sharply right at the edge. t: 1 = at rest, 0 = fully at edge.
-  function easeScale(t) {
-    const p = 1 - t;
-    const eased = p <= 0 ? 0 : p >= 1 ? 1 : Math.pow(2, 10 * (p - 1));
-    return 1 - eased;
-  }
+	// Exponential ease-in: barely moves for most of the approach, then
+	// ramps up sharply right at the edge. t: 1 = at rest, 0 = fully at edge.
+	function easeScale(t) {
+		const p = 1 - t;
+		const eased =
+			p <= 0 ? 0
+			: p >= 1 ? 1
+			: Math.pow(2, 10 * (p - 1));
+		return 1 - eased;
+	}
 
-  function applyLine(el, tFade, tScale) {
-    el.style.opacity = tFade;
-    el.style.transform = `scale(${(0.85 + tScale * 0.15).toFixed(3)})`;
-  }
+	function applyLine(el, tFade, tScale) {
+		el.style.opacity = tFade;
+		el.style.transform = `scale(${(0.85 + tScale * 0.15).toFixed(3)})`;
+	}
 
-  // A zone shrinks to the line's actual resting distance from an edge if
-  // that distance is smaller than the max (preventing pre-trigger at
-  // rest); otherwise it keeps the full max — including when the line
-  // isn't visible yet at rest (negative/undefined distance), so it still
-  // animates in properly once scrolled into range.
-  function clampZone(maxZone, restingGap) {
-    return restingGap >= 0 && restingGap < maxZone ? restingGap : maxZone;
-  }
+	// A zone shrinks to the line's actual resting distance from an edge if
+	// that distance is smaller than the max (preventing pre-trigger at
+	// rest); otherwise it keeps the full max — including when the line
+	// isn't visible yet at rest (negative/undefined distance), so it still
+	// animates in properly once scrolled into range.
+	function clampZone(maxZone, restingGap) {
+		return restingGap >= 0 && restingGap < maxZone ? restingGap : maxZone;
+	}
 
-  // Wrap each paragraph's words into one block span per rendered line, so
-  // a line contracts as a single cohesive unit rather than each word
-  // scaling around its own center. Re-run only on view-open/resize —
-  // both of those always happen at scrollTop 0, which is what lets us
-  // safely capture each line's resting gap from each edge below.
-  function rebuildLines() {
-    lines = [];
-    const headerBottom = header.getBoundingClientRect().bottom;
-    const bottomEdge = bottomBar
-      ? bottomBar.getBoundingClientRect().top
-      : scrollEl.getBoundingClientRect().bottom;
+	// Wrap each paragraph's words into one block span per rendered line, so
+	// a line contracts as a single cohesive unit rather than each word
+	// scaling around its own center. Re-run only on view-open/resize —
+	// both of those always happen at scrollTop 0, which is what lets us
+	// safely capture each line's resting gap from each edge below.
+	function rebuildLines() {
+		lines = [];
+		const headerBottom = header.getBoundingClientRect().bottom;
+		const bottomEdge =
+			bottomBar ?
+				bottomBar.getBoundingClientRect().top
+			:	scrollEl.getBoundingClientRect().bottom;
 
-    body.querySelectorAll("p").forEach((p) => {
-      const words = Array.from(p.querySelectorAll(".word"));
-      if (!words.length) return;
+		body.querySelectorAll('p').forEach((p) => {
+			const words = Array.from(p.querySelectorAll('.word'));
+			if (!words.length) return;
 
-      // Flatten first (undoes any previous line-wrapping) so natural
-      // reflow can be re-measured accurately.
-      const flat = document.createDocumentFragment();
-      words.forEach((w, i) => {
-        flat.appendChild(w);
-        if (i < words.length - 1) flat.appendChild(document.createTextNode(" "));
-      });
-      p.replaceChildren(flat);
+			// Flatten first (undoes any previous line-wrapping) so natural
+			// reflow can be re-measured accurately.
+			const flat = document.createDocumentFragment();
+			words.forEach((w, i) => {
+				flat.appendChild(w);
+				if (i < words.length - 1) flat.appendChild(document.createTextNode(' '));
+			});
+			p.replaceChildren(flat);
 
-      // Detect line breaks from the now-flat natural flow, tracking each
-      // line's top and bottom edge as we go.
-      const groups = [];
-      let lastTop = null;
-      words.forEach((w) => {
-        const rect = w.getBoundingClientRect();
-        if (lastTop === null || Math.abs(rect.top - lastTop) > 2) {
-          groups.push({ words: [], top: Infinity, bottom: 0 });
-          lastTop = rect.top;
-        }
-        const group = groups[groups.length - 1];
-        group.words.push(w);
-        group.top = Math.min(group.top, rect.top);
-        group.bottom = Math.max(group.bottom, rect.bottom);
-      });
+			// Detect line breaks from the now-flat natural flow, tracking each
+			// line's top and bottom edge as we go.
+			const groups = [];
+			let lastTop = null;
+			words.forEach((w) => {
+				const rect = w.getBoundingClientRect();
+				if (lastTop === null || Math.abs(rect.top - lastTop) > 2) {
+					groups.push({ words: [], top: Infinity, bottom: 0 });
+					lastTop = rect.top;
+				}
+				const group = groups[groups.length - 1];
+				group.words.push(w);
+				group.top = Math.min(group.top, rect.top);
+				group.bottom = Math.max(group.bottom, rect.bottom);
+			});
 
-      // Rebuild as one block wrapper per detected line.
-      const wrapped = document.createDocumentFragment();
-      groups.forEach((group) => {
-        const lineEl = document.createElement("span");
-        lineEl.className = "about-line";
-        group.words.forEach((w, i) => {
-          lineEl.appendChild(w);
-          if (i < group.words.length - 1)
-            lineEl.appendChild(document.createTextNode(" "));
-        });
-        wrapped.appendChild(lineEl);
+			// Rebuild as one block wrapper per detected line.
+			const wrapped = document.createDocumentFragment();
+			groups.forEach((group) => {
+				const lineEl = document.createElement('span');
+				lineEl.className = 'about-line';
+				group.words.forEach((w, i) => {
+					lineEl.appendChild(w);
+					if (i < group.words.length - 1)
+						lineEl.appendChild(document.createTextNode(' '));
+				});
+				wrapped.appendChild(lineEl);
 
-        const restingGapTop = group.bottom - headerBottom;
-        const restingGapBottom = bottomEdge - group.top;
-        const fadeZoneTop = clampZone(maxFadeZoneTop, restingGapTop);
-        const scaleZoneTop = clampZone(maxScaleZoneTop, restingGapTop);
-        const fadeZoneBottom = clampZone(maxFadeZoneBottom, restingGapBottom);
-        const scaleZoneBottom = clampZone(maxScaleZoneBottom, restingGapBottom);
-        lines.push({
-          el: lineEl,
-          fadeZoneTop,
-          scaleZoneTop,
-          fadeZoneBottom,
-          scaleZoneBottom,
-          maxZoneTop: Math.max(fadeZoneTop, scaleZoneTop),
-          maxZoneBottom: Math.max(fadeZoneBottom, scaleZoneBottom),
-          settled: undefined,
-        });
-      });
-      p.replaceChildren(wrapped);
-    });
-  }
+				const restingGapTop = group.bottom - headerBottom;
+				const restingGapBottom = bottomEdge - group.top;
+				const fadeZoneTop = clampZone(maxFadeZoneTop, restingGapTop);
+				const scaleZoneTop = clampZone(maxScaleZoneTop, restingGapTop);
+				const fadeZoneBottom = clampZone(maxFadeZoneBottom, restingGapBottom);
+				const scaleZoneBottom = clampZone(maxScaleZoneBottom, restingGapBottom);
+				lines.push({
+					el: lineEl,
+					fadeZoneTop,
+					scaleZoneTop,
+					fadeZoneBottom,
+					scaleZoneBottom,
+					maxZoneTop: Math.max(fadeZoneTop, scaleZoneTop),
+					maxZoneBottom: Math.max(fadeZoneBottom, scaleZoneBottom),
+					settled: undefined,
+				});
+			});
+			p.replaceChildren(wrapped);
+		});
+	}
 
-  function update() {
-    const headerBottom = header.getBoundingClientRect().bottom;
-    const bottomEdge = bottomBar
-      ? bottomBar.getBoundingClientRect().top
-      : scrollEl.getBoundingClientRect().bottom;
+	function update() {
+		const headerBottom = header.getBoundingClientRect().bottom;
+		const bottomEdge =
+			bottomBar ?
+				bottomBar.getBoundingClientRect().top
+			:	scrollEl.getBoundingClientRect().bottom;
 
-    lines.forEach((line) => {
-      const rect = line.el.getBoundingClientRect();
-      const topGap = rect.bottom - headerBottom;
-      const bottomGap = bottomEdge - rect.top;
+		lines.forEach((line) => {
+			const rect = line.el.getBoundingClientRect();
+			const topGap = rect.bottom - headerBottom;
+			const bottomGap = bottomEdge - rect.top;
 
-      const atRestTop = line.maxZoneTop <= 0 || topGap >= line.maxZoneTop;
-      const atRestBottom =
-        line.maxZoneBottom <= 0 || bottomGap >= line.maxZoneBottom;
+			const atRestTop = line.maxZoneTop <= 0 || topGap >= line.maxZoneTop;
+			const atRestBottom = line.maxZoneBottom <= 0 || bottomGap >= line.maxZoneBottom;
 
-      // Fully clear of both edges' zones: snap to rest once, then skip
-      // this line entirely until its state changes again.
-      if (atRestTop && atRestBottom) {
-        if (line.settled !== 1) {
-          applyLine(line.el, 1, 1);
-          line.el.style.willChange = "auto";
-          line.settled = 1;
-        }
-        return;
-      }
-      // Fully behind the header, or not yet scrolled up past the bottom
-      // bar: fully hidden either way.
-      if (topGap <= 0 || bottomGap <= 0) {
-        if (line.settled !== 0) {
-          applyLine(line.el, 0, 0);
-          line.el.style.willChange = "auto";
-          line.settled = 0;
-        }
-        return;
-      }
+			// Fully clear of both edges' zones: snap to rest once, then skip
+			// this line entirely until its state changes again.
+			if (atRestTop && atRestBottom) {
+				if (line.settled !== 1) {
+					applyLine(line.el, 1, 1);
+					line.el.style.willChange = 'auto';
+					line.settled = 1;
+				}
+				return;
+			}
+			// Fully behind the header, or not yet scrolled up past the bottom
+			// bar: fully hidden either way.
+			if (topGap <= 0 || bottomGap <= 0) {
+				if (line.settled !== 0) {
+					applyLine(line.el, 0, 0);
+					line.el.style.willChange = 'auto';
+					line.settled = 0;
+				}
+				return;
+			}
 
-      if (line.settled !== null) line.el.style.willChange = "transform, opacity";
-      line.settled = null;
+			if (line.settled !== null) line.el.style.willChange = 'transform, opacity';
+			line.settled = null;
 
-      const tFadeTop =
-        line.fadeZoneTop <= 0 ? 1 : Math.min(1, topGap / line.fadeZoneTop);
-      const tFadeBottom =
-        line.fadeZoneBottom <= 0 ? 1 : Math.min(1, bottomGap / line.fadeZoneBottom);
-      const tScaleTop =
-        line.scaleZoneTop <= 0
-          ? 1
-          : easeScale(Math.min(1, topGap / line.scaleZoneTop));
-      const tScaleBottom =
-        line.scaleZoneBottom <= 0
-          ? 1
-          : easeScale(Math.min(1, bottomGap / line.scaleZoneBottom));
+			const tFadeTop = line.fadeZoneTop <= 0 ? 1 : Math.min(1, topGap / line.fadeZoneTop);
+			const tFadeBottom =
+				line.fadeZoneBottom <= 0 ? 1 : Math.min(1, bottomGap / line.fadeZoneBottom);
+			const tScaleTop =
+				line.scaleZoneTop <= 0 ? 1 : easeScale(Math.min(1, topGap / line.scaleZoneTop));
+			const tScaleBottom =
+				line.scaleZoneBottom <= 0 ?
+					1
+				:	easeScale(Math.min(1, bottomGap / line.scaleZoneBottom));
 
-      applyLine(
-        line.el,
-        Math.min(tFadeTop, tFadeBottom),
-        Math.min(tScaleTop, tScaleBottom),
-      );
-    });
-    ticking = false;
-  }
+			applyLine(
+				line.el,
+				Math.min(tFadeTop, tFadeBottom),
+				Math.min(tScaleTop, tScaleBottom)
+			);
+		});
+		ticking = false;
+	}
 
-  updateAboutFade = () => {
-    rebuildLines();
-    update();
-  };
+	updateAboutFade = () => {
+		rebuildLines();
+		update();
+	};
 
-  scrollEl.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
-    },
-    { passive: true },
-  );
+	scrollEl.addEventListener(
+		'scroll',
+		() => {
+			if (!ticking) {
+				requestAnimationFrame(update);
+				ticking = true;
+			}
+		},
+		{ passive: true }
+	);
 
-  let resizeTimer;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      if (document.getElementById("about-view")?.classList.contains("is-active")) {
-        updateAboutFade();
-      }
-    }, 150);
-  });
+	let resizeTimer;
+	window.addEventListener('resize', () => {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(() => {
+			if (document.getElementById('about-view')?.classList.contains('is-active')) {
+				updateAboutFade();
+			}
+		}, 150);
+	});
 }
 
 /* ── Bohl Entertainment brochure: scroll-reveal (subpage card 7) ── */
 function initBrochureReveal() {
-  const card = document.querySelector('.subpage-card[data-index="7"]');
-  if (!card) return;
-  card.addEventListener("dragstart", (e) => e.preventDefault());
-  const els = card.querySelectorAll(".be-reveal");
-  if (!els.length) return;
+	const card = document.querySelector('.subpage-card[data-index="7"]');
+	if (!card) return;
+	card.addEventListener('dragstart', (e) => e.preventDefault());
+	const els = card.querySelectorAll('.be-reveal');
+	if (!els.length) return;
 
-  if (!("IntersectionObserver" in window)) {
-    els.forEach((el) => el.classList.add("is-visible"));
-    return;
-  }
+	if (!('IntersectionObserver' in window)) {
+		els.forEach((el) => el.classList.add('is-visible'));
+		return;
+	}
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          io.unobserve(entry.target);
-        }
-      });
-    },
-    { root: card, threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
-  );
+	const io = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-visible');
+					io.unobserve(entry.target);
+				}
+			});
+		},
+		{ root: card, threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+	);
 
-  els.forEach((el, i) => {
-    el.style.transitionDelay = `${(i % 4) * 60}ms`;
-    io.observe(el);
-  });
+	els.forEach((el, i) => {
+		el.style.transitionDelay = `${(i % 4) * 60}ms`;
+		io.observe(el);
+	});
 }
 initBrochureReveal();
 
 /* ── Musik: discography accordion with lazy embeds ── */
 function initDiscography() {
-  const items = document.querySelectorAll(".disco__item");
-  items.forEach((item) => {
-    const bar = item.querySelector(".disco__bar");
-    bar.addEventListener("click", () => {
-      const open = item.classList.toggle("is-open");
-      bar.setAttribute("aria-expanded", open);
+	const items = document.querySelectorAll('.disco__item');
+	items.forEach((item) => {
+		const bar = item.querySelector('.disco__bar');
+		bar.addEventListener('click', () => {
+			const open = item.classList.toggle('is-open');
+			bar.setAttribute('aria-expanded', open);
 
-      // lazy-inject iframes on first open
-      if (open && !item.dataset.loaded) {
-        const yt = item.dataset.yt;
-        const sp = item.dataset.sp;
-        item.querySelector(".disco__video").innerHTML =
-          `<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
-        item.querySelector(".disco__spotify").innerHTML =
-          `<iframe src="https://open.spotify.com/embed/track/${sp}?theme=0" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
-        item.dataset.loaded = "true";
-      }
+			// lazy-inject iframes on first open
+			if (open && !item.dataset.loaded) {
+				const yt = item.dataset.yt;
+				const sp = item.dataset.sp;
+				item.querySelector('.disco__video').innerHTML =
+					`<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+				item.querySelector('.disco__spotify').innerHTML =
+					`<iframe src="https://open.spotify.com/embed/track/${sp}?theme=0" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+				item.dataset.loaded = 'true';
+			}
 
-      // close others
-      if (open) {
-        items.forEach((other) => {
-          if (other !== item && other.classList.contains("is-open")) {
-            other.classList.remove("is-open");
-            other
-              .querySelector(".disco__bar")
-              .setAttribute("aria-expanded", "false");
-          }
-        });
-      }
-    });
-  });
+			// close others
+			if (open) {
+				items.forEach((other) => {
+					if (other !== item && other.classList.contains('is-open')) {
+						other.classList.remove('is-open');
+						other.querySelector('.disco__bar').setAttribute('aria-expanded', 'false');
+					}
+				});
+			}
+		});
+	});
 }
 initDiscography();
