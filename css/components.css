@@ -525,8 +525,8 @@
 .social-icons a:hover {
 	transform: scale(1.12);
 }
-.social-icons a:hover svg {
-}
+/* .social-icons a:hover svg {
+} */
 .social-icons a:active {
 	transform: scale(0.92);
 }
@@ -876,7 +876,8 @@
 }
 
 /* ── About view (nested inside subpage card 8) ── */
-#subpage-card-contact {
+#subpage-card-contact,
+#subpage-card-musik {
 	scrollbar-gutter: stable;
 }
 .about-overlay__header {
@@ -1499,7 +1500,6 @@ a.be-contact__val:hover {
    ══════════════════════════════════════════════ */
 .disco {
 	padding: 12px var(--side-pad) 56px;
-	max-width: 720px;
 	margin: 0 auto;
 }
 .disco__label {
@@ -1543,7 +1543,7 @@ a.be-contact__val:hover {
 	font-family: var(--font-display);
 	font-size: 19px;
 	text-transform: uppercase;
-	letter-spacing: 0.03em;
+	letter-spacing: 0.04em;
 	flex: 1 1 auto;
 	line-height: 1.1;
 }
@@ -1600,6 +1600,25 @@ a.be-contact__val:hover {
 	border-radius: 12px;
 	display: block;
 	margin-top: 10px;
+}
+
+@media (min-width: 600px) {
+	.disco__title {
+		font-size: clamp(19px, 4vw, 36px);
+	}
+	.disco__thumb {
+		width: 88px;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		flex: 0 0 auto;
+		display: block;
+	}
+	.disco__thumb {
+		width: 132px;
+	}
+	.disco__year {
+		font-size: 15px;
+	}
 }
 
 /* ══════════════════════════════════════════════
