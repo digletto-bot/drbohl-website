@@ -123,6 +123,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		openSubpage();
 	};
 
+	// Handle clicks on contact page cutout button
+	// -> Prevent opening the overlay, if the user meant to drag between slides
+	const heroCutoutBtn = document.querySelector('.hero-cutout-button');
+	let hcBtnStartX, hcBtnStartY;
+	heroCutoutBtn.addEventListener('pointerdown', (e) => {
+		hcBtnStartX = e.clientX;
+		hcBtnStartY = e.clientY;
+	});
+	heroCutoutBtn.addEventListener('click', (e) => {
+		if (Math.hypot(e.clientX - hcBtnStartX, e.clientY - hcBtnStartY) > 6) return;
+		openAboutPage();
+	});
+
 	/* ── ESC closes everything ── */
 	document.addEventListener('keydown', (e) => {
 		if (e.key !== 'Escape') return;
