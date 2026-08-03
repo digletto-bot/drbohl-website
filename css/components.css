@@ -876,7 +876,8 @@
 }
 
 /* ── About view (nested inside subpage card 8) ── */
-#subpage-card-contact {
+#subpage-card-contact,
+#subpage-card-musik {
 	scrollbar-gutter: stable;
 }
 .about-overlay__header {
