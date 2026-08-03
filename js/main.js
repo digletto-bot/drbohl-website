@@ -122,6 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		showAboutView();
 		openSubpage();
 	};
+	window.openAboutPageFromCutout = () => {
+		const contactCard = document.querySelector('article.title-card[data-index="8"]');
+		const transform = getComputedStyle(contactCard).transform;
+		if (transform != 'matrix(1, 0, 0, 1, 0, 0)') return;
+		openAboutPage();
+	};
 
 	/* ── ESC closes everything ── */
 	document.addEventListener('keydown', (e) => {
