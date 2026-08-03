@@ -17,7 +17,10 @@ export function fitText() {
 	const availW = (track ? track.offsetWidth : window.innerWidth) - SIDE_PAD * 2;
 
 	const screenW = window.innerWidth;
-	const seed = screenW < 600 ? 120 : screenW <= 1000 ? 140 : 160;
+	const seed =
+		screenW < 600 ? 120
+		: screenW <= 1000 ? 140
+		: 160;
 
 	document.querySelectorAll('.title-card__headline-line').forEach((el) => {
 		// Seed at large size, measure, then scale to fit exactly
@@ -36,11 +39,6 @@ export function updateProgressNav(index) {
 		});
 	});
 }
-
-// export function updateSlideCounter(index, total) {
-//   const el = document.getElementById('slide-counter');
-//   if (el) el.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
-// }
 
 export function dismissSwipeHint() {
 	const h = document.querySelector('.swipe-hint');
