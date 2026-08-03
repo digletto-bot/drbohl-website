@@ -825,7 +825,7 @@
 	padding: 0px var(--side-pad) 0px;
 	font-family: var(--font-display);
 	font-weight: 900;
-	font-size: clamp(58px, 18vw, 82px);
+	font-size: var(--fs-title);
 	line-height: 0.88;
 	text-transform: uppercase;
 	color: var(--hero-yellow);
@@ -834,7 +834,7 @@
 	padding: 20px var(--side-pad) 0;
 	font-size: 15px;
 	line-height: 1.65;
-	color: var(--caption-grey);
+	color: var(--body-text);
 	max-width: 480px;
 }
 .subpage-overlay__cta {
@@ -904,7 +904,7 @@
 .about-overlay__title {
 	font-family: var(--font-display);
 	font-weight: 900;
-	font-size: clamp(58px, 18vw, 82px);
+	font-size: var(--fs-title);
 	line-height: 0.88;
 	text-transform: uppercase;
 	color: var(--hero-yellow);

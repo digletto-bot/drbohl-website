@@ -230,4 +230,11 @@
 	.desktop-arrow--next {
 		right: var(--side-pad);
 	}
+	.subpage-card-inner {
+		padding-top: 15px;
+	}
+	.subpage-ticket-btn {
+		/* overlay 70px + half of title first line (clamp) minus half button (26px) + subpage-card-inner padding (15px)*/
+		top: calc(70px + clamp(58px, 18vw, 82px) * 0.5 - 26px + 15px) !important;
+	}
 }
