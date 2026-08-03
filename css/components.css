@@ -501,10 +501,11 @@
 	transform: scale(1.12);
 }
 .social-icons a:hover svg {
-	filter: drop-shadow(0 0 2px rgba(245, 237, 211, 1))
-		drop-shadow(0 0 8px rgba(244, 222, 153, 0.75))
-		drop-shadow(0 0 18px rgba(243, 209, 104, 0.55))
-		drop-shadow(0 0 30px rgba(242, 193, 46, 0.35));
+  filter:
+    drop-shadow(0 0 2px rgb(204, 187, 131))
+    drop-shadow(0 0 4px rgba(244, 222, 153, 0.75))
+    drop-shadow(0 0 8px rgba(243, 209, 104, 0.55))
+    drop-shadow(0 0 12px rgba(242, 193, 46, 0.35));
 }
 .social-icons a:active {
 	transform: scale(0.92);
