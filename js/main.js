@@ -518,3 +518,20 @@ function initDiscography() {
 	});
 }
 initDiscography();
+
+/* ── Kabarett: show-banner accordion (separate open/close controls) ── */
+function initKabarettAccordion() {
+	document.querySelectorAll('.kab-show').forEach((show) => {
+		const openBtn = show.querySelector('.kab-open');
+		const closeBtn = show.querySelector('.kab-close');
+		openBtn.addEventListener('click', () => {
+			show.classList.add('is-open');
+			openBtn.setAttribute('aria-expanded', 'true');
+		});
+		closeBtn.addEventListener('click', () => {
+			show.classList.remove('is-open');
+			openBtn.setAttribute('aria-expanded', 'false');
+		});
+	});
+}
+initKabarettAccordion();
