@@ -9,12 +9,7 @@ import Slider from './slider.js';
 import Router from './router.js';
 import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
-import {
-	fitText,
-	updateProgressNav,
-	// updateSlideCounter,
-	dismissSwipeHint,
-} from './animations.js';
+import { fitText, updateProgressNav, dismissSwipeHint } from './animations.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	/* ── fitText ── */
@@ -29,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	const slider = new Slider({
 		onSlideChange: (index) => {
 			updateProgressNav(index);
-			// updateSlideCounter(index, slider.totalSlides);
 			menu.onSlideChange(index);
 			if (window.router) router.onSlideChange(index);
 			dismissSwipeHint();
@@ -50,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	ticketBtn?.classList.toggle('is-active', subpageSlider.currentIndex === 0);
 
 	updateProgressNav(slider.index);
-	// updateSlideCounter(slider.index, slider.totalSlides);
 
 	/* ── Menu ── */
 	const menu = new Menu(slider);
@@ -525,3 +518,20 @@ function initDiscography() {
 	});
 }
 initDiscography();
+
+/* ── Kabarett: show-banner accordion (separate open/close controls) ── */
+function initKabarettAccordion() {
+	document.querySelectorAll('.kab-show').forEach((show) => {
+		const openBtn = show.querySelector('.kab-open');
+		const closeBtn = show.querySelector('.kab-close');
+		openBtn.addEventListener('click', () => {
+			show.classList.add('is-open');
+			openBtn.setAttribute('aria-expanded', 'true');
+		});
+		closeBtn.addEventListener('click', () => {
+			show.classList.remove('is-open');
+			openBtn.setAttribute('aria-expanded', 'false');
+		});
+	});
+}
+initKabarettAccordion();

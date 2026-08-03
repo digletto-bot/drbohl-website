@@ -232,7 +232,6 @@
 <button id="arrow-next" class="desktop-arrow desktop-arrow--next" aria-label="Weiter">
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
-<!-- <div id="slide-counter" class="slide-counter">01 / 10</div> -->
 
 <!-- Netflix-style menu -->
 <div id="full-screen-menu" class="full-screen-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true" draggable="false">
@@ -368,8 +367,111 @@
     <article class="subpage-card is-next" data-index="1" aria-label="Kabarett">
       <div class="subpage-card-inner">
         <div class="subpage-overlay__title">Kabarett</div>
-        <div class="subpage-overlay__body">Live auf der Bühne. Aktuelle Programme und Tickets.</div>
-        <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+        <div class="subpage-overlay__body kab-intro">
+          <p>Komm her, du Gieriger!</p>
+          <p>In Person noch ehrlicher, tiefer, wesentlich verschwitzter, angeblich witziger und je nach Sitzplatz auch ein bissl größer.</p>
+          <p>Absolutes Kulterprogramm, da kannst auch die Mami und die Großödan mitnehmen. Schau dich mal um. Komm mach jetzt, trau dich.</p>
+          <p>Mit großvärterlicher Liebe,<br>Dr.Bohl</p>
+        </div>
+
+        <div class="kab-shows">
+          <!-- SOLO -->
+          <div class="kab-show">
+            <div class="kab-banner">
+              <img class="kab-banner__img" src="assets/images/kabarett-solo.jpg" alt="" loading="lazy" />
+              <div class="kab-banner__shade"></div>
+              <div class="kab-banner__content" data-fs="large">
+                <span class="kab-banner__title" data-fs="large">Solo</span>
+                <button type="button" class="ghost-button kab-banner__cta" onclick="goToTickets()">Alle Termine</button>
+              </div>
+              <button class="kab-open" aria-expanded="false" aria-controls="kab-panel-solo" aria-label="Mehr zu Solo">
+                <span class="kab-open__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="kab-panel" id="kab-panel-solo">
+              <div class="kab-panel-inner">
+                <div class="kab-panel-content">
+                  <p>Bohl ganz allein, ganz nah. Das aktuelle Solo-Programm tourt quer durch Österreich — alle Termine und Locations findest du in der Terminübersicht.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis atque nostrum delectus facilis illum laudantium id accusantium, voluptatem dolor consequuntur dicta inventore in odit hic sapiente illo repellendus voluptates alias error mollitia minus consectetur porro! Illum rerum veniam, ad corporis aliquid deserunt tempora perferendis. Doloremque pariatur earum magni alias aut adipisci labore error magnam. Fuga sed, aliquid voluptatibus, quos assumenda quia officiis fugit consequatur at nesciunt eligendi voluptatum minima sapiente, impedit tempore culpa. Quod sint eaque praesentium. Modi ipsam eos, soluta repellat voluptatum sint earum ab exercitationem provident quibusdam eveniet optio at totam quidem fugiat voluptatibus illo sapiente non, excepturi aperiam atque vero nesciunt quas rerum? Debitis aliquam cum quidem iste doloribus sit architecto beatae iure expedita voluptas enim, suscipit exercitationem aspernatur accusamus reprehenderit magni ratione, aut delectus eius laboriosam? Velit odit error perspiciatis! Repellat, eius sapiente pariatur esse, consequuntur rem fuga nam vel adipisci asperiores doloremque omnis, mollitia voluptatibus?</p>
+                  <button class="kab-close" aria-controls="kab-panel-solo" aria-label="Schließen">
+                    <span class="kab-close__icon" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ANABOHLIKA -->
+          <div class="kab-show">
+            <div class="kab-banner">
+              <img class="kab-banner__img" src="assets/images/kabarett-anabohlika.jpg" alt="" loading="lazy" />
+              <div class="kab-banner__shade"></div>
+              <div class="kab-banner__content">
+                <span class="kab-banner__title">Anabohlika</span>
+                <button type="button" class="ghost-button kab-banner__cta">Stream Now</button>
+              </div>
+              <button class="kab-open" aria-expanded="false" aria-controls="kab-panel-anabohlika" aria-label="Mehr zu Anabohlika">
+                <span class="kab-open__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="kab-panel" id="kab-panel-anabohlika">
+              <div class="kab-panel-inner">
+                <div class="kab-panel-content">
+                  <p>Die Kult-Show im XXL-Format — Muckis und Pointen gleichermaßen aufgepumpt. Jetzt auf den bekannten Streaming-Plattformen abrufbar.</p>
+                  <button class="kab-close" aria-controls="kab-panel-anabohlika" aria-label="Schließen">
+                    <span class="kab-close__icon" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DR.BOHL - LIVE! -->
+          <div class="kab-show">
+            <div class="kab-banner">
+              <img class="kab-banner__img" src="assets/images/kabarett-dr-bohl-live.jpg" alt="" loading="lazy" />
+              <div class="kab-banner__shade"></div>
+              <div class="kab-banner__content">
+                <span class="kab-banner__title">Dr.Bohl– Live!</span>
+              </div>
+              <button class="kab-open" aria-expanded="false" aria-controls="kab-panel-live" aria-label="Mehr zu Dr.Bohl – Live!">
+                <span class="kab-open__icon" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="kab-panel" id="kab-panel-live">
+              <div class="kab-panel-inner">
+                <div class="kab-panel-content">
+                  <p>Der Klassiker, der alles begonnen hat. Zwei Brüder, ein Sofa, jede Menge Chaos — die Live-Show in voller Länge.</p>
+                  <button class="kab-close" aria-controls="kab-panel-live" aria-label="Schließen">
+                    <span class="kab-close__icon" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="kab-newsletter">
+          <p class="kab-newsletter__text">Du willst nicht 24/7 die Seite refreshen für Tickets als wär's ein Coldplay Konzert?<br>Tickets sollten kein Privileg sein, sondern ein Grundrecht!</p>
+          <form class="kab-signup" onsubmit="event.preventDefault();">
+            <span class="kab-signup__label">Möld di an und I möld mi</span>
+            <div class="kab-signup__row">
+              <input type="email" placeholder="deine@email.at" required />
+              <button type="submit" class="kab-signup__submit" aria-label="Anmelden">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="kab-crowd">
+          <img class="kab-crowd__img" src="assets/images/kabarett-newsletter-section.jpg" alt="" loading="lazy" />
+          <div class="kab-crowd__shade"></div>
+          <blockquote class="kab-testimonial">
+            <span class="kab-testimonial__quote">„Bestes Kulturprogramm, meine Oma hat geweint.“</span>
+            <span class="kab-testimonial__stars" aria-hidden="true">★★★★★</span>
+          </blockquote>
+        </section>
       </div>
     </article>
 
@@ -392,7 +494,7 @@
     </article>
 
     <!-- CARD 4 — MUSIK -->
-    <article class="subpage-card is-next" data-index="4" aria-label="Musik">
+    <article id="subpage-card-musik" class="subpage-card is-next" data-index="4" aria-label="Musik">
       <div class="subpage-card-inner">
         <div class="subpage-overlay__title">Musik</div>
         <div class="subpage-overlay__body">Releases, Playlists und Hörproben von Dr.Bohl.</div>

@@ -20,7 +20,7 @@
 	position: relative;
 	flex: 1;
 	/* max-width: 28px; */
-	max-width: clamp(28px, 8vw, 48px);
+	max-width: clamp(28px, 8vw, 72px);
 	height: 100%;
 	display: flex;
 	align-items: center;
@@ -33,11 +33,11 @@
 }
 .progress-nav__item.is-active {
 	max-width: 38px;
-	max-width: clamp(38px, 10vw, 60px);
+	max-width: clamp(38px, 10vw, 90px);
 }
 .progress-nav__bar {
 	width: 100%;
-	height: clamp(6px, 1.33vw, 8px);
+	height: clamp(6px, 1.33vw, 12px);
 	border-radius: 999px;
 	background: var(--progress-inactive);
 	pointer-events: none;
@@ -156,6 +156,7 @@
 	border-radius: 10px;
 	transition: background 0.2s ease;
 	-webkit-tap-highlight-color: transparent;
+	filter: drop-shadow(0 0 2px var(--tap-yellow));
 }
 .menu-button:hover {
 	background: rgba(245, 245, 240, 0.08);
@@ -166,11 +167,24 @@
 	height: 2px;
 	border-radius: 2px;
 	background: var(--light-text);
+	background: var(--hero-yellow);
 	transition:
 		transform 0.3s var(--slide-easing),
 		opacity 0.3s ease;
 	transform-origin: center;
 }
+
+@media (min-width: 1000px) {
+	.menu-button {
+		gap: 7.5px;
+	}
+
+	.menu-button__line {
+		width: 33px;
+		height: 3px;
+	}
+}
+
 .menu-button.is-open .menu-button__line:nth-child(1) {
 	transform: translateY(7px) rotate(45deg);
 }
@@ -525,8 +539,8 @@
 .social-icons a:hover {
 	transform: scale(1.12);
 }
-.social-icons a:hover svg {
-}
+/* .social-icons a:hover svg {
+} */
 .social-icons a:active {
 	transform: scale(0.92);
 }
@@ -825,7 +839,7 @@
 	padding: 0px var(--side-pad) 0px;
 	font-family: var(--font-display);
 	font-weight: 900;
-	font-size: clamp(58px, 18vw, 82px);
+	font-size: var(--fs-title);
 	line-height: 0.88;
 	text-transform: uppercase;
 	color: var(--hero-yellow);
@@ -834,7 +848,7 @@
 	padding: 20px var(--side-pad) 0;
 	font-size: 15px;
 	line-height: 1.65;
-	color: var(--caption-grey);
+	color: var(--body-text);
 	max-width: 480px;
 }
 .subpage-overlay__cta {
@@ -876,7 +890,8 @@
 }
 
 /* ── About view (nested inside subpage card 8) ── */
-#subpage-card-contact {
+#subpage-card-contact,
+#subpage-card-musik {
 	scrollbar-gutter: stable;
 }
 .about-overlay__header {
@@ -904,7 +919,7 @@
 .about-overlay__title {
 	font-family: var(--font-display);
 	font-weight: 900;
-	font-size: clamp(58px, 18vw, 82px);
+	font-size: var(--fs-title);
 	line-height: 0.88;
 	text-transform: uppercase;
 	color: var(--hero-yellow);
@@ -1499,7 +1514,6 @@ a.be-contact__val:hover {
    ══════════════════════════════════════════════ */
 .disco {
 	padding: 12px var(--side-pad) 56px;
-	max-width: 720px;
 	margin: 0 auto;
 }
 .disco__label {
@@ -1543,7 +1557,7 @@ a.be-contact__val:hover {
 	font-family: var(--font-display);
 	font-size: 19px;
 	text-transform: uppercase;
-	letter-spacing: 0.03em;
+	letter-spacing: 0.04em;
 	flex: 1 1 auto;
 	line-height: 1.1;
 }
@@ -1600,6 +1614,439 @@ a.be-contact__val:hover {
 	border-radius: 12px;
 	display: block;
 	margin-top: 10px;
+}
+
+@media (min-width: 600px) {
+	.disco__title {
+		font-size: clamp(19px, 4vw, 36px);
+	}
+	.disco__thumb {
+		width: 88px;
+		aspect-ratio: 16 / 9;
+		object-fit: cover;
+		flex: 0 0 auto;
+		display: block;
+	}
+	.disco__thumb {
+		width: 132px;
+	}
+	.disco__year {
+		font-size: 15px;
+	}
+}
+
+/* ══════════════════════════════════════════════
+   KABARETT — Show banners (skewed accordion)
+   ══════════════════════════════════════════════ */
+.kab-intro {
+	max-width: 560px;
+}
+.kab-intro p {
+	margin: 0 0 18px;
+}
+.kab-intro p:last-child {
+	margin-bottom: 0;
+}
+
+.kab-shows {
+	padding: 44px var(--side-pad) 4px;
+}
+.kab-show {
+	position: relative;
+	/* atan(0.12 / 2.1) — must match .kab-banner's clip-path inset (12%)
+	   at its aspect-ratio (2.1/1); negative because the right edge sits
+	   higher. Recompute if either of those two values changes. */
+	--kab-skew: -3.3deg;
+	/* Same 12% / 2.1 ratio as .kab-banner's clip-path, expressed as a
+	   share of WIDTH (cqw) rather than height, so the ::before card
+	   background below can use a fixed pixel-equivalent inset instead of
+	   a height-relative percentage — its box spans banner + toggle +
+	   foldout, whose combined height changes when the panel opens, and a
+	   %-based clip-path would visibly re-steepen as that height grows. */
+	container-type: inline-size;
+	--kab-cut: 5.71cqw;
+}
+.kab-show:last-child {
+	margin-bottom: 0;
+}
+
+/* Card background: one continuous jet-black parallelogram behind the
+   banner and foldout, cut at the same angle as .kab-banner so the
+   photo's slanted edges read as a continuation of one shape rather than
+   a slanted image sitting above an unrelated rectangular panel. */
+.kab-show::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	background: #000;
+	clip-path: polygon(0 var(--kab-cut), 100% 0, 100% calc(100% - var(--kab-cut)), 0% 100%);
+}
+
+/* The banner itself is clipped into a parallelogram — simpler and more
+   predictable for a full-bleed photo than skewing the box and
+   counter-skewing its contents (which is what .be-cover__angle does for
+   a small decorative accent shape). Text sits in a normal, unclipped
+   flex layer so it stays upright and never risks being cropped. */
+.kab-banner {
+	position: relative;
+	z-index: 1;
+	aspect-ratio: 2.1 / 1;
+	overflow: hidden;
+	clip-path: polygon(0 12%, 100% 0%, 100% 88%, 0% 100%);
+	background: #111;
+}
+.kab-banner__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.kab-banner__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		115deg,
+		rgba(0, 0, 0, 0.82) 0%,
+		rgba(0, 0, 0, 0.35) 45%,
+		rgba(0, 0, 0, 0) 72%
+	);
+}
+.kab-banner__content {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	padding: 16% var(--side-pad) 9%;
+}
+.kab-banner__title {
+	font-family: var(--font-display);
+	font-weight: 900;
+	font-size: clamp(31px, 12vw, 125px);
+	line-height: 0.9;
+	text-transform: uppercase;
+	color: var(--hero-yellow);
+	text-shadow:
+		2px 4px 4px rgba(0, 0, 0, 1),
+		2px 4px 8px rgba(0, 0, 0, 1);
+	transform: skewY(var(--kab-skew));
+	transform-origin: top left;
+}
+.kab-banner__content[data-fs='large'] {
+	padding: 14% var(--side-pad) 9%;
+}
+.kab-banner__title[data-fs='large'] {
+	font-size: clamp(48px, 18vw, 180px);
+}
+
+.kab-banner__cta {
+	align-self: flex-start;
+	font-size: 12px;
+	padding: 5px 14px;
+	box-shadow: none;
+}
+
+.ghost-button.kab-banner__cta {
+	transform: skewY(var(--kab-skew));
+	transform-origin: top left;
+	font-size: clamp(12px, 2.5vw, 25px);
+}
+
+/* Open control: a "+" floating over the bottom-center of the image
+   itself (not a separate bar below it). Only ever *opens* — it fades
+   out once the show is open, since at that point the close control
+   inside the foldout is the relevant action. Fade timings are split
+   across the two target-state rules (base = fade in on close, .is-open
+   = fade out on open) so each direction gets its own duration; the
+   visibility swap is delayed to the end of its own opacity transition
+   (same trick as .progress-nav__item's tooltip below) so it drops out
+   of the tab order/hit-testing only once actually invisible. */
+.kab-open {
+	position: absolute;
+	left: 50%;
+	bottom: 10%;
+	z-index: 2;
+	transform: translateX(-50%);
+	width: clamp(33px, 3vw, 44px);
+	height: clamp(33px, 3vw, 44px);
+	padding: 0;
+	border-radius: 50%;
+	border: 1.9px solid var(--hero-yellow);
+	background: rgba(20, 20, 20, 0.85);
+	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
+	cursor: pointer;
+	opacity: 1;
+	visibility: visible;
+	transition:
+		opacity 250ms ease,
+		background 200ms ease,
+		transform 200ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.kab-open:hover {
+	background: rgba(20, 20, 20, 0.5);
+	transform: translateX(-50%) scale(1.08);
+}
+.kab-show.is-open .kab-open {
+	opacity: 0;
+	/* visibility: hidden; */
+	pointer-events: none;
+	transition: opacity 250ms ease;
+}
+.kab-open__icon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: clamp(10px, 1vw, 14px);
+	height: clamp(10px, 1vw, 14px);
+	transform: translate(-50%, -50%);
+}
+.kab-open__icon::before,
+.kab-open__icon::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background: var(--hero-yellow);
+	transform: translate(-50%, -50%);
+}
+.kab-open__icon::before {
+	width: clamp(10px, 1vw, 14px);
+	height: 2px;
+}
+.kab-open__icon::after {
+	width: 2px;
+	height: clamp(10px, 1vw, 14px);
+}
+
+/* Close control: sits at the bottom of the foldout's own content, in
+   normal flow — closing it removes .is-open, which both collapses the
+   panel (see .kab-panel below) and fades .kab-open back in. It's a
+   static "×" (two fixed diagonals), not a rotated "+", since there's no
+   shared icon to animate between the two controls anymore. */
+.kab-close {
+	position: relative;
+	display: block;
+	margin: 18px auto 0;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border-radius: 50%;
+	border: 1.9px solid var(--hero-yellow);
+	background: rgba(20, 20, 20, 0.9);
+	cursor: pointer;
+	transition: background 200ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.kab-close:hover {
+	background: rgba(242, 193, 46, 0.15);
+}
+.kab-close__icon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 14px;
+	height: 14px;
+	transform: translate(-50%, -50%);
+}
+.kab-close__icon::before,
+.kab-close__icon::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 14px;
+	height: 2px;
+	background: var(--hero-yellow);
+}
+.kab-close__icon::before {
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+.kab-close__icon::after {
+	transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* .kab-panel-inner is what the grid-rows transition actually resizes
+   every frame — it stays untransformed so that cost is a plain,
+   layer-cheap clip. The skew lives one level deeper, on
+   .kab-panel-content, which is never itself resized (its natural
+   height doesn't depend on how much of it the clip currently reveals),
+   so its transformed paint can be rasterized once and reused across
+   frames instead of being redone at a new size every time. */
+.kab-panel-inner {
+	min-height: 0;
+	overflow: hidden;
+	padding: 0 14px;
+	padding: calc(6% + 6px) 14px 14px;
+}
+.kab-panel-content {
+	transform: skewY(var(--kab-skew));
+	transform-origin: top left;
+	opacity: 0;
+	/* Quick, no-delay fade-out — this is what the .kab-panel delay above
+	   is timed against, so the text is fully gone before the row starts
+	   collapsing around it. */
+	transition: opacity 110ms ease;
+	will-change: transform, opacity;
+}
+.kab-show.is-open .kab-panel-content {
+	opacity: 1;
+	transition: opacity 220ms ease 40ms;
+}
+.kab-panel-content p {
+	font-size: 14px;
+	line-height: 1.65;
+	color: var(--caption-grey);
+	margin: 0;
+}
+
+/* Progressive enhancement: where the browser can animate a real
+   `height` to/from the `auto` keyword (interpolate-size), use that
+   directly instead of the grid-template-rows/fr proxy above — one
+   fewer layer of indirection between the transition and the property
+   it's actually changing. Falls back to the grid-rows technique
+   everywhere else (@supports gates on the browser recognizing the
+   property at all, not on it doing anything at runtime). */
+@supports (interpolate-size: allow-keywords) {
+	.kab-panel {
+		display: block;
+		height: 0;
+		overflow: hidden;
+		interpolate-size: allow-keywords;
+		transition: height 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
+	}
+	.kab-show.is-open .kab-panel {
+		height: auto;
+		transition: height 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
+	}
+}
+
+/* Newsletter signup */
+.kab-newsletter {
+	padding: 56px var(--side-pad) 48px;
+	text-align: center;
+	max-width: 520px;
+	margin: 0 auto;
+}
+.kab-newsletter__text {
+	font-size: 15px;
+	line-height: 1.6;
+	color: var(--light-text);
+	margin: 0 0 28px;
+}
+.kab-signup__label {
+	display: block;
+	font-family: var(--font-display);
+	font-size: 15px;
+	letter-spacing: 0.02em;
+	color: var(--hero-yellow);
+	margin-bottom: 14px;
+}
+.kab-signup__row {
+	position: relative;
+	display: flex;
+}
+.kab-signup__row input {
+	width: 100%;
+	height: 46px;
+	padding: 0 60px 0 18px;
+	border-radius: 23px;
+	border: 1.5px solid rgba(245, 245, 240, 0.4);
+	background: transparent;
+	color: var(--light-text);
+	font-family: var(--font-body);
+	font-size: 14px;
+	transition: border-color var(--btn-duration) ease;
+}
+.kab-signup__row input::placeholder {
+	color: var(--disabled-grey);
+}
+.kab-signup__row input:focus {
+	outline: none;
+	border-color: var(--hero-yellow);
+}
+.kab-signup__submit {
+	position: absolute;
+	right: 4px;
+	top: 4px;
+	bottom: 4px;
+	width: 38px;
+	border-radius: 50%;
+	border: 0;
+	background: var(--hero-yellow);
+	color: var(--dark-text);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition:
+		background var(--btn-duration) ease,
+		transform var(--btn-duration) ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.kab-signup__submit:hover {
+	background: var(--hover-yellow);
+}
+.kab-signup__submit:active {
+	transform: scale(0.92);
+}
+
+/* Crowd photo + testimonial footer */
+.kab-crowd {
+	position: relative;
+	margin-top: 8px;
+	aspect-ratio: 16 / 11;
+	overflow: hidden;
+}
+.kab-crowd__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: bottom left;
+	display: block;
+}
+.kab-crowd__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		to top,
+		rgba(10, 10, 10, 0.92) 0%,
+		rgba(10, 10, 10, 0.15) 45%,
+		rgba(10, 10, 10, 0) 70%
+	);
+}
+.kab-testimonial {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 10px var(--side-pad);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	background-color: #bdb6b61a;
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+}
+.kab-testimonial__quote {
+	font-size: 20px;
+	font-style: italic;
+	line-height: 1.4;
+	color: var(--light-text);
+}
+.kab-testimonial__stars {
+	flex-shrink: 0;
+	color: var(--hero-yellow);
+	font-size: 21px;
+	letter-spacing: 1px;
+	line-height: 1;
 }
 
 /* ── Hero cutout group: periodic + interactive glow (text + silhouette) ── */
