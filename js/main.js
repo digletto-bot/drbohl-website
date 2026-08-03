@@ -37,14 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		},
 	});
 
+	const ticketBtn = document.querySelector('.subpage-ticket-btn');
 	const subpageSlider = new Slider({
 		trackId: 'subpage-slider-track',
 		cardSelector: '.subpage-card',
 		bindKeyboard: false,
 		onSlideChange: (index) => {
 			slider.goTo(index);
+			ticketBtn?.classList.toggle('is-active', index === 0);
 		},
 	});
+	ticketBtn?.classList.toggle('is-active', subpageSlider.currentIndex === 0);
 
 	updateProgressNav(slider.index);
 	// updateSlideCounter(slider.index, slider.totalSlides);

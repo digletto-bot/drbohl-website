@@ -45,9 +45,11 @@
 		background 0.25s ease,
 		transform 0.2s ease;
 }
-.progress-nav__item:hover .progress-nav__bar {
-	background: rgba(245, 245, 240, 0.6);
-	transform: scaleY(1.4);
+@media (hover: hover) {
+	.progress-nav__item:hover .progress-nav__bar {
+		background: rgba(245, 245, 240, 0.6);
+		transform: scaleY(1.4);
+	}
 }
 .progress-nav__item.is-active .progress-nav__bar {
 	background: var(--progress-active);
@@ -90,7 +92,6 @@
 	right: 0;
 	transform: translate(0, -4px);
 }
-.progress-nav__item:hover::after,
 .progress-nav__item:focus-visible::after {
 	opacity: 1;
 	visibility: visible;
@@ -100,13 +101,28 @@
 		transform 180ms ease,
 		visibility 0s;
 }
-.progress-nav__item:first-child:hover::after,
 .progress-nav__item:first-child:focus-visible::after {
 	transform: translate(0, 0);
 }
-.progress-nav__item:last-child:hover::after,
 .progress-nav__item:last-child:focus-visible::after {
 	transform: translate(0, 0);
+}
+@media (hover: hover) {
+	.progress-nav__item:hover::after {
+		opacity: 1;
+		visibility: visible;
+		transform: translate(-50%, 0);
+		transition:
+			opacity 180ms ease,
+			transform 180ms ease,
+			visibility 0s;
+	}
+	.progress-nav__item:first-child:hover::after {
+		transform: translate(0, 0);
+	}
+	.progress-nav__item:last-child:hover::after {
+		transform: translate(0, 0);
+	}
 }
 
 @media (min-width: 400px) {
@@ -452,7 +468,15 @@
 	height: 28px;
 	display: block;
 }
-.subpage-ticket-btn:hover {
+@media (hover: hover) {
+	.subpage-ticket-btn:hover {
+		background: var(--hero-yellow);
+		color: var(--dark-text);
+		box-shadow: 0 0 14px rgba(242, 193, 46, 0.4);
+		transform: scale(1.06);
+	}
+}
+.subpage-ticket-btn.is-active {
 	background: var(--hero-yellow);
 	color: var(--dark-text);
 	box-shadow: 0 0 14px rgba(242, 193, 46, 0.4);
