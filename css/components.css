@@ -156,6 +156,7 @@
 	border-radius: 10px;
 	transition: background 0.2s ease;
 	-webkit-tap-highlight-color: transparent;
+	filter: drop-shadow(0 0 2px var(--tap-yellow));
 }
 .menu-button:hover {
 	background: rgba(245, 245, 240, 0.08);
@@ -166,11 +167,24 @@
 	height: 2px;
 	border-radius: 2px;
 	background: var(--light-text);
+	background: var(--hero-yellow);
 	transition:
 		transform 0.3s var(--slide-easing),
 		opacity 0.3s ease;
 	transform-origin: center;
 }
+
+@media (min-width: 1000px) {
+	.menu-button {
+		gap: 7.5px;
+	}
+
+	.menu-button__line {
+		width: 33px;
+		height: 3px;
+	}
+}
+
 .menu-button.is-open .menu-button__line:nth-child(1) {
 	transform: translateY(7px) rotate(45deg);
 }
