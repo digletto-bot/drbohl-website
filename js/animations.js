@@ -20,7 +20,7 @@ export function fitText() {
 		// Seed at large size, measure, then scale to fit exactly
 		el.style.fontSize = '160px';
 		const ratio = availW / el.scrollWidth;
-		// Apply, but never exceed 120px (already the seed)
+		// Apply, but never exceed 160px (already the seed)
 		el.style.fontSize = Math.min(Math.floor(160 * ratio), 160) + 'px';
 	});
 }
