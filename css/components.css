@@ -1821,7 +1821,7 @@ a.be-contact__val:hover {
 .kab-panel-content p {
 	font-size: 14px;
 	line-height: 1.65;
-	color: var(--caption-grey);
+	color: var(--body-text);
 	margin: 0;
 }
 
