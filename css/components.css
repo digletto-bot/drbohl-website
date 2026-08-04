@@ -1744,8 +1744,8 @@ a.be-contact__val:hover {
 	bottom: 10%;
 	z-index: 2;
 	transform: translateX(-50%);
-	width: clamp(33px, 3vw, 44px);
-	height: clamp(33px, 3vw, 44px);
+	width: clamp(30px, 2.5vw, 44px);
+	height: clamp(30px, 2.5vw, 44px);
 	padding: 0;
 	border-radius: 50%;
 	border: 1.9px solid var(--hero-yellow);
@@ -1782,12 +1782,12 @@ a.be-contact__val:hover {
 	transform: translate(-50%, -50%);
 }
 .kab-open__icon::before {
-	width: clamp(10px, 1vw, 14px);
-	height: 2px;
+	width: clamp(9px, 1vw, 14px);
+	height: 1.5px;
 }
 .kab-open__icon::after {
-	width: 2px;
-	height: clamp(10px, 1vw, 14px);
+	height: clamp(9px, 1vw, 14px);
+	width: 1.5px;
 }
 
 /* .kab-panel-inner is what the grid-rows transition actually resizes
