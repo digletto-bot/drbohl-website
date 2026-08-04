@@ -14,3 +14,4 @@ Talking points
 - Bohl Entertainment (Fotos needed)
 - Social media subpage (Option to implement stats via API / content reel)
 - Text content for whole page
+- SVG logo (including for favicon)
