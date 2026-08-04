@@ -17,7 +17,7 @@
 	--caption-grey: #a0a09a;
 
 	/* ── Progress nav ── */
-	--progress-inactive: rgba(245, 245, 240, 0.3);
+	--progress-inactive: rgba(192, 192, 188, 0.6);
 	--progress-active: var(--hero-yellow);
 
 	/* ── Spacing ── */

@@ -44,6 +44,7 @@
 	transition:
 		background 0.25s ease,
 		transform 0.2s ease;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 @media (hover: hover) {
 	.progress-nav__item:hover .progress-nav__bar {
