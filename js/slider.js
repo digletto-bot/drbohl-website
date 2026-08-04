@@ -157,6 +157,7 @@ class Slider {
 	/* ── Mouse drag ── */
 	_bindMouse() {
 		this.track.addEventListener('mousedown', (e) => {
+			if (e.button != 0) return;
 			this._md = true;
 			this._mx = e.clientX;
 			this._mdx = 0;
@@ -164,6 +165,7 @@ class Slider {
 			this.tapEnded = false;
 		});
 		window.addEventListener('mousemove', (e) => {
+			if (e.button != 0) return;
 			if (!this._md) return;
 			this._mdx = e.clientX - this._mx;
 
@@ -175,7 +177,8 @@ class Slider {
 				});
 			}
 		});
-		window.addEventListener('mouseup', () => {
+		window.addEventListener('mouseup', (e) => {
+			if (e.button != 0) return;
 			this.tapEnded = true;
 			if (!this._md) return;
 			this._md = false;
