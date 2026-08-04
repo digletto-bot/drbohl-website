@@ -208,20 +208,27 @@
 		width: 52px;
 		height: 52px;
 		border-radius: 50%;
-		background: rgba(245, 245, 240, 0.07);
+		background: rgba(34, 34, 34, 0.49);
 		border: 1px solid rgba(245, 245, 240, 0.12);
 		color: var(--light-text);
 		cursor: pointer;
 		transition:
 			background 200ms ease,
-			border-color 200ms ease;
+			border-color 200ms ease,
+			opacity 200ms ease;
 		z-index: 5;
 		backdrop-filter: blur(8px);
+		box-shadow: 0px 0px 20px rgba(0, 0, 0, 1);
 	}
 
 	.desktop-arrow:hover {
 		background: rgba(242, 193, 46, 0.15);
 		border-color: rgba(242, 193, 46, 0.3);
+	}
+
+	.desktop-arrow.is-disabled {
+		opacity: 0;
+		pointer-events: none;
 	}
 
 	.desktop-arrow--prev {
@@ -231,10 +238,10 @@
 		right: var(--side-pad);
 	}
 	.subpage-card-inner {
-		padding-top: 15px;
+		padding-top: 20px;
 	}
 	.subpage-ticket-btn {
-		/* overlay 70px + half of title first line (clamp) minus half button (26px) + subpage-card-inner padding (15px)*/
-		top: calc(70px + clamp(58px, 18vw, 82px) * 0.5 - 26px + 15px) !important;
+		/* overlay 70px + half of title first line (clamp) minus half button (26px) + subpage-card-inner padding (20px)*/
+		top: calc(70px + clamp(58px, 18vw, 82px) * 0.5 - 26px + 20px) !important;
 	}
 }

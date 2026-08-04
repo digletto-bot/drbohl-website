@@ -226,10 +226,10 @@
 
 <!-- Desktop arrows -->
 <button id="arrow-prev" class="desktop-arrow desktop-arrow--prev" aria-label="Zurück">
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9l5 5" stroke="var(--hero-yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
 <button id="arrow-next" class="desktop-arrow desktop-arrow--next" aria-label="Weiter">
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M7 4l5 5-5 5" stroke="var(--hero-yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
 
 <!-- Netflix-style menu -->
@@ -238,7 +238,7 @@
     <div class="full-screen-menu__header">
       <div class="full-screen-menu__title">Dr.Bohl</div>
       <button id="menu-close" class="full-screen-menu__close" aria-label="Menü schließen">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="var(--hero-yellow)" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
     </div>
 
@@ -379,8 +379,8 @@
             <div class="kab-banner">
               <img class="kab-banner__img" src="assets/images/kabarett-solo.jpg" alt="" loading="lazy" />
               <div class="kab-banner__shade"></div>
-              <div class="kab-banner__content">
-                <span class="kab-banner__title">Solo</span>
+              <div class="kab-banner__content" data-fs="large">
+                <span class="kab-banner__title" data-fs="large">Solo</span>
                 <button type="button" class="ghost-button kab-banner__cta" onclick="goToTickets()">Alle Termine</button>
               </div>
               <button class="kab-open" aria-expanded="false" aria-controls="kab-panel-solo" aria-label="Mehr zu Solo">
@@ -493,7 +493,7 @@
     </article>
 
     <!-- CARD 4 — MUSIK -->
-    <article class="subpage-card is-next" data-index="4" aria-label="Musik">
+    <article id="subpage-card-musik" class="subpage-card is-next" data-index="4" aria-label="Musik">
       <div class="subpage-card-inner">
         <div class="subpage-overlay__title">Musik</div>
         <div class="subpage-overlay__body">Releases, Playlists und Hörproben von Dr.Bohl.</div>
