@@ -1057,7 +1057,7 @@
 	color: var(--light-text);
 	display: flex;
 	position: relative;
-	gap: 10px;
+	gap: clamp(10px, 1.4vw, 15px);
 }
 
 .sp-title span {
