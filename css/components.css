@@ -875,6 +875,69 @@
 	line-height: 1.6;
 }
 
+/* ── Showtime: TV-appearance grid. Title/CTA reuse the exact Kabarett
+   banner treatment (same font, weight, color, text-shadow and ghost-
+   button styling as .kab-banner__title / .kab-banner__cta) — just
+   without the banner's parallelogram clip-path and skew, since these
+   cards are plain rectangles. Sized off the card's own inline size
+   (cqw) rather than the viewport (vw, as the single-column Kabarett
+   banner uses) so type scales correctly in the 2-column grid too. ── */
+.show-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 21px;
+	padding: 20px var(--side-pad) 48px;
+}
+@media (min-width: 600px) {
+	.show-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+.show-card {
+	position: relative;
+	container-type: inline-size;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	background: #111;
+}
+.show-card__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.show-card__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 50%);
+}
+.show-card__title {
+	position: absolute;
+	left: 5%;
+	right: 5%;
+	bottom: 6%;
+	font-family: var(--font-family-title);
+	letter-spacing: var(--letter-spacing-title);
+	font-weight: 900;
+	font-size: clamp(25px, 15cqw, 70px);
+	line-height: 0.9;
+	text-transform: uppercase;
+	color: var(--hero-yellow);
+	text-shadow:
+		2px 4px 4px rgba(0, 0, 0, 1),
+		2px 4px 8px rgba(0, 0, 0, 1);
+}
+.ghost-button.show-card__cta {
+	position: absolute;
+	top: 14px;
+	left: 14px;
+	font-size: clamp(9px, 2.5cqw, 16px);
+	padding: 5px 14px;
+	box-shadow: none;
+}
+
 /* ── About view (nested inside subpage card 8) ── */
 #subpage-card-contact,
 #subpage-card-musik {
