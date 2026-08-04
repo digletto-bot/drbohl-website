@@ -156,7 +156,6 @@
 	border-radius: 10px;
 	transition: background 0.2s ease;
 	-webkit-tap-highlight-color: transparent;
-	filter: drop-shadow(0 0 2px var(--tap-yellow));
 }
 .menu-button:hover {
 	background: rgba(245, 245, 240, 0.08);
@@ -172,9 +171,10 @@
 		transform 0.3s var(--slide-easing),
 		opacity 0.3s ease;
 	transform-origin: center;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 800px) {
 	.menu-button {
 		gap: 7.5px;
 	}
@@ -182,6 +182,11 @@
 	.menu-button__line {
 		width: 33px;
 		height: 3px;
+	}
+
+	.full-screen-menu__close svg {
+		width: 30px;
+		height: 30px;
 	}
 }
 
@@ -590,8 +595,8 @@
 .full-screen-menu__title {
 	font-family: var(--font-display);
 	font-weight: 900;
-	font-size: 34px;
-	letter-spacing: 0.04em;
+	font-size: var(--fs-subtitle);
+	letter-spacing: 0.02em;
 	text-transform: uppercase;
 	color: var(--hero-yellow);
 	padding-right: 56px;
@@ -1018,7 +1023,7 @@
 
 /* Hero */
 .sp-hero {
-	padding: 36px var(--side-pad) 28px;
+	padding: 0 var(--side-pad) 28px;
 	border-bottom: 1px solid rgba(245, 245, 240, 0.08);
 }
 
@@ -1043,7 +1048,7 @@
 .sp-title {
 	font-family: var(--font-display);
 	font-weight: 900;
-	font-size: clamp(58px, 16vw, 76px);
+	font-size: var(--fs-title);
 	line-height: 0.84;
 	text-transform: uppercase;
 	color: var(--light-text);

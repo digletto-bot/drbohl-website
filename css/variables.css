@@ -30,6 +30,7 @@
 	--font-display: 'DrukCond', 'Impact', 'Arial Black', sans-serif;
 	--font-body: 'NHaas', 'Helvetica Neue', Arial, sans-serif;
 	--fs-title: clamp(65px, 20vw, 132px);
+	--fs-subtitle: clamp(42px, 14vw, 90px);
 
 	/* ── Motion ── */
 	--slide-duration: 300ms;

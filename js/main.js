@@ -21,6 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('resize', fitText);
 
 	/* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
+	const arrowPrev = document.getElementById('arrow-prev');
+	const arrowNext = document.getElementById('arrow-next');
+	function updateDesktopArrows(index) {
+		arrowPrev?.classList.toggle('is-disabled', index === 0);
+		arrowNext?.classList.toggle('is-disabled', index === slider.totalSlides - 1);
+	}
+
 	const slider = new Slider({
 		onSlideChange: (index) => {
 			updateProgressNav(index);
@@ -28,8 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (window.router) router.onSlideChange(index);
 			dismissSwipeHint();
 			subpageSlider.goTo(index);
+			updateDesktopArrows(index);
 		},
 	});
+	updateDesktopArrows(slider.index);
 
 	const ticketBtn = document.querySelector('.subpage-ticket-btn');
 	const subpageSlider = new Slider({
