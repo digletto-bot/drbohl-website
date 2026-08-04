@@ -1,0 +1,5 @@
+- Filter for ticket buttons
+  - Effort: Medium
+  - Requires maintaining any filterable properties in the google sheets doc
+- Image modifications
+  - Showtime title card image (Move central pillar for legibility of title and overall visual clarity)
