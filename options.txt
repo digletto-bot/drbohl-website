@@ -7,6 +7,9 @@
 - Bohl100 Rebranding
   - Effort: low to medium
   - Notes: Shadow and color changes
+- Showtime improvements/additions
+  - Effort: low
+  - Notes: Adding descriptions in the form of accordions/popups/tab view
 
 
 Talking points
