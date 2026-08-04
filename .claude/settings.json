@@ -10,7 +10,8 @@
       "Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\852ca5ef-1a2a-4bd8-96ed-b5208efda891\\\\scratchpad\\\\shot.js\")",
       "Bash(mkdir -p titlecards/about titlecards/bohl-entertainment titlecards/bohl100 titlecards/home titlecards/kabarett titlecards/musik titlecards/podcast titlecards/showtime titlecards/social-media)",
       "Bash(mkdir -p subpages/kabarett subpages/musik subpages/showtime)",
-      "Bash(git mv *)"
+      "Bash(git mv *)",
+      "Bash(python3 -)"
     ]
   }
 }
