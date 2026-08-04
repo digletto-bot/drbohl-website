@@ -1801,8 +1801,7 @@ a.be-contact__val:hover {
 .kab-panel-inner {
 	min-height: 0;
 	overflow: hidden;
-	padding: 0 14px;
-	padding: calc(6% + 6px) 14px 14px;
+	padding: 5% var(--side-pad) 5%;
 }
 .kab-panel-content {
 	transform: skewY(var(--kab-skew));
