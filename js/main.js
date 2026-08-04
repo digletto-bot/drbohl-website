@@ -154,20 +154,40 @@ function hideLoadingScreen() {
 	document.getElementById('loading-screen')?.classList.add('is-hidden');
 }
 
-/* ── Subpage overlay (single unified container; called from inline onclick) ── */
+/* ── Subpage overlay (single unified container; called from inline onclick) ──
+   Opening pushes a synthetic history entry so the mobile/browser back button
+   closes the overlay instead of navigating away; popstate below reacts to
+   that entry going away (whether via back button or our own history.back()
+   call in closeSubpage) by closing it. */
 window.openSubpage = function () {
 	const sp = document.getElementById('subpage-overlay');
+	if (sp.classList.contains('is-open')) return;
 	sp.classList.add('is-open');
 	sp.setAttribute('aria-hidden', 'false');
 	document.querySelector('.subpage-card.is-current')?.scrollTo(0, 0);
+	history.pushState({ subpage: true }, '', window.location.href);
 };
 
 window.closeSubpage = function () {
 	const sp = document.getElementById('subpage-overlay');
+	if (!sp.classList.contains('is-open')) return;
 	document.activeElement.blur();
 	sp.classList.remove('is-open');
 	sp.setAttribute('aria-hidden', 'true');
+	if (history.state?.subpage) history.back();
 };
+
+window.addEventListener('popstate', (e) => {
+	const sp = document.getElementById('subpage-overlay');
+	if (e.state?.subpage) {
+		sp.classList.add('is-open');
+		sp.setAttribute('aria-hidden', 'false');
+	} else if (sp.classList.contains('is-open')) {
+		document.activeElement.blur();
+		sp.classList.remove('is-open');
+		sp.setAttribute('aria-hidden', 'true');
+	}
+});
 
 /* ── About page copy ── */
 const ABOUT_LEAD = 'Vom gelben Pfannenwender zum Whackofatz';
