@@ -1735,14 +1735,9 @@ a.be-contact__val:hover {
 }
 
 /* Open control: a "+" floating over the bottom-center of the image
-   itself (not a separate bar below it). Only ever *opens* — it fades
-   out once the show is open, since at that point the close control
-   inside the foldout is the relevant action. Fade timings are split
-   across the two target-state rules (base = fade in on close, .is-open
-   = fade out on open) so each direction gets its own duration; the
-   visibility swap is delayed to the end of its own opacity transition
-   (same trick as .progress-nav__item's tooltip below) so it drops out
-   of the tab order/hit-testing only once actually invisible. */
+   itself (not a separate bar below it). Doubles as the close control —
+   staying in place and rotating 45deg to turn the "+" into an "×"
+   while the show is open. */
 .kab-open {
 	position: absolute;
 	left: 50%;
@@ -1757,23 +1752,17 @@ a.be-contact__val:hover {
 	background: rgba(20, 20, 20, 0.85);
 	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
 	cursor: pointer;
-	opacity: 1;
-	visibility: visible;
 	transition:
-		opacity 250ms ease,
 		background 200ms ease,
 		transform 200ms ease;
 	-webkit-tap-highlight-color: transparent;
 }
 .kab-open:hover {
-	background: rgba(20, 20, 20, 0.5);
+	background: rgba(30, 30, 30, 0.85);
 	transform: translateX(-50%) scale(1.08);
 }
 .kab-show.is-open .kab-open {
-	opacity: 0;
-	/* visibility: hidden; */
-	pointer-events: none;
-	transition: opacity 250ms ease;
+	transform: translateX(-50%) rotate(45deg);
 }
 .kab-open__icon {
 	position: absolute;
@@ -1799,53 +1788,6 @@ a.be-contact__val:hover {
 .kab-open__icon::after {
 	width: 2px;
 	height: clamp(10px, 1vw, 14px);
-}
-
-/* Close control: sits at the bottom of the foldout's own content, in
-   normal flow — closing it removes .is-open, which both collapses the
-   panel (see .kab-panel below) and fades .kab-open back in. It's a
-   static "×" (two fixed diagonals), not a rotated "+", since there's no
-   shared icon to animate between the two controls anymore. */
-.kab-close {
-	position: relative;
-	display: block;
-	margin: 18px auto 0;
-	width: 36px;
-	height: 36px;
-	padding: 0;
-	border-radius: 50%;
-	border: 1.9px solid var(--hero-yellow);
-	background: rgba(20, 20, 20, 0.9);
-	cursor: pointer;
-	transition: background 200ms ease;
-	-webkit-tap-highlight-color: transparent;
-}
-.kab-close:hover {
-	background: rgba(242, 193, 46, 0.15);
-}
-.kab-close__icon {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 14px;
-	height: 14px;
-	transform: translate(-50%, -50%);
-}
-.kab-close__icon::before,
-.kab-close__icon::after {
-	content: '';
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 14px;
-	height: 2px;
-	background: var(--hero-yellow);
-}
-.kab-close__icon::before {
-	transform: translate(-50%, -50%) rotate(45deg);
-}
-.kab-close__icon::after {
-	transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* .kab-panel-inner is what the grid-rows transition actually resizes
