@@ -27,9 +27,12 @@
 	--subpage-bottom-pad: 55px;
 
 	/* ── Typography ── */
-	--font-display: 'DrukCond', 'Impact', 'Arial Black', sans-serif;
+	--font-family-title: 'DrukCond', 'Impact', 'Arial Black', sans-serif;
 	--font-body: 'NHaas', 'Helvetica Neue', Arial, sans-serif;
 	--fs-title: clamp(65px, 20vw, 132px);
+
+	--title-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
+	--letter-spacing-title: 0.01em;
 
 	/* ── Motion ── */
 	--slide-duration: 300ms;
