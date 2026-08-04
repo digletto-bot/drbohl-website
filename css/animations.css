@@ -166,10 +166,10 @@
 }
 
 .loading-screen__word {
-	font-family: var(--font-display);
+	font-family: var(--font-family-title);
 	font-weight: 900;
 	font-size: 15px;
-	letter-spacing: 0.22em;
+	letter-spacing: var(--letter-spacing-title);
 	color: var(--light-text);
 	animation: loadingPulse 1.6s ease-in-out infinite;
 }

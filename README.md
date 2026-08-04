@@ -34,18 +34,18 @@ Mobile-first interactive title-card website for Austrian comedian and entertaine
 
 Place files in `assets/images/` using these exact names:
 
-| Slide             | Filename                       |
-|-------------------|-------------------------------|
-| Home              | `home-hero.jpg`                |
-| Kabarett          | `kabarett-hero.jpg`            |
-| Social Media      | `social-media-hero.jpg`        |
-| Showtime          | `showtime-hero.jpg`            |
-| Musik             | `musik-hero.jpg`               |
-| Podcast           | `podcast-hero.jpg`             |
-| Bohl100           | `bohl100-hero.jpg`             |
-| Bohl Entertainment| `bohlentertainment-hero.jpg`   |
-| About             | `about-hero.jpg`               |
-| Schabernack       | `schabernack-hero.jpg`         |
+| Slide              | Filename                     |
+| ------------------ | ---------------------------- |
+| Home               | `home-hero.jpg`              |
+| Kabarett           | `kabarett-hero.jpg`          |
+| Social Media       | `social-media-hero.jpg`      |
+| Showtime           | `showtime-hero.jpg`          |
+| Musik              | `musik-hero.jpg`             |
+| Podcast            | `podcast-hero.jpg`           |
+| Bohl100            | `bohl100-hero.jpg`           |
+| Bohl Entertainment | `bohlentertainment-hero.jpg` |
+| About              | `about-hero.jpg`             |
+| Schabernack        | `schabernack-hero.jpg`       |
 
 **Desktop variants** (optional, wider crop): add `-desktop` suffix, e.g. `home-hero-desktop.jpg`.
 Swap them in via CSS `@media (min-width: 600px)` if needed.
@@ -71,11 +71,11 @@ JPG at 80–85% quality for optimal file size. WebP also supported — update th
 All colours are defined as CSS custom properties in `css/variables.css`.
 
 ```css
---hero-yellow:   #f2c12e;   /* Primary accent */
---hover-yellow:  #e5a800;   /* Hover state */
---tap-yellow:    #fde99a;   /* Tap/click flash */
---bg-dark:       #1f1f1f;   /* Card backgrounds */
---black:         #0a0a0a;   /* Site background */
+--hero-yellow: #f2c12e; /* Primary accent */
+--hover-yellow: #e5a800; /* Hover state */
+--tap-yellow: #fde99a; /* Tap/click flash */
+--bg-dark: #1f1f1f; /* Card backgrounds */
+--black: #0a0a0a; /* Site background */
 ```
 
 Change the value in one place — it propagates to every component.
@@ -86,7 +86,7 @@ Change the value in one place — it propagates to every component.
 
 1. Place `.woff2` (and optionally `.woff`) files in `assets/fonts/`.
 2. Update the `@font-face` declarations at the top of `css/base.css`.
-3. Update `--font-display` and `--font-body` in `css/variables.css` if switching families.
+3. Update `--font-family-title` and `--font-body` in `css/variables.css` if switching families.
 
 Required files for the default setup:
 
@@ -142,16 +142,17 @@ When building out real subpages, simply replace the content of each `subpages/*.
 
 All CSS animations live in `css/animations.css`:
 
-| Animation      | Trigger                  | Duration  |
-|----------------|--------------------------|-----------|
-| Slide push     | `.is-prev/current/next`  | 450ms     |
-| Card entrance  | `.is-current` selector   | 500–550ms |
-| Ken Burns zoom | `.is-current img`        | 8s        |
-| Menu cards     | `.is-open .menu-card`    | 400ms stagger |
-| Swipe hint     | On load, one-shot        | 2.4s      |
-| Progress pulse | On bar becoming active   | 1.2s, 1×  |
+| Animation      | Trigger                 | Duration      |
+| -------------- | ----------------------- | ------------- |
+| Slide push     | `.is-prev/current/next` | 450ms         |
+| Card entrance  | `.is-current` selector  | 500–550ms     |
+| Ken Burns zoom | `.is-current img`       | 8s            |
+| Menu cards     | `.is-open .menu-card`   | 400ms stagger |
+| Swipe hint     | On load, one-shot       | 2.4s          |
+| Progress pulse | On bar becoming active  | 1.2s, 1×      |
 
 JS-driven animation hooks are exported from `js/animations.js`:
+
 - `updateProgressNav(index)`
 - `updateSlideCounter(index, total)`
 - `dismissSwipeHint()`
@@ -170,6 +171,7 @@ To export manually: right-click → Save Page As, or use any static site downloa
 ## Desktop Implementation
 
 On screens ≥ 600px, the site renders as a centered iPhone-style frame (390×844px) with:
+
 - Subtle glow behind the frame
 - Side navigation arrows (prev/next)
 - Slide counter (01 / 10)

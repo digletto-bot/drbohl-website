@@ -128,7 +128,7 @@
 .subpage-card-inner {
 	position: relative;
 	width: 100%;
-	max-width: 900px;
+	max-width: 1200px;
 }
 .subpage-card.is-prev {
 	transform: translateX(-100%);
