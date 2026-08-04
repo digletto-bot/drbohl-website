@@ -29,13 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	const slider = new Slider({
-		onSlideChange: (index) => {
+		onSlideChange: (index, prev) => {
 			updateProgressNav(index);
 			menu.onSlideChange(index);
 			if (window.router) router.onSlideChange(index);
 			dismissSwipeHint();
 			subpageSlider.goTo(index);
 			updateDesktopArrows(index);
+			resetSubpageState(prev);
 		},
 	});
 	updateDesktopArrows(slider.index);
@@ -168,12 +169,17 @@ window.openSubpage = function () {
 	history.pushState({ subpage: true }, '', window.location.href);
 };
 
-window.closeSubpage = function () {
-	const sp = document.getElementById('subpage-overlay');
-	if (!sp.classList.contains('is-open')) return;
+function hideSubpageOverlay(sp) {
 	document.activeElement.blur();
 	sp.classList.remove('is-open');
 	sp.setAttribute('aria-hidden', 'true');
+	resetSubpageState(document.querySelector('.subpage-card.is-current')?.dataset.index);
+}
+
+window.closeSubpage = function () {
+	const sp = document.getElementById('subpage-overlay');
+	if (!sp.classList.contains('is-open')) return;
+	hideSubpageOverlay(sp);
 	if (history.state?.subpage) history.back();
 };
 
@@ -183,9 +189,7 @@ window.addEventListener('popstate', (e) => {
 		sp.classList.add('is-open');
 		sp.setAttribute('aria-hidden', 'false');
 	} else if (sp.classList.contains('is-open')) {
-		document.activeElement.blur();
-		sp.classList.remove('is-open');
-		sp.setAttribute('aria-hidden', 'true');
+		hideSubpageOverlay(sp);
 	}
 });
 
@@ -548,6 +552,22 @@ function initDiscography() {
 }
 initDiscography();
 
+/* Collapses all discography foldouts and tears down their lazy-injected
+   iframes (rather than just hiding them) so playback actually stops instead
+   of continuing behind the closed panel. Clearing dataset.loaded means the
+   track re-injects fresh, from the start, next time it's opened. */
+function resetMusikDiscography() {
+	document.querySelectorAll('.disco__item').forEach((item) => {
+		item.classList.remove('is-open');
+		item.querySelector('.disco__bar')?.setAttribute('aria-expanded', 'false');
+		const video = item.querySelector('.disco__video');
+		const spotify = item.querySelector('.disco__spotify');
+		if (video) video.innerHTML = '';
+		if (spotify) spotify.innerHTML = '';
+		delete item.dataset.loaded;
+	});
+}
+
 /* ── Kabarett: show-banner accordion (single open/close toggle) ── */
 function initKabarettAccordion() {
 	document.querySelectorAll('.kab-show').forEach((show) => {
@@ -559,3 +579,22 @@ function initKabarettAccordion() {
 	});
 }
 initKabarettAccordion();
+
+function resetKabarettAccordion() {
+	document.querySelectorAll('.kab-show').forEach((show) => {
+		show.classList.remove('is-open');
+		show.querySelector('.kab-open')?.setAttribute('aria-expanded', 'false');
+	});
+}
+
+/* ── Reset per-subpage interactive state when leaving that subpage, whether
+   because the overlay closed or the active slide changed. Keyed on the
+   subpage-card's aria-label (same identity Router uses for its paths), not
+   its index, so it doesn't depend on card order. ── */
+function resetSubpageState(index) {
+	if (index === undefined || index === null) return;
+	const card = document.querySelector(`.subpage-card[data-index="${index}"]`);
+	const label = card?.getAttribute('aria-label');
+	if (label === 'Kabarett') resetKabarettAccordion();
+	else if (label === 'Musik') resetMusikDiscography();
+}
