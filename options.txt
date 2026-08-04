@@ -13,3 +13,4 @@ Talking points
 - Schabernack (in About integrieren - macht den "KLICK MICH DU GIERIGER aspekt auch relevanter/cooler)
 - Bohl Entertainment (Fotos needed)
 - Social media subpage (Option to implement stats via API / content reel)
+- Text content for whole page
