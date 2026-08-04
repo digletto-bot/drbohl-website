@@ -498,10 +498,16 @@ function initDiscography() {
 			if (open && !item.dataset.loaded) {
 				const yt = item.dataset.yt;
 				const sp = item.dataset.sp;
-				item.querySelector('.disco__video').innerHTML =
-					`<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
-				item.querySelector('.disco__spotify').innerHTML =
-					`<iframe src="https://open.spotify.com/embed/track/${sp}?theme=0" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+				const spKind = item.dataset.spKind || 'track';
+				const videoEl = item.querySelector('.disco__video');
+				if (yt && videoEl) {
+					videoEl.innerHTML =
+						`<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+				}
+				if (sp) {
+					item.querySelector('.disco__spotify').innerHTML =
+						`<iframe src="https://open.spotify.com/embed/${spKind}/${sp}?theme=0" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+				}
 				item.dataset.loaded = 'true';
 			}
 
@@ -535,3 +541,21 @@ function initKabarettAccordion() {
 	});
 }
 initKabarettAccordion();
+
+/* ── Podcast: same open/close control pattern as the Kabarett banners,
+   applied to the two show tiles instead of a list of shows. ── */
+function initPodcastAccordion() {
+	document.querySelectorAll('.podcast-tile').forEach((tile) => {
+		const openBtn = tile.querySelector('.kab-open');
+		const closeBtn = tile.querySelector('.kab-close');
+		openBtn.addEventListener('click', () => {
+			tile.classList.add('is-open');
+			openBtn.setAttribute('aria-expanded', 'true');
+		});
+		closeBtn.addEventListener('click', () => {
+			tile.classList.remove('is-open');
+			openBtn.setAttribute('aria-expanded', 'false');
+		});
+	});
+}
+initPodcastAccordion();
