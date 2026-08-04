@@ -1824,12 +1824,21 @@ a.be-contact__val:hover {
 	margin: 0;
 }
 
+.kab-panel {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
+}
+.kab-show.is-open .kab-panel {
+	grid-template-rows: 1fr;
+}
+
 /* Progressive enhancement: where the browser can animate a real
    `height` to/from the `auto` keyword (interpolate-size), use that
    directly instead of the grid-template-rows/fr proxy above — one
    fewer layer of indirection between the transition and the property
    it's actually changing. Falls back to the grid-rows technique
-   everywhere else (@supports gates on the browser recognizing the
+   above everywhere else (@supports gates on the browser recognizing the
    property at all, not on it doing anything at runtime). */
 @supports (interpolate-size: allow-keywords) {
 	.kab-panel {
