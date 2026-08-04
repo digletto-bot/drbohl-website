@@ -33,11 +33,11 @@
 }
 .progress-nav__item.is-active {
 	max-width: 38px;
-	max-width: clamp(38px, 10vw, 90px);
+	max-width: clamp(38px, 10vw, 70px);
 }
 .progress-nav__bar {
 	width: 100%;
-	height: clamp(6px, 1.33vw, 12px);
+	height: clamp(6px, 1.33vw, 9px);
 	border-radius: 999px;
 	background: var(--progress-inactive);
 	pointer-events: none;
