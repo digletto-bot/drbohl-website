@@ -522,10 +522,10 @@ initBrochureReveal();
 function initDiscography() {
 	const items = document.querySelectorAll('.disco__item');
 	items.forEach((item) => {
-		const bar = item.querySelector('.disco__bar');
-		bar.addEventListener('click', () => {
+		const toggle = item.querySelector('.disco__toggle');
+		toggle.addEventListener('click', () => {
 			const open = item.classList.toggle('is-open');
-			bar.setAttribute('aria-expanded', open);
+			toggle.setAttribute('aria-expanded', open);
 
 			// lazy-inject iframes on first open
 			if (open && !item.dataset.loaded) {
@@ -548,7 +548,7 @@ function initDiscography() {
 				items.forEach((other) => {
 					if (other !== item && other.classList.contains('is-open')) {
 						other.classList.remove('is-open');
-						other.querySelector('.disco__bar').setAttribute('aria-expanded', 'false');
+						other.querySelector('.disco__toggle').setAttribute('aria-expanded', 'false');
 					}
 				});
 			}
@@ -564,7 +564,7 @@ initDiscography();
 function resetMusikDiscography() {
 	document.querySelectorAll('.disco__item').forEach((item) => {
 		item.classList.remove('is-open');
-		item.querySelector('.disco__bar')?.setAttribute('aria-expanded', 'false');
+		item.querySelector('.disco__toggle')?.setAttribute('aria-expanded', 'false');
 		const video = item.querySelector('.disco__video');
 		const spotify = item.querySelector('.disco__spotify');
 		if (video) video.innerHTML = '';

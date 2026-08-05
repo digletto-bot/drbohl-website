@@ -1731,15 +1731,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	gap: 14px;
 	width: 100%;
 	padding: 10px 14px 10px 10px;
-	background: none;
-	border: 0;
-	cursor: pointer;
-	text-align: left;
 	color: var(--light-text);
-	transition: background 200ms ease;
-}
-.disco__bar:hover {
-	background: #000000;
 }
 .disco__thumb {
 	width: 88px;
@@ -1748,28 +1740,35 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	flex: 0 0 auto;
 	display: block;
 }
-/* Text column — its own query container so title/year scale off the
-   width actually left over after the thumb, gap and chevron, not the
-   full row. Capped (clamp max) at roughly the thumbnail's height per
-   breakpoint so the stack never grows taller than the cover art. */
+/* Text column: title+year share one line, the Spotify badge sits on
+   the next — both left-aligned. The toggle button lives outside this
+   column (a sibling in .disco__bar) so it stays vertically centered
+   on the full row instead of chasing a two-line stack. */
 .disco__text {
-	container-type: inline-size;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	gap: 2px;
+	gap: 6px;
 	flex: 1 1 auto;
+	min-width: 0;
+}
+.disco__line {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
 	min-width: 0;
 }
 .disco__title {
 	font-family: var(--font-family-title);
-	font-size: clamp(16px, 26cqw, 42px);
+	font-size: 44px;
 	text-transform: uppercase;
 	letter-spacing: var(--letter-spacing-title);
 	line-height: 1;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	flex: 1 1 auto;
+	min-width: 0;
 }
 .disco__title em {
 	font-style: normal;
@@ -1777,24 +1776,71 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	opacity: 0.75;
 }
 .disco__year {
-	font-size: clamp(10px, 10cqw, 18px);
+	font-size: 15px;
 	color: var(--caption-grey);
 	letter-spacing: 0.1em;
 	line-height: 1;
 	white-space: nowrap;
-}
-.disco__chevron {
-	width: 10px;
-	height: 10px;
-	border-right: 2px solid var(--hero-yellow);
-	border-bottom: 2px solid var(--hero-yellow);
-	transform: rotate(45deg);
-	transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
 	flex: 0 0 auto;
-	margin: -4px 4px 0 2px;
 }
-.disco__item.is-open .disco__chevron {
-	transform: rotate(225deg) translate(-2px, -2px);
+.disco__spotify-badge {
+	height: 24px;
+}
+/* Toggle — a "+" that rotates into "×" on open (same idea as
+   .podcast-toggle). Kept as its own button and a sibling of the
+   Spotify badge link, not a wrapper around it, so the two never
+   fight over the same click. */
+.disco__toggle {
+	position: relative;
+	flex: 0 0 auto;
+	align-self: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 50%;
+	border: 1.9px solid var(--hero-yellow);
+	background: rgba(20, 20, 20, 0.85);
+	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
+	cursor: pointer;
+	transition:
+		background 200ms ease,
+		transform 200ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.disco__toggle:hover {
+	background: rgba(20, 20, 20, 0.5);
+	transform: scale(1.08);
+}
+.disco__toggle:active {
+	transform: scale(0.92);
+}
+.disco__toggle-icon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 46%;
+	height: 46%;
+	transform: translate(-50%, -50%) rotate(0deg);
+	transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.disco__toggle-icon::before,
+.disco__toggle-icon::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background: var(--hero-yellow);
+	transform: translate(-50%, -50%);
+}
+.disco__toggle-icon::before {
+	width: 100%;
+	height: 2px;
+}
+.disco__toggle-icon::after {
+	width: 2px;
+	height: 100%;
+}
+.disco__item.is-open .disco__toggle-icon {
+	transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .disco__panel {
@@ -1827,27 +1873,23 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	display: block;
 	margin-top: 10px;
 }
-.disco__spotify-badge {
-	height: 32px;
-	margin-top: 10px;
-}
 
 @media (min-width: 600px) {
 	.disco__title {
-		font-size: clamp(20px, 24cqw, 68px);
-	}
-	.disco__thumb {
-		width: 88px;
-		aspect-ratio: 16 / 9;
-		object-fit: cover;
-		flex: 0 0 auto;
-		display: block;
+		font-size: 66px;
 	}
 	.disco__thumb {
 		width: 132px;
 	}
 	.disco__year {
-		font-size: clamp(12px, 9cqw, 28px);
+		font-size: 20px;
+	}
+	.disco__spotify-badge {
+		height: 60px;
+	}
+	.disco__toggle {
+		width: 40px;
+		height: 40px;
 	}
 }
 
