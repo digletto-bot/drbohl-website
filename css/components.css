@@ -244,16 +244,17 @@
 /* ── Spotify "Listen on" badge ── */
 .spotify-badge {
 	display: inline-block;
-	transition: transform var(--btn-duration) ease;
 	-webkit-tap-highlight-color: transparent;
 }
 .spotify-badge img {
 	display: block;
 	width: auto;
 	height: 100%;
+	transition: transform var(--btn-duration) ease;
 }
-.spotify-badge:hover {
-	transform: scale(1.08);
+.spotify-badge img:hover {
+	transform: scale(1.04);
+	transform-origin: center;
 }
 .spotify-badge:active {
 	transform: scale(0.95);
@@ -1726,6 +1727,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	overflow: hidden;
 }
 .disco__bar {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: 14px;
@@ -1777,15 +1779,18 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	font-style: normal;
 }
 .disco__year {
-	font-size: 15px;
+	position: absolute;
+	font-size: var(--fs-body-small);
 	color: var(--caption-grey);
 	letter-spacing: 0.1em;
 	line-height: 1;
 	white-space: nowrap;
 	flex: 0 0 auto;
+	bottom: 10px;
+	right: 14px;
 }
 .disco__spotify-badge {
-	height: var(--fs-body-large-2);
+	height: clamp(38px, 5.7vw, 43px);
 }
 /* Toggle — a "+" that rotates into "×" on open (same idea as
    .podcast-toggle). Kept as its own button and a sibling of the
@@ -1879,9 +1884,12 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	.disco__thumb {
 		width: 132px;
 	}
+	.disco__text {
+		gap: 12px;
+	}
 	.disco__toggle {
-		width: 40px;
-		height: 40px;
+		width: 36px;
+		height: 36px;
 	}
 }
 
