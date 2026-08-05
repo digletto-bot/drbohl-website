@@ -828,8 +828,8 @@
 }
 .subpage-overlay__body {
 	padding: 20px var(--side-pad) 0;
-	font-size: 15px;
-	line-height: 1.65;
+	font-size: var(--fs-body);
+	line-height: 1.45;
 	color: var(--body-text);
 	max-width: 480px;
 }
@@ -1690,13 +1690,13 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	letter-spacing: var(--letter-spacing-title);
 	font-weight: 900;
 	font-size: clamp(24px, 4vw, 34px);
+	font-size: var(--fs-body-large-2);
 	line-height: 1;
 	text-transform: uppercase;
 	color: var(--light-text);
 	margin-bottom: 12px;
 }
 .shop-product__desc {
-	font-size: 14px;
 	line-height: 1.65;
 	color: rgba(245, 245, 240, 0.85);
 }
@@ -1979,9 +1979,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	transform: translate(-50%, -50%) rotate(45deg);
 }
 .podcast-tile__desc {
-	font-size: 14px;
+	font-size: var(--fs-body-small);
 	line-height: 1.6;
-	color: var(--caption-grey);
 	margin-bottom: 14px;
 }
 .podcast-tile__cta {
@@ -2242,8 +2241,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	transition: opacity 220ms ease 40ms;
 }
 .kab-panel-content p {
-	font-size: 14px;
-	line-height: 1.65;
+	font-size: var(--fs-body-small);
+	line-height: 1.45;
 	color: var(--body-text);
 	margin: 0;
 }
@@ -2286,7 +2285,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	margin: 0 auto;
 }
 .kab-newsletter__text {
-	font-size: 15px;
 	line-height: 1.6;
 	color: var(--light-text);
 	margin: 0 0 28px;
@@ -2294,8 +2292,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .kab-signup__label {
 	display: block;
 	font-family: var(--font-family-title);
-	font-size: 15px;
 	letter-spacing: var(--letter-spacing-title);
+	font-size: var(--fs-body-large-2);
 	color: var(--hero-yellow);
 	margin-bottom: 14px;
 }
@@ -2381,7 +2379,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	right: 0;
 	bottom: 0;
 	margin: 0;
-	padding: 10px var(--side-pad);
+	padding: 15px var(--side-pad);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -2391,10 +2389,11 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	-webkit-backdrop-filter: blur(8px);
 }
 .kab-testimonial__quote {
-	font-size: 20px;
+	font-size: var(--fs-body);
 	font-style: italic;
 	line-height: 1.4;
 	color: var(--light-text);
+	text-align: center;
 }
 .kab-testimonial__stars {
 	flex-shrink: 0;

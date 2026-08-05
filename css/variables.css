@@ -45,7 +45,11 @@
 	--font-body: 'NHaas', 'Helvetica Neue', Arial, sans-serif;
 	--fs-title: clamp(65px, 20vw, 132px);
 	--fs-subtitle: clamp(42px, 14vw, 90px);
-
+	--fs-body: clamp(14px, 2.3vw, 18px);
+	--fs-body-small: clamp(13px, 2.15vw, 17px);
+	--fs-body-small-2: clamp(12px, 2vw, 15px);
+	--fs-body-large: clamp(28px, 4.6vw, 36px);
+	--fs-body-large-2: clamp(46px, 6.9vw, 54px);
 	--title-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
 	--letter-spacing-title: 0.01em;
 
