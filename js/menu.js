@@ -55,6 +55,8 @@ class Menu {
 		this._lastMoveTime = 0;
 		this._snapTimer = null;
 		this._rafId = null;
+		this._currentGap = CARD_GAP;
+		this._forceTransform = false;
 
 		this._init();
 	}
@@ -159,6 +161,9 @@ class Menu {
 		const stageH = this.stage.offsetHeight;
 		const cardW = this.track.offsetWidth;
 		const cardH = cardW * (9 / 16);
+		const prevGap = this._currentGap;
+		this._currentGap = window.innerWidth <= 600 ? CARD_GAP : CARD_GAP * 1.5;
+		if (prevGap != this._currentGap) this._forceTransform = true;
 		// Track origin = stage vertical centre
 		this.track.style.top = stageH / 2 + 'px';
 		// Each card: top = -cardH/2 so its centre aligns with track origin
@@ -169,6 +174,10 @@ class Menu {
 		});
 		// Store for use in transforms
 		this._cardH = cardH;
+		if (this._forceTransform) {
+			this._applyTransforms();
+			this._forceTransform = false;
+		}
 	}
 
 	// ── Open / Close ────────────────────────────────────────────
@@ -232,7 +241,7 @@ class Menu {
 	_dragMove(y) {
 		const now = performance.now();
 		const dy = y - this._dragY;
-		const delta = -dy / (CARD_GAP + this._cardH);
+		const delta = -dy / (this._currentGap + this._cardH);
 		let pos = this._dragPos + delta;
 		// Rubber band at edges
 		const max = this.cards.length - 1;
@@ -386,7 +395,7 @@ class Menu {
 			// Scale-aware translateY: instead of a fixed gap per step, we account
 			// for the fact that scaled-down cards take up less vertical space.
 			// For each integer step between active and this card, the gap between
-			// two adjacent cards = (outerCard.scaledHeight/2 + innerCard.scaledHeight/2 + CARD_GAP).
+			// two adjacent cards = (outerCard.scaledHeight/2 + innerCard.scaledHeight/2 + _currentGap).
 			// We sum these cumulatively so visual gaps stay even across all cards.
 			const sign = offset >= 0 ? 1 : -1;
 			const absOffInt = Math.abs(offset);
@@ -395,7 +404,7 @@ class Menu {
 			for (let step = 1; step <= absOffInt; step++) {
 				const prevHalf = this._cardH * (1 - (step - 1) * SCALE_STEP) * 0.5;
 				const thisHalf = this._cardH * (1 - step * SCALE_STEP) * 0.5;
-				prevTop += prevHalf + thisHalf + CARD_GAP;
+				prevTop += prevHalf + thisHalf + this._currentGap;
 			}
 			// Handle fractional offset (drag position between two integer steps)
 			const frac = absOffInt % 1;
@@ -403,7 +412,7 @@ class Menu {
 				const intStep = Math.floor(absOffInt);
 				const prevHalf = this._cardH * (1 - intStep * SCALE_STEP) * 0.5;
 				const nextHalf = this._cardH * (1 - (intStep + 1) * SCALE_STEP) * 0.5;
-				const stepSize = prevHalf + nextHalf + CARD_GAP;
+				const stepSize = prevHalf + nextHalf + this._currentGap;
 				translateY = sign * (prevTop + frac * stepSize);
 			} else {
 				translateY = sign * prevTop;

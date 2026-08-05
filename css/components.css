@@ -2839,4 +2839,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		width: 96px;
 		height: 96px;
 	}
+	.full-screen-menu__stage {
+		max-width: 900px;
+	}
 }
