@@ -241,6 +241,28 @@
 	background: rgba(242, 193, 46, 0.4);
 }
 
+/* ── Spotify "Listen on" badge ── */
+.spotify-badge {
+	display: inline-block;
+	transition: transform var(--btn-duration) ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.spotify-badge img {
+	display: block;
+	width: auto;
+	height: 100%;
+}
+.spotify-badge:hover {
+	transform: scale(1.08);
+}
+.spotify-badge:active {
+	transform: scale(0.95);
+}
+.spotify-badge:focus-visible {
+	outline: 2px solid var(--hero-yellow);
+	outline-offset: 4px;
+}
+
 /* ── View switch: the title itself is the Contact/About toggle.
    Both words read as clickable at rest (medium-contrast, pointer cursor);
    the active one is yellow with an underline that grows in/out on
@@ -1805,6 +1827,10 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	display: block;
 	margin-top: 10px;
 }
+.disco__spotify-badge {
+	height: 32px;
+	margin-top: 10px;
+}
 
 @media (min-width: 600px) {
 	.disco__title {
@@ -1959,6 +1985,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	margin-bottom: 14px;
 }
 .podcast-tile__cta {
+	height: 36px;
 	margin-bottom: 18px;
 }
 .podcast-tile__list.disco {
