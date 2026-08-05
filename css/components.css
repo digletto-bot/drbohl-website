@@ -2113,14 +2113,15 @@ a.be-contact__val:hover {
 	object-position: bottom left;
 	display: block;
 }
+
 .kab-crowd__shade {
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(
 		to top,
 		rgba(10, 10, 10, 0.92) 0%,
-		rgba(10, 10, 10, 0.15) 45%,
-		rgba(10, 10, 10, 0) 70%
+		rgba(10, 10, 10, 0.5) 15%,
+		rgba(0, 0, 0, 0) 50% /* rgba(10, 10, 10, 1) 40% */
 	);
 }
 .kab-testimonial {
@@ -2192,12 +2193,26 @@ a.be-contact__val:hover {
 	}
 }
 
+.mobile-only {
+	display: block;
+}
+.desktop-only {
+	display: none;
+}
+
 @media (min-width: 400px) {
 	.progress-nav {
 		padding: 0 calc(var(--side-pad) + 48px) 0 var(--side-pad);
 	}
 }
 @media (min-width: 600px) {
+	.mobile-only {
+		display: none;
+	}
+	.desktop-only {
+		display: block;
+	}
+
 	.progress-nav {
 		gap: 8px;
 		padding: 0 calc(var(--side-pad) + 60px) 0 var(--side-pad);
