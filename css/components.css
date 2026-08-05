@@ -340,6 +340,17 @@
 	pointer-events: none;
 	transform-origin: 50% 62%;
 }
+.hero-cutout-text-image {
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center top;
+	pointer-events: none;
+	transform-origin: 50% 62%;
+}
 
 /* ── Hero cutout button — invisible hit-box, sized to hug him ── */
 .hero-cutout-button {
@@ -359,49 +370,6 @@
 .hero-cutout-button:focus-visible {
 	outline: 2px solid var(--hero-yellow);
 	outline-offset: 6px;
-}
-
-/* ── "Klick mich" call-to-action ── */
-.hero-cutout-cta {
-	position: absolute;
-	z-index: 3;
-	top: 44%;
-	left: 7%;
-	width: 50%;
-	margin: 0;
-	pointer-events: none;
-	text-align: center;
-	font-family: var(--font-family-title);
-	font-weight: 900;
-	font-size: clamp(15px, 4.6vw, 21px);
-	line-height: 1.15;
-	letter-spacing: var(--letter-spacing-title);
-	text-transform: uppercase;
-	color: var(--hero-yellow);
-	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
-	transition:
-		transform var(--btn-duration) ease,
-		text-shadow var(--btn-duration) ease;
-}
-.hero-cutout-cta span {
-	display: block;
-	margin-top: 2px;
-	color: var(--hero-yellow);
-}
-
-/* ── Solid line connecting the CTA text to the cutout ── */
-.hero-cutout-cta__line {
-	position: absolute;
-	z-index: 3;
-	top: 50.5%;
-	left: 41%;
-	width: clamp(48px, 8.5vw, 72px);
-	height: 3px;
-	border-radius: 2px;
-	background: var(--hero-yellow);
-	transform: rotate(32deg);
-	transform-origin: left center;
-	pointer-events: none;
 }
 
 /* ── Subpage overlay: floating Close button — same treatment and
@@ -2184,7 +2152,7 @@ a.be-contact__val:hover {
 	line-height: 1;
 }
 
-/* ── Hero cutout group: periodic + interactive glow (text + silhouette) ── */
+/* ── Hero cutout group: periodic + interactive glow (silhouette only) ── */
 @keyframes cutoutImgGlow {
 	0%,
 	26.7%,
@@ -2199,33 +2167,11 @@ a.be-contact__val:hover {
 			drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
 	}
 }
-@keyframes cutoutTextGlow {
-	0%,
-	26.7%,
-	100% {
-		text-shadow:
-			0 0 1px rgba(242, 193, 46, 0),
-			0 0 20px rgba(242, 193, 46, 0),
-			0 0 25px rgba(242, 193, 46, 0);
-	}
-	13.3% {
-		text-shadow:
-			0 0 1px var(--hero-yellow),
-			0 0 20px rgba(242, 193, 46, 0.38),
-			0 0 25px rgba(242, 193, 46, 0.14);
-	}
-}
 .hero-cutout-image {
 	transition: filter 250ms ease;
 }
-.hero-cutout-cta {
-	transition: text-shadow 250ms ease;
-}
 .title-card.is-current .hero-cutout-image {
 	animation: cutoutImgGlow 4.5s ease-in-out infinite 1s;
-}
-.title-card.is-current .hero-cutout-cta {
-	animation: cutoutTextGlow 4.5s ease-in-out infinite 1s;
 }
 .hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-image,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-image,
@@ -2235,23 +2181,13 @@ a.be-contact__val:hover {
 		drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
 		drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
 }
-.hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-cta,
-.hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-cta,
-.hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-cta {
-	animation: none;
-	text-shadow:
-		0 0 1px var(--hero-yellow),
-		0 0 20px rgba(242, 193, 46, 0.38),
-		0 0 25px rgba(242, 193, 46, 0.14);
-}
 .hero-cutout-button:hover ~ .hero-cutout-group,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group,
 .hero-cutout-button:active ~ .hero-cutout-group {
 	transform: scale(1.03);
 }
 @media (prefers-reduced-motion: reduce) {
-	.title-card.is-current .hero-cutout-image,
-	.title-card.is-current .hero-cutout-cta {
+	.title-card.is-current .hero-cutout-image {
 		animation: none;
 	}
 }

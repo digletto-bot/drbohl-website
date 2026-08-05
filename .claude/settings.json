@@ -11,7 +11,11 @@
       "Bash(mkdir -p titlecards/about titlecards/bohl-entertainment titlecards/bohl100 titlecards/home titlecards/kabarett titlecards/musik titlecards/podcast titlecards/showtime titlecards/social-media)",
       "Bash(mkdir -p subpages/kabarett subpages/musik subpages/showtime)",
       "Bash(git mv *)",
-      "Bash(python3 -)"
+      "Bash(python3 -)",
+      "Bash(python3 -m http.server 8791)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8791/index.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:8791/assets/images/titlecards/about/title-card-about-cutout-text__1920x1080.avif\")",
+      "Bash(kill %1)"
     ]
   }
 }
