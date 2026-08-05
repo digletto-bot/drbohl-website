@@ -18,3 +18,27 @@ Talking points
 - Social media subpage (Option to implement stats via API / content reel)
 - Text content for whole page
 - SVG logo (including for favicon)
+
+
+Summary of changes (146bde0f -> current, 145 commits, Jul 29 - Aug 5)
+- Full visual redesign (css/components.css: ~2870 lines touched)
+  - Interactive "hero cutout" character on Contact page (glow/hover effects)
+  - Redesigned navigation menu, subpage layouts, responsive refinements across screen sizes
+- Navigation menu overhaul (js/menu.js: ~540 lines touched)
+  - Stacked-card concept -> revert -> rebuilt into 3D perspective carousel
+  - Multiple rounds of interaction fixes (drag inertia, focus/accessibility, card scaling)
+- New content sections built from scratch
+  - Kabarett subpage (expandable content sections)
+  - Musik subpage (interactive discography, embedded YouTube/Spotify players)
+  - Showtime subpage
+- Responsive image system (86 image files changed - 76 added, 10 removed)
+  - Every title card and several subpage visuals re-exported to AVIF across 5 screen-size variants each
+  - Faster load times, sharp visuals from phones to ultrawide monitors
+- Core interaction/reliability work (js/main.js + js/slider.js: ~1400 lines touched)
+  - Slide-dragging behavior, subpage open/close routing
+  - Bug fixes: double-tap issues on mobile, focus retention, back-button handling
+- New 404 error page (1023 lines, mirrors main site experience instead of a bare error message)
+- Dozens of smaller polish commits: spacing/sizing tweaks, tooltip/scrollbar styling, minor copy updates
+
+Net effect: not incremental tweaking - a full front-end redesign (menu, hero interactions, styling
+system) plus three new content sections, backed by a proper responsive-image pipeline.

@@ -362,6 +362,17 @@
 	pointer-events: none;
 	transform-origin: 50% 62%;
 }
+.hero-cutout-text-image {
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center top;
+	pointer-events: none;
+	transform-origin: 50% 62%;
+}
 
 /* ── Hero cutout button — invisible hit-box, sized to hug him ── */
 .hero-cutout-button {
@@ -381,49 +392,6 @@
 .hero-cutout-button:focus-visible {
 	outline: 2px solid var(--hero-yellow);
 	outline-offset: 6px;
-}
-
-/* ── "Klick mich" call-to-action ── */
-.hero-cutout-cta {
-	position: absolute;
-	z-index: 3;
-	top: 44%;
-	left: 7%;
-	width: 50%;
-	margin: 0;
-	pointer-events: none;
-	text-align: center;
-	font-family: var(--font-family-title);
-	font-weight: 900;
-	font-size: clamp(15px, 4.6vw, 21px);
-	line-height: 1.15;
-	letter-spacing: var(--letter-spacing-title);
-	text-transform: uppercase;
-	color: var(--hero-yellow);
-	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
-	transition:
-		transform var(--btn-duration) ease,
-		text-shadow var(--btn-duration) ease;
-}
-.hero-cutout-cta span {
-	display: block;
-	margin-top: 2px;
-	color: var(--hero-yellow);
-}
-
-/* ── Solid line connecting the CTA text to the cutout ── */
-.hero-cutout-cta__line {
-	position: absolute;
-	z-index: 3;
-	top: 50.5%;
-	left: 41%;
-	width: clamp(48px, 8.5vw, 72px);
-	height: 3px;
-	border-radius: 2px;
-	background: var(--hero-yellow);
-	transform: rotate(32deg);
-	transform-origin: left center;
-	pointer-events: none;
 }
 
 /* ── Subpage overlay: floating Close button — same treatment and
@@ -938,8 +906,8 @@
 }
 .subpage-overlay__body {
 	padding: 20px var(--side-pad) 0;
-	font-size: 15px;
-	line-height: 1.65;
+	font-size: var(--fs-body);
+	line-height: 1.45;
 	color: var(--body-text);
 	max-width: 480px;
 }
@@ -1800,13 +1768,13 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	letter-spacing: var(--letter-spacing-title);
 	font-weight: 900;
 	font-size: clamp(24px, 4vw, 34px);
+	font-size: var(--fs-body-large-2);
 	line-height: 1;
 	text-transform: uppercase;
 	color: var(--light-text);
 	margin-bottom: 12px;
 }
 .shop-product__desc {
-	font-size: 14px;
 	line-height: 1.65;
 	color: rgba(245, 245, 240, 0.85);
 }
@@ -1870,7 +1838,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 }
 .disco__title {
 	font-family: var(--font-family-title);
-	font-size: 44px;
+	font-size: var(--fs-body-large-2);
 	text-transform: uppercase;
 	letter-spacing: var(--letter-spacing-title);
 	line-height: 1;
@@ -1879,11 +1847,12 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	text-overflow: ellipsis;
 	flex: 1 1 auto;
 	min-width: 0;
+	text-box-trim: trim-both;
+	text-box-edge: cap alphabetic;
 }
 .disco__title em {
-	font-style: normal;
-	font-size: 0.72em;
 	opacity: 0.75;
+	font-style: normal;
 }
 .disco__year {
 	font-size: 15px;
@@ -1894,7 +1863,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	flex: 0 0 auto;
 }
 .disco__spotify-badge {
-	height: 24px;
+	height: var(--fs-body-large-2);
 }
 /* Toggle — a "+" that rotates into "×" on open (same idea as
    .podcast-toggle). Kept as its own button and a sibling of the
@@ -1985,17 +1954,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 }
 
 @media (min-width: 600px) {
-	.disco__title {
-		font-size: 66px;
-	}
 	.disco__thumb {
 		width: 132px;
-	}
-	.disco__year {
-		font-size: 20px;
-	}
-	.disco__spotify-badge {
-		height: 60px;
 	}
 	.disco__toggle {
 		width: 40px;
@@ -2049,7 +2009,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
    once opened, the blurb + episode list beneath it. */
 .podcast-tile__body {
 	background: #161616;
-	padding: 18px 18px 22px;
+	padding: 16px;
 }
 /* Title + toggle share one row, sized off the tile's own inline-size
    (container query, not viewport) so both tiles land on the same
@@ -2072,6 +2032,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	text-box-trim: trim-both;
+	text-box-edge: cap alphabetic;
 }
 /* Toggle button — a single control that stays put in the title row and
    morphs "+" into "×" by rotating the whole glyph 45°, rather than
@@ -2080,8 +2042,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .podcast-toggle {
 	position: relative;
 	flex: 0 0 auto;
-	width: clamp(30px, 11cqw, 44px);
-	height: clamp(30px, 11cqw, 44px);
+	width: clamp(25px, 10cqw, 44px);
+	height: clamp(25px, 10cqw, 44px);
 	border-radius: 50%;
 	border: 1.9px solid var(--hero-yellow);
 	background: rgba(20, 20, 20, 0.85);
@@ -2129,9 +2091,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	transform: translate(-50%, -50%) rotate(45deg);
 }
 .podcast-tile__desc {
-	font-size: 14px;
+	font-size: var(--fs-body-small);
 	line-height: 1.6;
-	color: var(--caption-grey);
 	margin-bottom: 14px;
 }
 .podcast-tile__cta {
@@ -2392,8 +2353,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	transition: opacity 220ms ease 40ms;
 }
 .kab-panel-content p {
-	font-size: 14px;
-	line-height: 1.65;
+	font-size: var(--fs-body-small);
+	line-height: 1.45;
 	color: var(--body-text);
 	margin: 0;
 }
@@ -2436,7 +2397,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	margin: 0 auto;
 }
 .kab-newsletter__text {
-	font-size: 15px;
 	line-height: 1.6;
 	color: var(--light-text);
 	margin: 0 0 28px;
@@ -2444,8 +2404,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .kab-signup__label {
 	display: block;
 	font-family: var(--font-family-title);
-	font-size: 15px;
 	letter-spacing: var(--letter-spacing-title);
+	font-size: var(--fs-body-large-2);
 	color: var(--hero-yellow);
 	margin-bottom: 14px;
 }
@@ -2514,14 +2474,15 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	object-position: bottom left;
 	display: block;
 }
+
 .kab-crowd__shade {
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(
 		to top,
 		rgba(10, 10, 10, 0.92) 0%,
-		rgba(10, 10, 10, 0.15) 45%,
-		rgba(10, 10, 10, 0) 70%
+		rgba(10, 10, 10, 0.5) 15%,
+		rgba(0, 0, 0, 0) 50%
 	);
 }
 .kab-testimonial {
@@ -2530,7 +2491,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	right: 0;
 	bottom: 0;
 	margin: 0;
-	padding: 10px var(--side-pad);
+	padding: 15px var(--side-pad);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -2540,10 +2501,11 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	-webkit-backdrop-filter: blur(8px);
 }
 .kab-testimonial__quote {
-	font-size: 20px;
+	font-size: var(--fs-body);
 	font-style: italic;
 	line-height: 1.4;
 	color: var(--light-text);
+	text-align: center;
 }
 .kab-testimonial__stars {
 	flex-shrink: 0;
@@ -2553,7 +2515,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	line-height: 1;
 }
 
-/* ── Hero cutout group: periodic + interactive glow (text + silhouette) ── */
+/* ── Hero cutout group: periodic + interactive glow (silhouette only) ── */
 @keyframes cutoutImgGlow {
 	0%,
 	26.7%,
@@ -2568,33 +2530,11 @@ a.shop-product__image:active .shop-product__image-badge--available {
 			drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
 	}
 }
-@keyframes cutoutTextGlow {
-	0%,
-	26.7%,
-	100% {
-		text-shadow:
-			0 0 1px rgba(242, 193, 46, 0),
-			0 0 20px rgba(242, 193, 46, 0),
-			0 0 25px rgba(242, 193, 46, 0);
-	}
-	13.3% {
-		text-shadow:
-			0 0 1px var(--hero-yellow),
-			0 0 20px rgba(242, 193, 46, 0.38),
-			0 0 25px rgba(242, 193, 46, 0.14);
-	}
-}
 .hero-cutout-image {
 	transition: filter 250ms ease;
 }
-.hero-cutout-cta {
-	transition: text-shadow 250ms ease;
-}
 .title-card.is-current .hero-cutout-image {
 	animation: cutoutImgGlow 4.5s ease-in-out infinite 1s;
-}
-.title-card.is-current .hero-cutout-cta {
-	animation: cutoutTextGlow 4.5s ease-in-out infinite 1s;
 }
 .hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-image,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-image,
@@ -2604,25 +2544,22 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		drop-shadow(0 0 10px rgba(242, 193, 46, 0.38))
 		drop-shadow(0 0 18px rgba(242, 193, 46, 0.14));
 }
-.hero-cutout-button:hover ~ .hero-cutout-group .hero-cutout-cta,
-.hero-cutout-button:focus-visible ~ .hero-cutout-group .hero-cutout-cta,
-.hero-cutout-button:active ~ .hero-cutout-group .hero-cutout-cta {
-	animation: none;
-	text-shadow:
-		0 0 1px var(--hero-yellow),
-		0 0 20px rgba(242, 193, 46, 0.38),
-		0 0 25px rgba(242, 193, 46, 0.14);
-}
 .hero-cutout-button:hover ~ .hero-cutout-group,
 .hero-cutout-button:focus-visible ~ .hero-cutout-group,
 .hero-cutout-button:active ~ .hero-cutout-group {
 	transform: scale(1.03);
 }
 @media (prefers-reduced-motion: reduce) {
-	.title-card.is-current .hero-cutout-image,
-	.title-card.is-current .hero-cutout-cta {
+	.title-card.is-current .hero-cutout-image {
 		animation: none;
 	}
+}
+
+.mobile-only {
+	display: block;
+}
+.desktop-only {
+	display: none;
 }
 
 @media (min-width: 400px) {
@@ -2631,6 +2568,13 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	}
 }
 @media (min-width: 600px) {
+	.mobile-only {
+		display: none;
+	}
+	.desktop-only {
+		display: block;
+	}
+
 	.progress-nav {
 		gap: 8px;
 		padding: 0 calc(var(--side-pad) + 60px) 0 var(--side-pad);
