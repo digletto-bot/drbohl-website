@@ -15,7 +15,8 @@
       "Bash(python3 -m http.server 8791)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8791/index.html)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:8791/assets/images/titlecards/about/title-card-about-cutout-text__1920x1080.avif\")",
-      "Bash(kill %1)"
+      "Bash(kill %1)",
+      "Bash(python -c ' *)"
     ]
   }
 }
