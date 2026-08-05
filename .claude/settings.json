@@ -1,13 +1,13 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\41d8c9d9-a88f-4a81-a18c-e68c922739ff\\\\scratchpad\\\\cdp-hitarea.mjs\")",
-      "Bash(grep -v '^0$')",
-      "Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\41d8c9d9-a88f-4a81-a18c-e68c922739ff\\\\scratchpad\\\\cdp-scrollbar.mjs\")",
-      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --no-sandbox --window-size=900,400 --screenshot=C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/shots/scrollbar-width-test.png file:///C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/scrollbar-test.html)",
-      "Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --no-sandbox --window-size=1100,400 --screenshot=C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/shots/scrollbar-width-test2.png file:///C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/scrollbar-test.html)",
-      "Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\41d8c9d9-a88f-4a81-a18c-e68c922739ff\\\\scratchpad\\\\cdp-scrollbar2.mjs\")",
-      "Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\852ca5ef-1a2a-4bd8-96ed-b5208efda891\\\\scratchpad\\\\shot.js\")"
-    ]
-  }
+	"permissions": {
+		"allow": [
+			"Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\41d8c9d9-a88f-4a81-a18c-e68c922739ff\\\\scratchpad\\\\cdp-hitarea.mjs\")",
+			"Bash(grep -v '^0$')",
+			"Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\41d8c9d9-a88f-4a81-a18c-e68c922739ff\\\\scratchpad\\\\cdp-scrollbar.mjs\")",
+			"Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --no-sandbox --window-size=900,400 --screenshot=C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/shots/scrollbar-width-test.png file:///C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/scrollbar-test.html)",
+			"Bash('/c/Program Files/Google/Chrome/Application/chrome.exe' --headless=new --disable-gpu --no-sandbox --window-size=1100,400 --screenshot=C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/shots/scrollbar-width-test2.png file:///C:/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/41d8c9d9-a88f-4a81-a18c-e68c922739ff/scratchpad/scrollbar-test.html)",
+			"Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\41d8c9d9-a88f-4a81-a18c-e68c922739ff\\\\scratchpad\\\\cdp-scrollbar2.mjs\")",
+			"Bash(node \"C:\\\\Users\\\\alexs\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Dev-projects-drbohl-website-drbohl\\\\852ca5ef-1a2a-4bd8-96ed-b5208efda891\\\\scratchpad\\\\shot.js\")"
+		]
+	}
 }

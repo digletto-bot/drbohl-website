@@ -1523,6 +1523,152 @@ a.be-contact__val:hover {
 }
 
 /* ══════════════════════════════════════════════
+   SHOP — Bohl100 merch drops. Ported from the old
+   drbohl.at/bohl100 image-left/description-right
+   cards: one product per row, cover photo on one
+   side, grey description card on the other — same
+   grey as the Musik/Podcast containers. Availability
+   lives only as a badge in the image's bottom-right
+   corner (like the original "Jetzt shoppen" badge),
+   color-coded, with a status-specific hover treatment.
+   ══════════════════════════════════════════════ */
+.shop-list {
+	padding: 4px var(--side-pad) 56px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+.shop-product {
+	display: grid;
+	grid-template-columns: 42% 1fr;
+	border-radius: 14px;
+	overflow: hidden;
+	border: 1px solid rgba(245, 245, 240, 0.1);
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+@media (max-width: 640px) {
+	.shop-product {
+		grid-template-columns: 1fr;
+	}
+}
+.shop-product__image {
+	position: relative;
+	display: block;
+	aspect-ratio: 1 / 1;
+	overflow: hidden;
+}
+.shop-product__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition:
+		transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+		filter 280ms ease;
+}
+a.shop-product__image:hover img {
+	transform: scale(1.06);
+}
+a.shop-product__image:active img {
+	transform: scale(0.98);
+}
+/* Sold out — greyed, blurred overlay on hover signals "unavailable"
+   without a separate status pill anywhere else on the card. */
+.shop-product__image-overlay {
+	position: absolute;
+	inset: 0;
+	background: var(--disabled-grey);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 220ms ease;
+}
+.shop-product__image--soldout:hover .shop-product__image-overlay {
+	opacity: 0.7;
+}
+.shop-product__image--soldout:hover img {
+	filter: blur(4px);
+}
+/* Bei Auftritten erhältlich / "fast ausverkauft" — no overlay, the
+   badge itself glows in its own orange on hover instead. */
+.shop-product__image--limited:hover .shop-product__image-badge--limited {
+	background: var(--shop-yellow-hover);
+	box-shadow:
+		0 0 22px 4px rgba(200, 112, 16, 0.65),
+		0 4px 14px rgba(0, 0, 0, 0.4);
+}
+.shop-product__image-badge {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	display: inline-flex;
+	align-items: center;
+	padding: 6px 12px;
+	border-radius: 999px;
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 11px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--light-text);
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+	transition:
+		background 180ms ease,
+		transform 180ms ease,
+		box-shadow 180ms ease;
+}
+.shop-product__image-badge--soldout {
+	background: var(--shop-red);
+}
+.shop-product__image-badge--limited {
+	background: var(--shop-yellow);
+}
+.shop-product__image-badge--available {
+	background: var(--shop-green);
+}
+a.shop-product__image:hover .shop-product__image-badge--available {
+	background: var(--shop-green-hover);
+	transform: scale(1.06);
+}
+a.shop-product__image:active .shop-product__image-badge--available {
+	background: var(--shop-green-tap);
+	transform: scale(0.95);
+}
+.shop-product__body {
+	background: #161616;
+	padding: 22px 24px 26px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.shop-product__num {
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 11px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--caption-grey);
+	margin-bottom: 6px;
+}
+.shop-product__title {
+	font-family: var(--font-family-title);
+	letter-spacing: var(--letter-spacing-title);
+	font-weight: 900;
+	font-size: clamp(24px, 4vw, 34px);
+	line-height: 1;
+	text-transform: uppercase;
+	color: var(--light-text);
+	margin-bottom: 12px;
+}
+.shop-product__desc {
+	font-size: 14px;
+	line-height: 1.65;
+	color: rgba(245, 245, 240, 0.85);
+}
+.shop-product__desc b {
+	color: var(--light-text);
+}
+
+/* ══════════════════════════════════════════════
    MUSIK — Discography accordion
    ══════════════════════════════════════════════ */
 .disco {
@@ -1566,13 +1712,28 @@ a.be-contact__val:hover {
 	flex: 0 0 auto;
 	display: block;
 }
+/* Text column — its own query container so title/year scale off the
+   width actually left over after the thumb, gap and chevron, not the
+   full row. Capped (clamp max) at roughly the thumbnail's height per
+   breakpoint so the stack never grows taller than the cover art. */
+.disco__text {
+	container-type: inline-size;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 2px;
+	flex: 1 1 auto;
+	min-width: 0;
+}
 .disco__title {
 	font-family: var(--font-family-title);
-	font-size: 19px;
+	font-size: clamp(16px, 26cqw, 42px);
 	text-transform: uppercase;
 	letter-spacing: var(--letter-spacing-title);
-	flex: 1 1 auto;
-	line-height: 1.1;
+	line-height: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .disco__title em {
 	font-style: normal;
@@ -1580,9 +1741,11 @@ a.be-contact__val:hover {
 	opacity: 0.75;
 }
 .disco__year {
-	font-size: 12px;
+	font-size: clamp(10px, 10cqw, 18px);
 	color: var(--caption-grey);
 	letter-spacing: 0.1em;
+	line-height: 1;
+	white-space: nowrap;
 }
 .disco__chevron {
 	width: 10px;
@@ -1631,7 +1794,7 @@ a.be-contact__val:hover {
 
 @media (min-width: 600px) {
 	.disco__title {
-		font-size: clamp(19px, 4vw, 36px);
+		font-size: clamp(20px, 24cqw, 68px);
 	}
 	.disco__thumb {
 		width: 88px;
@@ -1644,7 +1807,7 @@ a.be-contact__val:hover {
 		width: 132px;
 	}
 	.disco__year {
-		font-size: 15px;
+		font-size: clamp(12px, 9cqw, 28px);
 	}
 }
 
@@ -1675,6 +1838,7 @@ a.be-contact__val:hover {
 	}
 }
 .podcast-tile {
+	container-type: inline-size;
 	border-radius: 12px;
 	overflow: hidden;
 	border: 1px solid rgba(245, 245, 240, 0.1);
@@ -1689,36 +1853,88 @@ a.be-contact__val:hover {
 	object-fit: cover;
 	display: block;
 }
-/* Black card under the cover art — houses the title and the open/close
-   controls, instead of floating the "+" over the image itself. */
+/* Black card under the cover art — houses the title/toggle row and,
+   once opened, the blurb + episode list beneath it. */
 .podcast-tile__body {
 	background: #161616;
 	padding: 18px 18px 22px;
-	text-align: center;
+}
+/* Title + toggle share one row, sized off the tile's own inline-size
+   (container query, not viewport) so both tiles land on the same
+   font-size — and therefore the same row height — regardless of which
+   title is longer. */
+.podcast-tile__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
 }
 .podcast-tile__title {
 	font-family: var(--font-family-title);
 	letter-spacing: var(--letter-spacing-title);
 	font-weight: 900;
-	font-size: clamp(28px, 8vw, 42px);
+	font-size: clamp(24px, 15cqw, 46px);
 	line-height: 1;
 	text-transform: uppercase;
 	color: var(--hero-yellow);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
-/* .kab-open is normally an absolutely-positioned overlay on the banner
-   image (Kabarett); here it sits in normal flow below the title.
-   Stays `position: relative` (not static) so its own ::icon child —
-   which is itself absolutely positioned to center within the button —
-   still resolves against the button and not some distant ancestor. */
-.podcast-tile .kab-open {
+/* Toggle button — a single control that stays put in the title row and
+   morphs "+" into "×" by rotating the whole glyph 45°, rather than
+   swapping between two separately-placed controls like the Kabarett
+   banners do. */
+.podcast-toggle {
 	position: relative;
-	display: block;
-	inset: auto;
-	margin: 14px auto 0;
-	transform: none;
+	flex: 0 0 auto;
+	width: clamp(30px, 11cqw, 44px);
+	height: clamp(30px, 11cqw, 44px);
+	border-radius: 50%;
+	border: 1.9px solid var(--hero-yellow);
+	background: rgba(20, 20, 20, 0.85);
+	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
+	cursor: pointer;
+	transition:
+		background 200ms ease,
+		transform 200ms ease;
+	-webkit-tap-highlight-color: transparent;
 }
-.podcast-tile .kab-open:hover {
+.podcast-toggle:hover {
+	background: rgba(20, 20, 20, 0.5);
 	transform: scale(1.08);
+}
+.podcast-toggle:active {
+	transform: scale(0.92);
+}
+.podcast-toggle__icon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 46%;
+	height: 46%;
+	transform: translate(-50%, -50%) rotate(0deg);
+	transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.podcast-toggle__icon::before,
+.podcast-toggle__icon::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background: var(--hero-yellow);
+	transform: translate(-50%, -50%);
+}
+.podcast-toggle__icon::before {
+	width: 100%;
+	height: 2px;
+}
+.podcast-toggle__icon::after {
+	width: 2px;
+	height: 100%;
+}
+.podcast-tile.is-open .podcast-toggle__icon {
+	transform: translate(-50%, -50%) rotate(45deg);
 }
 .podcast-tile__desc {
 	font-size: 14px;

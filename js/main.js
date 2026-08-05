@@ -542,19 +542,15 @@ function initKabarettAccordion() {
 }
 initKabarettAccordion();
 
-/* ── Podcast: same open/close control pattern as the Kabarett banners,
-   applied to the two show tiles instead of a list of shows. ── */
+/* ── Podcast: single toggle button (title row) that morphs "+" into
+   "×" via CSS rotation, unlike the Kabarett banners' two separately
+   placed open/close controls. ── */
 function initPodcastAccordion() {
 	document.querySelectorAll('.podcast-tile').forEach((tile) => {
-		const openBtn = tile.querySelector('.kab-open');
-		const closeBtn = tile.querySelector('.kab-close');
-		openBtn.addEventListener('click', () => {
-			tile.classList.add('is-open');
-			openBtn.setAttribute('aria-expanded', 'true');
-		});
-		closeBtn.addEventListener('click', () => {
-			tile.classList.remove('is-open');
-			openBtn.setAttribute('aria-expanded', 'false');
+		const toggle = tile.querySelector('.podcast-toggle');
+		toggle.addEventListener('click', () => {
+			const open = tile.classList.toggle('is-open');
+			toggle.setAttribute('aria-expanded', open);
 		});
 	});
 }
