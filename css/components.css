@@ -1871,7 +1871,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
    once opened, the blurb + episode list beneath it. */
 .podcast-tile__body {
 	background: #161616;
-	padding: 18px 18px 22px;
+	padding: 16px;
 }
 /* Title + toggle share one row, sized off the tile's own inline-size
    (container query, not viewport) so both tiles land on the same
@@ -1894,6 +1894,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	text-box-trim: trim-both;
+	text-box-edge: cap alphabetic;
 }
 /* Toggle button — a single control that stays put in the title row and
    morphs "+" into "×" by rotating the whole glyph 45°, rather than
@@ -1902,8 +1904,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .podcast-toggle {
 	position: relative;
 	flex: 0 0 auto;
-	width: clamp(30px, 11cqw, 44px);
-	height: clamp(30px, 11cqw, 44px);
+	width: clamp(25px, 10cqw, 44px);
+	height: clamp(25px, 10cqw, 44px);
 	border-radius: 50%;
 	border: 1.9px solid var(--hero-yellow);
 	background: rgba(20, 20, 20, 0.85);
