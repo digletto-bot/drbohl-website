@@ -605,6 +605,25 @@ function resetKabarettAccordion() {
 	});
 }
 
+/* ── Schabernack: timeline accordion (each year toggles independently) ── */
+function initTimelineAccordion() {
+	document.querySelectorAll('.tl-year').forEach((year) => {
+		const head = year.querySelector('.tl-year__head');
+		head.addEventListener('click', () => {
+			const open = year.classList.toggle('is-open');
+			head.setAttribute('aria-expanded', open);
+		});
+	});
+}
+initTimelineAccordion();
+
+function resetTimelineAccordion() {
+	document.querySelectorAll('.tl-year').forEach((year) => {
+		year.classList.remove('is-open');
+		year.querySelector('.tl-year__head')?.setAttribute('aria-expanded', 'false');
+	});
+}
+
 /* ── Reset per-subpage interactive state when leaving that subpage, whether
    because the overlay closed or the active slide changed. Keyed on the
    subpage-card's aria-label (same identity Router uses for its paths), not
@@ -615,6 +634,7 @@ function resetSubpageState(index) {
 	const label = card?.getAttribute('aria-label');
 	if (label === 'Kabarett') resetKabarettAccordion();
 	else if (label === 'Musik') resetMusikDiscography();
+	else if (label === 'Schabernack') resetTimelineAccordion();
 }
 
 /* ── Podcast: single toggle button (title row) that morphs "+" into
