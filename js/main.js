@@ -142,6 +142,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		openAboutPage();
 	});
 
+	// Handle clicks on shop product links
+	// -> Prevent opening the link, if the user meant to drag between slides
+	document.querySelectorAll('a.shop-product__image').forEach((link) => {
+		let startX, startY;
+		link.addEventListener('pointerdown', (e) => {
+			startX = e.clientX;
+			startY = e.clientY;
+		});
+		link.addEventListener('click', (e) => {
+			if (Math.hypot(e.clientX - startX, e.clientY - startY) > 6) e.preventDefault();
+		});
+	});
+
 	/* ── ESC closes everything ── */
 	document.addEventListener('keydown', (e) => {
 		if (e.key !== 'Escape') return;
