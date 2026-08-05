@@ -21,15 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.addEventListener('resize', fitText);
 
 	/* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
+	const arrowPrev = document.getElementById('arrow-prev');
+	const arrowNext = document.getElementById('arrow-next');
+	function updateDesktopArrows(index) {
+		arrowPrev?.classList.toggle('is-disabled', index === 0);
+		arrowNext?.classList.toggle('is-disabled', index === slider.totalSlides - 1);
+	}
+
 	const slider = new Slider({
-		onSlideChange: (index) => {
+		onSlideChange: (index, prev) => {
 			updateProgressNav(index);
 			menu.onSlideChange(index);
 			if (window.router) router.onSlideChange(index);
 			dismissSwipeHint();
 			subpageSlider.goTo(index);
+			updateDesktopArrows(index);
+			resetSubpageState(prev);
 		},
 	});
+	updateDesktopArrows(slider.index);
 
 	const ticketBtn = document.querySelector('.subpage-ticket-btn');
 	const subpageSlider = new Slider({
@@ -145,20 +155,43 @@ function hideLoadingScreen() {
 	document.getElementById('loading-screen')?.classList.add('is-hidden');
 }
 
-/* ── Subpage overlay (single unified container; called from inline onclick) ── */
+/* ── Subpage overlay (single unified container; called from inline onclick) ──
+   Opening pushes a synthetic history entry so the mobile/browser back button
+   closes the overlay instead of navigating away; popstate below reacts to
+   that entry going away (whether via back button or our own history.back()
+   call in closeSubpage) by closing it. */
 window.openSubpage = function () {
 	const sp = document.getElementById('subpage-overlay');
+	if (sp.classList.contains('is-open')) return;
 	sp.classList.add('is-open');
 	sp.setAttribute('aria-hidden', 'false');
 	document.querySelector('.subpage-card.is-current')?.scrollTo(0, 0);
+	history.pushState({ subpage: true }, '', window.location.href);
 };
 
-window.closeSubpage = function () {
-	const sp = document.getElementById('subpage-overlay');
+function hideSubpageOverlay(sp) {
 	document.activeElement.blur();
 	sp.classList.remove('is-open');
 	sp.setAttribute('aria-hidden', 'true');
+	resetSubpageState(document.querySelector('.subpage-card.is-current')?.dataset.index);
+}
+
+window.closeSubpage = function () {
+	const sp = document.getElementById('subpage-overlay');
+	if (!sp.classList.contains('is-open')) return;
+	hideSubpageOverlay(sp);
+	if (history.state?.subpage) history.back();
 };
+
+window.addEventListener('popstate', (e) => {
+	const sp = document.getElementById('subpage-overlay');
+	if (e.state?.subpage) {
+		sp.classList.add('is-open');
+		sp.setAttribute('aria-hidden', 'false');
+	} else if (sp.classList.contains('is-open')) {
+		hideSubpageOverlay(sp);
+	}
+});
 
 /* ── About page copy ── */
 const ABOUT_LEAD = 'Vom gelben Pfannenwender zum Whackofatz';
@@ -501,8 +534,7 @@ function initDiscography() {
 				const spKind = item.dataset.spKind || 'track';
 				const videoEl = item.querySelector('.disco__video');
 				if (yt && videoEl) {
-					videoEl.innerHTML =
-						`<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+					videoEl.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
 				}
 				if (sp) {
 					item.querySelector('.disco__spotify').innerHTML =
@@ -525,22 +557,52 @@ function initDiscography() {
 }
 initDiscography();
 
-/* ── Kabarett: show-banner accordion (separate open/close controls) ── */
+/* Collapses all discography foldouts and tears down their lazy-injected
+   iframes (rather than just hiding them) so playback actually stops instead
+   of continuing behind the closed panel. Clearing dataset.loaded means the
+   track re-injects fresh, from the start, next time it's opened. */
+function resetMusikDiscography() {
+	document.querySelectorAll('.disco__item').forEach((item) => {
+		item.classList.remove('is-open');
+		item.querySelector('.disco__bar')?.setAttribute('aria-expanded', 'false');
+		const video = item.querySelector('.disco__video');
+		const spotify = item.querySelector('.disco__spotify');
+		if (video) video.innerHTML = '';
+		if (spotify) spotify.innerHTML = '';
+		delete item.dataset.loaded;
+	});
+}
+
+/* ── Kabarett: show-banner accordion (single open/close toggle) ── */
 function initKabarettAccordion() {
 	document.querySelectorAll('.kab-show').forEach((show) => {
 		const openBtn = show.querySelector('.kab-open');
-		const closeBtn = show.querySelector('.kab-close');
 		openBtn.addEventListener('click', () => {
-			show.classList.add('is-open');
-			openBtn.setAttribute('aria-expanded', 'true');
-		});
-		closeBtn.addEventListener('click', () => {
-			show.classList.remove('is-open');
-			openBtn.setAttribute('aria-expanded', 'false');
+			const open = show.classList.toggle('is-open');
+			openBtn.setAttribute('aria-expanded', open);
 		});
 	});
 }
 initKabarettAccordion();
+
+function resetKabarettAccordion() {
+	document.querySelectorAll('.kab-show').forEach((show) => {
+		show.classList.remove('is-open');
+		show.querySelector('.kab-open')?.setAttribute('aria-expanded', 'false');
+	});
+}
+
+/* ── Reset per-subpage interactive state when leaving that subpage, whether
+   because the overlay closed or the active slide changed. Keyed on the
+   subpage-card's aria-label (same identity Router uses for its paths), not
+   its index, so it doesn't depend on card order. ── */
+function resetSubpageState(index) {
+	if (index === undefined || index === null) return;
+	const card = document.querySelector(`.subpage-card[data-index="${index}"]`);
+	const label = card?.getAttribute('aria-label');
+	if (label === 'Kabarett') resetKabarettAccordion();
+	else if (label === 'Musik') resetMusikDiscography();
+}
 
 /* ── Podcast: single toggle button (title row) that morphs "+" into
    "×" via CSS rotation, unlike the Kabarett banners' two separately
