@@ -493,17 +493,23 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 16px;
+	gap: 10px;
+	width: 100%;
+	max-width: 514px; /* = 5 × 90px icons + 4 × 16px gaps, the original desktop size */
+	margin-inline: auto;
 	border-radius: 12px;
-	filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 8px rgba(0, 0, 0, 0.5))
-		drop-shadow(0 0 14px rgba(0, 0, 0, 0.4));
+	filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 12px rgba(0, 0, 0, 0.4))
+		drop-shadow(0 0 14px rgba(0, 0, 0, 0.3));
 }
 .social-icons a {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 90px;
-	height: 90px;
+	flex: 1 1 0;
+	aspect-ratio: 1 / 1;
+	width: auto;
+	height: auto;
+	max-width: 90px;
 	color: var(--light-text);
 	-webkit-tap-highlight-color: transparent;
 	transition: transform 0.2s ease;
