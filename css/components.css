@@ -539,7 +539,6 @@
 	margin: 24px var(--side-pad) 48px;
 	aspect-ratio: 9 / 16;
 	overflow: hidden;
-	border-radius: 12px;
 }
 .sm-feature__img {
 	position: absolute;
@@ -1849,7 +1848,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 }
 .disco__title {
 	font-family: var(--font-family-title);
-	font-size: var(--fs-body-large-2);
+	font-size: var(--fs-body-large);
 	text-transform: uppercase;
 	letter-spacing: var(--letter-spacing-title);
 	line-height: 1;
@@ -2000,10 +1999,13 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	gap: 28px 20px;
 	padding: 4px var(--side-pad) 56px;
 }
-@media (max-width: 680px) {
+@media (max-width: 800px) {
 	.podcast-grid {
 		grid-template-columns: 1fr;
 		gap: 40px;
+	}
+	.disco__title {
+		font-size: var(--fs-body-large-2);
 	}
 }
 .podcast-tile {
