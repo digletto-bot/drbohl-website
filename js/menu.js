@@ -56,7 +56,6 @@ class Menu {
 		this._snapTimer = null;
 		this._rafId = null;
 		this._currentGap = CARD_GAP;
-		this._forceTransform = false;
 
 		this._init();
 	}
@@ -152,7 +151,20 @@ class Menu {
 			{ passive: false }
 		);
 
-		window.addEventListener('resize', () => this._layout());
+		window.addEventListener('resize', () => {
+			let resizeTimer = null;
+			let lastTransform = performance.now();
+			this._layout();
+			if (resizeTimer) clearTimeout(resizeTimer);
+			resizeTimer = setTimeout(() => {
+				const now = performance.now();
+				resizeTimer = null;
+				if (now - lastTransform < 10) return;
+				this._layout();
+				this._applyTransforms();
+				lastTransform = now;
+			}, 10);
+		});
 	}
 
 	// ── Layout: position track at stage centre, cards at -cardH/2 ──
@@ -161,9 +173,10 @@ class Menu {
 		const stageH = this.stage.offsetHeight;
 		const cardW = this.track.offsetWidth;
 		const cardH = cardW * (9 / 16);
-		const prevGap = this._currentGap;
-		this._currentGap = window.innerWidth <= 600 ? CARD_GAP : CARD_GAP * 1.5;
-		if (prevGap != this._currentGap) this._forceTransform = true;
+		this._currentGap =
+			window.innerWidth <= 600 ? CARD_GAP
+			: window.innerWidth <= 900 ? CARD_GAP * 1.5
+			: CARD_GAP * 2;
 		// Track origin = stage vertical centre
 		this.track.style.top = stageH / 2 + 'px';
 		// Each card: top = -cardH/2 so its centre aligns with track origin
@@ -174,10 +187,6 @@ class Menu {
 		});
 		// Store for use in transforms
 		this._cardH = cardH;
-		if (this._forceTransform) {
-			this._applyTransforms();
-			this._forceTransform = false;
-		}
 	}
 
 	// ── Open / Close ────────────────────────────────────────────
