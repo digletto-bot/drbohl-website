@@ -295,7 +295,13 @@
   <!-- SLIDE 10 — SCHABERNACK -->
   <article class="title-card is-next" data-index="9" aria-label="Schabernack">
     <div class="title-card__inner">
-      <div class="title-card__image-placeholder"></div>
+      <picture>
+        <source media="(min-width: 3840px)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__3840x2160.avif" />
+        <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__3440x1440.avif" />
+        <source media="(min-width: 2560px)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__2560x1440.avif" />
+        <source media="(min-width: 600px)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__1920x1080.avif" />
+        <img class="title-card__image" src="assets/images/titlecards/schabernack/title-card-schabernack__1080x1920.avif" alt="Schabernack" loading="lazy">
+      </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
         <div class="title-card__headline-wrap">
@@ -418,8 +424,11 @@
       <span class="menu-card__label-big">Contact</span>
       <span class="menu-card__number">09</span>
     </button>
-    <button class="menu-card" data-index="9">
-      <div style="position:absolute;inset:0;background:linear-gradient(160deg,#0e180d,#070707)"></div>
+    <button class="menu-card" data-index="9" style="--dim: 0.3">
+      <picture>
+        <source media="(min-width: 600px)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__1920x1080.avif" />
+        <img class="menu-card__image" src="assets/images/titlecards/schabernack/title-card-schabernack__1080x1920.avif" alt="" loading="lazy">
+      </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Schabernack</span>
       <span class="menu-card__label-big">Schabernack</span>
@@ -1091,8 +1100,466 @@
     <article class="subpage-card is-next" data-index="9" aria-label="Schabernack">
       <div class="subpage-card-inner">
         <div class="subpage-overlay__title">Schabernack</div>
-        <div class="subpage-overlay__body">Easter Eggs, Gags, Archivmaterial. Auf eigene Gefahr.</div>
-        <div class="subpage-overlay__note">Diese Seite ist ein Platzhalter. Inhalte folgen in der nächsten Entwicklungsphase.</div>
+        <div class="subpage-overlay__body">Easter Eggs, Gags, Archivmaterial. Auf eigene Gefahr. Die ganze Geschichte, Jahr für Jahr.</div>
+
+        <div class="tl">
+          <!-- 2026 -->
+          <div class="tl-year">
+            <button class="tl-year__head" aria-expanded="false" aria-controls="tl-panel-2026">
+              <span class="tl-year__num">2026</span>
+              <span class="tl-year__title">Opera Ball, products, music and Bohl Entertainment</span>
+              <span class="tl-year__icon" aria-hidden="true"></span>
+            </button>
+            <div class="tl-year__panel" id="tl-panel-2026">
+              <div class="tl-year__panel-inner">
+                <p class="tl-year__intro">In 2026, Dr.Bohl opened the Vienna Opera Ball, launched its first product with WEIN&amp;CO, released a third single and expanded into advertising with the founding of Bohl Entertainment.</p>
+                <ol class="tl-events">
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">30 January 2026</span><span class="tl-event__scope">Paulus / TV</span></p>
+                      <p class="tl-event__text">Fakt oder Fake appearance with Tina Ritschl and Alexandra Maritza Wachter.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">8 February 2026</span><span class="tl-event__scope">Paulus / Radio</span></p>
+                      <p class="tl-event__text">Radio Salzburg Café interview, focusing on his career, SOLO and the approaching Opera Ball opening.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/opernball.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">12 February 2026</span><span class="tl-event__scope">Paulus / Society</span></p>
+                        <p class="tl-event__text">Opens the 68th Vienna Opera Ball. Paulus and his partner Léa join the first row of debutants and take part in the formal opening.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bipa-campaign.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">1 April 2026</span><span class="tl-event__scope">Paulus / Campaign</span></p>
+                        <p class="tl-event__text">BIPA April Fool campaign: BI BOHL. BI BIPA. BI CURLY. presents a fictional Dr.Bohl curling shampoo promising "Schneckerl wie der Doktor."</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">17 April 2026</span><span class="tl-event__scope">Paulus / TV</span></p>
+                      <p class="tl-event__text">Return to Fakt oder Fake, appearing with JJ and Barbara Karlich in the season's later run.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bohl-liter.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">Late April 2026</span><span class="tl-event__scope">Brand / Product</span></p>
+                        <p class="tl-event__text">Launch of BOHL LITER with WEIN&amp;CO. The wine designed for white spritzers is presented at Vienna's Naschmarkt and released through WEIN&amp;CO shops and online.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/schnitzel-single.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">5 May 2026</span><span class="tl-event__scope">Paulus / Music</span></p>
+                        <p class="tl-event__text">Third official single: SCHNITZEL (all night long).</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">7 May 2026</span><span class="tl-event__scope">Paulus / Music video</span></p>
+                      <p class="tl-event__text">Official SCHNITZEL video rollout. The song is publicly revealed as having reached the final 20 from more than 600 Austrian submissions for Eurovision 2026.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/hyundai-marko.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">17 May 2026</span><span class="tl-event__scope">Business / Campaign</span></p>
+                        <p class="tl-event__text">Bohl Entertainment enters the advertising market. The newly founded company and Wirz develop Hyundai's Marko for President social-first campaign around Marko Arnautović; its initial content approaches 3.5 million organic views before expanding into a broader 360-degree campaign.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">17 June 2026</span><span class="tl-event__scope">Paulus / Music and football</span></p>
+                      <p class="tl-event__text">Marko for President WM anthem. Paulus releases a humorous song and video featuring Arnautović during Austria's World Cup campaign.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">17 July 2026</span><span class="tl-event__scope">Duo / Podcast</span></p>
+                      <p class="tl-event__text">Bohlmobil episode 93: Mondsee. The continuing podcast shows that the original brother-duo format remains active alongside Paulus's solo career.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/solo-touring.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">6 August 2026</span><span class="tl-event__scope">Paulus / Stage</span></p>
+                        <p class="tl-event__text">SOLO continues as a touring program, including a sold-out Theater im Park performance, with further dates scheduled into late 2026.</p>
+                      </div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2025 -->
+          <div class="tl-year">
+            <button class="tl-year__head" aria-expanded="false" aria-controls="tl-panel-2025">
+              <span class="tl-year__num">2025</span>
+              <span class="tl-year__title">Paulus becomes a mainstream solo entertainer</span>
+              <span class="tl-year__icon" aria-hidden="true"></span>
+            </button>
+            <div class="tl-year__panel" id="tl-panel-2025">
+              <div class="tl-year__panel-inner">
+                <p class="tl-year__intro">In 2025, Paulus stepped forward as a solo stage performer and became a national television personality. Dancing Stars, Frühstück bei mir, his first music releases, Disney dubbing and the ROMY red carpet expanded Dr.Bohl far beyond social comedy.</p>
+                <ol class="tl-events">
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/solo-premiere.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">11 February 2025</span><span class="tl-event__scope">Paulus / Stage</span></p>
+                        <p class="tl-event__text">Premiere of SOLO at the Wiener Stadtsaal. It is Paulus's first stage program without Benjamin and centres on dating, Tinder encounters and personal stories.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/dancing-stars-start.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">14 March 2025</span><span class="tl-event__scope">Paulus / TV</span></p>
+                        <p class="tl-event__text">Dancing Stars live competition begins. Paulus is partnered with professional dancer Catharina Malek for the 16th ORF season.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/willkommen-oesterreich.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">18 March 2025</span><span class="tl-event__scope">Paulus / TV interview</span></p>
+                        <p class="tl-event__text">Guest on Willkommen Österreich, appearing alongside André Heller and Ursula Strauss while promoting SOLO and discussing his developing television career.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/dancing-stars-final.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">23 May 2025</span><span class="tl-event__scope">Paulus / TV</span></p>
+                        <p class="tl-event__text">Second place in the Dancing Stars final. Paulus and Catharina reach the final and finish behind Aaron Karl and Kateryna Mizera.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">30 May 2025</span><span class="tl-event__scope">Paulus / TV</span></p>
+                      <p class="tl-event__text">70 Jahre Fernsehen – Die emotionalsten Momente. Paulus joins Katharina Straßer and Barbara Stöckl for the opening edition of ORF's anniversary series.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/fruehstueck-bei-mir.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">15 June 2025</span><span class="tl-event__scope">Paulus / Radio interview</span></p>
+                        <p class="tl-event__text">Frühstück bei mir with Claudia Stöckl. Paulus discusses his path from law graduate to full-time comedian, his family influence, Dancing Stars and the move from a school cellar to major sold-out venues.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/du-dummer.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">29 July 2025</span><span class="tl-event__scope">Paulus / Music</span></p>
+                        <p class="tl-event__text">First official single: DU DUMMER. Apple Music lists the one-track release under the Dr.Bohl name.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/weisser-spritzer.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">17 August 2025</span><span class="tl-event__scope">Paulus / Music</span></p>
+                        <p class="tl-event__text">Second single: WEISSER SPRITZER. The song extends the Dr.Bohl identity into comic Austrian pop.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/zoomania.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">26 November 2025</span><span class="tl-event__scope">Paulus / Film</span></p>
+                        <p class="tl-event__text">First dubbing role in Disney's Zoomania 2. Paulus voices two iguanas in the German-language version, including an iguana bartender speaking in Viennese dialect.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/romy-redcarpet.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">28 November 2025</span><span class="tl-event__scope">Paulus / Awards and interviews</span></p>
+                        <p class="tl-event__text">KURIER ROMY red-carpet coverage in Kitzbühel. Dr.Bohl conducts comedic celebrity interviews with the yellow spatula, later assembled as Red Carpet Schabernack ROMY 2025.</p>
+                      </div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2024 -->
+          <div class="tl-year">
+            <button class="tl-year__head" aria-expanded="false" aria-controls="tl-panel-2024">
+              <span class="tl-year__num">2024</span>
+              <span class="tl-year__title">ORF visibility, Opernball access and political interviews</span>
+              <span class="tl-year__icon" aria-hidden="true"></span>
+            </button>
+            <div class="tl-year__panel" id="tl-panel-2024">
+              <div class="tl-year__panel-inner">
+                <p class="tl-year__intro">2024 brought Dr.Bohl into national broadcasting: an official Opernball assignment, recurring ORF appearances, a three-part television broadcast of the first stage show and the interview format BOHL FRAGT.</p>
+                <ol class="tl-events">
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">February 2024</span><span class="tl-event__scope">Duo / Society content</span></p>
+                      <p class="tl-event__text">First official Vienna Opera Ball content assignment. Paulus later recalled that Dr.Bohl had been invited as the event's first official content creators to produce comedic coverage inside the ball.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/was-gibt-es-neues.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">From March 2024</span><span class="tl-event__scope">Paulus / TV</span></p>
+                        <p class="tl-event__text">Entry into the ORF comedy-panel circuit. Paulus begins appearing on Was gibt es Neues? and subsequently becomes a recurring member of the show's wider rotating panel.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">26 August 2024</span><span class="tl-event__scope">Duo / Streaming</span></p>
+                      <p class="tl-event__text">Dr.Bohl – Live! arrives on ORF ON, giving the original stage program a national streaming release.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">27 August 2024</span><span class="tl-event__scope">Duo / TV</span></p>
+                      <p class="tl-event__text">ORF 1 broadcast begins. DIE.NACHT presents the first stage program in three weekly parts — the duo's full cabaret television debut.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">September–October 2024</span><span class="tl-event__scope">Paulus / Interview series</span></p>
+                      <p class="tl-event__text">BOHL FRAGT launches. Paulus conducts intentionally non-political interviews with Werner Kogler, Beate Meinl-Reisinger and Andreas Babler during the Austrian election period. The extended interviews are also released as a podcast.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2023 -->
+          <div class="tl-year">
+            <button class="tl-year__head" aria-expanded="false" aria-controls="tl-panel-2023">
+              <span class="tl-year__num">2023</span>
+              <span class="tl-year__title">Second stage program and the move into national media</span>
+              <span class="tl-year__icon" aria-hidden="true"></span>
+            </button>
+            <div class="tl-year__panel" id="tl-panel-2023">
+              <div class="tl-year__panel-inner">
+                <p class="tl-year__intro">ANABOHLIKA marked Dr.Bohl's arrival in established Austrian cabaret. By the end of 2023, the brothers had moved from being radio guests to hosting their own three-day Ö3 special.</p>
+                <ol class="tl-events">
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/stadtsaal.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">16 January 2023</span><span class="tl-event__scope">Duo / Stage</span></p>
+                        <p class="tl-event__text">Premiere of ANABOHLIKA at the sold-out Wiener Stadtsaal — the second Dr.Bohl stage program.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">February 2023</span><span class="tl-event__scope">Duo / Award</span></p>
+                      <p class="tl-event__text">Bohlmobil reaches No. 9 at the Ö3 Podcast Award, completing a progression from No. 20 to No. 19 and then into the Top 10.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">20 March 2023</span><span class="tl-event__scope">Duo / Radio</span></p>
+                      <p class="tl-event__text">Ö3 guest takeover: the brothers select and discuss their personal "Top-Scheiben" in Treffpunkt Gästeliste, including their associations with Udo Jürgens, Elvis Presley, Dr. Alban and Wanda.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">2 June 2023</span><span class="tl-event__scope">Duo / Industry</span></p>
+                      <p class="tl-event__text">How to Bohl! at the Ö3 Podcast Festival. They present a case study about becoming and working as comedians.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">17 November 2023</span><span class="tl-event__scope">Paulus / TV</span></p>
+                      <p class="tl-event__text">ORF prime-time appearance in Hier spielt die Musik. Paulus competes alongside Anna Tropper-Lener in the musical entertainment show.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/ordination-radio.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">26–28 December 2023</span><span class="tl-event__scope">Duo / Radio</span></p>
+                        <p class="tl-event__text">First radio-hosting assignment: Ordination Dr.Bohl airs on Ö3 for three afternoons between Christmas and New Year, with Paulus and Benjamin hosting from 15:00 to 18:00.</p>
+                      </div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2020–2022 -->
+          <div class="tl-year">
+            <button class="tl-year__head" aria-expanded="false" aria-controls="tl-panel-2020-2022">
+              <span class="tl-year__num">2020–2022</span>
+              <span class="tl-year__title">Stage, podcast and television expansion</span>
+              <span class="tl-year__icon" aria-hidden="true"></span>
+            </button>
+            <div class="tl-year__panel" id="tl-panel-2020-2022">
+              <div class="tl-year__panel-inner">
+                <p class="tl-year__intro">In 2020, Dr.Bohl moved from social media to the stage and into podcasting. Two years later, the project had expanded into television presenting, scripted fiction and national brand events.</p>
+                <ol class="tl-events">
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">January 2020</span><span class="tl-event__scope">Duo / Stage</span></p>
+                      <p class="tl-event__text">World premiere of Dr.Bohl – Live!. Their first stage program is performed for roughly 120 invited friends in the cellar of their former school.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bohlmobil.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">16 April 2020</span><span class="tl-event__scope">Duo / Podcast</span></p>
+                        <p class="tl-event__text">Bohlmobil launches. Episode 1, "Perchtoldsdorf – Kalksburg," establishes the mobile podcast format: the brothers talking while travelling through Vienna and its surroundings.</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">February 2021</span><span class="tl-event__scope">Duo / Award</span></p>
+                      <p class="tl-event__text">First Ö3 Podcast Award placement: Bohlmobil reaches No. 20 in the inaugural Austrian ranking.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">23 February 2022</span><span class="tl-event__scope">Duo / Award</span></p>
+                      <p class="tl-event__text">Bohlmobil rises to No. 19 at the second Ö3 Podcast Award.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">June 2022</span><span class="tl-event__scope">Duo / Brand event</span></p>
+                      <p class="tl-event__text">Milka relaunch performance. Dr.Bohl makes a surprise appearance at Milka's major brand-relaunch event in Vienna's Filmquartier.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">29 August 2022</span><span class="tl-event__scope">Paulus / TV</span></p>
+                      <p class="tl-event__text">Television-hosting breakthrough: Paulus presents the first episode of PULS 4's unconventional street-and-fitness quiz Zack, Prack, Quiz.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__row">
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/tiafe-typen.avif" alt="" loading="lazy" />
+                      <div class="tl-event__body">
+                        <p class="tl-event__meta"><span class="tl-event__date">2022</span><span class="tl-event__scope">Duo / Fiction</span></p>
+                        <p class="tl-event__text">Tiafe Typen sitcom pilot. The independently produced pilot expands the Dr.Bohl characters into a scripted fictional format and includes performers such as Max Ortner and Gery Seidl.</p>
+                      </div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2016–2019 -->
+          <div class="tl-year">
+            <button class="tl-year__head" aria-expanded="false" aria-controls="tl-panel-2016-2019">
+              <span class="tl-year__num">2016–2019</span>
+              <span class="tl-year__title">The format is born</span>
+              <span class="tl-year__icon" aria-hidden="true"></span>
+            </button>
+            <div class="tl-year__panel" id="tl-panel-2016-2019">
+              <div class="tl-year__panel-inner">
+                <p class="tl-year__intro">What began in 2016 as a birthday video — with a yellow spatula standing in for a microphone — became a recurring comedy format in 2017. In 2018, "Studenten in den Sommerferien" gave Dr.Bohl its first viral breakthrough.</p>
+                <ol class="tl-events">
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">2016</span><span class="tl-event__scope">Duo</span></p>
+                      <p class="tl-event__text">The prototype birthday video. Paulus wanted to make an unconventional video for his best friend's 20th birthday. Attempts to interview strangers with the now-iconic yellow spatula largely failed, so Paulus played several invented characters himself. The response inspired the brothers to continue the format.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">2017</span><span class="tl-event__scope">Duo</span></p>
+                      <p class="tl-event__text">Regular Dr.Bohl videos begin. The official site identifies 2017 as the year the brothers started regularly translating their costumes, characters and deliberately shallow jokes into video.</p>
+                    </div>
+                  </li>
+                  <li class="tl-event tl-event--major">
+                    <span class="tl-event__marker" aria-hidden="true"></span>
+                    <div class="tl-event__body">
+                      <p class="tl-event__meta"><span class="tl-event__date">2018</span><span class="tl-event__scope">Duo</span></p>
+                      <p class="tl-event__text">First viral breakthrough: the clip "Studenten in den Sommerferien" spreads widely on Facebook, taking the project beyond their immediate circle for the first time.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </article>
 
