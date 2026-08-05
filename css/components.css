@@ -1023,7 +1023,8 @@
 
 /* ── About view (nested inside subpage card 8) ── */
 #subpage-card-contact,
-#subpage-card-musik {
+#subpage-card-musik,
+#subpage-card-schabernack {
 	scrollbar-gutter: stable;
 }
 .about-overlay__header {
