@@ -1986,8 +1986,9 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	height: 100%;
 }
 .acc-item.is-open .acc-toggle__icon {
-	transform: translate(-50%, -50%) rotate(45deg);
+	transform: translate(-50%, -50%) rotate(135deg);
 }
+
 /* Fold/unfold panel — grid-rows proxy by default, a real animated
    height where the browser supports it (interpolate-size). */
 .acc-panel {
