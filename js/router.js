@@ -17,7 +17,9 @@ class Router {
 		const url = new URL(window.location.href);
 		const pathSplit = url.pathname.split('/');
 		const index = this.routes.findIndex((e) => e.path == pathSplit[pathSplit.length - 1]);
-		if (index) this.slider.goTo(index);
+		// findIndex returns -1 for an unknown path, which is truthy — guard
+		// explicitly so a bad deep link lands on Home instead of goTo(-1).
+		if (index > 0) this.slider.goTo(index);
 	}
 
 	_convertToPathName = (label) => label.replace(/\s/g, '-').toLowerCase();
@@ -37,7 +39,6 @@ class Router {
 		const newPath = `${window.location.origin}/drbohl-website${pathComponent}`;
 
 		window.history.replaceState(null, '', newPath);
-		console.log(newPath);
 	}
 }
 

@@ -1,0 +1,42 @@
+[build]
+  publish = "."
+
+# ── Deep links ──────────────────────────────────────────────────────────
+# Same rule as _redirects (kept in both places: _redirects is the portable
+# form, netlify.toml is what Netlify reads first). Serves index.html with a
+# 200 for /kabarett, /musik, … instead of falling through to 404.html.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ── Caching ─────────────────────────────────────────────────────────────
+# Images carry their dimensions in the filename (…__1920x1080.avif) and
+# fonts never change in place, so both are safe to cache immutably: a new
+# file always means a new name.
+[[headers]]
+  for = "/assets/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# CSS/JS are NOT fingerprinted, so they must revalidate — otherwise a
+# deploy would not reach visitors who already have the old file cached.
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

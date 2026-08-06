@@ -1,0 +1,8 @@
+# SPA fallback: every unmatched path serves index.html with a 200 status.
+# Without this the host falls through to 404.html, which renders correctly
+# but responds HTTP 404 — bad for search indexing and rejected outright by
+# some link-preview bots.
+#
+# Real files (assets, css, js) are matched before this rule, so they are
+# unaffected.
+/*  /index.html  200
