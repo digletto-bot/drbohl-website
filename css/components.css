@@ -2855,6 +2855,9 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	.full-screen-menu__stage {
 		max-width: 900px;
 	}
+	.about-overlay__body {
+		max-width: 650px;
+	}
 }
 @media (min-width: 900px) {
 	.full-screen-menu__stage {
