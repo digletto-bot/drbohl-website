@@ -1522,6 +1522,11 @@
 	transform-origin: top right;
 	z-index: 0;
 }
+@media (max-width: 600px) {
+	.be-cover__angle {
+		top: 10%;
+	}
+}
 .be-cover__angle::after {
 	content: '';
 	position: absolute;
