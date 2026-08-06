@@ -34,7 +34,18 @@
       "Bash(mkdir -p titlecards/about titlecards/bohl-entertainment titlecards/bohl100 titlecards/home titlecards/kabarett titlecards/musik titlecards/podcast titlecards/showtime titlecards/social-media)",
       "Bash(mkdir -p subpages/kabarett subpages/musik subpages/showtime)",
       "Bash(git mv *)",
-      "Bash(python3 -)"
+      "Bash(python3 -)",
+      "Bash(npx --yes playwright --version)",
+      "Bash(mkdir -p /c/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/3f469184-4143-4696-af2a-21bb59dac091/scratchpad)",
+      "Read(//c/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/3f469184-4143-4696-af2a-21bb59dac091/scratchpad/**)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(npx playwright *)",
+      "Bash(SCRATCH=\"/c/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/3f469184-4143-4696-af2a-21bb59dac091/scratchpad\"; ls \"$SCRATCH/node_modules\" 2>/dev/null | grep -i playwright; ls \"$SCRATCH\" )",
+      "Read(//c/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/3f469184-4143-4696-af2a-21bb59dac091/scratchpad/node_modules/**)",
+      "Bash(ls \"/c/Users/alexs/AppData/Local/ms-playwright\" 2>/dev/null || echo \"not found\")",
+      "Read(//c/Users/alexs/AppData/Local/ms-playwright/**)",
+      "Bash(mkdir -p /c/Users/alexs/AppData/Local/Temp/claude/c--Dev-projects-drbohl-website-drbohl/3f469184-4143-4696-af2a-21bb59dac091/scratchpad/shots)"
     ]
   }
 }

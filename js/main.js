@@ -361,8 +361,11 @@ initBrochureReveal();
 function initDiscography() {
 	const items = document.querySelectorAll('.disco__item');
 	items.forEach((item) => {
+		const bar = item.querySelector('.disco__bar');
 		const toggle = item.querySelector('.disco__toggle');
-		toggle.addEventListener('click', () => {
+		bar.addEventListener('click', (e) => {
+			// Let the Spotify badge link navigate instead of toggling.
+			if (e.target.closest('.disco__spotify-badge')) return;
 			const open = item.classList.toggle('is-open');
 			toggle.setAttribute('aria-expanded', open);
 
@@ -468,8 +471,9 @@ function resetSubpageState(index) {
    placed open/close controls. ── */
 function initPodcastAccordion() {
 	document.querySelectorAll('.podcast-tile').forEach((tile) => {
+		const head = tile.querySelector('.podcast-tile__head');
 		const toggle = tile.querySelector('.podcast-toggle');
-		toggle.addEventListener('click', () => {
+		head.addEventListener('click', () => {
 			const open = tile.classList.toggle('is-open');
 			toggle.setAttribute('aria-expanded', open);
 		});

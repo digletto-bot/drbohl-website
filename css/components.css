@@ -1907,6 +1907,109 @@ a.shop-product__image:active .shop-product__image-badge--available {
 }
 
 /* ══════════════════════════════════════════════
+   ACCORDION — shared building blocks reused by the Musik (disco),
+   Podcast, Schabernack (tl-year) and Kabarett accordions below.
+   .acc-item carries no styling of its own — it's a state hook so
+   ".acc-item.is-open" can drive the shared toggle-icon/panel rules
+   once instead of once per accordion. Each concrete accordion keeps
+   its own BEM class for JS hooks, layout and whatever genuinely
+   differs (card chrome, bar padding, toggle position/easing).
+   ══════════════════════════════════════════════ */
+.acc-bar {
+	cursor: pointer;
+	transition: background 200ms ease;
+}
+.acc-bar:hover {
+	background: #333232;
+}
+.acc-card {
+	border: 1px solid #2e2e2e;
+	background: #161616;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+.acc-toggle {
+	position: relative;
+	flex: 0 0 auto;
+	width: var(--accordion-btn-size);
+	height: var(--accordion-btn-size);
+	border-radius: 50%;
+	border: 1.9px solid var(--hero-yellow);
+	background: rgba(20, 20, 20, 0.85);
+	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
+	cursor: pointer;
+	transition:
+		background 200ms ease,
+		transform 200ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.acc-toggle:hover {
+	background: rgba(20, 20, 20, 0.5);
+	transform: scale(1.08);
+}
+.acc-toggle:active {
+	transform: scale(0.92);
+}
+/* "+" that rotates into "×" on open. Only Musik/Podcast use this exact
+   glyph technique (rotate one rigid cross) — Schabernack and Kabarett
+   draw/animate their +/× differently and keep their own icon rules. */
+.acc-toggle__icon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 46%;
+	height: 46%;
+	transform: translate(-50%, -50%) rotate(0deg);
+	transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.acc-toggle__icon::before,
+.acc-toggle__icon::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background: var(--hero-yellow);
+	transform: translate(-50%, -50%);
+}
+.acc-toggle__icon::before {
+	width: 100%;
+	height: 2px;
+}
+.acc-toggle__icon::after {
+	width: 2px;
+	height: 100%;
+}
+.acc-item.is-open .acc-toggle__icon {
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+/* Fold/unfold panel — grid-rows proxy by default, a real animated
+   height where the browser supports it (interpolate-size). */
+.acc-panel {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.acc-item.is-open .acc-panel {
+	grid-template-rows: 1fr;
+}
+.acc-panel-inner {
+	min-height: 0;
+	overflow: hidden;
+}
+@supports (interpolate-size: allow-keywords) {
+	.acc-panel {
+		display: block;
+		height: 0;
+		overflow: hidden;
+		interpolate-size: allow-keywords;
+		transition: height 340ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	.acc-item.is-open .acc-panel {
+		height: auto;
+	}
+}
+
+/* ══════════════════════════════════════════════
    MUSIK — Discography accordion
    ══════════════════════════════════════════════ */
 .disco {
@@ -1920,12 +2023,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	text-transform: uppercase;
 	color: var(--hero-yellow);
 	margin: 0 0 16px;
-}
-.disco__item {
-	border: 1px solid #2e2e2e;
-	background: #161616;
-	margin-bottom: 10px;
-	overflow: hidden;
 }
 .disco__bar {
 	position: relative;
@@ -1997,74 +2094,11 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .disco__spotify-badge {
 	height: clamp(38px, 5.7vw, 43px);
 }
-/* Toggle — a "+" that rotates into "×" on open (same idea as
-   .podcast-toggle). Kept as its own button and a sibling of the
+/* Toggle — a "+" that rotates into "×" on open (.acc-toggle /
+   .acc-toggle__icon). Kept as its own button and a sibling of the
    Spotify badge link, not a wrapper around it, so the two never
    fight over the same click. */
-.disco__toggle {
-	position: relative;
-	flex: 0 0 auto;
-	align-self: center;
-	width: var(--accordion-btn-size);
-	height: var(--accordion-btn-size);
-	border-radius: 50%;
-	border: 1.9px solid var(--hero-yellow);
-	background: rgba(20, 20, 20, 0.85);
-	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
-	cursor: pointer;
-	transition:
-		background 200ms ease,
-		transform 200ms ease;
-	-webkit-tap-highlight-color: transparent;
-}
-.disco__toggle:hover {
-	background: rgba(20, 20, 20, 0.5);
-	transform: scale(1.08);
-}
-.disco__toggle:active {
-	transform: scale(0.92);
-}
-.disco__toggle-icon {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 46%;
-	height: 46%;
-	transform: translate(-50%, -50%) rotate(0deg);
-	transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.disco__toggle-icon::before,
-.disco__toggle-icon::after {
-	content: '';
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	background: var(--hero-yellow);
-	transform: translate(-50%, -50%);
-}
-.disco__toggle-icon::before {
-	width: 100%;
-	height: 2px;
-}
-.disco__toggle-icon::after {
-	width: 2px;
-	height: 100%;
-}
-.disco__item.is-open .disco__toggle-icon {
-	transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.disco__panel {
-	display: grid;
-	grid-template-rows: 0fr;
-	transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.disco__item.is-open .disco__panel {
-	grid-template-rows: 1fr;
-}
 .disco__panel-inner {
-	min-height: 0;
-	overflow: hidden;
 	padding: 0 10px;
 }
 .disco__item.is-open .disco__panel-inner {
@@ -2154,6 +2188,10 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
+	/* Bleeds out of the body's own padding so the hover fill below reaches
+	   the tile edges, same as .disco__bar and .tl-year__head. */
+	margin: -16px -16px 0;
+	padding: 16px;
 }
 .podcast-tile__title {
 	font-family: var(--font-family-title);
@@ -2170,60 +2208,9 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	text-box-edge: cap alphabetic;
 }
 /* Toggle button — a single control that stays put in the title row and
-   morphs "+" into "×" by rotating the whole glyph 45°, rather than
-   swapping between two separately-placed controls like the Kabarett
-   banners do. */
-.podcast-toggle {
-	position: relative;
-	flex: 0 0 auto;
-	width: var(--accordion-btn-size);
-	height: var(--accordion-btn-size);
-	border-radius: 50%;
-	border: 1.9px solid var(--hero-yellow);
-	background: rgba(20, 20, 20, 0.85);
-	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
-	cursor: pointer;
-	transition:
-		background 200ms ease,
-		transform 200ms ease;
-	-webkit-tap-highlight-color: transparent;
-}
-.podcast-toggle:hover {
-	background: rgba(20, 20, 20, 0.5);
-	transform: scale(1.08);
-}
-.podcast-toggle:active {
-	transform: scale(0.92);
-}
-.podcast-toggle__icon {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	width: 46%;
-	height: 46%;
-	transform: translate(-50%, -50%) rotate(0deg);
-	transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.podcast-toggle__icon::before,
-.podcast-toggle__icon::after {
-	content: '';
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	background: var(--hero-yellow);
-	transform: translate(-50%, -50%);
-}
-.podcast-toggle__icon::before {
-	width: 100%;
-	height: 2px;
-}
-.podcast-toggle__icon::after {
-	width: 2px;
-	height: 100%;
-}
-.podcast-tile.is-open .podcast-toggle__icon {
-	transform: translate(-50%, -50%) rotate(45deg);
-}
+   morphs "+" into "×" by rotating the whole glyph 45° (.acc-toggle /
+   .acc-toggle__icon), rather than swapping between two separately-placed
+   controls like the Kabarett banners do. */
 .podcast-tile__desc {
 	font-size: var(--fs-body-small);
 	line-height: 1.6;
@@ -2237,22 +2224,10 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	padding: 0;
 }
 
-/* Fold state — same grid-template-rows technique as .kab-panel, kept
-   as separate classes (not a shared .kab-panel) so the podcast tiles
+/* Fold state uses the shared .acc-panel/.acc-panel-inner mechanics.
+   Kept as its own class (not reusing .kab-panel) so the podcast tiles
    don't inherit .kab-show's banner skew/clip-path, which only makes
    sense for the slanted Kabarett banners. */
-.podcast-panel {
-	display: grid;
-	grid-template-rows: 0fr;
-	transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.podcast-tile.is-open .podcast-panel {
-	grid-template-rows: 1fr;
-}
-.podcast-panel-inner {
-	min-height: 0;
-	overflow: hidden;
-}
 .podcast-panel-content {
 	opacity: 0;
 	padding-top: 14px;
@@ -2263,24 +2238,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .podcast-tile.is-open .podcast-panel-content {
 	opacity: 1;
 	transition: opacity 220ms ease 40ms;
-}
-.podcast-tile.is-open .kab-open {
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity 250ms ease;
-}
-@supports (interpolate-size: allow-keywords) {
-	.podcast-panel {
-		display: block;
-		height: 0;
-		overflow: hidden;
-		interpolate-size: allow-keywords;
-		transition: height 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
-	}
-	.podcast-tile.is-open .podcast-panel {
-		height: auto;
-		transition: height 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
-	}
 }
 
 /* ══════════════════════════════════════════════
@@ -2405,34 +2362,32 @@ a.shop-product__image:active .shop-product__image-badge--available {
 }
 
 /* Open control: a "+" floating over the bottom-center of the image
-   itself (not a separate bar below it). Doubles as the close control —
-   staying in place and rotating 45deg to turn the "+" into an "×"
-   while the show is open. */
+   itself (not a separate bar below it). Doubles as the close control,
+   rotating in place while the show is open. .acc-toggle supplies the
+   shared circular badge look; everything below is the positioning-
+   over-a-photo + custom rotate/easing that only Kabarett needs. */
 .kab-open {
 	position: absolute;
 	left: 50%;
 	bottom: 10%;
 	z-index: 2;
 	transform: translateX(-50%);
-	width: var(--accordion-btn-size);
-	height: var(--accordion-btn-size);
-	padding: 0;
-	border-radius: 50%;
-	border: 1.9px solid var(--hero-yellow);
-	background: rgba(20, 20, 20, 0.85);
-	box-shadow: 0 0 10px rgba(242, 193, 46, 0.3);
-	cursor: pointer;
 	transition:
 		background 200ms ease,
-		transform 200ms ease;
-	-webkit-tap-highlight-color: transparent;
+		transform 200ms ease-in-out;
 }
 .kab-open:hover {
 	background: rgba(30, 30, 30, 0.85);
 	transform: translateX(-50%) scale(1.08);
 }
+.kab-open:active {
+	transform: translateX(-50%) scale(0.92);
+}
 .kab-show.is-open .kab-open {
-	transform: translateX(-50%) rotate(45deg);
+	transform: translateX(-50%) rotate(135deg);
+}
+.kab-show.is-open .kab-open:hover {
+	transform: translateX(-50%) rotate(135deg) scale(1.08);
 }
 .kab-open__icon {
 	position: absolute;
@@ -2468,8 +2423,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
    so its transformed paint can be rasterized once and reused across
    frames instead of being redone at a new size every time. */
 .kab-panel-inner {
-	min-height: 0;
-	overflow: hidden;
 	padding: 5% var(--side-pad) 5%;
 }
 .kab-panel-content {
@@ -2493,33 +2446,15 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	margin: 0;
 }
 
+/* Uses the shared .acc-panel grid-rows/interpolate-size mechanics —
+   this only adds the extra beat .kab-panel-content's fade-out above is
+   timed against, so the text is fully gone before the row collapses. */
 .kab-panel {
-	display: grid;
-	grid-template-rows: 0fr;
-	transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
+	transition-delay: 110ms;
 }
-.kab-show.is-open .kab-panel {
-	grid-template-rows: 1fr;
-}
-
-/* Progressive enhancement: where the browser can animate a real
-   `height` to/from the `auto` keyword (interpolate-size), use that
-   directly instead of the grid-template-rows/fr proxy above — one
-   fewer layer of indirection between the transition and the property
-   it's actually changing. Falls back to the grid-rows technique
-   above everywhere else (@supports gates on the browser recognizing the
-   property at all, not on it doing anything at runtime). */
 @supports (interpolate-size: allow-keywords) {
 	.kab-panel {
-		display: block;
-		height: 0;
-		overflow: hidden;
-		interpolate-size: allow-keywords;
-		transition: height 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
-	}
-	.kab-show.is-open .kab-panel {
-		height: auto;
-		transition: height 340ms cubic-bezier(0.22, 1, 0.36, 1) 110ms;
+		transition-delay: 110ms;
 	}
 }
 
@@ -2751,34 +2686,23 @@ a.shop-product__image:active .shop-product__image-badge--available {
    SCHABERNACK — Timeline accordion
    One .tl-year per year (or year-range) block, latest first, each
    toggled independently (no "close others") by its own full-width
-   header button — same +/× icon rotation as .podcast-toggle. Events
-   inside render as dots on a vertical rail, with bigger glowing dots
-   for the milestone (★) events vs. plain grey dots for minor (•) ones.
+   header button. Events inside render as dots on a vertical rail,
+   with bigger glowing dots for the milestone (★) events vs. plain
+   grey dots for minor (•) ones.
    ══════════════════════════════════════════════ */
 .tl {
 	padding: 8px var(--side-pad) 56px;
-}
-.tl-year {
-	border: 1px solid #2e2e2e;
-	background: #161616;
-	margin-bottom: 10px;
-	overflow: hidden;
 }
 .tl-year__head {
 	display: flex;
 	align-items: center;
 	gap: 14px;
 	width: 100%;
-	padding: 14px 14px 14px 16px;
+	padding: 10px 14px 10px 16px;
 	background: none;
 	border: 0;
-	cursor: pointer;
 	text-align: left;
 	color: var(--light-text);
-	transition: background 200ms ease;
-}
-.tl-year__head:hover {
-	background: #000000;
 }
 .tl-year__num {
 	font-family: var(--font-family-title);
@@ -2797,17 +2721,12 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	color: var(--caption-grey);
 	min-width: 0;
 }
-/* "+" that rotates into "×" on open — same idea as .podcast-toggle__icon. */
-.tl-year__icon {
-	position: relative;
-	flex: 0 0 auto;
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	border: 1.9px solid var(--hero-yellow);
-	background: rgba(20, 20, 20, 0.85);
-	transition: transform 200ms ease;
-}
+/* Badge chrome comes from .acc-toggle. The "+"/"×" glyph itself is
+   bespoke here (independently animated before/after bars) rather than
+   the shared .acc-toggle__icon's single-rotate technique, and this
+   rule makes it react to hovering anywhere on the bar, not just the
+   icon itself — .tl-year__icon is decorative, the clickable element is
+   the whole .tl-year__head button. */
 .tl-year__head:hover .tl-year__icon {
 	transform: scale(1.08);
 }
@@ -2835,17 +2754,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .tl-year.is-open .tl-year__icon::before {
 	transform: translate(-50%, -50%) rotate(180deg);
 }
-.tl-year__panel {
-	display: grid;
-	grid-template-rows: 0fr;
-	transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.tl-year.is-open .tl-year__panel {
-	grid-template-rows: 1fr;
-}
 .tl-year__panel-inner {
-	min-height: 0;
-	overflow: hidden;
 	padding: 0 16px;
 }
 .tl-year.is-open .tl-year__panel-inner {
