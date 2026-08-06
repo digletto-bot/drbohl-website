@@ -238,7 +238,7 @@ function buildAboutContent() {
 	// (initAboutReveal) animates each <p> as one block via
 	// IntersectionObserver + CSS transitions, so there is nothing here
 	// to stagger at the word level.
-	let html = `<div class="about-lead-mask"><p class="about-overlay__lead about-reveal">${ABOUT_LEAD}</p></div><span class="about-lead-rule"></span>`;
+	let html = `<div class="about-lead-mask"><p class="about-overlay__lead about-reveal">${ABOUT_LEAD}</p></div><span class="about-lead-rule" aria-hidden="true"></span>`;
 	ABOUT_PARAGRAPHS.forEach((para) => {
 		html += `<p class="about-reveal">${para}</p>`;
 	});
