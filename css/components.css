@@ -2318,8 +2318,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	object-fit: cover;
 	display: block;
 }
-.kab-banner__img:nth-child(1) {
-	object-position: bottom;
+.kab-show:nth-child(2) .kab-banner img {
+	object-position: 50% 70%;
 }
 .kab-banner__shade {
 	position: absolute;
