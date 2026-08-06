@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
   <meta name="description" content="Dr.Bohl — Kabarettist, Entertainer, Comedian." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Preload only the critical above-the-fold font: DrukCond, which the
+       first-paint headline needs synchronously for fitText() to size it
+       correctly. The two NHaas weights are body-text and lower priority,
+       so they load in the normal CSS discovery order instead — preloading
+       every weight would compete with the font that actually blocks the
+       first visible content. -->
+  <link rel="preload" href="assets/fonts/DrukCond-Super.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Open Graph / Twitter card. Image and text reuse existing approved
+       assets/copy only — no new content. og:url and canonical are left as
+       placeholders: the final production domain was not provided, and
+       hard-coding a guess would be worse than omitting it. Fill in
+       <PRODUCTION_DOMAIN> before deploying to production. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Dr.Bohl" />
+  <meta property="og:description" content="Dr.Bohl — Kabarettist, Entertainer, Comedian." />
+  <meta property="og:image" content="https://<PRODUCTION_DOMAIN>/assets/images/meta/og-home.jpg" />
+  <meta property="og:image:width" content="1920" />
+  <meta property="og:image:height" content="1080" />
+  <!-- <link rel="canonical" href="https://<PRODUCTION_DOMAIN>/" /> -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dr.Bohl" />
+  <meta name="twitter:description" content="Dr.Bohl — Kabarettist, Entertainer, Comedian." />
+  <meta name="twitter:image" content="https://<PRODUCTION_DOMAIN>/assets/images/meta/og-home.jpg" />
+
   <title>Dr.Bohl</title>
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
@@ -72,7 +99,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio > 2)" srcset="assets/images/titlecards/home/title-card-home__3440x1440.avif" />
         <source media="(min-width: 2560px) and (aspect-ratio > 1)" srcset="assets/images/titlecards/home/title-card-home__2560x1440.avif" />
         <source media="(min-width: 600px) and (aspect-ratio > 1)" srcset="assets/images/titlecards/home/title-card-home__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/home/title-card-home__1080x1920.avif" alt="Dr.Bohl" loading="eager">
+        <img class="title-card__image" src="assets/images/titlecards/home/title-card-home__1080x1920.avif" alt="Dr.Bohl" loading="eager" fetchpriority="high" decoding="sync">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -98,7 +125,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/kabarett/title-card-kabarett__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/kabarett/title-card-kabarett__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/kabarett/title-card-kabarett__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/kabarett/title-card-kabarett__1080x1920.avif" alt="Kabarett" loading="lazy">
+        <img class="title-card__image" src="assets/images/titlecards/kabarett/title-card-kabarett__1080x1920.avif" alt="Kabarett" loading="lazy" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -120,7 +147,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/social-media/title-card-social-media__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/social-media/title-card-social-media__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/social-media/title-card-social-media__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/social-media/title-card-social-media__1080x1920.avif" alt="Social Media" loading="lazy" style="object-position:center center">
+        <img class="title-card__image" src="assets/images/titlecards/social-media/title-card-social-media__1080x1920.avif" alt="Social Media" loading="lazy" style="object-position:center center" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content" style="justify-content: start;">
@@ -149,7 +176,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/showtime/title-card-showtime__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/showtime/title-card-showtime__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/showtime/title-card-showtime__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/showtime/title-card-showtime__1080x1920.avif" alt="Showtime" loading="lazy">
+        <img class="title-card__image" src="assets/images/titlecards/showtime/title-card-showtime__1080x1920.avif" alt="Showtime" loading="lazy" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -171,7 +198,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio > 2)" srcset="assets/images/titlecards/musik/title-card-musik__3440x1440.avif" />
         <source media="(min-width: 2560px) and (aspect-ratio > 1)" srcset="assets/images/titlecards/musik/title-card-musik__2560x1440.avif" />
         <source media="(min-width: 600px) and (aspect-ratio > 1)" srcset="assets/images/titlecards/musik/title-card-musik__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/musik/title-card-musik__1080x1920.avif" alt="Musik" loading="lazy">
+        <img class="title-card__image" src="assets/images/titlecards/musik/title-card-musik__1080x1920.avif" alt="Musik" loading="lazy" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -193,7 +220,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/podcast/title-card-podcast__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/podcast/title-card-podcast__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/podcast/title-card-podcast__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/podcast/title-card-podcast__1080x1920.avif" alt="Podcast" loading="lazy">
+        <img class="title-card__image" src="assets/images/titlecards/podcast/title-card-podcast__1080x1920.avif" alt="Podcast" loading="lazy" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -215,7 +242,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/bohl100/title-card-bohl100__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/bohl100/title-card-bohl100__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/bohl100/title-card-bohl100__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/bohl100/title-card-bohl100__1080x1920.avif" alt="Shop" loading="lazy" style="object-position:center center">
+        <img class="title-card__image" src="assets/images/titlecards/bohl100/title-card-bohl100__1080x1920.avif" alt="Shop" loading="lazy" style="object-position:center center" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -237,7 +264,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__1080x1920.avif" alt="Bohl Entertainment" loading="lazy">
+        <img class="title-card__image" src="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__1080x1920.avif" alt="Bohl Entertainment" loading="lazy" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -259,7 +286,7 @@
         <source media="(min-width: 3840px)" srcset="assets/images/titlecards/about/title-card-about__3840x2160.avif" />
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/about/title-card-about__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/about/title-card-about__2560x1440.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/about/title-card-about__1920x1080.avif" alt="Contact" loading="lazy">
+        <img class="title-card__image" src="assets/images/titlecards/about/title-card-about__1920x1080.avif" alt="Contact" loading="lazy" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <button class="hero-cutout-button" type="button" aria-label="Über Dr.Bohl"></button>
@@ -270,7 +297,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/about/title-card-about-cutout__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/about/title-card-about-cutout__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/about/title-card-about-cutout__1920x1080.avif" />
-        <img class="hero-cutout-image" src="assets/images/titlecards/about/title-card-about-cutout__1080x1920.avif" alt="" loading="lazy">
+        <img class="hero-cutout-image" src="assets/images/titlecards/about/title-card-about-cutout__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
         </div>
         <picture>
@@ -278,7 +305,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/about/title-card-about-cutout-text__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/about/title-card-about-cutout-text__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/about/title-card-about-cutout-text__1920x1080.avif" />
-        <img class="hero-cutout-text-image" src="assets/images/titlecards/about/title-card-about-cutout-text__1080x1920.avif" alt="" loading="lazy">
+        <img class="hero-cutout-text-image" src="assets/images/titlecards/about/title-card-about-cutout-text__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       </div>
       <div class="title-card__content">
@@ -300,7 +327,7 @@
         <source media="(min-width: 3440px) and (aspect-ratio >= 2)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__3440x1440.avif" />
         <source media="(min-width: 2560px)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__2560x1440.avif" />
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__1920x1080.avif" />
-        <img class="title-card__image" src="assets/images/titlecards/schabernack/title-card-schabernack__1080x1920.avif" alt="Schabernack" loading="lazy">
+        <img class="title-card__image" src="assets/images/titlecards/schabernack/title-card-schabernack__1080x1920.avif" alt="Schabernack" loading="lazy" decoding="async">
       </picture>
       <div class="title-card__overlay"></div>
       <div class="title-card__content">
@@ -340,7 +367,7 @@
     <button class="menu-card is-active" data-index="0">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/home/title-card-home__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/home/title-card-home__1080x1920.avif" alt="" loading="lazy">
+        <img class="menu-card__image" src="assets/images/titlecards/home/title-card-home__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Home</span>
@@ -350,7 +377,7 @@
     <button class="menu-card" data-index="1">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/kabarett/title-card-kabarett__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/kabarett/title-card-kabarett__1080x1920.avif" alt="" loading="lazy">
+        <img class="menu-card__image" src="assets/images/titlecards/kabarett/title-card-kabarett__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Kabarett</span>
@@ -360,7 +387,7 @@
     <button class="menu-card" data-index="2">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/social-media/title-card-social-media__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/social-media/title-card-social-media__1080x1920.avif" alt="" loading="lazy" style="object-position:center center">
+        <img class="menu-card__image" src="assets/images/titlecards/social-media/title-card-social-media__1080x1920.avif" alt="" loading="lazy" style="object-position:center center" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Social Media</span>
@@ -370,7 +397,7 @@
     <button class="menu-card" data-index="3">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/showtime/title-card-showtime__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/showtime/title-card-showtime__1080x1920.avif" alt="" loading="lazy">
+        <img class="menu-card__image" src="assets/images/titlecards/showtime/title-card-showtime__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Showtime</span>
@@ -380,7 +407,7 @@
     <button class="menu-card" data-index="4">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/musik/title-card-musik__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/musik/title-card-musik__1080x1920.avif" alt="" loading="lazy">
+        <img class="menu-card__image" src="assets/images/titlecards/musik/title-card-musik__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Musik</span>
@@ -390,7 +417,7 @@
     <button class="menu-card" data-index="5" style="--dim: 0.3">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/podcast/title-card-podcast__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/podcast/title-card-podcast__1080x1920.avif" alt="" loading="lazy">
+        <img class="menu-card__image" src="assets/images/titlecards/podcast/title-card-podcast__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Podcast</span>
@@ -400,7 +427,7 @@
     <button class="menu-card" data-index="6"  style="--dim: 0.2">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/bohl100/title-card-bohl100__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/bohl100/title-card-bohl100__1080x1920.avif" alt="" loading="lazy" style="object-position:center center">
+        <img class="menu-card__image" src="assets/images/titlecards/bohl100/title-card-bohl100__1080x1920.avif" alt="" loading="lazy" style="object-position:center center" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Shop</span>
@@ -410,7 +437,7 @@
     <button class="menu-card" data-index="7" style="--dim: 0.3">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__1080x1920.avif" alt="" loading="lazy">
+        <img class="menu-card__image" src="assets/images/titlecards/bohl-entertainment/title-card-bohl-entertainment__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Bohl Entertainment</span>
@@ -418,7 +445,7 @@
       <span class="menu-card__number">08</span>
     </button>
     <button class="menu-card" data-index="8">
-      <img class="menu-card__image" src="assets/images/titlecards/about/title-card-about-merged__1920x1080.avif" alt="" loading="lazy">
+      <img class="menu-card__image" src="assets/images/titlecards/about/title-card-about-merged__1920x1080.avif" alt="" loading="lazy" decoding="async">
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Contact</span>
       <span class="menu-card__label-big">Contact</span>
@@ -427,7 +454,7 @@
     <button class="menu-card" data-index="9" style="--dim: 0.3">
       <picture>
         <source media="(min-width: 600px)" srcset="assets/images/titlecards/schabernack/title-card-schabernack__1920x1080.avif" />
-        <img class="menu-card__image" src="assets/images/titlecards/schabernack/title-card-schabernack__1080x1920.avif" alt="" loading="lazy">
+        <img class="menu-card__image" src="assets/images/titlecards/schabernack/title-card-schabernack__1080x1920.avif" alt="" loading="lazy" decoding="async">
       </picture>
       <div class="menu-card__overlay"></div>
       <span class="menu-card__label">Schabernack</span>
@@ -497,7 +524,7 @@
           <!-- SOLO -->
           <div class="kab-show">
             <div class="kab-banner">
-              <img class="kab-banner__img" src="assets/images/subpages/kabarett/kabarett-solo__2400x1143.avif" alt="" loading="lazy" draggable="false" />
+              <img class="kab-banner__img" src="assets/images/subpages/kabarett/kabarett-solo__2400x1143.avif" alt="" loading="lazy" draggable="false" / decoding="async">
               <div class="kab-banner__shade"></div>
               <div class="kab-banner__content" data-fs="large">
                 <span class="kab-banner__title" data-fs="large">Solo</span>
@@ -522,7 +549,7 @@
           <!-- ANABOHLIKA -->
           <div class="kab-show">
             <div class="kab-banner">
-              <img class="kab-banner__img" src="assets/images/subpages/kabarett/subpage-kabarett-anabohlika__1920x1080.avif" alt="" loading="lazy" draggable="false" />
+              <img class="kab-banner__img" src="assets/images/subpages/kabarett/subpage-kabarett-anabohlika__1920x1080.avif" alt="" loading="lazy" draggable="false" / decoding="async">
               <div class="kab-banner__shade"></div>
               <div class="kab-banner__content">
                 <span class="kab-banner__title">Anabohlika</span>
@@ -544,7 +571,7 @@
           <!-- DR.BOHL - LIVE! -->
           <div class="kab-show">
             <div class="kab-banner">
-              <img class="kab-banner__img" src="assets/images/subpages/kabarett/kabarett-dr-bohl-live__2400x1143.avif" alt="" loading="lazy" draggable="false" />
+              <img class="kab-banner__img" src="assets/images/subpages/kabarett/kabarett-dr-bohl-live__2400x1143.avif" alt="" loading="lazy" draggable="false" / decoding="async">
               <div class="kab-banner__shade"></div>
               <div class="kab-banner__content">
                 <span class="kab-banner__title">Dr.Bohl– Live!</span>
@@ -578,8 +605,8 @@
 
         <section class="kab-crowd">
           <div class="kab-crowd-image-wrapper">
-            <img class="kab-crowd__img" src="assets/images/subpages/kabarett/subpage-kabarett-newsletter__1920x1080.avif" alt="" loading="lazy" draggable="false" />
-            <img class="kab-crowd__img" src="assets/images/subpages/kabarett/subpage-kabarett-newsletter-cutout__1920x1080.avif" alt="" loading="lazy" draggable="false" />
+            <img class="kab-crowd__img" src="assets/images/subpages/kabarett/subpage-kabarett-newsletter__1920x1080.avif" alt="" loading="lazy" draggable="false" / decoding="async">
+            <img class="kab-crowd__img" src="assets/images/subpages/kabarett/subpage-kabarett-newsletter-cutout__1920x1080.avif" alt="" loading="lazy" draggable="false" / decoding="async">
           </div>
           <div class="kab-crowd__shade"></div>
           <blockquote class="kab-testimonial">
@@ -600,7 +627,7 @@
             <source media="(min-width: 3840px)" srcset="assets/images/subpages/social-media/subpage-social-media-main__3840x2160.avif" />
             <source media="(min-width: 2560px)" srcset="assets/images/subpages/social-media/subpage-social-media-main__2560x1440.avif" />
             <source media="(min-width: 600px)" srcset="assets/images/subpages/social-media/subpage-social-media-main__1920x1080.avif" />
-            <img class="sm-feature__img" src="assets/images/subpages/social-media/subpage-social-media-main__1080x1920.avif" alt="Dr.Bohl auf Social Media" loading="lazy" draggable="false"/>
+            <img class="sm-feature__img" src="assets/images/subpages/social-media/subpage-social-media-main__1080x1920.avif" alt="Dr.Bohl auf Social Media" loading="lazy" draggable="false"/ decoding="async">
           </picture>
           <div class="sm-feature__overlay">
             <div class="social-icons sm-feature__icons">
@@ -624,25 +651,25 @@
         <div class="subpage-overlay__title">Showtime</div>
         <div class="show-grid">
           <div class="show-card">
-            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-dancing-stars.avif" alt="" loading="lazy" draggable="false" />
+            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-dancing-stars.avif" alt="" loading="lazy" draggable="false" / decoding="async">
             <div class="show-card__shade"></div>
             <button type="button" class="ghost-button show-card__cta">Stream Now</button>
             <span class="show-card__title">Dancing Stars</span>
           </div>
           <div class="show-card">
-            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-tiafe-typen.avif" alt="" loading="lazy" draggable="false" />
+            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-tiafe-typen.avif" alt="" loading="lazy" draggable="false" / decoding="async">
             <div class="show-card__shade"></div>
             <button type="button" class="ghost-button show-card__cta">Stream Now</button>
             <span class="show-card__title">Tiafe Typen</span>
           </div>
           <div class="show-card">
-            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-was-gibt-es-neues.avif" alt="" loading="lazy" draggable="false" />
+            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-was-gibt-es-neues.avif" alt="" loading="lazy" draggable="false" / decoding="async">
             <div class="show-card__shade"></div>
             <button type="button" class="ghost-button show-card__cta">Stream Now</button>
             <span class="show-card__title">Was gibt's Neues?</span>
           </div>
           <div class="show-card">
-            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-willkommen-oesterreich.avif" alt="" loading="lazy" draggable="false" />
+            <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-willkommen-oesterreich.avif" alt="" loading="lazy" draggable="false" / decoding="async">
             <div class="show-card__shade"></div>
             <button type="button" class="ghost-button show-card__cta">Stream Now</button>
             <span class="show-card__title">Willkommen Österreich</span>
@@ -660,13 +687,13 @@
           <p class="disco__label">Discography</p>
           <div class="disco__item" data-yt="FZHPy-TDQGs" data-sp="3ygDjNYM0iOebN99xnmcLf">
             <div class="disco__bar">
-              <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/musik/subpage-musik-schnitzel__1080x1080.avif" alt="" loading="lazy" draggable="false" />
+              <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/musik/subpage-musik-schnitzel__1080x1080.avif" alt="" loading="lazy" draggable="false" / decoding="async">
               <div class="disco__text">
                 <div class="disco__line">
                   <span class="disco__title">Schnitzel <em>(all night long)</em></span>
                 </div>
                 <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/track/3ygDjNYM0iOebN99xnmcLf" target="_blank" rel="noopener" aria-label="Schnitzel (all night long) auf Spotify hören" draggable="false">
-                  <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                  <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                 </a>
               </div>
               <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-3ygDjNYM0iOebN99xnmcLf" aria-label="Mehr zu Schnitzel (all night long)">
@@ -683,13 +710,13 @@
           </div>
           <div class="disco__item" data-yt="iA3T5BsK59w" data-sp="7w4lRwN9v1mMw5TXU5Z208">
             <div class="disco__bar">
-              <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/musik/subpage-musik-weisser-spritzer__1080x1080.avif" alt="" loading="lazy" draggable="false" />
+              <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/musik/subpage-musik-weisser-spritzer__1080x1080.avif" alt="" loading="lazy" draggable="false" / decoding="async">
               <div class="disco__text">
                 <div class="disco__line">
                   <span class="disco__title">Weisser Spritzer</span>
                 </div>
                 <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/track/7w4lRwN9v1mMw5TXU5Z208" target="_blank" rel="noopener" aria-label="Weisser Spritzer auf Spotify hören" draggable="false">
-                  <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                  <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                 </a>
               </div>
               <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-7w4lRwN9v1mMw5TXU5Z208" aria-label="Mehr zu Weisser Spritzer">
@@ -706,13 +733,13 @@
           </div>
           <div class="disco__item" data-yt="xkx6l-3OYb8" data-sp="5fKVrbQJzzMlQba234Y5JP">
             <div class="disco__bar">
-              <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/musik/subpage-musik-du-dummer__1080x1080.avif" alt="" loading="lazy" draggable="false" />
+              <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/musik/subpage-musik-du-dummer__1080x1080.avif" alt="" loading="lazy" draggable="false" / decoding="async">
               <div class="disco__text">
                 <div class="disco__line">
                   <span class="disco__title">Du Dummer</span>
                 </div>
                 <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/track/5fKVrbQJzzMlQba234Y5JP" target="_blank" rel="noopener" aria-label="Du Dummer auf Spotify hören" draggable="false">
-                  <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                  <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                 </a>
               </div>
               <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-5fKVrbQJzzMlQba234Y5JP" aria-label="Mehr zu Du Dummer">
@@ -741,7 +768,7 @@
           <!-- BOHLMOBIL -->
           <div class="podcast-tile" id="podcast-tile-bohlmobil">
             <div class="podcast-tile__art">
-              <img src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="Bohlmobil Cover" loading="lazy" draggable="false" />
+              <img src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="Bohlmobil Cover" loading="lazy" draggable="false" / decoding="async">
             </div>
             <div class="podcast-tile__body">
               <div class="podcast-tile__head">
@@ -758,14 +785,14 @@
                     <p class="disco__label">Neueste Folgen</p>
                     <div class="disco__item" data-sp="2oU2uuehyyZjc5NUJI3Dio" data-sp-kind="episode">
                       <div class="disco__bar">
-                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="" loading="lazy" draggable="false" />
+                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
                           <div class="disco__line">
                             <span class="disco__title">Mondsee <em>#93</em></span>
                             <span class="disco__year">17.07.</span>
                           </div>
                           <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/episode/2oU2uuehyyZjc5NUJI3Dio" target="_blank" rel="noopener" aria-label="Mondsee #93 auf Spotify hören" draggable="false">
-                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                           </a>
                         </div>
                         <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-2oU2uuehyyZjc5NUJI3Dio" aria-label="Mehr zu Mondsee #93">
@@ -780,14 +807,14 @@
                     </div>
                     <div class="disco__item" data-sp="7KjHfXgsys83liWMpydOpG" data-sp-kind="episode">
                       <div class="disco__bar">
-                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="" loading="lazy" draggable="false" />
+                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
                           <div class="disco__line">
                             <span class="disco__title">Nachts im Autohaus <em>#92</em></span>
                             <span class="disco__year">15.06.</span>
                           </div>
                           <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/episode/7KjHfXgsys83liWMpydOpG" target="_blank" rel="noopener" aria-label="Nachts im Autohaus #92 auf Spotify hören" draggable="false">
-                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                           </a>
                         </div>
                         <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-7KjHfXgsys83liWMpydOpG" aria-label="Mehr zu Nachts im Autohaus #92">
@@ -802,14 +829,14 @@
                     </div>
                     <div class="disco__item" data-sp="6YXqGOvKHd52peNt8b7Bu2" data-sp-kind="episode">
                       <div class="disco__bar">
-                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="" loading="lazy" draggable="false" />
+                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a01361357bfeb502e3375f36c" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
                           <div class="disco__line">
                             <span class="disco__title">Akademisches Gymnasium <em>#91</em></span>
                             <span class="disco__year">18.05.</span>
                           </div>
                           <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/episode/6YXqGOvKHd52peNt8b7Bu2" target="_blank" rel="noopener" aria-label="Akademisches Gymnasium #91 auf Spotify hören" draggable="false">
-                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                           </a>
                         </div>
                         <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-6YXqGOvKHd52peNt8b7Bu2" aria-label="Mehr zu Akademisches Gymnasium #91">
@@ -832,7 +859,7 @@
           <!-- BOHL FRAGT -->
           <div class="podcast-tile" id="podcast-tile-bohlfragt">
             <div class="podcast-tile__art">
-              <img src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="Bohl Fragt Cover" loading="lazy" draggable="false" />
+              <img src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="Bohl Fragt Cover" loading="lazy" draggable="false" / decoding="async">
             </div>
             <div class="podcast-tile__body">
               <div class="podcast-tile__head">
@@ -846,20 +873,20 @@
                 <div class="podcast-panel-content">
                   <p class="podcast-tile__desc">Was gibt's Schöneres als a gmiatliche Melange und a bissl Schmäh? Bohl bittet Promis zum Interview.</p>
                   <a class="spotify-badge podcast-tile__cta" href="https://open.spotify.com/show/1SdGEJdyYuY9AlXpyHKerq" target="_blank" rel="noopener" aria-label="Auf Spotify hören" draggable="false">
-                    <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                    <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                   </a>
                   <div class="disco podcast-tile__list">
                     <p class="disco__label">Neueste Folgen</p>
                     <div class="disco__item" data-sp="28eB8yIcbI85UpMZ13Fd9x" data-sp-kind="episode">
                       <div class="disco__bar">
-                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="" loading="lazy" draggable="false" />
+                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
                           <div class="disco__line">
                             <span class="disco__title">Andi Babler <em>Interview</em></span>
                             <span class="disco__year">19.09.</span>
                           </div>
                           <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/episode/28eB8yIcbI85UpMZ13Fd9x" target="_blank" rel="noopener" aria-label="Andi Babler Interview auf Spotify hören" draggable="false">
-                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                           </a>
                         </div>
                         <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-28eB8yIcbI85UpMZ13Fd9x" aria-label="Mehr zu Andi Babler Interview">
@@ -874,14 +901,14 @@
                     </div>
                     <div class="disco__item" data-sp="1gwTfFk2gxqjND41dVDf8d" data-sp-kind="episode">
                       <div class="disco__bar">
-                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="" loading="lazy" draggable="false" />
+                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
                           <div class="disco__line">
                             <span class="disco__title">Beate Meinl-Reisinger <em>Interview</em></span>
                             <span class="disco__year">19.09.</span>
                           </div>
                           <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/episode/1gwTfFk2gxqjND41dVDf8d" target="_blank" rel="noopener" aria-label="Beate Meinl-Reisinger Interview auf Spotify hören" draggable="false">
-                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                           </a>
                         </div>
                         <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-1gwTfFk2gxqjND41dVDf8d" aria-label="Mehr zu Beate Meinl-Reisinger Interview">
@@ -896,14 +923,14 @@
                     </div>
                     <div class="disco__item" data-sp="0ylORNkjoz3rr7PZG0wDH6" data-sp-kind="episode">
                       <div class="disco__bar">
-                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="" loading="lazy" draggable="false" />
+                        <img class="disco__thumb disco__thumb--square" src="https://i.scdn.co/image/ab6765630000ba8a24cb057f63a3bf96382145ea" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
                           <div class="disco__line">
                             <span class="disco__title">Werner Kogler <em>Interview</em></span>
                             <span class="disco__year">19.09.</span>
                           </div>
                           <a class="spotify-badge disco__spotify-badge" href="https://open.spotify.com/episode/0ylORNkjoz3rr7PZG0wDH6" target="_blank" rel="noopener" aria-label="Werner Kogler Interview auf Spotify hören" draggable="false">
-                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" />
+                            <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                           </a>
                         </div>
                         <button class="disco__toggle" aria-expanded="false" aria-controls="disco-panel-0ylORNkjoz3rr7PZG0wDH6" aria-label="Mehr zu Werner Kogler Interview">
@@ -936,7 +963,7 @@
           <!-- Bohl2/100 — BOHL LITER -->
           <div class="shop-product">
             <a class="shop-product__image" href="https://www.weinco.at/inspiration/dr-bohl-liter-50001" target="_blank" rel="noopener" draggable="false">
-              <img src="assets/images/subpages/bohl100/shop-bohl-liter__1008x1008.avif" alt="Bohl Liter" loading="lazy" draggable="false" />
+              <img src="assets/images/subpages/bohl100/shop-bohl-liter__1008x1008.avif" alt="Bohl Liter" loading="lazy" draggable="false" / decoding="async">
               <span class="shop-product__image-badge shop-product__image-badge--available">Jetzt shoppen</span>
             </a>
             <div class="shop-product__body">
@@ -949,7 +976,7 @@
           <!-- ANABOHLIKA — Shirts -->
           <div class="shop-product">
             <div class="shop-product__image shop-product__image--limited">
-              <img src="assets/images/subpages/bohl100/shop-anabohlika-shirt__1000x1000.avif" alt="Anabohlika Shirt" loading="lazy" draggable="false" />
+              <img src="assets/images/subpages/bohl100/shop-anabohlika-shirt__1000x1000.avif" alt="Anabohlika Shirt" loading="lazy" draggable="false" / decoding="async">
               <span class="shop-product__image-badge shop-product__image-badge--limited">Bei Auftritten erhältlich</span>
             </div>
             <div class="shop-product__body">
@@ -962,7 +989,7 @@
           <!-- Bohl1/100 — Shirt GRUPPO FKK DONAUINSEL -->
           <div class="shop-product">
             <div class="shop-product__image shop-product__image--soldout">
-              <img src="assets/images/subpages/bohl100/shop-donauinsel-shirt__1008x1008.avif" alt="GRUPPO FKK DONAUINSEL Shirt" loading="lazy" draggable="false" />
+              <img src="assets/images/subpages/bohl100/shop-donauinsel-shirt__1008x1008.avif" alt="GRUPPO FKK DONAUINSEL Shirt" loading="lazy" draggable="false" / decoding="async">
               <span class="shop-product__image-overlay"></span>
               <span class="shop-product__image-badge shop-product__image-badge--soldout">Ausverkauft</span>
             </div>
@@ -976,7 +1003,7 @@
           <!-- Bohl3/100 — 'BIST DU DEPPAT' Cap -->
           <div class="shop-product">
             <div class="shop-product__image shop-product__image--soldout">
-              <img src="assets/images/subpages/bohl100/shop-deppat-cap__1008x1260.avif" alt="Bist Du Deppat Cap" loading="lazy" draggable="false" />
+              <img src="assets/images/subpages/bohl100/shop-deppat-cap__1008x1260.avif" alt="Bist Du Deppat Cap" loading="lazy" draggable="false" / decoding="async">
               <span class="shop-product__image-overlay"></span>
               <span class="shop-product__image-badge shop-product__image-badge--soldout">Ausverkauft</span>
             </div>
@@ -999,7 +1026,7 @@
           <div class="be-cover__inner">
             <p class="be-label be-reveal">Entertainment · Produktion · Kreation</p>
             <h1 class="be-h1 be-reveal">Bohl<br>Entertainment</h1>
-            <img class="be-cover__image be-reveal" src="assets/images/brochure/hero-duo__1600x1000.avif" alt="Bohl Entertainment Gründerduo" loading="lazy" draggable="false" />
+            <img class="be-cover__image be-reveal" src="assets/images/brochure/hero-duo__1600x1000.avif" alt="Bohl Entertainment Gründerduo" loading="lazy" draggable="false" / decoding="async">
             <p class="be-cover__sub be-reveal">Wir produzieren Unterhaltung, die bleibt.<br>Von der Idee bis zur Bühne — alles aus einer Hand.</p>
           </div>
         </section>
@@ -1017,9 +1044,9 @@
             <div class="be-card be-reveal"><span class="be-card__num">06</span><h3 class="be-card__title">Shop</h3><p class="be-card__text">Das Eventformat. 100 Minuten Programm, null Kompromisse.</p></div>
           </div>
           <div class="be-refs">
-            <img class="be-reveal" src="assets/images/brochure/ref-arnautovic-bts__626x470.avif" alt="Behind the scenes: Arnautovic x Hyundai" loading="lazy" draggable="false" />
-            <img class="be-reveal" src="assets/images/brochure/ref-weinco__626x470.avif" alt="Kampagne: WEIN&amp;CO" loading="lazy" draggable="false" />
-            <img class="be-reveal" src="assets/images/brochure/ref-bipa__626x470.avif" alt="Kampagne: BIPA" loading="lazy" draggable="false" />
+            <img class="be-reveal" src="assets/images/brochure/ref-arnautovic-bts__626x470.avif" alt="Behind the scenes: Arnautovic x Hyundai" loading="lazy" draggable="false" / decoding="async">
+            <img class="be-reveal" src="assets/images/brochure/ref-weinco__626x470.avif" alt="Kampagne: WEIN&amp;CO" loading="lazy" draggable="false" / decoding="async">
+            <img class="be-reveal" src="assets/images/brochure/ref-bipa__626x470.avif" alt="Kampagne: BIPA" loading="lazy" draggable="false" / decoding="async">
           </div>
         </section>
         <section class="be-section">
@@ -1053,7 +1080,7 @@
               </ul>
               <a class="be-cta be-reveal" href="mailto:hello@bohl-entertainment.at">Projekt anfragen</a>
             </div>
-            <img class="be-contact__img be-reveal" src="assets/images/brochure/ref-arnautovic-final__900x675.avif" alt="Arnautovic x Hyundai — Produktion von Bohl Entertainment" loading="lazy" draggable="false" />
+            <img class="be-contact__img be-reveal" src="assets/images/brochure/ref-arnautovic-final__900x675.avif" alt="Arnautovic x Hyundai — Produktion von Bohl Entertainment" loading="lazy" draggable="false" / decoding="async">
           </div>
         </section>
         <div class="be-footer">@drbohl &nbsp;·&nbsp; @bohlentertainment &nbsp;·&nbsp; YouTube / Spotify / Instagram / TikTok</div>
@@ -1128,7 +1155,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/opernball.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/opernball.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">12 February 2026</span><span class="tl-event__scope">Paulus / Society</span></p>
                         <p class="tl-event__text">Opens the 68th Vienna Opera Ball. Paulus and his partner Léa join the first row of debutants and take part in the formal opening.</p>
@@ -1138,7 +1165,7 @@
                   <li class="tl-event">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bipa-campaign.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bipa-campaign.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">1 April 2026</span><span class="tl-event__scope">Paulus / Campaign</span></p>
                         <p class="tl-event__text">BIPA April Fool campaign: BI BOHL. BI BIPA. BI CURLY. presents a fictional Dr.Bohl curling shampoo promising "Schneckerl wie der Doktor."</p>
@@ -1155,7 +1182,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bohl-liter.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bohl-liter.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">Late April 2026</span><span class="tl-event__scope">Brand / Product</span></p>
                         <p class="tl-event__text">Launch of BOHL LITER with WEIN&amp;CO. The wine designed for white spritzers is presented at Vienna's Naschmarkt and released through WEIN&amp;CO shops and online.</p>
@@ -1165,7 +1192,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/schnitzel-single.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/schnitzel-single.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">5 May 2026</span><span class="tl-event__scope">Paulus / Music</span></p>
                         <p class="tl-event__text">Third official single: SCHNITZEL (all night long).</p>
@@ -1182,7 +1209,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/hyundai-marko.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/hyundai-marko.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">17 May 2026</span><span class="tl-event__scope">Business / Campaign</span></p>
                         <p class="tl-event__text">Bohl Entertainment enters the advertising market. The newly founded company and Wirz develop Hyundai's Marko for President social-first campaign around Marko Arnautović; its initial content approaches 3.5 million organic views before expanding into a broader 360-degree campaign.</p>
@@ -1206,7 +1233,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/solo-touring.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/solo-touring.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">6 August 2026</span><span class="tl-event__scope">Paulus / Stage</span></p>
                         <p class="tl-event__text">SOLO continues as a touring program, including a sold-out Theater im Park performance, with further dates scheduled into late 2026.</p>
@@ -1232,7 +1259,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/solo-premiere.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/solo-premiere.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">11 February 2025</span><span class="tl-event__scope">Paulus / Stage</span></p>
                         <p class="tl-event__text">Premiere of SOLO at the Wiener Stadtsaal. It is Paulus's first stage program without Benjamin and centres on dating, Tinder encounters and personal stories.</p>
@@ -1242,7 +1269,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/dancing-stars-start.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/dancing-stars-start.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">14 March 2025</span><span class="tl-event__scope">Paulus / TV</span></p>
                         <p class="tl-event__text">Dancing Stars live competition begins. Paulus is partnered with professional dancer Catharina Malek for the 16th ORF season.</p>
@@ -1252,7 +1279,7 @@
                   <li class="tl-event">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/willkommen-oesterreich.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/willkommen-oesterreich.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">18 March 2025</span><span class="tl-event__scope">Paulus / TV interview</span></p>
                         <p class="tl-event__text">Guest on Willkommen Österreich, appearing alongside André Heller and Ursula Strauss while promoting SOLO and discussing his developing television career.</p>
@@ -1262,7 +1289,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/dancing-stars-final.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/dancing-stars-final.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">23 May 2025</span><span class="tl-event__scope">Paulus / TV</span></p>
                         <p class="tl-event__text">Second place in the Dancing Stars final. Paulus and Catharina reach the final and finish behind Aaron Karl and Kateryna Mizera.</p>
@@ -1279,7 +1306,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/fruehstueck-bei-mir.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/fruehstueck-bei-mir.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">15 June 2025</span><span class="tl-event__scope">Paulus / Radio interview</span></p>
                         <p class="tl-event__text">Frühstück bei mir with Claudia Stöckl. Paulus discusses his path from law graduate to full-time comedian, his family influence, Dancing Stars and the move from a school cellar to major sold-out venues.</p>
@@ -1289,7 +1316,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/du-dummer.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/du-dummer.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">29 July 2025</span><span class="tl-event__scope">Paulus / Music</span></p>
                         <p class="tl-event__text">First official single: DU DUMMER. Apple Music lists the one-track release under the Dr.Bohl name.</p>
@@ -1299,7 +1326,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/weisser-spritzer.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/weisser-spritzer.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">17 August 2025</span><span class="tl-event__scope">Paulus / Music</span></p>
                         <p class="tl-event__text">Second single: WEISSER SPRITZER. The song extends the Dr.Bohl identity into comic Austrian pop.</p>
@@ -1309,7 +1336,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/zoomania.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/zoomania.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">26 November 2025</span><span class="tl-event__scope">Paulus / Film</span></p>
                         <p class="tl-event__text">First dubbing role in Disney's Zoomania 2. Paulus voices two iguanas in the German-language version, including an iguana bartender speaking in Viennese dialect.</p>
@@ -1319,7 +1346,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/romy-redcarpet.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/romy-redcarpet.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">28 November 2025</span><span class="tl-event__scope">Paulus / Awards and interviews</span></p>
                         <p class="tl-event__text">KURIER ROMY red-carpet coverage in Kitzbühel. Dr.Bohl conducts comedic celebrity interviews with the yellow spatula, later assembled as Red Carpet Schabernack ROMY 2025.</p>
@@ -1352,7 +1379,7 @@
                   <li class="tl-event">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/was-gibt-es-neues.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/was-gibt-es-neues.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">From March 2024</span><span class="tl-event__scope">Paulus / TV</span></p>
                         <p class="tl-event__text">Entry into the ORF comedy-panel circuit. Paulus begins appearing on Was gibt es Neues? and subsequently becomes a recurring member of the show's wider rotating panel.</p>
@@ -1399,7 +1426,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/stadtsaal.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/stadtsaal.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">16 January 2023</span><span class="tl-event__scope">Duo / Stage</span></p>
                         <p class="tl-event__text">Premiere of ANABOHLIKA at the sold-out Wiener Stadtsaal — the second Dr.Bohl stage program.</p>
@@ -1437,7 +1464,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/ordination-radio.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/ordination-radio.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">26–28 December 2023</span><span class="tl-event__scope">Duo / Radio</span></p>
                         <p class="tl-event__text">First radio-hosting assignment: Ordination Dr.Bohl airs on Ö3 for three afternoons between Christmas and New Year, with Paulus and Benjamin hosting from 15:00 to 18:00.</p>
@@ -1470,7 +1497,7 @@
                   <li class="tl-event tl-event--major">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bohlmobil.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/bohlmobil.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">16 April 2020</span><span class="tl-event__scope">Duo / Podcast</span></p>
                         <p class="tl-event__text">Bohlmobil launches. Episode 1, "Perchtoldsdorf – Kalksburg," establishes the mobile podcast format: the brothers talking while travelling through Vienna and its surroundings.</p>
@@ -1508,7 +1535,7 @@
                   <li class="tl-event">
                     <span class="tl-event__marker" aria-hidden="true"></span>
                     <div class="tl-event__row">
-                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/tiafe-typen.avif" alt="" loading="lazy" />
+                      <img class="tl-event__thumb" src="assets/images/subpages/schabernack/timeline/tiafe-typen.avif" alt="" loading="lazy" / decoding="async">
                       <div class="tl-event__body">
                         <p class="tl-event__meta"><span class="tl-event__date">2022</span><span class="tl-event__scope">Duo / Fiction</span></p>
                         <p class="tl-event__text">Tiafe Typen sitcom pilot. The independently produced pilot expands the Dr.Bohl characters into a scripted fictional format and includes performers such as Max Ortner and Gery Seidl.</p>

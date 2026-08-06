@@ -1040,7 +1040,11 @@
 	left: 0;
 	right: 0;
 	top: 100%;
-	height: px;
+	/* Was `height: px;` — an invalid declaration the browser silently
+	   dropped, so this fade strip rendered at zero height and did
+	   nothing. Restored to the same 26px as the header's own bottom
+	   padding, matching the gradient's evident original intent. */
+	height: 26px;
 	background: linear-gradient(
 		to bottom,
 		var(--black) 0%,
@@ -1077,28 +1081,138 @@
 	line-height: 1.2;
 	text-transform: uppercase;
 	color: var(--hero-yellow);
-	margin-bottom: 24px;
+	/* margin-bottom moved to .about-lead-mask — it sat inside the clip
+	   region here and would be masked away. */
+	margin-bottom: 0;
 }
-/* Each detected line is wrapped (in JS, initAboutScroll) in one of these
-   so the whole line contracts as a single unit toward the sticky header,
-   instead of every word shrinking around its own center. will-change is
-   toggled in JS only on lines currently inside the fade zone, so idle
-   lines don't sit on their own compositor layer. */
-.about-overlay__body .about-line {
+
+/* ══════════════════════════════════════════════
+   About reveal — editorial stage-light system
+   (replaces the old per-word split + continuous
+   per-scroll-frame line geometry in main.js)
+   ══════════════════════════════════════════════
+   Lead sentence: revealed once, upward, from behind an overflow mask,
+   with a thin rule drawing left-to-right underneath it. Wrapped in JS
+   (buildAboutContent) as:
+     <div class="about-lead-mask">
+       <p class="about-overlay__lead about-reveal">…</p>
+     </div>
+     <span class="about-lead-rule"></span>
+   Biography paragraphs: each treated as one block, entering with a
+   simple fade + upward translate + slight scale, triggered once via
+   IntersectionObserver (see initAboutReveal in main.js) — no per-frame
+   scroll math, no line-detection reflow, no per-word DOM.
+   The one-time "stage light" sweep is a ::before pseudo-element that
+   only exists (via the .about-sweep-once class) for the duration of
+   the reveal transition, then is removed from the DOM by JS so it
+   costs nothing afterward — see main.js. */
+.about-lead-mask {
+	overflow: hidden;
+	/* A little vertical breathing room so uppercase descenders/accents in
+	   the heading aren't clipped by the mask once it has fully risen, and
+	   the gap before the underline rule that previously came from the
+	   lead's own margin-bottom (now zeroed, since that margin sat inside
+	   the clip region and would be masked away). */
+	padding-bottom: 0.12em;
+	margin-bottom: 20px;
+}
+.about-lead-rule {
 	display: block;
-	transform-origin: top center;
+	width: 64px;
+	height: 3px;
+	margin: 0 0 24px;
+	background: var(--hero-yellow);
+	transform: scaleX(0);
+	transform-origin: left center;
+	transition: transform 550ms cubic-bezier(0.22, 1, 0.36, 1) 180ms;
 }
-.about-overlay__body .word {
-	display: inline-block;
+.about-lead-rule.is-in {
+	transform: scaleX(1);
+}
+
+/* Body paragraphs: fade + gentle lift + micro-scale. opacity is part of
+   the effect here (they are NOT clipped by a mask), so it stays. */
+.about-overlay__body p:not(.about-overlay__lead).about-reveal {
 	opacity: 0;
-	transform: translateY(14px);
+	transform: translateY(24px) scale(0.985);
 	transition:
-		opacity 600ms ease,
-		transform 600ms ease;
+		opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+		transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-.about-overlay__body .word.is-in {
+.about-overlay__body p:not(.about-overlay__lead).about-reveal.is-in {
 	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+/* Lead: a TRUE mask rise. The heading is fully opaque and sits pushed
+   down by a full line-height inside the overflow:hidden mask, so at rest
+   it is entirely clipped out of view; on reveal it slides up to 0 and
+   emerges from behind the mask's bottom edge. No opacity fade — the clip
+   edge is what does the revealing, which is what makes it read as
+   "rising from behind" rather than "fading in while nudging up". 1.2em
+   (its own line-height) guarantees full concealment regardless of font
+   metrics. */
+.about-lead-mask .about-reveal {
+	transform: translateY(1.2em);
+	transition: transform 680ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.about-lead-mask .about-reveal.is-in {
 	transform: translateY(0);
+}
+
+/* Stage-light sweep: a narrow, low-opacity diagonal band that crosses
+   the paragraph once as it reveals. Only present (via .about-sweep-once,
+   added and removed by JS alongside .is-in) during the reveal itself —
+   no permanent pseudo-element/compositor layer sits on settled
+   paragraphs afterward. */
+.about-sweep-once {
+	position: relative;
+	overflow: hidden;
+}
+.about-sweep-once::before {
+	content: '';
+	position: absolute;
+	top: -20%;
+	left: -30%;
+	width: 45%;
+	height: 140%;
+	background: linear-gradient(
+		100deg,
+		transparent 0%,
+		rgba(242, 193, 46, 0.16) 45%,
+		transparent 100%
+	);
+	transform: translateX(-120%);
+	pointer-events: none;
+	will-change: transform, opacity;
+}
+.about-sweep-once.is-sweeping::before {
+	transition:
+		transform 680ms cubic-bezier(0.33, 1, 0.68, 1),
+		opacity 680ms ease;
+	transform: translateX(220%);
+	opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.about-lead-rule {
+		transition: none;
+		transform: scaleX(1);
+	}
+	/* Selectors here match or exceed the specificity of the animated
+	   rules above (.about-lead-mask .about-reveal is a two-class
+	   selector), so these resets reliably win and everything shows in
+	   its final resting state with no motion. */
+	.about-reveal,
+	.about-lead-mask .about-reveal,
+	.about-overlay__body p:not(.about-overlay__lead).about-reveal {
+		transition: none;
+		opacity: 1;
+		transform: none;
+	}
+	.about-sweep-once::before {
+		display: none;
+	}
 }
 
 /* ── Contact form ── */

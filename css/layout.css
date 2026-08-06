@@ -118,7 +118,12 @@
 	-webkit-overflow-scrolling: touch;
 	will-change: transform;
 	transition: transform var(--slide-duration) var(--slide-easing);
-	user-select: none;
+	/* user-select: none removed — this container holds all subpage reading
+	   content (biography, tour dates, Schabernack copy). Horizontal-swipe
+	   detection is handled by JS preventDefault() on the drag gesture, not
+	   by this property, and touch-action: pan-y already scopes native
+	   touch handling to vertical scroll only, so removing this does not
+	   affect slider behaviour — it only stops blocking text selection. */
 	touch-action: pan-y;
 	background: var(--black);
 	transform: translateX(100%) translateZ(0);
