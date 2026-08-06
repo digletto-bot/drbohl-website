@@ -2706,6 +2706,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	gap: 14px;
 	width: 100%;
 	padding: 10px 14px 10px 16px;
+	padding: 16px;
 	background: none;
 	border: 0;
 	text-align: left;
@@ -2728,38 +2729,15 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	color: var(--caption-grey);
 	min-width: 0;
 }
-/* Badge chrome comes from .acc-toggle. The "+"/"×" glyph itself is
-   bespoke here (independently animated before/after bars) rather than
-   the shared .acc-toggle__icon's single-rotate technique, and this
-   rule makes it react to hovering anywhere on the bar, not just the
-   icon itself — .tl-year__icon is decorative, the clickable element is
-   the whole .tl-year__head button. */
+/* Badge chrome (.acc-toggle) and "+"/"×" glyph (.acc-toggle__icon, on
+   the nested span) are both the shared component now — same look and
+   rotate-to-× animation as Musik/Podcast. This rule is the one
+   Schabernack-specific addition: it scales the badge on hover anywhere
+   on the bar, not just when the pointer is over the small icon itself
+   — .tl-year__icon is decorative, the clickable element is the whole
+   .tl-year__head button. */
 .tl-year__head:hover .tl-year__icon {
 	transform: scale(1.08);
-}
-.tl-year__icon::before,
-.tl-year__icon::after {
-	content: '';
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	background: var(--hero-yellow);
-	transform: translate(-50%, -50%);
-	transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.tl-year__icon::before {
-	width: 46%;
-	height: 2px;
-}
-.tl-year__icon::after {
-	width: 2px;
-	height: 46%;
-}
-.tl-year.is-open .tl-year__icon::after {
-	transform: translate(-50%, -50%) rotate(90deg) scale(0);
-}
-.tl-year.is-open .tl-year__icon::before {
-	transform: translate(-50%, -50%) rotate(180deg);
 }
 .tl-year__panel-inner {
 	padding: 0 16px;
