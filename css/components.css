@@ -1024,6 +1024,7 @@
 /* ── About view (nested inside subpage card 8) ── */
 #subpage-card-contact,
 #subpage-card-musik,
+#subpage-card-podcast,
 #subpage-card-schabernack {
 	scrollbar-gutter: stable;
 }
@@ -2195,7 +2196,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	gap: 12px;
 	/* Bleeds out of the body's own padding so the hover fill below reaches
 	   the tile edges, same as .disco__bar and .tl-year__head. */
-	margin: -16px -16px 0;
+	margin: -16px;
 	padding: 16px;
 }
 .podcast-tile__title {
@@ -2235,7 +2236,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
    sense for the slanted Kabarett banners. */
 .podcast-panel-content {
 	opacity: 0;
-	padding-top: 14px;
+	padding-top: 24px;
 	text-align: left;
 	transition: opacity 110ms ease;
 	will-change: opacity;

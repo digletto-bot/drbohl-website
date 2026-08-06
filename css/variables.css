@@ -67,7 +67,7 @@
 	--hl-base: 92px;
 
 	/* -- Constant sizes -- */
-	--accordion-btn-size: clamp(30px, 2.5vw, 44px);
+	--accordion-btn-size: clamp(25px, 2vw, 36px);
 }
 
 @media (min-width: 600px) {
