@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	/* ── Router ── */
 	const router = new Router(slider);
 	window.router = router;
+	window.slider = slider;
 
 	/* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ── */
 	document.querySelectorAll('.progress-nav').forEach((nav) => {
@@ -217,6 +218,14 @@ window.addEventListener('popstate', (e) => {
 		sp.setAttribute('aria-hidden', 'false');
 	} else if (sp.classList.contains('is-open')) {
 		hideSubpageOverlay(sp);
+		// Closing pops the pushState entry from openSubpage, landing back on
+		// whatever entry/URL was current before the subpage opened — stale if
+		// slides were changed (via replaceState) while the subpage was open.
+		// Re-stamp the URL from the slider's actual current index to fix that.
+		setTimeout(() => {
+			window.router?.onSlideChange(window.slider.index);
+			console.log(window.router.routes[idx].path);
+		}, 1000);
 	}
 });
 
@@ -294,7 +303,10 @@ function initAboutReveal() {
 		void el.offsetWidth;
 		el.classList.add('is-sweeping');
 		revealNow(el);
-		setTimeout(() => el.classList.remove('about-sweep-once', 'is-sweeping'), SWEEP_CLEANUP_MS);
+		setTimeout(
+			() => el.classList.remove('about-sweep-once', 'is-sweeping'),
+			SWEEP_CLEANUP_MS
+		);
 	}
 
 	if (reduceMotion || !('IntersectionObserver' in window)) {
