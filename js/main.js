@@ -222,10 +222,7 @@ window.addEventListener('popstate', (e) => {
 		// whatever entry/URL was current before the subpage opened — stale if
 		// slides were changed (via replaceState) while the subpage was open.
 		// Re-stamp the URL from the slider's actual current index to fix that.
-		setTimeout(() => {
-			window.router?.onSlideChange(window.slider.index);
-			console.log(window.router.routes[idx].path);
-		}, 1000);
+		window.router?.onSlideChange(window.slider.index);
 	}
 });
 
