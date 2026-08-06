@@ -319,7 +319,7 @@ function initAboutReveal() {
 				observer.unobserve(entry.target);
 			});
 		},
-		{ root: scrollEl, rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
+		{ root: scrollEl, rootMargin: '0px 0px -10% 0px', threshold: 0 }
 	);
 
 	body.querySelectorAll('.about-reveal').forEach((p) => observer.observe(p));
