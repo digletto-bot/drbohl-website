@@ -1810,8 +1810,10 @@ a.shop-product__image:hover img {
 a.shop-product__image:active img {
 	transform: scale(0.98);
 }
-/* Sold out — greyed, blurred overlay on hover signals "unavailable"
-   without a separate status pill anywhere else on the card. */
+/* Sold out / limited — greyed, blurred overlay on hover signals
+   "not simply available" for both statuses; each badge additionally
+   scales up slightly (from its own bottom-right corner, since that's
+   where it's anchored) rather than glowing. */
 .shop-product__image-overlay {
 	position: absolute;
 	inset: 0;
@@ -1820,19 +1822,21 @@ a.shop-product__image:active img {
 	pointer-events: none;
 	transition: opacity 220ms ease;
 }
-.shop-product__image--soldout:hover .shop-product__image-overlay {
+.shop-product__image--soldout:hover .shop-product__image-overlay,
+.shop-product__image--limited:hover .shop-product__image-overlay {
 	opacity: 0.7;
 }
-.shop-product__image--soldout:hover img {
+.shop-product__image--soldout:hover img,
+.shop-product__image--limited:hover img {
 	filter: blur(4px);
 }
-/* Bei Auftritten erhältlich / "fast ausverkauft" — no overlay, the
-   badge itself glows in its own orange on hover instead. */
 .shop-product__image--limited:hover .shop-product__image-badge--limited {
 	background: var(--shop-yellow-hover);
-	box-shadow:
-		0 0 22px 4px rgba(200, 112, 16, 0.65),
-		0 4px 14px rgba(0, 0, 0, 0.4);
+	transform: scale(1.06);
+}
+.shop-product__image--soldout:hover .shop-product__image-badge--soldout {
+	background: var(--shop-red-hover);
+	transform: scale(1.06);
 }
 .shop-product__image-badge {
 	position: absolute;
@@ -1849,6 +1853,7 @@ a.shop-product__image:active img {
 	text-transform: uppercase;
 	color: var(--light-text);
 	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+	transform-origin: bottom right;
 	transition:
 		background 180ms ease,
 		transform 180ms ease,
