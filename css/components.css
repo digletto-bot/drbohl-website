@@ -1841,6 +1841,9 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	flex: 1 1 auto;
 	min-width: 0;
 }
+.disco__text a {
+	width: fit-content;
+}
 .disco__line {
 	display: flex;
 	align-items: baseline;
@@ -1858,6 +1861,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	text-overflow: ellipsis;
 	flex: 1 1 auto;
 	min-width: 0;
+	padding-left: 4px;
 	text-box-trim: trim-both;
 	text-box-edge: cap alphabetic;
 }
@@ -1887,8 +1891,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	position: relative;
 	flex: 0 0 auto;
 	align-self: center;
-	width: 32px;
-	height: 32px;
+	width: var(--accordion-btn-size);
+	height: var(--accordion-btn-size);
 	border-radius: 50%;
 	border: 1.9px solid var(--hero-yellow);
 	background: rgba(20, 20, 20, 0.85);
@@ -1974,10 +1978,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	.disco__text {
 		gap: 12px;
 	}
-	.disco__toggle {
-		width: 36px;
-		height: 36px;
-	}
 }
 
 /* Square variant — used for podcast cover art thumbs instead of the
@@ -2062,8 +2062,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 .podcast-toggle {
 	position: relative;
 	flex: 0 0 auto;
-	width: clamp(25px, 10cqw, 44px);
-	height: clamp(25px, 10cqw, 44px);
+	width: var(--accordion-btn-size);
+	height: var(--accordion-btn-size);
 	border-radius: 50%;
 	border: 1.9px solid var(--hero-yellow);
 	background: rgba(20, 20, 20, 0.85);
@@ -2300,8 +2300,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	bottom: 10%;
 	z-index: 2;
 	transform: translateX(-50%);
-	width: clamp(30px, 2.5vw, 44px);
-	height: clamp(30px, 2.5vw, 44px);
+	width: var(--accordion-btn-size);
+	height: var(--accordion-btn-size);
 	padding: 0;
 	border-radius: 50%;
 	border: 1.9px solid var(--hero-yellow);
