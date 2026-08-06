@@ -2080,6 +2080,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	flex: 1 1 auto;
 	min-width: 0;
 	padding-left: 4px;
+	text-shadow: var(--subtitle-shadow);
 	text-box-trim: trim-both;
 	text-box-edge: cap alphabetic;
 }
@@ -2211,6 +2212,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	text-shadow: var(--subtitle-shadow);
 	text-box-trim: trim-both;
 	text-box-edge: cap alphabetic;
 }
@@ -2315,6 +2317,9 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	height: 100%;
 	object-fit: cover;
 	display: block;
+}
+.kab-banner__img:nth-child(1) {
+	object-position: bottom;
 }
 .kab-banner__shade {
 	position: absolute;
