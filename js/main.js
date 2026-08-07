@@ -10,7 +10,7 @@ import Router from './router.js';
 import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
 import { fitText, updateProgressNav, dismissSwipeHint } from './animations.js';
-import { playHeroIntro, mountHeroIntroDevButton } from './hero-intro.js';
+import { playShutterIntro, mountShutterDevButton } from './shutter-intro.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	/* ── fitText ── */
@@ -28,18 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (revealed) return;
 		revealed = true;
 		fitText();
+		/* ── PROTOTYPE: full-viewport shutter reveal ──
+		   Built BEFORE hideLoadingScreen() so the black bands are already
+		   covering the viewport when the loading screen lifts — otherwise
+		   the finished page would flash unmasked for one frame. fitText()
+		   runs first so the title is correctly sized underneath.
+		   Remove this + the import + js/shutter-intro.js + its CSS block
+		   to revert. */
+		playShutterIntro();
 		hideLoadingScreen();
+		mountShutterDevButton();
 		setTimeout(fitText, 120);
-		/* ── PROTOTYPE: hero slice-reveal intro ──
-		   Fires after fitText() so the cloned slices inherit the exact
-		   inline font-size, and after the loading screen has gone so the
-		   reveal is actually visible. rAF lets the fitText style flush
-		   commit first. Remove this block + the import + js/hero-intro.js
-		   + its CSS block to revert. */
-		requestAnimationFrame(() => {
-			playHeroIntro();
-			mountHeroIntroDevButton();
-		});
 	}
 	document.fonts.ready.then(revealSite);
 	setTimeout(revealSite, 2500);

@@ -195,71 +195,50 @@
    ────────────────────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   HERO INTRO — PROTOTYPE (asymmetric slice reveal)
-   Paired with js/hero-intro.js. Remove both together to
+   SHUTTER INTRO — PROTOTYPE (full-viewport reveal)
+   Paired with js/shutter-intro.js. Remove both together to
    revert; nothing else references these classes.
    ══════════════════════════════════════════════════════════ */
 
-/* While the intro is running, suppress the stock `.is-current` fadeUp
-   on this card's headline so the two reveals cannot fight: the real
-   span is hidden and the three clipped clones stand in for it.
-
-   `hero-intro-done` then holds the settled state. This matters because
-   the stock rule is `animation: fadeUp ... both` — with `both` fill it
-   ends holding opacity:1, so simply dropping the marker at cleanup
-   would re-trigger the whole 550ms fade and read as a second, softer
-   reveal immediately after the intro. Keeping a done-state class means
-   the title just stays put, exactly as it looks today.
-
-   `hero-intro-done` is cleared by the slider when the card loses
-   .is-current, so navigating away and back gives the normal fadeUp
-   entrance again — existing behaviour is unchanged. */
-.title-card.hero-intro-running .title-card__headline-line {
-	animation: none !important;
-	opacity: 0;
-}
-.title-card.hero-intro-done .title-card__headline-line {
-	animation: none !important;
-	opacity: 1;
-}
-
-/* The clones are stacked over the real (temporarily invisible) span.
-   The wrap already sits in normal flow and keeps its box, so adding
-   this absolute overlay causes no reflow and no layout shift. */
-.hero-intro-stage {
-	position: absolute;
+/* Fixed to the viewport, above everything, but pointer-transparent so
+   it can never intercept a click even mid-animation. The real page is
+   fully rendered and interactive underneath from the first frame. */
+.shutter-intro {
+	position: fixed;
 	inset: 0;
+	z-index: 9998;
 	pointer-events: none;
+	/* Own stacking/containment context so band transforms cannot
+	   invalidate layout elsewhere on the page. */
+	contain: strict;
 }
-.hero-intro-stage .hero-intro-slice {
+
+.shutter-intro__band {
 	position: absolute;
-	top: 0;
 	left: 0;
 	width: 100%;
-	/* Inherits font-family/weight/spacing/colour/shadow from
-	   .title-card__headline-line (cloned), plus the inline font-size
-	   fitText() wrote — so each band matches the original exactly. */
-	will-change: transform, opacity;
+	background: var(--black, #0a0a0a);
+	/* Only transform is animated (scaleX), so these stay on the
+	   compositor — no layout, no repaint per frame. transform-origin is
+	   set per-band in JS to control reveal direction. */
+	will-change: transform;
+	/* Hairline outset kills the sub-pixel seams that otherwise show as
+	   thin light lines between adjacent bands on fractional-DPR
+	   displays. */
+	margin-top: -0.5px;
+	padding-bottom: 1px;
 }
 
-/* The wrap must establish a containing block for the absolute stage.
-   position:relative only — padding/text-align/flex-shrink untouched,
-   so the title's existing layout and responsive behaviour are
-   unchanged. */
-.title-card__headline-wrap {
-	position: relative;
-}
-
-/* Reduced motion: the JS never builds the stage, but belt-and-braces
-   in case a clone is ever left behind mid-run. */
+/* Reduced motion: JS never builds the overlay, but this guarantees
+   nothing can flash even if a band were somehow present. */
 @media (prefers-reduced-motion: reduce) {
-	.hero-intro-stage {
+	.shutter-intro {
 		display: none;
 	}
 }
 
-/* ── DEV ONLY: replay button ── */
-#hero-intro-replay {
+/* ── DEV ONLY: replay control ── */
+#shutter-intro-replay {
 	position: fixed;
 	right: 12px;
 	bottom: 12px;
@@ -277,6 +256,6 @@
 	cursor: pointer;
 	opacity: 0.85;
 }
-#hero-intro-replay:hover {
+#shutter-intro-replay:hover {
 	opacity: 1;
 }
