@@ -1,5 +1,14 @@
 import sharp from 'sharp';
 
-await sharp('assets/images/brochure/hero-duo__1600x1000.avif')
-	.resize({ width: 500, height: 312 })
-	.toFile('assets/images/brochure/hero-duo__500x312.avif');
+await sharp(
+	'assets/images/subpages/showtime/subpage-showtime-willkommen-oesterreich.avif'
+)
+	.resize({ width: 640, height: 360 })
+	.toFile(
+		'assets/images/subpages/showtime/subpage-showtime-willkommen-oesterreich__640x360.avif'
+	);
+await sharp('assets/images/subpages/showtime/subpage-showtime-was-gibt-es-neues.avif')
+	.resize({ width: 640, height: 360 })
+	.toFile(
+		'assets/images/subpages/showtime/subpage-showtime-was-gibt-es-neues__640x360.avif'
+	);
