@@ -42,7 +42,7 @@ export async function renderTourDates(container) {
 				const btnEl =
 					isSoldOut ?
 						`<span class="td-btn sold-out">Ausverkauft</span>`
-					:	`<a href="${url}" class="td-btn" target="_blank" rel="noopener" aria-label="Tickets für ${venue}">Tickets</a>`;
+					:	`<a href="${url}" class="td-btn" target="_blank" rel="noopener" aria-label="Tickets für ${venue}" draggable="false">Tickets</a>`;
 
 				return `
         <div class="td-row">
