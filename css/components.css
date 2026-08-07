@@ -1115,7 +1115,6 @@
 	   lead's own margin-bottom (now zeroed, since that margin sat inside
 	   the clip region and would be masked away). */
 	padding-bottom: 0.12em;
-	margin-bottom: 20px;
 }
 .about-lead-rule {
 	display: block;
