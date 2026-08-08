@@ -33,9 +33,6 @@
 
 	/* ── Spacing ── */
 	--side-pad: 20px;
-	@media (min-width: 600px) {
-		--side-pad: 24px;
-	}
 	/* Reserved band at the bottom of the subpage overlay for the floating
      Close button — .subpage-close-btn centers itself within this. */
 	--subpage-bottom-pad: 55px;
@@ -74,6 +71,7 @@
 
 @media (min-width: 600px) {
 	:root {
+		--side-pad: 24px;
 		--subpage-bottom-pad: 80px;
 	}
 }
