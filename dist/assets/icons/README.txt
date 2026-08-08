@@ -1,1 +1,0 @@
-Place SVG icons here
