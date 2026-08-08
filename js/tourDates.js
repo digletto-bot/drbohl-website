@@ -26,7 +26,7 @@ async function fetchTourDates() {
 
 const LOADING_HTML = `
   <div class="td-loading">
-    <svg class="td-loading__spinner" viewBox="0 0 48 48" width="32" height="32" aria-hidden="true">
+    <svg class="td-loading__spinner" viewBox="0 0 48 48" width="64" height="64" aria-hidden="true">
       <circle class="td-loading__spinner-track" cx="24" cy="24" r="20" fill="none" stroke-width="3"/>
       <circle class="td-loading__spinner-arc" cx="24" cy="24" r="20" fill="none" stroke-width="3"/>
     </svg>
