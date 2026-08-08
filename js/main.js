@@ -14,8 +14,13 @@ import { fitText, updateProgressNav, dismissSwipeHint } from './animations.js';
 /* Slide indices for subpages whose init work is deferred past first paint —
    Contact/About content is built lazily on first visit to that slide, and
    Tour Dates are only fetched once that subpage is actually opened. */
-const CONTACT_SLIDE_INDEX = 8;
 const TOUR_DATES_SLIDE_INDEX = 0;
+const KABARETT_SLIDE_INDEX = 1;
+const MUSIK_SLIDE_INDEX = 4;
+const PODCAST_SLIDE_INDEX = 5;
+const BOHL_ENTERTAINMENT_SLIDE_INDEX = 7;
+const CONTACT_SLIDE_INDEX = 8;
+const SCHABERNACK_SLIDE_INDEX = 9;
 
 let aboutInitialized = false;
 function ensureAboutInit() {
@@ -23,7 +28,6 @@ function ensureAboutInit() {
 	aboutInitialized = true;
 	buildAboutContent();
 	initAboutReveal();
-	console.log('init about');
 }
 
 let tourDatesLoaded = false;
@@ -31,6 +35,41 @@ function ensureTourDatesLoaded() {
 	if (tourDatesLoaded) return;
 	tourDatesLoaded = true;
 	renderTourDates(document.getElementById('tour-list'));
+}
+
+let kabarettInitialized = false;
+function ensureKabarettInit() {
+	if (kabarettInitialized) return;
+	kabarettInitialized = true;
+	initKabarettAccordion();
+}
+
+let musikInitialized = false;
+function ensureMusikInit() {
+	if (musikInitialized) return;
+	musikInitialized = true;
+	initDiscography();
+}
+
+let podcastInitialized = false;
+function ensurePodcastInit() {
+	if (podcastInitialized) return;
+	podcastInitialized = true;
+	initPodcastAccordion();
+}
+
+let brochureInitialized = false;
+function ensureBrochureInit() {
+	if (brochureInitialized) return;
+	brochureInitialized = true;
+	initBrochureReveal();
+}
+
+let timelineInitialized = false;
+function ensureTimelineInit() {
+	if (timelineInitialized) return;
+	timelineInitialized = true;
+	initTimelineAccordion();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -73,7 +112,30 @@ document.addEventListener('DOMContentLoaded', () => {
 			subpageSlider.goTo(index);
 			updateDesktopArrows(index);
 			resetSubpageState(prev);
-			if (index === CONTACT_SLIDE_INDEX) ensureAboutInit();
+			switch (index) {
+				case CONTACT_SLIDE_INDEX:
+					ensureAboutInit();
+					break;
+				case KABARETT_SLIDE_INDEX:
+					ensureKabarettInit();
+					break;
+				case MUSIK_SLIDE_INDEX:
+					ensureMusikInit();
+					break;
+				case PODCAST_SLIDE_INDEX:
+					ensurePodcastInit();
+					// Podcast episode lists reuse the .disco__item/.disco__bar
+					// accordion markup (see e.g. index.html "Neueste Folgen"),
+					// so it needs the same init as the Musik subpage.
+					ensureMusikInit();
+					break;
+				case BOHL_ENTERTAINMENT_SLIDE_INDEX:
+					ensureBrochureInit();
+					break;
+				case SCHABERNACK_SLIDE_INDEX:
+					ensureTimelineInit();
+					break;
+			}
 		},
 	});
 	updateDesktopArrows(slider.index);
@@ -381,7 +443,6 @@ function initBrochureReveal() {
 		io.observe(el);
 	});
 }
-initBrochureReveal();
 
 /* ── Musik: discography accordion with lazy embeds ── */
 function initDiscography() {
@@ -423,7 +484,6 @@ function initDiscography() {
 		});
 	});
 }
-initDiscography();
 
 /* Collapses all discography foldouts and tears down their lazy-injected
    iframes (rather than just hiding them) so playback actually stops instead
@@ -451,7 +511,6 @@ function initKabarettAccordion() {
 		});
 	});
 }
-initKabarettAccordion();
 
 function resetKabarettAccordion() {
 	document.querySelectorAll('.kab-show').forEach((show) => {
@@ -470,7 +529,6 @@ function initTimelineAccordion() {
 		});
 	});
 }
-initTimelineAccordion();
 
 function resetTimelineAccordion() {
 	document.querySelectorAll('.tl-year').forEach((year) => {
@@ -505,4 +563,3 @@ function initPodcastAccordion() {
 		});
 	});
 }
-initPodcastAccordion();
