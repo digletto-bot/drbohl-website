@@ -218,11 +218,8 @@ window.openSubpage = function () {
 		ensureTourDatesLoaded();
 };
 
-function subpageOverlayIsOpen() {
-	return (
-		document.getElementById('subpage-overlay')?.classList.contains('is-open') ?? false
-	);
-}
+const subpageOverlayIsOpen = () =>
+	document.getElementById('subpage-overlay')?.classList.contains('is-open') ?? false;
 
 function hideSubpageOverlay(sp) {
 	document.activeElement.blur();
