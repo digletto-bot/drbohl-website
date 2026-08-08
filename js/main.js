@@ -176,9 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		openAboutPage();
 	});
 
-	// Handle clicks on shop product links
+	// Handle clicks links contained by slider
 	// -> Prevent opening the link, if the user meant to drag between slides
-	document.querySelectorAll('a.shop-product__image').forEach((link) => {
+	document.querySelectorAll('a').forEach((link) => {
 		let startX, startY;
 		link.addEventListener('pointerdown', (e) => {
 			startX = e.clientX;
