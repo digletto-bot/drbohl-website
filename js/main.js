@@ -11,6 +11,28 @@ import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
 import { fitText, updateProgressNav, dismissSwipeHint } from './animations.js';
 
+/* Slide indices for subpages whose init work is deferred past first paint —
+   Contact/About content is built lazily on first visit to that slide, and
+   Tour Dates are only fetched once that subpage is actually opened. */
+const CONTACT_SLIDE_INDEX = 8;
+const TOUR_DATES_SLIDE_INDEX = 0;
+
+let aboutInitialized = false;
+function ensureAboutInit() {
+	if (aboutInitialized) return;
+	aboutInitialized = true;
+	buildAboutContent();
+	initAboutReveal();
+	console.log('init about');
+}
+
+let tourDatesLoaded = false;
+function ensureTourDatesLoaded() {
+	if (tourDatesLoaded) return;
+	tourDatesLoaded = true;
+	renderTourDates(document.getElementById('tour-list'));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	/* ── fitText ── */
 	/* ── fitText / loading screen ──
@@ -51,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			subpageSlider.goTo(index);
 			updateDesktopArrows(index);
 			resetSubpageState(prev);
+			if (index === CONTACT_SLIDE_INDEX) ensureAboutInit();
 		},
 	});
 	updateDesktopArrows(slider.index);
@@ -63,6 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		onSlideChange: (index) => {
 			slider.goTo(index);
 			ticketBtn?.classList.toggle('is-active', index === 0);
+			if (index === TOUR_DATES_SLIDE_INDEX && subpageOverlayIsOpen())
+				ensureTourDatesLoaded();
 		},
 	});
 	ticketBtn?.classList.toggle('is-active', subpageSlider.currentIndex === 0);
@@ -77,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const router = new Router(slider);
 	window.router = router;
 	window.slider = slider;
+	window.subpageSlider = subpageSlider;
 
 	/* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ── */
 	document.querySelectorAll('.progress-nav').forEach((nav) => {
@@ -89,18 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('arrow-prev')?.addEventListener('click', () => slider.prev());
 	document.getElementById('arrow-next')?.addEventListener('click', () => slider.next());
 
-	/* ── Tour Dates (subpage card 0) ── */
-	renderTourDates(document.getElementById('tour-list'));
-
 	/* ── Contact form (subpage card 8) ── */
 	document.getElementById('contact-form')?.addEventListener('submit', (e) => {
 		e.preventDefault();
 		closeSubpage();
 	});
-
-	/* ── About view (nested inside subpage card 8) ── */
-	buildAboutContent();
-	initAboutReveal();
 
 	window.goToTickets = () => subpageSlider.goTo(0);
 	window.subpagePrev = () => {
@@ -195,7 +214,15 @@ window.openSubpage = function () {
 	sp.setAttribute('aria-hidden', 'false');
 	document.querySelector('.subpage-card.is-current')?.scrollTo(0, 0);
 	history.pushState({ subpage: true }, '', window.location.href);
+	if (window.subpageSlider?.currentIndex === TOUR_DATES_SLIDE_INDEX)
+		ensureTourDatesLoaded();
 };
+
+function subpageOverlayIsOpen() {
+	return (
+		document.getElementById('subpage-overlay')?.classList.contains('is-open') ?? false
+	);
+}
 
 function hideSubpageOverlay(sp) {
 	document.activeElement.blur();
@@ -216,6 +243,8 @@ window.addEventListener('popstate', (e) => {
 	if (e.state?.subpage) {
 		sp.classList.add('is-open');
 		sp.setAttribute('aria-hidden', 'false');
+		if (window.subpageSlider?.currentIndex === TOUR_DATES_SLIDE_INDEX)
+			ensureTourDatesLoaded();
 	} else if (sp.classList.contains('is-open')) {
 		hideSubpageOverlay(sp);
 		// Closing pops the pushState entry from openSubpage, landing back on

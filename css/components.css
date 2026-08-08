@@ -1330,6 +1330,26 @@
 	padding: 0 var(--side-pad) 60px;
 }
 
+.td-loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 60px 0;
+}
+.td-loading__spinner {
+	animation: loadingSpin 1.1s linear infinite;
+}
+.td-loading__spinner-track {
+	stroke: var(--light-text);
+	opacity: 0.15;
+}
+.td-loading__spinner-arc {
+	stroke: var(--hero-yellow);
+	stroke-linecap: round;
+	stroke-dasharray: 34 91.6;
+	transform-origin: 24px 24px;
+}
+
 .td-row {
 	display: grid;
 	grid-template-columns: 80px 1fr auto;

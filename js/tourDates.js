@@ -24,14 +24,24 @@ async function fetchTourDates() {
 	return rows.map(parseCSVRow);
 }
 
+const LOADING_HTML = `
+  <div class="td-loading">
+    <svg class="td-loading__spinner" viewBox="0 0 48 48" width="32" height="32" aria-hidden="true">
+      <circle class="td-loading__spinner-track" cx="24" cy="24" r="20" fill="none" stroke-width="3"/>
+      <circle class="td-loading__spinner-arc" cx="24" cy="24" r="20" fill="none" stroke-width="3"/>
+    </svg>
+  </div>`;
+
 /**
- * Renders tour date rows into a container element.
+ * Renders tour date rows into a container element. Shows a loading spinner
+ * while the sheet is fetched, since this is only called on demand (when the
+ * Tour Dates subpage is actually opened) rather than eagerly on page load.
  * @param {HTMLElement} container
  */
 export async function renderTourDates(container) {
+	if (!container) return;
+	container.innerHTML = LOADING_HTML;
 	try {
-		if (!container) throw new Error('No valid container for dates found');
-
 		const tourDates = await fetchTourDates();
 
 		container.innerHTML = tourDates
