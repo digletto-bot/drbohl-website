@@ -38,7 +38,7 @@ class Router {
 		// This is the temporary value for github.io
 		const newPath = `${window.location.origin}/drbohl-website${pathComponent}`;
 
-		window.history.replaceState(null, '', newPath);
+		window.history.replaceState(history.state, '', newPath);
 	}
 }
 
