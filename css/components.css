@@ -1265,8 +1265,22 @@
    TOUR DATES SUBPAGE
    ══════════════════════════════════════════════════════════ */
 
+/* Tour Dates is the one subpage where the list itself scrolls instead of
+   the whole card — the hero title stays pinned while #tour-list fills the
+   remaining height. Every other subpage keeps the default (the shared
+   .subpage-card scrolls as a whole), so this is scoped to this card only. */
+.subpage-card[aria-label='Tour Dates'] {
+	overflow-y: hidden;
+}
+.subpage-card[aria-label='Tour Dates'] .subpage-card-inner {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
 /* Hero */
 .sp-hero {
+	flex-shrink: 0;
 	padding: 0 var(--side-pad) 28px;
 	border-bottom: 1px solid rgba(245, 245, 240, 0.08);
 }
@@ -1327,10 +1341,15 @@
 
 /* Tour list */
 .td-list {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
 	padding: 0 var(--side-pad) 60px;
 }
 
 .td-loading {
+	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
