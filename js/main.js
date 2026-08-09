@@ -10,7 +10,7 @@ import Router from './router.js';
 import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
 import { fitText, updateProgressNav, dismissSwipeHint } from './animations.js';
-import { playShutterIntro, mountShutterDevButton } from './shutter-intro.js';
+import { playCreditsIntro, mountCreditsDevButton } from './credits-intro.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	/* ── fitText ── */
@@ -28,16 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (revealed) return;
 		revealed = true;
 		fitText();
-		/* ── PROTOTYPE: full-viewport shutter reveal ──
-		   Built BEFORE hideLoadingScreen() so the black bands are already
-		   covering the viewport when the loading screen lifts — otherwise
-		   the finished page would flash unmasked for one frame. fitText()
-		   runs first so the title is correctly sized underneath.
-		   Remove this + the import + js/shutter-intro.js + its CSS block
-		   to revert. */
-		playShutterIntro();
-		hideLoadingScreen();
-		mountShutterDevButton();
 		setTimeout(fitText, 120);
 	}
 	document.fonts.ready.then(revealSite);
