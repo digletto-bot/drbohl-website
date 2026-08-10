@@ -40,7 +40,7 @@ class Router {
 		}
 
 		const pathComponent = this.routes[idx].path ? `/${this.routes[idx].path}` : '';
-		const newPath = `${window.location.origin}${this.basePath}${pathComponent}` || '/';
+		const newPath = `${window.location.origin}${this.basePath}${pathComponent}`;
 
 		window.history.replaceState(history.state, '', newPath);
 	}
