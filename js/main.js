@@ -28,6 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (revealed) return;
 		revealed = true;
 		fitText();
+		/* ── PROTOTYPE: "IT'S SHOWTIME BABY!" credit intro ──
+		   Built BEFORE hideLoadingScreen() so the black backdrop already
+		   covers the viewport when the loader lifts — otherwise the
+		   finished page flashes for one frame before the intro starts.
+		   fitText() runs first so the title underneath is correctly
+		   sized by the time it's revealed.
+		   Plays once per session; see CONFIG.sessionKey.
+		   Remove this + the import + js/credits-intro.js + its CSS block
+		   to revert. */
+		playCreditsIntro();
+		hideLoadingScreen();
+		mountCreditsDevButton();
 		setTimeout(fitText, 120);
 	}
 	document.fonts.ready.then(revealSite);
