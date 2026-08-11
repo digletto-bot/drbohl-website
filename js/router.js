@@ -27,7 +27,13 @@ class Router {
 
 		// findIndex returns -1 for an unknown path, which is truthy — guard
 		// explicitly so a bad deep link lands on Home instead of goTo(-1).
-		if (index > 0) this.slider.goTo(index);
+		if (index > 0) {
+			this.slider.goTo(index);
+		} else if (index == -1) {
+			// Invalid path: slider is already showing Home, but the URL bar
+			// still shows the bad path — correct it to match.
+			this.onSlideChange(0);
+		}
 	}
 
 	_convertToPathName = (label) => label.replace(/\s/g, '-').toLowerCase();
