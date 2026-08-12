@@ -44,11 +44,19 @@ function ensureKabarettInit() {
 	initKabarettAccordion();
 }
 
+const MUSIK_AUTO_OPEN_MIN_WIDTH = 600;
+
 let musikInitialized = false;
 function ensureMusikInit() {
 	if (musikInitialized) return;
 	musikInitialized = true;
 	initDiscography();
+
+	// Open the first release by default, but only on wider viewports —
+	// on narrow phones it'd just push the rest of the list further down.
+	if (window.innerWidth > MUSIK_AUTO_OPEN_MIN_WIDTH) {
+		document.querySelector('#subpage-card-musik .disco__item .disco__bar')?.click();
+	}
 }
 
 let podcastInitialized = false;
