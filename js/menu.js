@@ -42,6 +42,7 @@ class Menu {
 		this.closeBtn = document.getElementById('menu-close');
 		this.stage = document.getElementById('menu-stage');
 		this.track = document.getElementById('menu-track');
+		this.homeBtn = document.getElementById('menu-home');
 		this.cards = [];
 		this.isOpen = false;
 
@@ -86,6 +87,10 @@ class Menu {
 			})
 		);
 		this.closeBtn?.addEventListener('click', () => this.close());
+		this.homeBtn?.addEventListener('click', () => {
+			this.close();
+			setTimeout(() => this.slider.goTo(0), 80);
+		});
 		this.overlay.addEventListener('click', (e) => {
 			if (e.target === this.overlay) this.close();
 		});
