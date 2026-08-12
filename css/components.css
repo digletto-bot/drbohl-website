@@ -1318,14 +1318,8 @@
 	line-height: 0.84;
 	text-transform: uppercase;
 	color: var(--light-text);
-	display: flex;
 	position: relative;
 	gap: clamp(10px, 1.4vw, 15px);
-}
-
-.sp-title span {
-	display: block;
-	position: relative;
 }
 
 .sp-title::after {
@@ -1337,13 +1331,6 @@
 	height: 5px;
 	background: var(--hero-yellow);
 	border-radius: 2px;
-}
-
-@media (max-width: 720px) {
-	.sp-title {
-		flex-direction: column;
-		gap: 0px;
-	}
 }
 
 /* Tour list */
@@ -2150,7 +2137,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 }
 .disco__title {
 	font-family: var(--font-family-title);
-	font-size: var(--fs-body-large);
+	font-size: var(--fs-disco-title);
 	text-transform: uppercase;
 	letter-spacing: var(--letter-spacing-title);
 	line-height: 1;
@@ -2240,9 +2227,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	.podcast-grid {
 		grid-template-columns: 1fr;
 		gap: 40px;
-	}
-	.disco__title {
-		font-size: var(--fs-body-large-2);
 	}
 }
 .podcast-tile {

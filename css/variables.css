@@ -50,6 +50,7 @@
 	--fs-body-2: clamp(21px, 3.5vw, 27px);
 	--fs-body-large: clamp(28px, 4.6vw, 36px);
 	--fs-body-large-2: clamp(46px, 6.9vw, 54px);
+	--fs-disco-title: clamp(36px, 6.9vw, 54px);
 
 	--title-shadow: 2px 4px 3px rgba(0, 0, 0, 0.5);
 	--subtitle-shadow: 1px 1px 2px rgb(0, 0, 0);
