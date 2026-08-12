@@ -257,6 +257,23 @@ document.addEventListener('DOMContentLoaded', () => {
 		menu.close();
 		closeSubpage();
 	});
+
+	/* ── Menu card images: they start loading="lazy", but the menu overlay
+	   is display:none until opened, so native lazy-loading never even starts
+	   fetching them — they'd otherwise only begin loading (and visibly pop
+	   in) the first time the menu opens. Once initial setup is idle, flip
+	   them to eager so the browser fetches them in the background via its
+	   own low-priority scheduling, ready by the time the menu is opened. */
+	const preloadMenuCardImages = () => {
+		document
+			.querySelectorAll('#menu-track .menu-card__image')
+			.forEach((img) => (img.loading = 'eager'));
+	};
+	if ('requestIdleCallback' in window) {
+		requestIdleCallback(preloadMenuCardImages, { timeout: 2000 });
+	} else {
+		setTimeout(preloadMenuCardImages, 1500);
+	}
 });
 
 /* ── Loading screen: fades out once fonts are ready and fitText has run ── */
