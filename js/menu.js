@@ -154,8 +154,8 @@ class Menu {
 			{ passive: false }
 		);
 
+		let resizeTimer = null;
 		window.addEventListener('resize', () => {
-			let resizeTimer = null;
 			let lastTransform = performance.now();
 			this._layout();
 			if (resizeTimer) clearTimeout(resizeTimer);
