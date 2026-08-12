@@ -7,6 +7,7 @@ Main selling points:
   - Perfect 100/100 Lighthouse score across all four categories: Performance, Accessibility, Best Practices, and SEO
   - Every image is exported in multiple resolutions (via srcset/<picture>), so a phone downloads a small, phone-sized image and a large monitor downloads a sharp, full-size one - nobody downloads more than they need
   - Content is only built/loaded when it's actually needed (e.g. the tour dates list, discography embeds, and about-page text are only assembled the moment someone opens that section) - keeps the initial load light and fast
+  - Page has a integrated build-time optimisation pipeline, allowing to easily edit content in the future while retaining maximum performance
 - Design
   - One unified visual style and interaction language across the whole site - every subpage, card, and menu shares the same look and feel instead of feeling bolted together
   - Fully custom-built and handcrafted - not a template or page builder, so the design is unique to Dr.Bohl
