@@ -1845,7 +1845,7 @@ a.be-contact__val:hover {
 	object-fit: cover;
 	display: block;
 	transition:
-		transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+		transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
 		filter 280ms ease;
 }
 a.shop-product__image:hover img {
@@ -1876,11 +1876,15 @@ a.shop-product__image:active img {
 }
 .shop-product__image--limited:hover .shop-product__image-badge--limited {
 	background: var(--shop-yellow-hover);
-	transform: scale(1.06);
+	right: 50%;
+	bottom: 50%;
+	transform: translate(50%, 50%) scale(1.4);
 }
 .shop-product__image--soldout:hover .shop-product__image-badge--soldout {
 	background: var(--shop-red-hover);
-	transform: scale(1.06);
+	right: 50%;
+	bottom: 50%;
+	transform: translate(50%, 50%) scale(1.4);
 }
 .shop-product__image-badge {
 	position: absolute;
@@ -1898,16 +1902,21 @@ a.shop-product__image:active img {
 	color: var(--light-text);
 	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 	transform-origin: bottom right;
+	white-space: nowrap;
 	transition:
 		background 180ms ease,
+		right 180ms ease,
+		bottom 180ms ease,
 		transform 180ms ease,
 		box-shadow 180ms ease;
 }
 .shop-product__image-badge--soldout {
 	background: var(--shop-red);
+	transform-origin: center;
 }
 .shop-product__image-badge--limited {
 	background: var(--shop-yellow);
+	transform-origin: center;
 }
 .shop-product__image-badge--available {
 	background: var(--shop-green);
