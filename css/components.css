@@ -701,11 +701,32 @@
 
 .full-screen-menu__columns .fullscreen-menu__card-title-wrapper {
 	display: none;
+	flex-direction: column;
+	align-items: end;
+	justify-content: center;
+	padding-right: var(--side-pad);
 }
+
 .full-screen-menu__columns .fullscreen-menu__card-title-container {
+	display: flex;
+	flex-direction: column;
 	text-align: end;
+	font-size: clamp(24px, 2vw, 35px);
+	font-weight: 650;
+	gap: 0.8em;
+}
+
+.full-screen-menu__columns .menu-card-title {
+	color: var(--caption-grey);
+	transform-origin: right;
+	transition:
+		color 280ms ease,
+		transform 280ms ease;
+}
+.full-screen-menu__columns .menu-card-title.is-active {
 	color: var(--hero-yellow);
 	text-shadow: 0 0 2px var(--tap-yellow);
+	transform: scale(1.16);
 }
 
 /* ── 3D stage ──
@@ -2774,18 +2795,12 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	}
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1100px) {
 	.full-screen-menu__columns {
 		grid-template-columns: 1fr 800px 1fr;
 	}
 
 	.full-screen-menu__columns .fullscreen-menu__card-title-wrapper {
 		display: flex;
-		flex-direction: column;
-		align-items: end;
-		justify-content: center;
-		font-size: clamp(24px, 2vw, 35px);
-		padding-right: var(--side-pad);
-		font-weight: 650;
 	}
 }
