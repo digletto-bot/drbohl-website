@@ -108,6 +108,10 @@ class Menu {
 			this.close();
 			setTimeout(() => this.slider.goTo(0), 80);
 		});
+		this.contactBtn.addEventListener('click', () => {
+			this.close();
+			setTimeout(() => this.slider.goTo(this.cards.length - 1), 80);
+		});
 		this.overlay.addEventListener('click', (e) => {
 			if (e.target === this.overlay) this.close();
 		});
