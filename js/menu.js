@@ -92,6 +92,12 @@ class Menu {
 			});
 		});
 
+		this.titles.forEach((title, i) => {
+			title.addEventListener('mouseenter', () => {
+				this._snapTo(i);
+			});
+		});
+
 		this.burgers.forEach((b) =>
 			b.addEventListener('click', () => {
 				this.toggle();
