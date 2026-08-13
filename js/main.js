@@ -20,7 +20,6 @@ const MUSIK_SLIDE_INDEX = 4;
 const PODCAST_SLIDE_INDEX = 5;
 const BOHL_ENTERTAINMENT_SLIDE_INDEX = 7;
 const CONTACT_SLIDE_INDEX = 8;
-const SCHABERNACK_SLIDE_INDEX = 9;
 
 let aboutInitialized = false;
 function ensureAboutInit() {
@@ -71,13 +70,6 @@ function ensureBrochureInit() {
 	if (brochureInitialized) return;
 	brochureInitialized = true;
 	initBrochureReveal();
-}
-
-let timelineInitialized = false;
-function ensureTimelineInit() {
-	if (timelineInitialized) return;
-	timelineInitialized = true;
-	initTimelineAccordion();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -139,9 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
 					break;
 				case BOHL_ENTERTAINMENT_SLIDE_INDEX:
 					ensureBrochureInit();
-					break;
-				case SCHABERNACK_SLIDE_INDEX:
-					ensureTimelineInit();
 					break;
 			}
 		},
@@ -544,24 +533,6 @@ function resetKabarettAccordion() {
 	});
 }
 
-/* ── Schabernack: timeline accordion (each year toggles independently) ── */
-function initTimelineAccordion() {
-	document.querySelectorAll('.tl-year').forEach((year) => {
-		const head = year.querySelector('.tl-year__head');
-		head.addEventListener('click', () => {
-			const open = year.classList.toggle('is-open');
-			head.setAttribute('aria-expanded', open);
-		});
-	});
-}
-
-function resetTimelineAccordion() {
-	document.querySelectorAll('.tl-year').forEach((year) => {
-		year.classList.remove('is-open');
-		year.querySelector('.tl-year__head')?.setAttribute('aria-expanded', 'false');
-	});
-}
-
 /* ── Reset per-subpage interactive state when leaving that subpage, whether
    because the overlay closed or the active slide changed. Keyed on the
    subpage-card's aria-label (same identity Router uses for its paths), not
@@ -572,7 +543,6 @@ function resetSubpageState(index) {
 	const label = card?.getAttribute('aria-label');
 	if (label === 'Kabarett') resetKabarettAccordion();
 	else if (label === 'Musik') resetMusikDiscography();
-	else if (label === 'Schabernack') resetTimelineAccordion();
 }
 
 /* ── Podcast: single toggle button (title row) that morphs "+" into

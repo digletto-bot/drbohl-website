@@ -1031,8 +1031,7 @@
 /* ── About view (nested inside subpage card 8) ── */
 #subpage-card-contact,
 #subpage-card-musik,
-#subpage-card-podcast,
-#subpage-card-schabernack {
+#subpage-card-podcast {
 	scrollbar-gutter: stable;
 }
 .about-overlay__header {
@@ -1960,7 +1959,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 
 /* ══════════════════════════════════════════════
    ACCORDION — shared building blocks reused by the Musik (disco),
-   Podcast, Schabernack (tl-year) and Kabarett accordions below.
+   Podcast and Kabarett accordions below.
    .acc-item carries no styling of its own — it's a state hook so
    ".acc-item.is-open" can drive the shared toggle-icon/panel rules
    once instead of once per accordion. Each concrete accordion keeps
@@ -1997,7 +1996,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	-webkit-tap-highlight-color: transparent;
 }
 /* Scoped to the two known toggle depths (item > bar > toggle for disco/
-   kabarett/schabernack; item > body > bar > toggle for podcast) rather than
+   kabarett; item > body > bar > toggle for podcast) rather than
    a plain ".acc-item.is-open .acc-toggle" descendant selector — podcast
    tiles nest a disco accordion inside their panel, and an unbounded
    descendant match would also rotate that inner, still-closed toggle as
@@ -2015,8 +2014,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	transform: scale(0.92);
 }
 /* "+" that rotates into "×" on open. Only Musik/Podcast use this exact
-   glyph technique (rotate one rigid cross) — Schabernack and Kabarett
-   draw/animate their +/× differently and keep their own icon rules. */
+   glyph technique (rotate one rigid cross) — Kabarett draws/animates its
+   +/× differently and keeps its own icon rules. */
 .acc-toggle__icon {
 	position: absolute;
 	left: 50%;
@@ -2056,8 +2055,8 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	grid-template-rows: 0fr;
 	transition: grid-template-rows 340ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-/* Scoped to the two known panel depths (item > panel for disco/kabarett/
-   schabernack; item > body > panel for podcast) for the same reason as the
+/* Scoped to the two known panel depths (item > panel for disco/kabarett;
+   item > body > panel for podcast) for the same reason as the
    toggle rule above — an unbounded ".acc-item.is-open .acc-panel" would also
    expand the disco panel nested inside a podcast tile's own panel whenever
    the outer tile opens, regardless of that inner item's own state. */
@@ -2261,7 +2260,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	justify-content: space-between;
 	gap: 12px;
 	/* Bleeds out of the body's own padding so the hover fill below reaches
-	   the tile edges, same as .disco__bar and .tl-year__head. */
+	   the tile edges, same as .disco__bar. */
 	margin: -16px;
 	padding: 16px;
 }
@@ -2754,164 +2753,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	}
 }
 
-/* ══════════════════════════════════════════════
-   SCHABERNACK — Timeline accordion
-   One .tl-year per year (or year-range) block, latest first, each
-   toggled independently (no "close others") by its own full-width
-   header button. Events inside render as dots on a vertical rail,
-   with bigger glowing dots for the milestone (★) events vs. plain
-   grey dots for minor (•) ones.
-   ══════════════════════════════════════════════ */
-.tl {
-	padding: 8px var(--side-pad) 56px;
-}
-.tl-year__head {
-	display: flex;
-	align-items: center;
-	gap: 14px;
-	width: 100%;
-	padding: 10px 14px 10px 16px;
-	padding: 16px;
-	background: none;
-	border: 0;
-	text-align: left;
-	color: var(--light-text);
-}
-.tl-year__num {
-	font-family: var(--font-family-title);
-	letter-spacing: var(--letter-spacing-title);
-	font-size: 28px;
-	line-height: 1;
-	text-transform: uppercase;
-	color: var(--hero-yellow);
-	flex: 0 0 auto;
-	white-space: nowrap;
-}
-.tl-year__title {
-	flex: 1 1 auto;
-	font-size: 12px;
-	line-height: 1.4;
-	color: var(--caption-grey);
-	min-width: 0;
-}
-/* Badge chrome (.acc-toggle) and "+"/"×" glyph (.acc-toggle__icon, on
-   the nested span) are both the shared component now — same look and
-   rotate-to-× animation as Musik/Podcast. This rule is the one
-   Schabernack-specific addition: it scales the badge on hover anywhere
-   on the bar, not just when the pointer is over the small icon itself
-   — .tl-year__icon is decorative, the clickable element is the whole
-   .tl-year__head button. */
-.tl-year__head:hover .tl-year__icon {
-	transform: scale(1.08);
-}
-.tl-year__panel-inner {
-	padding: 0 16px;
-}
-.tl-year.is-open .tl-year__panel-inner {
-	padding: 0 16px 22px;
-}
-.tl-year__intro {
-	margin: 2px 0 20px;
-	font-size: 14px;
-	line-height: 1.65;
-	color: var(--body-text);
-	font-style: italic;
-}
-.tl-events {
-	list-style: none;
-	position: relative;
-	margin: 0;
-	padding: 0;
-}
-.tl-events::before {
-	content: '';
-	position: absolute;
-	left: 4px;
-	top: 6px;
-	bottom: 6px;
-	width: 2px;
-	background: #2e2e2e;
-}
-.tl-event {
-	position: relative;
-	padding: 0 0 20px 26px;
-}
-.tl-event:last-child {
-	padding-bottom: 0;
-}
-.tl-event__marker {
-	position: absolute;
-	left: 0;
-	top: 5px;
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background: var(--caption-grey);
-}
-.tl-event--major .tl-event__marker {
-	left: -2px;
-	top: 3px;
-	width: 14px;
-	height: 14px;
-	background: var(--hero-yellow);
-	box-shadow: 0 0 8px rgba(242, 193, 46, 0.7);
-}
-.tl-event__meta {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: baseline;
-	gap: 4px 10px;
-	margin: 0 0 4px;
-	font-size: 11px;
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-}
-.tl-event__date {
-	color: var(--hero-yellow);
-	font-weight: 700;
-}
-.tl-event__scope {
-	color: var(--caption-grey);
-}
-.tl-event__text {
-	margin: 0;
-	font-size: var(--fs-body);
-	line-height: 1.6;
-	color: var(--body-text);
-}
-/* Only events with a matching photo get a .tl-event__row wrapper —
-   events without one just render .tl-event__body directly. */
-.tl-event__row {
-	display: flex;
-	gap: 12px;
-	align-items: flex-start;
-}
-.tl-event__thumb {
-	width: 72px;
-	height: 72px;
-	object-fit: cover;
-	border-radius: 8px;
-	flex: 0 0 auto;
-	display: block;
-}
-
 @media (min-width: 600px) {
-	.tl-year__num {
-		font-size: 36px;
-	}
-	.tl-year__title {
-		font-size: 14px;
-	}
-	.tl-year__intro {
-		font-size: 16px;
-	}
-	.tl-event__text {
-		font-size: 16px;
-	}
-	.tl-event__thumb {
-		width: 96px;
-		height: 96px;
-	}
 	.full-screen-menu__stage {
 		max-width: 500px;
 	}
