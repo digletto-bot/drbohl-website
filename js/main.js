@@ -282,6 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	} else {
 		setTimeout(preloadMenuCardImages, 1500);
 	}
+	menu.open();
 });
 
 /* ── Loading screen: fades out once fonts are ready and fitText has run ── */

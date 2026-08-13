@@ -692,6 +692,22 @@
 	background: rgba(245, 245, 240, 0.08);
 }
 
+.full-screen-menu__columns {
+	display: grid;
+	flex-grow: 1;
+	width: 100%;
+	grid-template-columns: 0 1fr 0;
+}
+
+.full-screen-menu__columns .fullscreen-menu__card-title-wrapper {
+	display: none;
+}
+.full-screen-menu__columns .fullscreen-menu__card-title-container {
+	text-align: end;
+	color: var(--hero-yellow);
+	text-shadow: 0 0 2px var(--tap-yellow);
+}
+
 /* ── 3D stage ──
    Stage fills all remaining space. Cards sit inside it with
    top:50% so the active card (offset=0, translateY=0) is centred.
@@ -700,15 +716,13 @@
    within it and fade out before reaching the edges.
 ── */
 .full-screen-menu__stage {
-	/* flex: 1; */
-	max-width: 600px;
 	width: 100%;
+	flex-grow: 1;
 	position: relative;
 	perspective: 900px;
 	perspective-origin: 50% 50%;
 	overflow: hidden;
 	touch-action: none;
-	flex-grow: 1;
 	-webkit-user-select: none;
 	user-select: none;
 	/* No mask-image here — it kills preserve-3d in Chrome/Safari.
@@ -857,6 +871,7 @@
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity 300ms ease 80ms;
+	text-shadow: 0 0 3px #000;
 }
 .menu-card.is-active .menu-card__label-big {
 	opacity: 1;
@@ -2912,22 +2927,23 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		width: 96px;
 		height: 96px;
 	}
-	.full-screen-menu__stage {
-		max-width: 500px;
-	}
 	.about-overlay__body {
 		max-width: 650px;
 	}
 }
 
-@media (min-width: 800px) {
-	.full-screen-menu__stage {
-		max-width: 700px;
-	}
-}
-
 @media (min-width: 1000px) {
-	.full-screen-menu__stage {
-		max-width: 900px;
+	.full-screen-menu__columns {
+		grid-template-columns: 1fr 800px 1fr;
+	}
+
+	.full-screen-menu__columns .fullscreen-menu__card-title-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: end;
+		justify-content: center;
+		font-size: clamp(24px, 2vw, 35px);
+		padding-right: var(--side-pad);
+		font-weight: 650;
 	}
 }
