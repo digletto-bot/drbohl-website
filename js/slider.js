@@ -106,7 +106,11 @@ class Slider {
 		this.track.addEventListener(
 			'touchstart',
 			(e) => {
-				if (e.target instanceof HTMLInputElement) return;
+				if (
+					e.target instanceof HTMLInputElement ||
+					e.target instanceof HTMLTextAreaElement
+				)
+					return;
 				this._tx = e.touches[0].clientX;
 				this._ty = e.touches[0].clientY;
 				this._tdx = 0;
@@ -158,7 +162,12 @@ class Slider {
 	/* ── Mouse drag ── */
 	_bindMouse() {
 		this.track.addEventListener('mousedown', (e) => {
-			if (e.button != 0 || e.target instanceof HTMLInputElement) return;
+			if (
+				e.button != 0 ||
+				e.target instanceof HTMLInputElement ||
+				e.target instanceof HTMLTextAreaElement
+			)
+				return;
 			this._md = true;
 			this._mx = e.clientX;
 			this._mdx = 0;
