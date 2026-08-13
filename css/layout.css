@@ -119,7 +119,7 @@
 	will-change: transform;
 	transition: transform var(--slide-duration) var(--slide-easing);
 	/* user-select: none removed — this container holds all subpage reading
-	   content (biography, tour dates, Schabernack copy). Horizontal-swipe
+	   content (biography, tour dates, etc.). Horizontal-swipe
 	   detection is handled by JS preventDefault() on the drag gesture, not
 	   by this property, and touch-action: pan-y already scopes native
 	   touch handling to vertical scroll only, so removing this does not
@@ -161,14 +161,6 @@
 	height: 100%;
 	object-fit: cover;
 	object-position: center top;
-	z-index: 1;
-}
-
-/* Schabernack / no-image fallback */
-.title-card__image-placeholder {
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(160deg, #18150d 0%, #0a0a0a 100%);
 	z-index: 1;
 }
 
