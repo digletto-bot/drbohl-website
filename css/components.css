@@ -724,7 +724,7 @@
 	margin: 0;
 	padding: 0;
 	font: inherit;
-	color: var(--caption-grey);
+	color: var(--disabled-grey);
 	transform-origin: right;
 	cursor: pointer;
 	text-align: end;
@@ -739,11 +739,19 @@
 }
 .full-screen-menu__columns .menu-card-title.is-active {
 	color: var(--hero-yellow);
-	text-shadow: 0 0 3px var(--tap-yellow);
-	transform: scale(1.16);
+	transform: scale(1.26);
+	text-shadow:
+		0 0 1px var(--hero-yellow),
+		0 0 10px rgba(242, 193, 46, 0.38),
+		0 0 18px rgba(242, 193, 46, 0.14);
 }
+/* .full-screen-menu__columns .menu-card-title.is-active {
+	color: var(--hero-yellow);
+	text-shadow: 0 0 3px var(--tap-yellow);
+	transform: scale(1.26);
+} */
 .full-screen-menu__columns .menu-card-title.is-active:hover {
-	transform: scale(1.25);
+	transform: scale(1.35);
 }
 
 /* ── 3D stage ──
