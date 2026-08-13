@@ -704,7 +704,8 @@
 	flex-direction: column;
 	align-items: end;
 	justify-content: center;
-	padding-right: var(--side-pad);
+	/* +8px to align with centered close icon for menu */
+	padding-right: calc(var(--side-pad) + 8px);
 }
 
 .full-screen-menu__columns .fullscreen-menu__card-title-container {
