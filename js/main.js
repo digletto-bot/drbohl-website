@@ -500,19 +500,16 @@ function initDiscography() {
 	});
 }
 
-/* Collapses all discography foldouts and tears down their lazy-injected
-   iframes (rather than just hiding them) so playback actually stops instead
-   of continuing behind the closed panel. Clearing dataset.loaded means the
-   track re-injects fresh, from the start, next time it's opened. */
+/* Leaves foldouts open and their embeds in place — only stops playback, by
+   reloading each embedded iframe (reassigning src to itself). That's a
+   reliable, embed-agnostic way to kill audio/video without needing a
+   YouTube/Spotify postMessage API integration, and without tearing down or
+   collapsing anything the visitor had open. */
 function resetMusikDiscography() {
 	document.querySelectorAll('.disco__item').forEach((item) => {
-		item.classList.remove('is-open');
-		item.querySelector('.disco__toggle')?.setAttribute('aria-expanded', 'false');
-		const video = item.querySelector('.disco__video');
-		const spotify = item.querySelector('.disco__spotify');
-		if (video) video.innerHTML = '';
-		if (spotify) spotify.innerHTML = '';
-		delete item.dataset.loaded;
+		item.querySelectorAll('.disco__video iframe, .disco__spotify iframe').forEach((iframe) => {
+			iframe.src = iframe.src;
+		});
 	});
 }
 
