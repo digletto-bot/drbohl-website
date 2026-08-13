@@ -43,11 +43,13 @@ class Menu {
 		this.stage = document.getElementById('menu-stage');
 		this.track = document.getElementById('menu-track');
 		this.homeBtn = document.getElementById('menu-home');
+		this.titles = Array.from(document.querySelectorAll('.menu-card-title'));
 		this.cards = [];
 		this.isOpen = false;
 
 		this._pos = 0; // fractional active position
 		this._activeIdx = 0;
+		this._centeredIdx = -1; // whichever card is currently nearest dead-center
 		this._dragging = false;
 		this._dragged = false;
 		this._dragY = 0;
@@ -77,6 +79,16 @@ class Menu {
 					this.close();
 					setTimeout(() => this.slider.goTo(i), 80);
 				}
+			});
+		});
+
+		// Title-list clicks (desktop side column) — always jump straight to
+		// that slide, unlike a card click which re-centers first if it isn't
+		// already the active one.
+		this.titles.forEach((title, i) => {
+			title.addEventListener('click', () => {
+				this.close();
+				setTimeout(() => this.slider.goTo(i), 80);
 			});
 		});
 
@@ -445,6 +457,23 @@ class Menu {
 				`scale(${scale.toFixed(3)})`,
 			].join(' ');
 		});
+
+		this._updateCentered();
+	}
+
+	// Label swap (small -> big) tracks whichever card is nearest dead-center
+	// *right now*, independent of _activeIdx — which only updates once a
+	// drag/fling settles. This keeps the label legible mid-drag instead of
+	// only once the carousel stops.
+	_updateCentered() {
+		const max = this.cards.length - 1;
+		const idx = Math.max(0, Math.min(max, Math.round(this._pos)));
+		if (idx === this._centeredIdx) return;
+		this.cards[this._centeredIdx]?.classList.remove('is-centered');
+		this.titles[this._centeredIdx]?.classList.remove('is-active');
+		this.cards[idx]?.classList.add('is-centered');
+		this.titles[idx]?.classList.add('is-active');
+		this._centeredIdx = idx;
 	}
 
 	_updateActive = () =>
