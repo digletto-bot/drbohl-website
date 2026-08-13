@@ -1,7 +1,7 @@
 /**
  * DR.BOHL — TOUR DATES
  * Tour dates are fetched from a Google Sheet with the following headers:
- * date | venue | city | url
+ * date | venue | city | url | state | note
  *
  * Date format from Google Sheets CSV export: M/D/YYYY (e.g. "8/15/2026")
  */
@@ -45,14 +45,15 @@ export async function renderTourDates(container) {
 		const tourDates = await fetchTourDates();
 
 		container.innerHTML = tourDates
-			.map(([dateStr, venue, city, url]) => {
+			.map(([dateStr, venue, city, url, stateNr, note]) => {
 				const { day, month, year } = parseSheetDate(dateStr);
 
-				const isSoldOut = url === 'sold-out';
-				const btnEl =
-					isSoldOut ?
-						`<span class="td-btn sold-out">Ausverkauft</span>`
-					:	`<a href="${url}" class="td-btn" target="_blank" rel="noopener" aria-label="Tickets für ${venue}" draggable="false">Tickets</a>`;
+				const btnClass =
+					stateNr == 1 ? 'sold-out'
+					: stateNr == 2 ? 'rest'
+					: '';
+
+				const btnEl = `<a href="${url}" class="td-btn ${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}" draggable="false">Tickets</a>`;
 
 				return `
         <div class="td-row">
@@ -64,6 +65,7 @@ export async function renderTourDates(container) {
             <div class="td-city">${city}</div>
             <div class="td-venue">${venue}</div>
           </div>
+          <div class="td-note desktop-only">${note}</div>
           ${btnEl}
         </div>`;
 			})

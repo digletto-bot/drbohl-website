@@ -1271,19 +1271,6 @@
    TOUR DATES SUBPAGE
    ══════════════════════════════════════════════════════════ */
 
-/* Tour Dates is the one subpage where the list itself scrolls instead of
-   the whole card — the hero title stays pinned while #tour-list fills the
-   remaining height. Every other subpage keeps the default (the shared
-   .subpage-card scrolls as a whole), so this is scoped to this card only. */
-.subpage-card[aria-label='Tour Dates'] {
-	overflow-y: hidden;
-}
-.subpage-card[aria-label='Tour Dates'] .subpage-card-inner {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-}
-
 /* Hero */
 .sp-hero {
 	flex-shrink: 0;
@@ -1336,8 +1323,6 @@
 .td-list {
 	flex: 1;
 	min-height: 0;
-	overflow-y: auto;
-	-webkit-overflow-scrolling: touch;
 	padding: 0 var(--side-pad) 60px;
 }
 
@@ -1425,8 +1410,14 @@
 	color: var(--caption-grey);
 }
 
+.td-note {
+	display: none;
+	color: #b5211f;
+}
+
 /* Ticket button */
 .td-btn {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -1458,9 +1449,44 @@
 }
 
 .td-btn.sold-out {
-	background: transparent;
-	color: var(--disabled-grey);
-	border: 1px solid var(--disabled-grey);
+	background: var(--disabled-grey);
+	color: var(--black);
+	border: 1px solid var(--black);
+	pointer-events: none;
+}
+
+.td-btn.rest {
+	overflow: visible;
+}
+
+.td-btn.rest::after {
+	content: 'Restverkauf';
+	position: absolute;
+	bottom: calc(100% + 7px);
+	left: 50%;
+	transform: translateX(calc(-50% - 10px)) rotate(-3deg);
+	background: #b5211f;
+	color: #fff;
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 9px;
+	letter-spacing: 0.06em;
+	white-space: nowrap;
+	padding: 3px 8px;
+	border-radius: 4px;
+	/* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); */
+	pointer-events: none;
+}
+
+.td-btn.rest::before {
+	content: '';
+	position: absolute;
+	bottom: calc(100% + 0px);
+	left: 50%;
+	transform: translateX(calc(-50% - 10px)) rotate(-3deg);
+	border: 4px solid transparent;
+	border-top-color: #b5211f;
+	/* filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25)); */
 	pointer-events: none;
 }
 
@@ -2729,6 +2755,10 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		height: 3px;
 	}
 
+	.full-screen-menu__stage {
+		max-width: 500px;
+	}
+
 	.full-screen-menu__close svg {
 		width: 30px;
 		height: 30px;
@@ -2744,6 +2774,14 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		width: 28px;
 		height: 28px;
 	}
+
+	.td-row {
+		grid-template-columns: 80px 1fr 1fr auto;
+	}
+
+	.about-overlay__body {
+		max-width: 650px;
+	}
 }
 
 @media (min-width: 800px) {
@@ -2751,18 +2789,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		justify-content: center;
 		padding: 0 calc(var(--side-pad) + 60px);
 	}
-}
-
-@media (min-width: 600px) {
-	.full-screen-menu__stage {
-		max-width: 500px;
-	}
-	.about-overlay__body {
-		max-width: 650px;
-	}
-}
-
-@media (min-width: 800px) {
 	.full-screen-menu__stage {
 		max-width: 700px;
 	}
