@@ -90,9 +90,7 @@ class Menu {
 				this.close();
 				setTimeout(() => this.slider.goTo(i), 80);
 			});
-		});
 
-		this.titles.forEach((title, i) => {
 			title.addEventListener('mouseenter', () => {
 				this._snapTo(i);
 			});
