@@ -16,7 +16,7 @@
 const CARD_GAP = 16; // px of visible gap between card edges (scale-aware)
 const TILT_X = 10; // deg rotateX per card offset
 const SCALE_STEP = 0.09; // scale reduction per offset step
-const BRIGHTNESS_STEP = 0.3; // brightness reduction per offset step
+const BRIGHTNESS_STEP = 0.4; // brightness reduction per offset step
 const MIN_BRIGHTNESS = 0.4; // floor brightness
 const VISIBLE_RANGE = 3; // cards shown above/below active
 const SNAP_MS = 380; // snap animation duration
@@ -188,10 +188,7 @@ class Menu {
 		const stageH = this.stage.offsetHeight;
 		const cardW = this.track.offsetWidth;
 		const cardH = cardW * (9 / 16);
-		this._currentGap =
-			window.innerWidth <= 600 ? CARD_GAP
-			: window.innerWidth <= 900 ? CARD_GAP * 1.5
-			: CARD_GAP * 2;
+		this._currentGap = window.innerWidth <= 600 ? CARD_GAP : CARD_GAP * 1.5;
 		// Track origin = stage vertical centre
 		this.track.style.top = stageH / 2 + 'px';
 		// Each card: top = -cardH/2 so its centre aligns with track origin
