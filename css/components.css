@@ -1412,7 +1412,8 @@
 
 .td-note {
 	display: none;
-	color: #b5211f;
+	/* color: #b5211f; */
+	color: var(--hero-yellow);
 }
 
 /* Ticket button */
@@ -1464,7 +1465,7 @@
 	position: absolute;
 	bottom: calc(100% + 7px);
 	left: 50%;
-	transform: translateX(calc(-50% - 10px)) rotate(-3deg);
+	transform: translateX(calc(-50% + 10px)) rotate(3deg);
 	background: #b5211f;
 	color: #fff;
 	font-family: var(--font-body);
@@ -1483,7 +1484,7 @@
 	position: absolute;
 	bottom: calc(100% + 0px);
 	left: 50%;
-	transform: translateX(calc(-50% - 10px)) rotate(-3deg);
+	transform: translateX(calc(-50% + 10px)) rotate(3deg);
 	border: 4px solid transparent;
 	border-top-color: #b5211f;
 	/* filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.25)); */
