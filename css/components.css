@@ -1520,6 +1520,38 @@
 	pointer-events: none;
 }
 
+/* Collapsing hero — on scroll, the eyebrow + title shrink from their
+   natural size down to the floating ticket button's height, trading
+   header space for more of the list being visible. js/main.js drives
+   --td-collapse (0–1) per scroll frame; --td-hero-natural/--td-hero-target/
+   --td-title-scale-target are the endpoints it interpolates between,
+   measured once (and on resize) since they depend on rendered text
+   metrics. The 9999px fallbacks keep the hero at its intrinsic height
+   before that first measurement runs (collapse is 0 then too, so the
+   subtracted term is always zeroed out regardless of the fallback). */
+@media (max-width: 800px) {
+	.subpage-card[aria-label='Tour Dates'] .sp-hero {
+		max-height: calc(
+			var(--td-hero-natural, 9999px) -
+				(var(--td-hero-natural, 9999px) - var(--td-hero-target, 9999px)) * var(--td-collapse, 0)
+		);
+		padding-bottom: calc(28px - 22px * var(--td-collapse, 0));
+		overflow: hidden;
+	}
+
+	.subpage-card[aria-label='Tour Dates'] .sp-eyebrow {
+		opacity: calc(1 - var(--td-collapse, 0));
+		max-height: calc(20px * (1 - var(--td-collapse, 0)));
+		margin-bottom: calc(12px * (1 - var(--td-collapse, 0)));
+		overflow: hidden;
+	}
+
+	.subpage-card[aria-label='Tour Dates'] .sp-title {
+		transform: scale(calc(1 - (1 - var(--td-title-scale-target, 0.4)) * var(--td-collapse, 0)));
+		transform-origin: left top;
+	}
+}
+
 /* Past shows */
 .td-row.past .td-date,
 .td-row.past .td-city {

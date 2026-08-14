@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		},
 	});
 	ticketBtn?.classList.toggle('is-active', subpageSlider.currentIndex === 0);
+	initTourDatesHeroCollapse(ticketBtn);
 
 	updateProgressNav(slider.index);
 
@@ -541,6 +542,67 @@ function resetSubpageState(index) {
 	const label = card?.getAttribute('aria-label');
 	if (label === 'Kabarett') resetKabarettAccordion();
 	else if (label === 'Musik') resetMusikDiscography();
+	else if (label === 'Tour Dates') resetTourDatesHero();
+}
+
+/* ── Tour Dates: collapsing hero on scroll (≤800px only) ──
+   As #tour-list scrolls, .sp-hero shrinks from its natural height down
+   to the floating ticket button's height (see components.css), so
+   scrolling trades header space for more of the list actually being
+   visible. --td-collapse (0–1) is updated per scroll frame; the
+   endpoints it interpolates between are measured once up front and again
+   on resize, since they depend on rendered text metrics that shift with
+   viewport width (--fs-title is a clamp, and the ticket button itself
+   resizes at 600px). */
+const TOUR_HERO_MQ = window.matchMedia('(max-width: 800px)');
+const TOUR_HERO_COLLAPSE_DISTANCE = 70;
+
+function initTourDatesHeroCollapse(ticketBtn) {
+	const hero = document.querySelector(".subpage-card[aria-label='Tour Dates'] .sp-hero");
+	const title = hero?.querySelector('.sp-title');
+	const list = document.getElementById('tour-list');
+	if (!hero || !title || !list) return;
+
+	function measure() {
+		hero.style.setProperty('--td-hero-natural', hero.getBoundingClientRect().height + 'px');
+		const targetHeight = ticketBtn?.getBoundingClientRect().height || 40;
+		const scaleTarget = Math.max(0.25, Math.min(1, targetHeight / title.offsetHeight));
+		hero.style.setProperty('--td-hero-target', targetHeight + 'px');
+		hero.style.setProperty('--td-title-scale-target', scaleTarget.toFixed(3));
+	}
+
+	let ticking = false;
+	function onScroll() {
+		if (ticking) return;
+		ticking = true;
+		requestAnimationFrame(() => {
+			const progress = Math.min(1, Math.max(0, list.scrollTop / TOUR_HERO_COLLAPSE_DISTANCE));
+			hero.style.setProperty('--td-collapse', progress.toFixed(3));
+			ticking = false;
+		});
+	}
+
+	function bind() {
+		measure();
+		list.addEventListener('scroll', onScroll, { passive: true });
+	}
+	function unbind() {
+		list.removeEventListener('scroll', onScroll);
+		hero.style.setProperty('--td-collapse', '0');
+	}
+
+	if (TOUR_HERO_MQ.matches) bind();
+	TOUR_HERO_MQ.addEventListener('change', (e) => (e.matches ? bind() : unbind()));
+	window.addEventListener('resize', () => {
+		if (TOUR_HERO_MQ.matches) measure();
+	});
+}
+
+function resetTourDatesHero() {
+	const hero = document.querySelector(".subpage-card[aria-label='Tour Dates'] .sp-hero");
+	const list = document.getElementById('tour-list');
+	if (list) list.scrollTop = 0;
+	hero?.style.setProperty('--td-collapse', '0');
 }
 
 /* ── Podcast: single toggle button (title row) that morphs "+" into
