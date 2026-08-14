@@ -1527,9 +1527,42 @@
 }
 
 .td-btn.sold-out {
-	background: transparent;
-	color: var(--disabled-grey);
-	border: 1px solid var(--disabled-grey);
+	background: var(--disabled-grey);
+	color: var(--black);
+	border: 1px solid var(--black);
+	pointer-events: none;
+}
+
+.td-btn.rest {
+	overflow: visible;
+}
+
+.td-btn.rest::after {
+	content: 'Restverkauf';
+	position: absolute;
+	bottom: calc(100% + 7px);
+	left: 50%;
+	transform: translateX(calc(-50% + 10px)) rotate(3deg);
+	background: #b5211f;
+	color: #fff;
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 9px;
+	letter-spacing: 0.06em;
+	white-space: nowrap;
+	padding: 3px 8px;
+	border-radius: 4px;
+	pointer-events: none;
+}
+
+.td-btn.rest::before {
+	content: '';
+	position: absolute;
+	bottom: calc(100% + 0px);
+	left: 50%;
+	transform: translateX(calc(-50% + 10px)) rotate(3deg);
+	border: 4px solid transparent;
+	border-top-color: #b5211f;
 	pointer-events: none;
 }
 
@@ -2798,10 +2831,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		height: 3px;
 	}
 
-	.full-screen-menu__stage {
-		max-width: 500px;
-	}
-
 	.full-screen-menu__close svg {
 		width: 30px;
 		height: 30px;
@@ -2816,6 +2845,10 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	.subpage-ticket-btn svg {
 		width: 28px;
 		height: 28px;
+	}
+
+	.td-row {
+		grid-template-columns: 80px 1fr 1fr auto;
 	}
 }
 
