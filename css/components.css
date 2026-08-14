@@ -724,7 +724,7 @@
 	margin: 0;
 	padding: 0;
 	font: inherit;
-	color: var(--caption-grey);
+	color: var(--disabled-grey);
 	transform-origin: right;
 	cursor: pointer;
 	text-align: end;
@@ -734,16 +734,37 @@
 		transform 280ms ease,
 		text-shadow 280ms ease;
 }
+
 .full-screen-menu__columns .menu-card-title:hover {
 	transform: scale(1.06);
 }
+
 .full-screen-menu__columns .menu-card-title.is-active {
 	color: var(--hero-yellow);
-	text-shadow: 0 0 3px var(--tap-yellow);
-	transform: scale(1.16);
+	transform: scale(1.26);
+	text-shadow:
+		0 0 1px var(--hero-yellow),
+		0 0 10px rgba(242, 193, 46, 0.38),
+		0 0 18px rgba(242, 193, 46, 0.14);
 }
+
 .full-screen-menu__columns .menu-card-title.is-active:hover {
-	transform: scale(1.25);
+	transform: scale(1.35);
+}
+
+.full-screen-menu__footer {
+	width: 100%;
+	padding: 25px 0 15px 0;
+	display: flex;
+	justify-content: center;
+}
+
+.full-screen-menu__contact-button {
+	transition: opacity 280ms ease-out;
+	opacity: 1;
+}
+.full-screen-menu__contact-button.fade-out {
+	opacity: 0;
 }
 
 /* ── 3D stage ──
@@ -2854,5 +2875,9 @@ a.shop-product__image:active .shop-product__image-badge--available {
 
 	.full-screen-menu__columns .fullscreen-menu__card-title-wrapper {
 		display: flex;
+	}
+
+	.full-screen-menu__footer {
+		display: none;
 	}
 }

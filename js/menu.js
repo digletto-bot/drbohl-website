@@ -43,6 +43,7 @@ class Menu {
 		this.stage = document.getElementById('menu-stage');
 		this.track = document.getElementById('menu-track');
 		this.homeBtn = document.getElementById('menu-home');
+		this.contactBtn = document.querySelector('.full-screen-menu__contact-button');
 		this.titles = Array.from(document.querySelectorAll('.menu-card-title'));
 		this.cards = [];
 		this.isOpen = false;
@@ -106,6 +107,10 @@ class Menu {
 		this.homeBtn?.addEventListener('click', () => {
 			this.close();
 			setTimeout(() => this.slider.goTo(0), 80);
+		});
+		this.contactBtn.addEventListener('click', () => {
+			this.close();
+			setTimeout(() => this.slider.goTo(this.cards.length - 1), 80);
 		});
 		this.overlay.addEventListener('click', (e) => {
 			if (e.target === this.overlay) this.close();
@@ -423,18 +428,17 @@ class Menu {
 			// two adjacent cards = (outerCard.scaledHeight/2 + innerCard.scaledHeight/2 + _currentGap).
 			// We sum these cumulatively so visual gaps stay even across all cards.
 			const sign = offset >= 0 ? 1 : -1;
-			const absOffInt = Math.abs(offset);
 			let translateY = 0;
 			let prevTop = 0; // tracks cumulative Y of the previous step
-			for (let step = 1; step <= absOffInt; step++) {
+			for (let step = 1; step <= absOff; step++) {
 				const prevHalf = this._cardH * (1 - (step - 1) * SCALE_STEP) * 0.5;
 				const thisHalf = this._cardH * (1 - step * SCALE_STEP) * 0.5;
 				prevTop += prevHalf + thisHalf + this._currentGap;
 			}
 			// Handle fractional offset (drag position between two integer steps)
-			const frac = absOffInt % 1;
+			const frac = absOff % 1;
 			if (frac > 0) {
-				const intStep = Math.floor(absOffInt);
+				const intStep = Math.floor(absOff);
 				const prevHalf = this._cardH * (1 - intStep * SCALE_STEP) * 0.5;
 				const nextHalf = this._cardH * (1 - (intStep + 1) * SCALE_STEP) * 0.5;
 				const stepSize = prevHalf + nextHalf + this._currentGap;
@@ -469,6 +473,7 @@ class Menu {
 	_updateCentered() {
 		const max = this.cards.length - 1;
 		const idx = Math.max(0, Math.min(max, Math.round(this._pos)));
+		this.contactBtn?.classList.toggle('fade-out', idx === max);
 		if (idx === this._centeredIdx) return;
 		this.cards[this._centeredIdx]?.classList.remove('is-centered');
 		this.titles[this._centeredIdx]?.classList.remove('is-active');

@@ -272,7 +272,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	} else {
 		setTimeout(preloadMenuCardImages, 1500);
 	}
-	menu.open();
 });
 
 /* ── Loading screen: fades out once fonts are ready and fitText has run ── */
@@ -508,9 +507,11 @@ function initDiscography() {
    collapsing anything the visitor had open. */
 function resetMusikDiscography() {
 	document.querySelectorAll('.disco__item').forEach((item) => {
-		item.querySelectorAll('.disco__video iframe, .disco__spotify iframe').forEach((iframe) => {
-			iframe.src = iframe.src;
-		});
+		item
+			.querySelectorAll('.disco__video iframe, .disco__spotify iframe')
+			.forEach((iframe) => {
+				iframe.src = iframe.src;
+			});
 	});
 }
 
