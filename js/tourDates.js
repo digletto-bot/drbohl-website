@@ -48,12 +48,22 @@ export async function renderTourDates(container) {
 			.map(([dateStr, venue, city, url, stateNr, note]) => {
 				const { day, month, year } = parseSheetDate(dateStr);
 
-				const btnClass =
-					stateNr == 1 ? 'sold-out'
-					: stateNr == 2 ? 'rest'
-					: '';
+				let btnClass, btnContent;
+				switch (stateNr) {
+					case '1':
+						btnClass = 'td-btn rest';
+						btnContent = 'Tickets';
+						break;
+					case '2':
+						btnClass = 'td-btn sold-out';
+						btnContent = 'Ausverkauft';
+						break;
+					default:
+						btnClass = 'td-btn';
+						btnContent = 'Tickets';
+				}
 
-				const btnEl = `<a href="${url}" class="td-btn ${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}" draggable="false">Tickets</a>`;
+				const btnEl = `<a href="${url}" class="${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}" draggable="false">${btnContent}</a>`;
 
 				return `
         <div class="td-row">
