@@ -173,6 +173,11 @@ class Slider {
 			this._mdx = 0;
 			this.track.style.cursor = 'grabbing';
 			this.tapEnded = false;
+			// Iframes (YouTube/Spotify embeds) swallow mouse events that pass
+			// over them, which stops the window mousemove/mouseup listeners
+			// below from firing. Disable their pointer events for the
+			// duration of the drag so the browser keeps routing to window.
+			this.track.classList.add('is-dragging');
 		});
 		window.addEventListener('mousemove', (e) => {
 			if (e.button != 0) return;
@@ -193,6 +198,7 @@ class Slider {
 			if (!this._md) return;
 			this._md = false;
 			this.track.style.cursor = '';
+			this.track.classList.remove('is-dragging');
 			const thr = Math.min(MAX_SCROLL_THRESHOLD, this.track.offsetWidth * 0.2);
 			if (this._mdx < -thr && this.currentIndex < this.totalSlides - 1) {
 				this.next();

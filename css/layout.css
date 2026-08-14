@@ -26,6 +26,13 @@
 	user-select: none;
 }
 
+/* Embedded YouTube/Spotify iframes otherwise swallow mouse events during
+   a drag, breaking the window mousemove/mouseup listeners in slider.js. */
+#slider-track.is-dragging iframe,
+#subpage-slider-track.is-dragging iframe {
+	pointer-events: none;
+}
+
 /* ── Mobile: full viewport ── */
 .title-card {
 	position: absolute;
