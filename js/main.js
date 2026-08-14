@@ -286,6 +286,17 @@ function hideLoadingScreen() {
 	document.getElementById('loading-screen')?.classList.add('is-hidden');
 }
 
+/* A reload preserves history.state for the current entry, but the overlay's
+   DOM always starts closed. Reloading while the subpage was open therefore
+   leaves a stale { subpage: true } entry underneath the closed overlay —
+   opening it again then stacks a second such entry, and closeSubpage()'s
+   single history.back() only unwinds the top one, so the overlay silently
+   reappears until closed a second time. Normalize away that staleness once
+   on load, before any open/close interaction can happen. */
+if (history.state?.subpage && !document.getElementById('subpage-overlay')?.classList.contains('is-open')) {
+	history.replaceState(null, '', window.location.href);
+}
+
 /* ── Subpage overlay (single unified container; called from inline onclick) ──
    Opening pushes a synthetic history entry so the mobile/browser back button
    closes the overlay instead of navigating away; popstate below reacts to
