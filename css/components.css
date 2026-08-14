@@ -650,7 +650,7 @@
 /* Top bar */
 .full-screen-menu__header {
 	position: relative;
-	padding: 28px var(--side-pad) 20px;
+	padding: 28px var(--side-pad) 0px;
 	flex-shrink: 0;
 	z-index: 2;
 	width: 100%;
@@ -692,6 +692,81 @@
 	background: rgba(245, 245, 240, 0.08);
 }
 
+.full-screen-menu__columns {
+	display: grid;
+	flex-grow: 1;
+	width: 100%;
+	grid-template-columns: 0 1fr 0;
+}
+
+.full-screen-menu__columns .fullscreen-menu__card-title-wrapper {
+	display: none;
+	flex-direction: column;
+	align-items: end;
+	justify-content: center;
+	/* +8px to align with centered close icon for menu */
+	padding-right: calc(var(--side-pad) + 8px);
+}
+
+.full-screen-menu__columns .fullscreen-menu__card-title-container {
+	display: flex;
+	flex-direction: column;
+	text-align: end;
+	font-size: clamp(24px, 2vw, 35px);
+	font-weight: 650;
+	gap: 0.8em;
+}
+
+.full-screen-menu__columns .menu-card-title {
+	appearance: none;
+	background: none;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	font: inherit;
+	color: var(--disabled-grey);
+	transform-origin: right;
+	cursor: pointer;
+	text-align: end;
+	text-shadow: 0 0 2px #000;
+	transition:
+		color 280ms ease,
+		transform 280ms ease,
+		text-shadow 280ms ease;
+}
+
+.full-screen-menu__columns .menu-card-title:hover {
+	transform: scale(1.06);
+}
+
+.full-screen-menu__columns .menu-card-title.is-active {
+	color: var(--hero-yellow);
+	transform: scale(1.26);
+	text-shadow:
+		0 0 1px var(--hero-yellow),
+		0 0 10px rgba(242, 193, 46, 0.38),
+		0 0 18px rgba(242, 193, 46, 0.14);
+}
+
+.full-screen-menu__columns .menu-card-title.is-active:hover {
+	transform: scale(1.35);
+}
+
+.full-screen-menu__footer {
+	width: 100%;
+	padding: 25px 0 15px 0;
+	display: flex;
+	justify-content: center;
+}
+
+.full-screen-menu__contact-button {
+	transition: opacity 280ms ease-out;
+	opacity: 1;
+}
+.full-screen-menu__contact-button.fade-out {
+	opacity: 0;
+}
+
 /* ── 3D stage ──
    Stage fills all remaining space. Cards sit inside it with
    top:50% so the active card (offset=0, translateY=0) is centred.
@@ -700,15 +775,13 @@
    within it and fade out before reaching the edges.
 ── */
 .full-screen-menu__stage {
-	/* flex: 1; */
-	max-width: 600px;
 	width: 100%;
+	flex-grow: 1;
 	position: relative;
 	perspective: 900px;
 	perspective-origin: 50% 50%;
 	overflow: hidden;
 	touch-action: none;
-	flex-grow: 1;
 	-webkit-user-select: none;
 	user-select: none;
 	/* No mask-image here — it kills preserve-3d in Chrome/Safari.
@@ -817,7 +890,7 @@
 	pointer-events: none;
 }
 
-/* Small label — visible by default, fades out when active */
+/* Small label — visible by default, fades out once this card is centered */
 .menu-card__label {
 	position: absolute;
 	bottom: 12px;
@@ -834,12 +907,15 @@
 		opacity 220ms ease,
 		color 220ms ease;
 }
-.menu-card.is-active .menu-card__label {
+.menu-card.is-centered .menu-card__label {
 	opacity: 0;
 	color: var(--hero-yellow);
 }
 
-/* Big label — hidden by default, fades in when active */
+/* Big label — hidden by default, fades in once this card is centered.
+   Driven by .is-centered (tracks the nearest card during drag) rather
+   than .is-active (only updates once the carousel settles) so the label
+   stays legible mid-drag. */
 .menu-card__label-big {
 	position: absolute;
 	inset: 0;
@@ -857,8 +933,9 @@
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity 300ms ease 80ms;
+	text-shadow: 0 0 3px #000;
 }
-.menu-card.is-active .menu-card__label-big {
+.menu-card.is-centered .menu-card__label-big {
 	opacity: 1;
 }
 
@@ -1450,42 +1527,9 @@
 }
 
 .td-btn.sold-out {
-	background: var(--disabled-grey);
-	color: var(--black);
-	border: 1px solid var(--black);
-	pointer-events: none;
-}
-
-.td-btn.rest {
-	overflow: visible;
-}
-
-.td-btn.rest::after {
-	content: 'Restverkauf';
-	position: absolute;
-	bottom: calc(100% + 7px);
-	left: 50%;
-	transform: translateX(calc(-50% + 10px)) rotate(3deg);
-	background: #b5211f;
-	color: #fff;
-	font-family: var(--font-body);
-	font-weight: 700;
-	font-size: 9px;
-	letter-spacing: 0.06em;
-	white-space: nowrap;
-	padding: 3px 8px;
-	border-radius: 4px;
-	pointer-events: none;
-}
-
-.td-btn.rest::before {
-	content: '';
-	position: absolute;
-	bottom: calc(100% + 0px);
-	left: 50%;
-	transform: translateX(calc(-50% + 10px)) rotate(3deg);
-	border: 4px solid transparent;
-	border-top-color: #b5211f;
+	background: transparent;
+	color: var(--disabled-grey);
+	border: 1px solid var(--disabled-grey);
 	pointer-events: none;
 }
 
@@ -2773,14 +2817,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		width: 28px;
 		height: 28px;
 	}
-
-	.td-row {
-		grid-template-columns: 80px 1fr 1fr auto;
-	}
-
-	.about-overlay__body {
-		max-width: 650px;
-	}
 }
 
 @media (min-width: 800px) {
@@ -2788,13 +2824,28 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		justify-content: center;
 		padding: 0 calc(var(--side-pad) + 60px);
 	}
-	.full-screen-menu__stage {
-		max-width: 700px;
+}
+
+@media (min-width: 600px) {
+	.about-overlay__body {
+		max-width: 650px;
 	}
 }
 
-@media (min-width: 1000px) {
-	.full-screen-menu__stage {
-		max-width: 900px;
+@media (min-width: 1100px) {
+	.progress-nav {
+		justify-content: center;
+		padding: 0 calc(var(--side-pad) + 60px);
+	}
+	.full-screen-menu__columns {
+		grid-template-columns: 1fr min(1100px, calc(100vw - 200px)) 1fr;
+	}
+
+	.full-screen-menu__columns .fullscreen-menu__card-title-wrapper {
+		display: flex;
+	}
+
+	.full-screen-menu__footer {
+		display: none;
 	}
 }

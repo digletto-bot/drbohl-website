@@ -16,7 +16,7 @@
 const CARD_GAP = 16; // px of visible gap between card edges (scale-aware)
 const TILT_X = 10; // deg rotateX per card offset
 const SCALE_STEP = 0.09; // scale reduction per offset step
-const BRIGHTNESS_STEP = 0.3; // brightness reduction per offset step
+const BRIGHTNESS_STEP = 0.4; // brightness reduction per offset step
 const MIN_BRIGHTNESS = 0.4; // floor brightness
 const VISIBLE_RANGE = 3; // cards shown above/below active
 const SNAP_MS = 380; // snap animation duration
@@ -43,11 +43,14 @@ class Menu {
 		this.stage = document.getElementById('menu-stage');
 		this.track = document.getElementById('menu-track');
 		this.homeBtn = document.getElementById('menu-home');
+		this.contactBtn = document.querySelector('.full-screen-menu__contact-button');
+		this.titles = Array.from(document.querySelectorAll('.menu-card-title'));
 		this.cards = [];
 		this.isOpen = false;
 
 		this._pos = 0; // fractional active position
 		this._activeIdx = 0;
+		this._centeredIdx = -1; // whichever card is currently nearest dead-center
 		this._dragging = false;
 		this._dragged = false;
 		this._dragY = 0;
@@ -80,6 +83,20 @@ class Menu {
 			});
 		});
 
+		// Title-list clicks (desktop side column) — always jump straight to
+		// that slide, unlike a card click which re-centers first if it isn't
+		// already the active one.
+		this.titles.forEach((title, i) => {
+			title.addEventListener('click', () => {
+				this.close();
+				setTimeout(() => this.slider.goTo(i), 80);
+			});
+
+			title.addEventListener('mouseenter', () => {
+				this._snapTo(i);
+			});
+		});
+
 		this.burgers.forEach((b) =>
 			b.addEventListener('click', () => {
 				this.toggle();
@@ -90,6 +107,10 @@ class Menu {
 		this.homeBtn?.addEventListener('click', () => {
 			this.close();
 			setTimeout(() => this.slider.goTo(0), 80);
+		});
+		this.contactBtn.addEventListener('click', () => {
+			this.close();
+			setTimeout(() => this.slider.goTo(this.cards.length - 1), 80);
 		});
 		this.overlay.addEventListener('click', (e) => {
 			if (e.target === this.overlay) this.close();
@@ -176,10 +197,7 @@ class Menu {
 		const stageH = this.stage.offsetHeight;
 		const cardW = this.track.offsetWidth;
 		const cardH = cardW * (9 / 16);
-		this._currentGap =
-			window.innerWidth <= 600 ? CARD_GAP
-			: window.innerWidth <= 900 ? CARD_GAP * 1.5
-			: CARD_GAP * 2;
+		this._currentGap = window.innerWidth <= 600 ? CARD_GAP : CARD_GAP * 1.5;
 		// Track origin = stage vertical centre
 		this.track.style.top = stageH / 2 + 'px';
 		// Each card: top = -cardH/2 so its centre aligns with track origin
@@ -410,18 +428,17 @@ class Menu {
 			// two adjacent cards = (outerCard.scaledHeight/2 + innerCard.scaledHeight/2 + _currentGap).
 			// We sum these cumulatively so visual gaps stay even across all cards.
 			const sign = offset >= 0 ? 1 : -1;
-			const absOffInt = Math.abs(offset);
 			let translateY = 0;
 			let prevTop = 0; // tracks cumulative Y of the previous step
-			for (let step = 1; step <= absOffInt; step++) {
+			for (let step = 1; step <= absOff; step++) {
 				const prevHalf = this._cardH * (1 - (step - 1) * SCALE_STEP) * 0.5;
 				const thisHalf = this._cardH * (1 - step * SCALE_STEP) * 0.5;
 				prevTop += prevHalf + thisHalf + this._currentGap;
 			}
 			// Handle fractional offset (drag position between two integer steps)
-			const frac = absOffInt % 1;
+			const frac = absOff % 1;
 			if (frac > 0) {
-				const intStep = Math.floor(absOffInt);
+				const intStep = Math.floor(absOff);
 				const prevHalf = this._cardH * (1 - intStep * SCALE_STEP) * 0.5;
 				const nextHalf = this._cardH * (1 - (intStep + 1) * SCALE_STEP) * 0.5;
 				const stepSize = prevHalf + nextHalf + this._currentGap;
@@ -445,6 +462,24 @@ class Menu {
 				`scale(${scale.toFixed(3)})`,
 			].join(' ');
 		});
+
+		this._updateCentered();
+	}
+
+	// Label swap (small -> big) tracks whichever card is nearest dead-center
+	// *right now*, independent of _activeIdx — which only updates once a
+	// drag/fling settles. This keeps the label legible mid-drag instead of
+	// only once the carousel stops.
+	_updateCentered() {
+		const max = this.cards.length - 1;
+		const idx = Math.max(0, Math.min(max, Math.round(this._pos)));
+		this.contactBtn?.classList.toggle('fade-out', idx === max);
+		if (idx === this._centeredIdx) return;
+		this.cards[this._centeredIdx]?.classList.remove('is-centered');
+		this.titles[this._centeredIdx]?.classList.remove('is-active');
+		this.cards[idx]?.classList.add('is-centered');
+		this.titles[idx]?.classList.add('is-active');
+		this._centeredIdx = idx;
 	}
 
 	_updateActive = () =>
