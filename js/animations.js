@@ -40,6 +40,23 @@ export function updateProgressNav(index) {
 	});
 }
 
+/**
+ * updateImageEdgeFade — toggles .has-edge-fade on each .title-card__image,
+ * which CSS uses to mask its own left/right edges into the background.
+ * Only ever true on desktop, where width:auto can leave the image
+ * narrower than its card. Must be re-run on resize and once each image
+ * has loaded, since the rendered width depends on both the viewport and
+ * the image's intrinsic ratio.
+ */
+export function updateImageEdgeFade() {
+	document.querySelectorAll('.title-card__image').forEach((img) => {
+		const inner = img.closest('.title-card__inner');
+		if (!inner) return;
+		const isNarrow = img.offsetWidth > 0 && img.offsetWidth < inner.offsetWidth - 1;
+		img.classList.toggle('has-edge-fade', isNarrow);
+	});
+}
+
 export function dismissSwipeHint() {
 	const h = document.querySelector('.swipe-hint');
 	if (h) {

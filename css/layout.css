@@ -154,6 +154,11 @@
 }
 
 /* ── Hero image ── */
+@property --edge-fade {
+	syntax: '<number>';
+	inherits: false;
+	initial-value: 0;
+}
 .title-card__image {
 	position: absolute;
 	inset: 0;
@@ -162,6 +167,53 @@
 	object-fit: cover;
 	object-position: center top;
 	z-index: 1;
+
+	/* Edge fade: on desktop the image can render narrower than the card
+	   (see the width:auto override below), leaving flat background on
+	   both sides. This masks the image itself semi-transparent right at
+	   its own edges, blending it into that background — only when
+	   .has-edge-fade is set (updateImageEdgeFade() in animations.js,
+	   since CSS alone can't know if the image ended up narrower than its
+	   container). --edge-fade is a registered custom property so the
+	   transition animates the mask edges in/out smoothly instead of
+	   snapping. */
+	--edge-fade: 0;
+	transition: --edge-fade 0.25s ease;
+	/* An S-curve (smoothstep-ish) rather than a straight 2-stop linear
+	   ramp: a plain linear alpha fade reads as an abrupt dark vignette on
+	   light/bright source images, since the mask reveals the near-black
+	   app background underneath. Easing the alpha in and out over a wider
+	   180px band keeps that blend gradual regardless of the image's own
+	   brightness. */
+	-webkit-mask-image: linear-gradient(
+		to right,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 0,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) 45px,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) 90px,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) 135px,
+		rgba(0, 0, 0, 1) 180px,
+		rgba(0, 0, 0, 1) calc(100% - 180px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 100%
+	);
+	mask-image: linear-gradient(
+		to right,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 0,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) 45px,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) 90px,
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) 135px,
+		rgba(0, 0, 0, 1) 180px,
+		rgba(0, 0, 0, 1) calc(100% - 180px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
+		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 100%
+	);
+}
+.title-card__image.has-edge-fade {
+	--edge-fade: 1;
 }
 
 /* ── Gradient overlay ── */

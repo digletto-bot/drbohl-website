@@ -9,7 +9,7 @@ import Slider from './slider.js';
 import Router from './router.js';
 import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
-import { fitText, updateProgressNav, dismissSwipeHint } from './animations.js';
+import { fitText, updateProgressNav, dismissSwipeHint, updateImageEdgeFade } from './animations.js';
 
 /* Slide indices for subpages whose init work is deferred past first paint —
    Contact/About content is built lazily on first visit to that slide, and
@@ -94,6 +94,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.fonts.ready.then(revealSite);
 	setTimeout(revealSite, 2500);
 	window.addEventListener('resize', fitText);
+
+	/* ── Title card image edge fade ── */
+	updateImageEdgeFade();
+	window.addEventListener('resize', updateImageEdgeFade);
+	document.querySelectorAll('.title-card__image').forEach((img) => {
+		img.addEventListener('load', updateImageEdgeFade);
+	});
 
 	/* ── Sliders: outer (title cards) + inner (subpage cards), kept in sync ── */
 	const arrowPrev = document.getElementById('arrow-prev');
