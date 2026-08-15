@@ -194,29 +194,29 @@
 	   brightness. */
 	-webkit-mask-image: linear-gradient(
 		to right,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 0,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) 45px,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) 90px,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) 135px,
-		rgba(0, 0, 0, 1) 180px,
-		rgba(0, 0, 0, 1) calc(100% - 180px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 100%
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 0,
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) 45px,
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) 90px,
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) 135px,
+		rgba(10, 10, 10, 1) 180px,
+		rgba(10, 10, 10, 1) calc(100% - 180px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 100%
 	);
 	mask-image: linear-gradient(
 		to right,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 0,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) 45px,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) 90px,
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) 135px,
-		rgba(0, 0, 0, 1) 180px,
-		rgba(0, 0, 0, 1) calc(100% - 180px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
-		rgba(0, 0, 0, calc(1 - var(--edge-fade) * 1)) 100%
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 0,
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) 45px,
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) 90px,
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) 135px,
+		rgba(10, 10, 10, 1) 180px,
+		rgba(10, 10, 10, 1) calc(100% - 180px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
+		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 100%
 	);
 }
 .title-card__image.has-edge-fade {
@@ -275,7 +275,7 @@
 			opacity 200ms ease;
 		z-index: 5;
 		backdrop-filter: blur(8px);
-		box-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+		box-shadow: 0px 0px 10px rgba(10, 10, 10, 1);
 	}
 
 	.desktop-arrow:hover {
