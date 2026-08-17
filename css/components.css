@@ -1427,9 +1427,9 @@
 
 .td-row {
 	display: grid;
-	grid-template-columns: 80px 1fr auto;
+	grid-template-columns: clamp(60px, 10vw, 81px) 1fr auto;
 	align-items: center;
-	gap: 20px;
+	gap: 10px;
 	padding: 20px 0;
 	border-bottom: 1px solid rgba(245, 245, 240, 0.08);
 }
@@ -1445,7 +1445,7 @@
 .td-date {
 	font-family: var(--font-family-title);
 	font-weight: 900;
-	font-size: 48px;
+	font-size: var(--fs-td-main);
 	line-height: 1;
 	color: var(--light-text);
 	letter-spacing: var(--letter-spacing-title);
@@ -1472,7 +1472,7 @@
 .td-city {
 	font-family: var(--font-family-title);
 	font-weight: 900;
-	font-size: 48px;
+	font-size: var(--fs-td-main);
 	line-height: 1;
 	text-transform: uppercase;
 	letter-spacing: var(--letter-spacing-title);
@@ -1500,8 +1500,8 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	height: 36px;
-	padding: 0 14px;
+	height: 30px;
+	padding: 0 8px;
 	border-radius: 6px;
 	background: var(--hero-yellow);
 	color: var(--dark-text);
