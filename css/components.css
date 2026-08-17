@@ -583,6 +583,86 @@
 	color: var(--body-text);
 }
 
+/* ══════════════════════════════════════════════
+   Top reels grid (Instagram)
+   Mobile: replaces the feature image entirely.
+   Desktop: sits in the right-hand overlay column,
+   layered over the image.
+   ══════════════════════════════════════════════ */
+.sm-reels {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 6px;
+	width: 100%;
+	/* Lifts the whole block off the photo behind it so the tiles read
+	   as one panel rather than eight floating thumbnails. */
+	filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.62));
+}
+.sm-reel {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	border-radius: 3px;
+	/* Reserved by the aspect-ratio + width/height attrs on the img, so
+	   the grid never reflows as tiles decode. */
+	aspect-ratio: 9 / 16;
+	background: #111;
+	transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sm-reel__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.sm-reel__stat {
+	position: absolute;
+	left: 4px;
+	bottom: 4px;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	padding: 2px 5px;
+	border-radius: 3px;
+	background: rgba(10, 10, 10, 0.72);
+	color: var(--light-text);
+	font-family: var(--font-body);
+	font-size: 10px;
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: 0.02em;
+	/* Cheaper than backdrop-filter, which would add a costly layer per
+	   tile — eight of them on a scrolling page is not worth it. */
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+.sm-reel__icon {
+	width: 11px;
+	height: 11px;
+	flex: 0 0 auto;
+	fill: none;
+	stroke: var(--hero-yellow);
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+@media (hover: hover) and (pointer: fine) {
+	.sm-reel:hover {
+		transform: translateY(-3px) scale(1.03);
+		z-index: 3;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.sm-reel {
+		transition: none;
+	}
+	.sm-reel:hover {
+		transform: none;
+	}
+}
+
 @media (min-width: 600px) {
 	.sm-feature {
 		aspect-ratio: 16 / 9;
@@ -593,21 +673,47 @@
 		left: auto;
 		width: min(46%, 460px);
 	}
+	/* Desktop: 4x2 inside the right-hand column, above the copy. */
+	.sm-reels {
+		grid-template-columns: repeat(4, 1fr);
+		gap: 7px;
+	}
+	.sm-reel__stat {
+		font-size: 11px;
+		padding: 2px 6px;
+	}
 }
 
 @media (max-width: 599px) {
+	/* The reels grid stands in for the feature photo on mobile, so the
+	   image is hidden rather than removed — keeping <picture> intact
+	   means the desktop source set is untouched. */
+	.sm-feature__img {
+		display: none;
+	}
+	.sm-feature {
+		aspect-ratio: auto;
+	}
+	.sm-reels {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 6px;
+		margin-block: 4px 2px;
+	}
+	/* With the photo hidden the container has no intrinsic height, so
+	   the overlay switches from absolute-over-image to normal flow.
+	   Without this both the icon row and the copy would collapse onto
+	   the same zero-height box. */
+	.sm-feature__overlay {
+		position: static;
+		inset: auto;
+		padding-top: 18px;
+		align-items: stretch;
+	}
 	.sm-feature__text {
 		background: rgba(10, 10, 10, 0.9);
 		padding: 1.2em;
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
+		position: static;
 		text-align: center;
-	}
-	.sm-feature__overlay {
-		inset: 0;
-		padding-top: 18px;
 	}
 	.social-icons.sm-feature__icons {
 		width: 100%;
