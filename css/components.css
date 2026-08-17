@@ -1364,7 +1364,7 @@
 /* Hero */
 .sp-hero {
 	flex-shrink: 0;
-	padding: 0 var(--side-pad) 28px;
+	padding: 0px var(--side-pad) 28px;
 	border-bottom: 1px solid rgba(245, 245, 240, 0.08);
 }
 
@@ -1547,7 +1547,10 @@
    --td-collapse (0–1) per scroll frame; --td-hero-natural/--td-hero-target/
    --td-title-scale-target are the endpoints it interpolates between,
    measured once (and on resize) since they depend on rendered text
-   metrics. The 9999px fallbacks keep the hero at its intrinsic height
+   metrics. --td-hero-target already includes the 20px collapsed
+   padding-bottom below (ticket-button height + 20px), so the scaled
+   title has room to render in full instead of being clipped by
+   max-height. The 9999px fallbacks keep the hero at its intrinsic height
    before that first measurement runs (collapse is 0 then too, so the
    subtracted term is always zeroed out regardless of the fallback). */
 @media (max-width: 800px) {
@@ -1556,7 +1559,7 @@
 			var(--td-hero-natural, 9999px) -
 				(var(--td-hero-natural, 9999px) - var(--td-hero-target, 9999px)) * var(--td-collapse, 0)
 		);
-		padding-bottom: calc(28px - 22px * var(--td-collapse, 0));
+		padding-bottom: calc(28px - 8px * var(--td-collapse, 0));
 		overflow: hidden;
 	}
 
