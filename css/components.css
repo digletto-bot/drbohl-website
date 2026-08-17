@@ -1105,8 +1105,8 @@
 
 .glow-border:not(.sm-feature):hover {
 	box-shadow:
-		0 0 18px rgba(242, 193, 46, 0.14),
-		0 7px 24px rgba(0, 0, 0, 0.55);
+		0 0 18px rgba(242, 193, 46, 0.24),
+		0 7px 24px rgba(0, 0, 0, 0.75);
 }
 
 .glow-border::after {
