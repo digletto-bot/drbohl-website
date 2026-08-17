@@ -1351,7 +1351,7 @@
 /* Hero */
 .sp-hero {
 	flex-shrink: 0;
-	padding: 0 var(--side-pad) 28px;
+	padding: 0px var(--side-pad) 28px;
 	border-bottom: 1px solid rgba(245, 245, 240, 0.08);
 }
 
@@ -1401,6 +1401,7 @@
 	flex: 1;
 	min-height: 0;
 	padding: 0 var(--side-pad) 60px;
+	overflow-y: scroll;
 }
 
 .td-loading {
@@ -1531,6 +1532,63 @@
 	color: var(--black);
 	border: 1px solid var(--black);
 	pointer-events: none;
+}
+
+.subpage-card[aria-label='Tour Dates'] {
+	overflow-y: hidden;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+/* .subpage-card-inner is normally unconstrained-height (auto, sized to
+   content), which breaks .td-list's flex:1/min-height:0 scroll trick since
+   it isn't a flex item of anything. Bound it here so that chain reaches
+   .td-list and the list actually scrolls instead of being clipped by the
+   card's overflow-y: hidden above. */
+.subpage-card[aria-label='Tour Dates'] .subpage-card-inner {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+}
+
+/* Collapsing hero — on scroll, the eyebrow + title shrink from their
+   natural size down to the floating ticket button's height, trading
+   header space for more of the list being visible. js/main.js drives
+   --td-collapse (0–1) per scroll frame; --td-hero-natural/--td-hero-target/
+   --td-title-scale-target are the endpoints it interpolates between,
+   measured once (and on resize) since they depend on rendered text
+   metrics. --td-hero-target already includes the 20px collapsed
+   padding-bottom below (ticket-button height + 20px), so the scaled
+   title has room to render in full instead of being clipped by
+   max-height. The 9999px fallbacks keep the hero at its intrinsic height
+   before that first measurement runs (collapse is 0 then too, so the
+   subtracted term is always zeroed out regardless of the fallback). */
+@media (max-width: 800px) {
+	.subpage-card[aria-label='Tour Dates'] .sp-hero {
+		max-height: calc(
+			var(--td-hero-natural, 9999px) -
+				(var(--td-hero-natural, 9999px) - var(--td-hero-target, 9999px)) *
+				var(--td-collapse, 0)
+		);
+		padding-bottom: calc(28px - 8px * var(--td-collapse, 0));
+		overflow: hidden;
+	}
+
+	.subpage-card[aria-label='Tour Dates'] .sp-eyebrow {
+		opacity: calc(1 - var(--td-collapse, 0));
+		max-height: calc(20px * (1 - var(--td-collapse, 0)));
+		margin-bottom: calc(12px * (1 - var(--td-collapse, 0)));
+		overflow: hidden;
+	}
+
+	.subpage-card[aria-label='Tour Dates'] .sp-title {
+		transform: scale(
+			calc(1 - (1 - var(--td-title-scale-target, 0.4)) * var(--td-collapse, 0))
+		);
+		transform-origin: left top;
+	}
 }
 
 .td-btn.rest {

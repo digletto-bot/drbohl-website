@@ -9,7 +9,12 @@ import Slider from './slider.js';
 import Router from './router.js';
 import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
-import { fitText, updateProgressNav, dismissSwipeHint, updateImageEdgeFade } from './animations.js';
+import {
+	fitText,
+	updateProgressNav,
+	dismissSwipeHint,
+	updateImageEdgeFade,
+} from './animations.js';
 
 /* Slide indices for subpages whose init work is deferred past first paint —
    Contact/About content is built lazily on first visit to that slide, and
@@ -293,7 +298,10 @@ function hideLoadingScreen() {
    single history.back() only unwinds the top one, so the overlay silently
    reappears until closed a second time. Normalize away that staleness once
    on load, before any open/close interaction can happen. */
-if (history.state?.subpage && !document.getElementById('subpage-overlay')?.classList.contains('is-open')) {
+if (
+	history.state?.subpage &&
+	!document.getElementById('subpage-overlay')?.classList.contains('is-open')
+) {
 	history.replaceState(null, '', window.location.href);
 }
 
@@ -575,6 +583,11 @@ function resetSubpageState(index) {
    resizes at 600px). */
 const TOUR_HERO_MQ = window.matchMedia('(max-width: 800px)');
 const TOUR_HERO_COLLAPSE_DISTANCE = 70;
+// Must match the 20px padding-bottom the collapsed .sp-hero resolves to in
+// components.css — the scaled title is sized to fill the ticket button's
+// height exactly, so without this the collapsed max-height has no slack
+// left for the padding and clips the title instead of showing it.
+const TOUR_HERO_COLLAPSED_PADDING = 20;
 
 function initTourDatesHeroCollapse(ticketBtn) {
 	const hero = document.querySelector(".subpage-card[aria-label='Tour Dates'] .sp-hero");
@@ -583,10 +596,16 @@ function initTourDatesHeroCollapse(ticketBtn) {
 	if (!hero || !title || !list) return;
 
 	function measure() {
-		hero.style.setProperty('--td-hero-natural', hero.getBoundingClientRect().height + 'px');
-		const targetHeight = ticketBtn?.getBoundingClientRect().height || 40;
-		const scaleTarget = Math.max(0.25, Math.min(1, targetHeight / title.offsetHeight));
-		hero.style.setProperty('--td-hero-target', targetHeight + 'px');
+		hero.style.setProperty(
+			'--td-hero-natural',
+			hero.getBoundingClientRect().height + 'px'
+		);
+		const btnHeight = ticketBtn?.getBoundingClientRect().height || 40;
+		const scaleTarget = Math.max(0.25, Math.min(1, btnHeight / title.offsetHeight));
+		hero.style.setProperty(
+			'--td-hero-target',
+			btnHeight + TOUR_HERO_COLLAPSED_PADDING + 'px'
+		);
 		hero.style.setProperty('--td-title-scale-target', scaleTarget.toFixed(3));
 	}
 
@@ -595,7 +614,10 @@ function initTourDatesHeroCollapse(ticketBtn) {
 		if (ticking) return;
 		ticking = true;
 		requestAnimationFrame(() => {
-			const progress = Math.min(1, Math.max(0, list.scrollTop / TOUR_HERO_COLLAPSE_DISTANCE));
+			const progress = Math.min(
+				1,
+				Math.max(0, list.scrollTop / TOUR_HERO_COLLAPSE_DISTANCE)
+			);
 			hero.style.setProperty('--td-collapse', progress.toFixed(3));
 			ticking = false;
 		});
