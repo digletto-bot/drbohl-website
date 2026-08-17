@@ -1057,7 +1057,7 @@
 	justify-content: center;
 	gap: 0.5em;
 	padding: 0 var(--side-pad);
-	font-size: var(--fs-body-large);
+	font-size: var(--fs-body-2);
 	font-weight: 700;
 	letter-spacing: 0.03em;
 	text-transform: uppercase;
@@ -1065,7 +1065,7 @@
 }
 
 .subpage-overlay__title + .show-section-title {
-	padding-top: 1em;
+	padding-top: 1.5em;
 }
 
 .show-section-title::before,
@@ -1086,7 +1086,7 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 21px;
-	padding: 16px var(--side-pad) 48px;
+	padding: 16px var(--side-pad) 68px;
 }
 @media (min-width: 600px) {
 	.show-grid {
