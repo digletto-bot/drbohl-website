@@ -1061,7 +1061,26 @@
 	font-weight: 700;
 	letter-spacing: 0.03em;
 	text-transform: uppercase;
-	color: var(--hero-yellow);
+	/* color: var(--hero-yellow); */
+
+	color: var(--hover-yellow);
+
+	/* color: transparent;
+	background: linear-gradient(
+		180deg,
+		#fff6b0 0%,
+		#ffe05a 22%,
+		#ffc72c 43%,
+		#e9a800 49%,
+		#ffea7a 52%,
+		#ffd034 61%,
+		#efb000 82%,
+		#ffd84a 100%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45); */
 }
 
 .subpage-overlay__title + .show-section-title {
@@ -1178,8 +1197,25 @@
 	left: 14px;
 	font-size: clamp(9px, 2.5cqw, 16px);
 	padding: 5px 14px;
-	box-shadow: none;
-	border: 1px solid var(--hero-yellow);
+
+	/* box-shadow: none;
+	border: 1px solid var(--hero-yellow); */
+
+	color: #dca83e;
+	background: linear-gradient(180deg, rgba(18, 18, 16, 0.94), rgba(8, 9, 8, 0.96));
+	border: 1px solid rgba(218, 165, 53, 0.78);
+	box-shadow:
+		inset 0 0 5px rgba(224, 174, 59, 0.06),
+		0 0 5px rgba(224, 174, 59, 0.05);
+}
+.show-card__cta.ghost-button:hover {
+	color: #f0c65c;
+	border-color: rgba(238, 185, 60, 0.95);
+	background: linear-gradient(180deg, rgba(41, 32, 13, 0.96), rgba(15, 13, 8, 0.98));
+	box-shadow: 0 0 8px rgba(220, 165, 46, 0.12);
+}
+.show-card__cta.ghost-button:active {
+	background: linear-gradient(180deg, rgba(41, 32, 13, 0.96), rgba(15, 13, 8, 0.98));
 }
 
 /* ── About view (nested inside subpage card 8) ── */
