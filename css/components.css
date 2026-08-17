@@ -20,7 +20,7 @@
 	position: relative;
 	flex: 1;
 	/* max-width: 28px; */
-	max-width: clamp(28px, 8vw, 72px);
+	max-width: clamp(28px, 8vw, 120px);
 	height: 100%;
 	display: flex;
 	align-items: center;
@@ -33,7 +33,7 @@
 }
 .progress-nav__item.is-active {
 	max-width: 38px;
-	max-width: clamp(38px, 10vw, 70px);
+	max-width: clamp(38px, 11vw, 130px);
 }
 .progress-nav__bar {
 	width: 100%;
