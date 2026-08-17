@@ -1179,7 +1179,7 @@
 	font-size: clamp(9px, 2.5cqw, 16px);
 	padding: 5px 14px;
 	box-shadow: none;
-	border: 1px solid var(--hero-yellow)
+	border: 1px solid var(--hero-yellow);
 }
 
 /* ── About view (nested inside subpage card 8) ── */

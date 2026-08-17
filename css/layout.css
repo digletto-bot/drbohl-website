@@ -186,37 +186,23 @@
 	   snapping. */
 	--edge-fade: 0;
 	transition: --edge-fade 0.25s ease;
-	/* An S-curve (smoothstep-ish) rather than a straight 2-stop linear
-	   ramp: a plain linear alpha fade reads as an abrupt dark vignette on
-	   light/bright source images, since the mask reveals the near-black
-	   app background underneath. Easing the alpha in and out over a wider
-	   180px band keeps that blend gradual regardless of the image's own
-	   brightness. */
+	/* A straight 2-stop linear ramp per side. An earlier version added
+	   intermediate stops to ease the alpha in/out, but that piecewise
+	   ramp showed up as visible banding at each stop boundary — a plain
+	   linear fade over the full 180px looks cleaner. */
 	-webkit-mask-image: linear-gradient(
 		to right,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 0,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) 45px,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) 90px,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) 135px,
-		rgba(10, 10, 10, 1) 180px,
-		rgba(10, 10, 10, 1) calc(100% - 180px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 100%
+		rgba(31, 31, 31, calc(1 - var(--edge-fade) * 1)) 0,
+		rgba(31, 31, 31, 1) 180px,
+		rgba(31, 31, 31, 1) calc(100% - 180px),
+		rgba(31, 31, 31, calc(1 - var(--edge-fade) * 1)) 100%
 	);
 	mask-image: linear-gradient(
 		to right,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 0,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) 45px,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) 90px,
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) 135px,
-		rgba(10, 10, 10, 1) 180px,
-		rgba(10, 10, 10, 1) calc(100% - 180px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.15)) calc(100% - 135px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.5)) calc(100% - 90px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 0.85)) calc(100% - 45px),
-		rgba(10, 10, 10, calc(1 - var(--edge-fade) * 1)) 100%
+		rgba(31, 31, 31, calc(1 - var(--edge-fade) * 1)) 0,
+		rgba(31, 31, 31, 1) 180px,
+		rgba(31, 31, 31, 1) calc(100% - 180px),
+		rgba(31, 31, 31, calc(1 - var(--edge-fade) * 1)) 100%
 	);
 }
 .title-card__image.has-edge-fade {
