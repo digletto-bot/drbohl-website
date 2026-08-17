@@ -1049,7 +1049,43 @@
    without the banner's parallelogram clip-path and skew, since these
    cards are plain rectangles. Sized off the card's own inline size
    (cqw) rather than the viewport (vw, as the single-column Kabarett
-   banner uses) so type scales correctly in the 2-column grid too. ── */
+   banner uses) so type scales correctly in the 2-column grid too. ──
+
+   Cinematic metallic-gold palette (Showtime only): SHOWTIME's own title
+   is the brightest gold, section headings a level down in muted
+   bronze-gold, the CTA a restrained engraved-outline gold, and the
+   card border/divider accents barely-visible — deliberately not all
+   the same flat --hero-yellow, to build a visual hierarchy. ── */
+
+.subpage-card[aria-label='Showtime'] {
+	background:
+		radial-gradient(
+			ellipse at 50% 35%,
+			rgba(63, 48, 21, 0.08) 0%,
+			rgba(28, 23, 13, 0.035) 32%,
+			transparent 62%
+		),
+		linear-gradient(180deg, #060707 0%, #090a09 42%, #0b0c0b 68%, #070808 100%);
+}
+
+.subpage-card[aria-label='Showtime'] .subpage-overlay__title {
+	color: transparent;
+	background: linear-gradient(
+		180deg,
+		#f8d66a 0%,
+		#e9b640 23%,
+		#c98a25 50%,
+		#e8b442 72%,
+		#b97918 100%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow:
+		0 2px 0 rgba(76, 43, 4, 0.45),
+		0 5px 10px rgba(0, 0, 0, 0.5),
+		0 0 12px rgba(224, 169, 48, 0.08);
+}
 
 .show-section-title {
 	display: flex;
@@ -1061,7 +1097,12 @@
 	font-weight: 700;
 	letter-spacing: 0.03em;
 	text-transform: uppercase;
-	color: var(--hero-yellow);
+	color: transparent;
+	background: linear-gradient(180deg, #dfb75c 0%, #c4933c 55%, #aa7727 100%);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
 }
 
 .subpage-overlay__title + .show-section-title {
@@ -1073,13 +1114,15 @@
 	content: '';
 	width: clamp(50px, 12vw, 120px);
 	height: 1px;
-}
-
-.show-section-title::before {
-	background: linear-gradient(to right, transparent, rgba(242, 193, 46, 0.55));
-}
-.show-section-title::after {
-	background: linear-gradient(to left, transparent, rgba(242, 193, 46, 0.55));
+	opacity: 0.75;
+	background: linear-gradient(
+		90deg,
+		transparent 0%,
+		rgba(188, 137, 43, 0.2) 30%,
+		rgba(205, 154, 55, 0.65) 50%,
+		rgba(188, 137, 43, 0.2) 70%,
+		transparent 100%
+	);
 }
 
 .show-grid {
@@ -1178,8 +1221,21 @@
 	left: 14px;
 	font-size: clamp(9px, 2.5cqw, 16px);
 	padding: 5px 14px;
-	box-shadow: none;
-	border: 1px solid var(--hero-yellow);
+	color: #dca83e;
+	background: linear-gradient(180deg, rgba(18, 18, 16, 0.94), rgba(8, 9, 8, 0.96));
+	border: 1px solid rgba(218, 165, 53, 0.78);
+	box-shadow:
+		inset 0 0 5px rgba(224, 174, 59, 0.06),
+		0 0 5px rgba(224, 174, 59, 0.05);
+}
+.show-card__cta.ghost-button:hover {
+	color: #f0c65c;
+	border-color: rgba(238, 185, 60, 0.95);
+	background: linear-gradient(180deg, rgba(41, 32, 13, 0.96), rgba(15, 13, 8, 0.98));
+	box-shadow: 0 0 8px rgba(220, 165, 46, 0.12);
+}
+.show-card__cta.ghost-button:active {
+	background: linear-gradient(180deg, rgba(41, 32, 13, 0.96), rgba(15, 13, 8, 0.98));
 }
 
 /* ── About view (nested inside subpage card 8) ── */
