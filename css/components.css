@@ -539,6 +539,7 @@
 	margin: 24px var(--side-pad) 48px;
 	aspect-ratio: 9 / 16;
 	overflow: hidden;
+	border-radius: 2px;
 }
 .sm-feature__img {
 	position: absolute;
@@ -1049,24 +1050,99 @@
    cards are plain rectangles. Sized off the card's own inline size
    (cqw) rather than the viewport (vw, as the single-column Kabarett
    banner uses) so type scales correctly in the 2-column grid too. ── */
+
+.show-section-title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5em;
+	padding: 0 var(--side-pad);
+	font-size: var(--fs-body-large);
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	color: var(--hero-yellow);
+}
+
+.subpage-overlay__title + .show-section-title {
+	padding-top: 1em;
+}
+
+.show-section-title::before,
+.show-section-title::after {
+	content: '';
+	width: clamp(50px, 12vw, 120px);
+	height: 1px;
+}
+
+.show-section-title::before {
+	background: linear-gradient(to right, transparent, rgba(242, 193, 46, 0.55));
+}
+.show-section-title::after {
+	background: linear-gradient(to left, transparent, rgba(242, 193, 46, 0.55));
+}
+
 .show-grid {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 21px;
-	padding: 20px var(--side-pad) 48px;
+	padding: 16px var(--side-pad) 48px;
 }
 @media (min-width: 600px) {
 	.show-grid {
 		grid-template-columns: 1fr 1fr;
 	}
 }
+
+.glow-border {
+	box-shadow:
+		0 0 14px rgba(242, 193, 46, 0.07),
+		0 5px 20px rgba(0, 0, 0, 0.45);
+	transition:
+		box-shadow 250ms ease,
+		transform 250ms ease;
+}
+
+.glow-border:not(.sm-feature):hover {
+	box-shadow:
+		0 0 18px rgba(242, 193, 46, 0.14),
+		0 7px 24px rgba(0, 0, 0, 0.55);
+}
+
+.glow-border::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	border-radius: inherit;
+
+	border: 1px solid transparent;
+
+	background: linear-gradient(
+			135deg,
+			rgba(242, 193, 46, 0.45),
+			rgba(242, 193, 46, 0.1) 35%,
+			rgba(255, 220, 100, 0.22) 65%,
+			rgba(242, 193, 46, 0.06)
+		)
+		border-box;
+
+	/* only show the background in the border area */
+	mask:
+		linear-gradient(#000 0 0) padding-box,
+		linear-gradient(#000 0 0);
+	mask-composite: exclude;
+}
+
 .show-card {
 	position: relative;
+	border-radius: 4px;
+	overflow: hidden;
 	container-type: inline-size;
 	aspect-ratio: 16 / 9;
-	overflow: hidden;
 	background: #111;
 }
+
 .show-card__img {
 	position: absolute;
 	inset: 0;
