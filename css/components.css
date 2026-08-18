@@ -416,7 +416,7 @@
 	outline: 2px solid var(--hero-yellow);
 	outline-offset: 6px;
 }
-@media /* (min-height: 1000px) and */(min-width: 1000px) {
+@media (min-width: 1000px) {
 	.hero-cutout-button {
 		left: 50%;
 		right: unset;
