@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0a0a0a" />
-  <meta name="description" content="Dr.Bohl — Kabarettist, Entertainer, Comedian." />
+  <meta name="description" content="Dr.Bohl — Kabarettist, Entertainer und Comedian aus Österreich. Kabarett-Tickets, Termine, TV-Auftritte, Musik und mehr." />
   <meta name="robots" content="index, follow" />
 
   <!-- Preload only the critical above-the-fold font: DrukCond, which the
@@ -16,23 +16,83 @@
   <link rel="preload" href="assets/fonts/DrukCond-Super.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Open Graph / Twitter card. Image and text reuse existing approved
-       assets/copy only — no new content. og:url and canonical are left as
-       placeholders: the final production domain was not provided, and
-       hard-coding a guess would be worse than omitting it. Fill in
-       <PRODUCTION_DOMAIN> before deploying to production. -->
+       assets/copy only — no new content. router.js keeps <title>, this
+       description, og:*, twitter:*, and the canonical link below in sync
+       with the active slide on navigation (see ROUTE_META in router.js);
+       these tags are just the Home/initial-paint values. -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Dr.Bohl" />
-  <meta property="og:description" content="Dr.Bohl — Kabarettist, Entertainer, Comedian." />
-  <meta property="og:image" content="https://<PRODUCTION_DOMAIN>/assets/images/meta/og-home.jpg" />
+  <meta property="og:title" content="Dr.Bohl — Kabarett Tickets, Entertainer, Comedian" />
+  <meta property="og:description" content="Dr.Bohl — Kabarettist, Entertainer und Comedian aus Österreich. Kabarett-Tickets, Termine, TV-Auftritte, Musik und mehr." />
+  <meta property="og:url" content="https://www.drbohl.at/" />
+  <meta property="og:image" content="https://www.drbohl.at/assets/images/meta/og-home.jpg" />
   <meta property="og:image:width" content="1920" />
   <meta property="og:image:height" content="1080" />
-  <!-- <link rel="canonical" href="https://<PRODUCTION_DOMAIN>/" /> -->
+  <link rel="canonical" href="https://www.drbohl.at/" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Dr.Bohl" />
-  <meta name="twitter:description" content="Dr.Bohl — Kabarettist, Entertainer, Comedian." />
-  <meta name="twitter:image" content="https://<PRODUCTION_DOMAIN>/assets/images/meta/og-home.jpg" />
+  <meta name="twitter:title" content="Dr.Bohl — Kabarett Tickets, Entertainer, Comedian" />
+  <meta name="twitter:description" content="Dr.Bohl — Kabarettist, Entertainer und Comedian aus Österreich. Kabarett-Tickets, Termine, TV-Auftritte, Musik und mehr." />
+  <meta name="twitter:image" content="https://www.drbohl.at/assets/images/meta/og-home.jpg" />
 
-  <title>Dr.Bohl</title>
+  <title>Dr.Bohl — Kabarett Tickets, Entertainer, Comedian</title>
+
+  <!-- Structured data: who Dr.Bohl is + the site's own identity/socials.
+       Doesn't guarantee sitelinks (Google generates those algorithmically
+       from crawlable site structure — see the real <a href> nav below),
+       but gives Google unambiguous entity/navigation signal to work from. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://www.drbohl.at/#person",
+        "name": "Dr.Bohl",
+        "url": "https://www.drbohl.at/",
+        "jobTitle": ["Kabarettist", "Entertainer", "Comedian"],
+        "sameAs": [
+          "https://www.facebook.com/share/1D3Cdf1hv9/",
+          "https://www.instagram.com/dr.bohl/",
+          "https://www.tiktok.com/@dr.bohl",
+          "https://www.youtube.com/@DrBohl",
+          "https://open.spotify.com/artist/3521X7UerANEaB3utPets1"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.drbohl.at/#website",
+        "url": "https://www.drbohl.at/",
+        "name": "Dr.Bohl",
+        "publisher": { "@id": "https://www.drbohl.at/#person" },
+        "inLanguage": "de"
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://www.drbohl.at/#nav",
+        "name": [
+          "Kabarett",
+          "Social Media",
+          "Showtime",
+          "Musik",
+          "Podcast",
+          "Shop",
+          "Bohl Entertainment",
+          "Kontakt"
+        ],
+        "url": [
+          "https://www.drbohl.at/kabarett",
+          "https://www.drbohl.at/social-media",
+          "https://www.drbohl.at/showtime",
+          "https://www.drbohl.at/musik",
+          "https://www.drbohl.at/podcast",
+          "https://www.drbohl.at/shop",
+          "https://www.drbohl.at/bohl-entertainment",
+          "https://www.drbohl.at/contact"
+        ]
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
@@ -73,15 +133,15 @@
 <div id="slider-track" role="region" aria-label="Dr.Bohl Navigation">
 
   <nav class="progress-nav" aria-label="Slide navigation">
-    <button class="progress-nav__item is-active"  aria-label="Home"             aria-current="true"  data-index="0"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Kabarett"         aria-current="false" data-index="1"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Social Media"     aria-current="false" data-index="2"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Showtime"         aria-current="false" data-index="3"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Musik"            aria-current="false" data-index="4"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Podcast"          aria-current="false" data-index="5"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Shop"          aria-current="false" data-index="6"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Bohl Entertainment" aria-current="false" data-index="7"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item"            aria-label="Contact"          aria-current="false" data-index="8"><span class="progress-nav__bar"></span></button>
+    <a class="progress-nav__item is-active"  href="/"                    aria-label="Home"             aria-current="true"  data-index="0"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/kabarett"            aria-label="Kabarett"         aria-current="false" data-index="1"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/social-media"        aria-label="Social Media"     aria-current="false" data-index="2"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/showtime"            aria-label="Showtime"         aria-current="false" data-index="3"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/musik"               aria-label="Musik"            aria-current="false" data-index="4"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/podcast"             aria-label="Podcast"          aria-current="false" data-index="5"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/shop"                aria-label="Shop"          aria-current="false" data-index="6"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/bohl-entertainment"  aria-label="Bohl Entertainment" aria-current="false" data-index="7"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item"            href="/contact"             aria-label="Contact"          aria-current="false" data-index="8"><span class="progress-nav__bar"></span></a>
   </nav>
 
   <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="full-screen-menu">
@@ -449,15 +509,15 @@
       </div>
       <div id="menu-card-title-wrapper" class="fullscreen-menu__card-title-wrapper">
         <div class="fullscreen-menu__card-title-container">
-          <button type="button" class="menu-card-title">Home</button>
-          <button type="button" class="menu-card-title">Kabarett</button>
-          <button type="button" class="menu-card-title">Socials</button>
-          <button type="button" class="menu-card-title">Showtime</button>
-          <button type="button" class="menu-card-title">Musik</button>
-          <button type="button" class="menu-card-title">Podcast</button>
-          <button type="button" class="menu-card-title">Shop</button>
-          <button type="button" class="menu-card-title">Bohl Ent.</button>
-          <button type="button" class="menu-card-title">Contact</button>
+          <a class="menu-card-title" href="/">Home</a>
+          <a class="menu-card-title" href="/kabarett">Kabarett</a>
+          <a class="menu-card-title" href="/social-media">Socials</a>
+          <a class="menu-card-title" href="/showtime">Showtime</a>
+          <a class="menu-card-title" href="/musik">Musik</a>
+          <a class="menu-card-title" href="/podcast">Podcast</a>
+          <a class="menu-card-title" href="/shop">Shop</a>
+          <a class="menu-card-title" href="/bohl-entertainment">Bohl Ent.</a>
+          <a class="menu-card-title" href="/contact">Contact</a>
         </div>
       </div>
     </div>
@@ -473,15 +533,15 @@
   <div class="subpage-overlay__bar"></div>
 
   <nav class="progress-nav" aria-label="Slide navigation">
-    <button class="progress-nav__item" aria-label="Home" data-index="0"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Kabarett" data-index="1"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Social Media" data-index="2"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Showtime" data-index="3"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Musik" data-index="4"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Podcast" data-index="5"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Shop" data-index="6"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Bohl Entertainment" data-index="7"><span class="progress-nav__bar"></span></button>
-    <button class="progress-nav__item" aria-label="Contact" data-index="8"><span class="progress-nav__bar"></span></button>
+    <a class="progress-nav__item" href="/"                   aria-label="Home" data-index="0"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/kabarett"           aria-label="Kabarett" data-index="1"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/social-media"       aria-label="Social Media" data-index="2"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/showtime"           aria-label="Showtime" data-index="3"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/musik"              aria-label="Musik" data-index="4"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/podcast"             aria-label="Podcast" data-index="5"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/shop"                aria-label="Shop" data-index="6"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/bohl-entertainment"  aria-label="Bohl Entertainment" data-index="7"><span class="progress-nav__bar"></span></a>
+    <a class="progress-nav__item" href="/contact"              aria-label="Contact" data-index="8"><span class="progress-nav__bar"></span></a>
   </nav>
 
   <button class="menu-button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="full-screen-menu">

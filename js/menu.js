@@ -85,9 +85,12 @@ class Menu {
 
 		// Title-list clicks (desktop side column) — always jump straight to
 		// that slide, unlike a card click which re-centers first if it isn't
-		// already the active one.
+		// already the active one. These are real <a href> elements (crawlable
+		// deep links); preventDefault keeps the actual navigation as the
+		// in-page slider transition instead of a full page load.
 		this.titles.forEach((title, i) => {
-			title.addEventListener('click', () => {
+			title.addEventListener('click', (e) => {
+				e.preventDefault();
 				this.close();
 				setTimeout(() => this.slider.goTo(i), 80);
 			});

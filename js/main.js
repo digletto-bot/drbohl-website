@@ -176,10 +176,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	window.slider = slider;
 	window.subpageSlider = subpageSlider;
 
-	/* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ── */
+	/* ── Progress nav clicks (title-card navbar + subpage-overlay navbar) ──
+	   These are real <a href> elements (crawlable deep links), but the
+	   actual navigation is still the in-page slider transition — so
+	   preventDefault stops the browser from also doing a full page load. */
 	document.querySelectorAll('.progress-nav').forEach((nav) => {
 		nav.querySelectorAll('.progress-nav__item').forEach((item, i) => {
-			item.addEventListener('click', () => slider.goTo(i));
+			item.addEventListener('click', (e) => {
+				e.preventDefault();
+				slider.goTo(i);
+			});
 		});
 	});
 
