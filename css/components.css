@@ -403,7 +403,7 @@
 	left: 10%;
 	right: 10%;
 	top: 43%;
-	bottom: 19%;
+	bottom: 12%;
 	z-index: 5;
 	padding: 0;
 	margin: 0;
@@ -415,6 +415,14 @@
 .hero-cutout-button:focus-visible {
 	outline: 2px solid var(--hero-yellow);
 	outline-offset: 6px;
+}
+@media /* (min-height: 1000px) and */(min-width: 1000px) {
+	.hero-cutout-button {
+		left: 50%;
+		right: unset;
+		width: 900px;
+		transform: translateX(-50%);
+	}
 }
 
 /* ── Subpage overlay: floating Close button — same treatment and
