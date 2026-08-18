@@ -20,7 +20,7 @@
 	position: relative;
 	flex: 1;
 	/* max-width: 28px; */
-	max-width: clamp(28px, 8vw, 120px);
+	max-width: clamp(28px, 9vw, 120px);
 	height: 100%;
 	display: flex;
 	align-items: center;
