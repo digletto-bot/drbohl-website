@@ -1747,7 +1747,6 @@
 .be-section {
 	position: relative;
 	padding: 56px var(--side-pad);
-	max-width: 960px;
 	margin: 0 auto;
 	overflow: hidden;
 }
