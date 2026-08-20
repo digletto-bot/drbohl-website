@@ -95,6 +95,10 @@
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/animations.css" />
+
+  <!-- Plausible Analytics — see index.html for rationale. -->
+  <script>window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+  <script defer data-domain="www.drbohl.at" src="https://plausible.io/js/script.manual.js"></script>
 </head>
 <body>
 <!-- Social icon sprite, inlined (not an external file reference) so the
@@ -646,7 +650,7 @@
 
         <section class="kab-newsletter">
           <p class="kab-newsletter__text">Du willst nicht 24/7 die Seite refreshen für Tickets als wär's ein Coldplay Konzert?<br>Tickets sollten kein Privileg sein, sondern ein Grundrecht!</p>
-          <form class="kab-signup" onsubmit="event.preventDefault();">
+          <form id="newsletter-form" class="kab-signup">
             <span class="kab-signup__label">Möld di an und I möld mi</span>
             <div class="kab-signup__row">
               <input id="newsletter-input" type="email" placeholder="deine@email.at" required />

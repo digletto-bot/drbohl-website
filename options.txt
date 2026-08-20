@@ -77,3 +77,24 @@ Summary of changes (146bde0f -> current, 145 commits, Jul 29 - Aug 5)
 
 Net effect: not incremental tweaking - a full front-end redesign (menu, hero interactions, styling
 system) plus three new content sections, backed by a proper responsive-image pipeline.
+
+
+Summary of changes (9450811 -> current, Aug 12 - Aug 20)
+- Bugfixes
+  - Input fields no longer interact with slider
+  - Embedded iframes no longer consume pointer events -> Moving the cursor over embeds while dragging slider works properly now
+- Menu improvements
+  - Decreased size of menu elements to improve visibility of adjacent cards (Better UX)
+  - New feature (desktop): Title column on right side allows instant access to any page
+  - New feature (mobile): As long as contact card is not visible on screen, a button with direct access to contact is visible
+- Tour dates page overhaul
+  - Improved layout to show more content on small screens ("Tour Dates" header shrinks on scoll and no longer breaks onto 2 lines)
+  - Implemented 3 different ticket states in frontend and google sheets backend (Normal, Restkarten, Sold-out)
+  - Implemented "additional info" textcontent in frontend and google sheets backend
+- First musik entry is open on page start
+- Schabernack content
+  - Removed slide
+  - Moved content into subsection of showtime
+  - Style overhaul for showtime page to accomodate new content
+- Shop unavailable animations improved -> badges scale up and center on hover
+- Miscellaneous adjustments (e.g. Removed "interview" suffix from names in podcasts)

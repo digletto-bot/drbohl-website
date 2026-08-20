@@ -1,3 +1,5 @@
+import { trackPageview } from './analytics.js';
+
 // Per-route <title> / meta description, keyed by slide index (same order
 // as the title-card aria-labels in index.html). Drives search-snippet
 // differentiation per section — reviewed/approved copy, not placeholder text.
@@ -91,13 +93,21 @@ class Router {
 		// `window.router` has been assigned — i.e. after this constructor
 		// has already returned. So the very first paint's meta never runs
 		// through onSlideChange; apply it directly here instead.
-		this._applyMeta(index > 0 ? index : 0);
+		const initialIndex = index > 0 ? index : 0;
+		this._applyMeta(initialIndex);
+		trackPageview(this._pathFor(initialIndex));
 	}
 
 	_convertToPathName = (label) => label.replace(/\s/g, '-').toLowerCase();
 
+	_pathFor(idx) {
+		const pathComponent = this.routes[idx].path ? `/${this.routes[idx].path}` : '';
+		return `${this.basePath}${pathComponent}` || '/';
+	}
+
 	onSlideChange(idx) {
 		this._applyMeta(idx);
+		trackPageview(this._pathFor(idx));
 
 		// Skip while developing locally so we don't need redirect rules for a dev server.
 		const { hostname } = window.location;

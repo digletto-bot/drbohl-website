@@ -9,6 +9,7 @@ import Slider from './slider.js';
 import Router from './router.js';
 import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
+import { trackEvent } from './analytics.js';
 import {
 	fitText,
 	updateProgressNav,
@@ -25,6 +26,8 @@ const MUSIK_SLIDE_INDEX = 4;
 const PODCAST_SLIDE_INDEX = 5;
 const BOHL_ENTERTAINMENT_SLIDE_INDEX = 7;
 const CONTACT_SLIDE_INDEX = 8;
+
+const SOCIAL_PLATFORMS = new Set(['Facebook', 'Instagram', 'TikTok', 'YouTube', 'Spotify']);
 
 let aboutInitialized = false;
 function ensureAboutInit() {
@@ -196,7 +199,41 @@ document.addEventListener('DOMContentLoaded', () => {
 	/* ── Contact form (subpage card 8) ── */
 	document.getElementById('contact-form')?.addEventListener('submit', (e) => {
 		e.preventDefault();
+		trackEvent('Contact Form Submit');
 		closeSubpage();
+	});
+
+	/* ── Newsletter signup (Kabarett subpage) ── */
+	document.getElementById('newsletter-form')?.addEventListener('submit', (e) => {
+		e.preventDefault();
+		trackEvent('Newsletter Signup');
+	});
+
+	/* ── Analytics: outbound ticket/social links + embed badges.
+	   Delegated on document since ticket links (.td-btn) are injected
+	   asynchronously by tourDates.js once the Tour Dates subpage is opened. ── */
+	document.addEventListener('click', (e) => {
+		const ticketLink = e.target.closest('.td-btn');
+		if (ticketLink) {
+			trackEvent('Ticket Click', {
+				venue: ticketLink.getAttribute('aria-label')?.replace(/^Tickets für /, '') || '',
+			});
+			return;
+		}
+
+		const socialLink = e.target.closest('a[aria-label]');
+		if (socialLink && SOCIAL_PLATFORMS.has(socialLink.getAttribute('aria-label'))) {
+			trackEvent('Social Click', { platform: socialLink.getAttribute('aria-label') });
+			return;
+		}
+
+		const spotifyBadge = e.target.closest('.spotify-badge');
+		if (spotifyBadge) {
+			trackEvent('Embed Click', {
+				type: 'Spotify',
+				label: spotifyBadge.getAttribute('aria-label') || '',
+			});
+		}
 	});
 
 	window.goToTickets = () => subpageSlider.goTo(0);
@@ -290,7 +327,34 @@ document.addEventListener('DOMContentLoaded', () => {
 	} else {
 		setTimeout(preloadMenuCardImages, 1500);
 	}
+
+	initReelImpressionTracking();
 });
+
+/* ── Instagram reel embeds: track a view once per reel as it scrolls into
+   view. embed.js (loaded at the end of the page) replaces each blockquote's
+   contents with an iframe in place, so the element keeps occupying the same
+   layout space and IntersectionObserver keeps working against it. ── */
+function initReelImpressionTracking() {
+	const reels = document.querySelectorAll('.instagram-media[data-instgrm-permalink]');
+	if (!reels.length || !('IntersectionObserver' in window)) return;
+
+	const observer = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((entry) => {
+				if (!entry.isIntersecting) return;
+				const match = entry.target
+					.getAttribute('data-instgrm-permalink')
+					?.match(/\/reel\/([^/?]+)/);
+				trackEvent('Embed View', { type: 'Instagram Reel', item: match?.[1] || '' });
+				observer.unobserve(entry.target);
+			});
+		},
+		{ threshold: 0.5 }
+	);
+
+	reels.forEach((reel) => observer.observe(reel));
+}
 
 /* ── Loading screen: fades out once fonts are ready and fitText has run ── */
 function hideLoadingScreen() {
@@ -511,10 +575,12 @@ function initDiscography() {
 				const videoEl = item.querySelector('.disco__video');
 				if (yt && videoEl) {
 					videoEl.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${yt}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+					trackEvent('Embed Open', { type: 'YouTube', item: item.dataset.yt });
 				}
 				if (sp) {
 					item.querySelector('.disco__spotify').innerHTML =
 						`<iframe src="https://open.spotify.com/embed/${spKind}/${sp}?theme=0" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
+					trackEvent('Embed Open', { type: 'Spotify', item: sp });
 				}
 				item.dataset.loaded = 'true';
 			}
