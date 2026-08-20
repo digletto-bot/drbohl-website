@@ -613,6 +613,18 @@
 	color: var(--body-text);
 }
 
+.reel-wrapper {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(326px, 1fr));
+	gap: 16px;
+	margin: 0 var(--side-pad) 48px;
+}
+.reel-wrapper .instagram-media {
+	width: 100% !important;
+	min-width: 0;
+	overflow: hidden;
+}
+
 @media (min-width: 600px) {
 	.sm-feature {
 		aspect-ratio: 16 / 9;
@@ -3034,6 +3046,18 @@ a.shop-product__image:active .shop-product__image-badge--available {
 @media (min-width: 600px) {
 	.about-overlay__body {
 		max-width: 650px;
+	}
+}
+
+@media (min-width: 1000px) {
+	.sm-feature__img {
+		position: relative;
+		aspect-ratio: 2.1;
+		height: auto;
+		object-position: bottom;
+	}
+	.sm-feature {
+		aspect-ratio: auto;
 	}
 }
 
