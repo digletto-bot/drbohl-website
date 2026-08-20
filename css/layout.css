@@ -209,6 +209,16 @@
 	--edge-fade: 1;
 }
 
+/* Edge fade disabled for these title cards — their images render full-bleed
+   with no flat background showing at the sides, so the mask has nothing to
+   blend and was only adding needless cost. */
+.title-card[aria-label='Podcast'] .title-card__image,
+.title-card[aria-label='Shop'] .title-card__image,
+.title-card[aria-label='Bohl Entertainment'] .title-card__image {
+	-webkit-mask-image: none;
+	mask-image: none;
+}
+
 /* ── Gradient overlay ── */
 .title-card__overlay {
 	position: absolute;
