@@ -566,8 +566,8 @@
    legible over whatever's behind it in the photo. */
 .sm-feature {
 	position: relative;
-	margin: 24px var(--side-pad) 48px;
-	aspect-ratio: 9 / 16;
+	margin: 24px var(--side-pad) clamp(16px, 3vw, 36px);
+	padding: var(--side-pad);
 	overflow: hidden;
 	border-radius: 2px;
 }
@@ -580,14 +580,10 @@
 	display: block;
 }
 .sm-feature__overlay {
-	position: absolute;
-	top: 16px;
-	left: 16px;
-	right: 16px;
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
+	align-items: center;
 	gap: 14px;
 }
 /* Overrides .social-icons' own sizing (100%/514px wide — built for a
@@ -604,7 +600,7 @@
 .sm-feature__text {
 	align-self: stretch;
 	text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-	text-align: right;
+	text-align: center;
 }
 .sm-feature__text p {
 	margin: 0;
@@ -628,28 +624,22 @@
 @media (min-width: 600px) {
 	.sm-feature {
 		aspect-ratio: 16 / 9;
+		padding: 0;
 	}
 	.sm-feature__overlay {
+		position: absolute;
 		top: 24px;
 		right: 24px;
+		bottom: 24px;
 		left: auto;
 		width: min(46%, 460px);
 	}
-}
-
-@media (max-width: 599px) {
 	.sm-feature__text {
-		background: rgba(10, 10, 10, 0.9);
-		padding: 1.2em;
-		position: absolute;
+		padding-right: 0.5em;
 		left: 0;
 		right: 0;
 		bottom: 0;
-		text-align: center;
-	}
-	.sm-feature__overlay {
-		inset: 0;
-		padding-top: 18px;
+		text-align: right;
 	}
 	.social-icons.sm-feature__icons {
 		width: 100%;
