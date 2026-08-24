@@ -1509,80 +1509,164 @@
 
 /* Tour list */
 /* ══════════════════════════════════════════════
-   Tour dates — filter row
+   Tour dates — filter (fold-out selects)
    ══════════════════════════════════════════════ */
 .td-filter {
-	padding: 0 var(--side-pad) 4px;
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
 	gap: 8px;
+	padding: 0 var(--side-pad) 10px;
 	flex-shrink: 0;
-}
-.td-filter__row {
-	display: flex;
-	gap: 8px;
-	/* Horizontal scroll rather than wrapping: with many regions a
-	   wrapping row would push the first tour date below the fold on a
-	   phone, which is the opposite of what a filter is for. */
-	overflow-x: auto;
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-	/* Bleeds to the card edges so chips scroll out to the very edge
-	   instead of stopping short inside the padding. */
-	margin-inline: calc(var(--side-pad) * -1);
-	padding-inline: var(--side-pad);
-	padding-bottom: 2px;
-	scroll-padding-inline: var(--side-pad);
-}
-.td-filter__row::-webkit-scrollbar {
-	display: none;
-}
-.td-filter__row--regions {
-	/* Visibly subordinate to the country row. */
-	opacity: 0.9;
+	/* Panels are absolutely positioned against these, and must layer
+	   above the rows below without clipping. */
+	position: relative;
+	z-index: 3;
 }
 
-.td-chip {
-	flex: 0 0 auto;
-	padding: 7px 14px;
-	border-radius: 999px;
-	border: 1px solid rgba(245, 245, 240, 0.22);
-	background: transparent;
-	color: var(--caption-grey);
+.td-select {
+	position: relative;
+	/* Share the row evenly, but never get so narrow the label is
+	   unreadable — below that they wrap to the next line. */
+	flex: 1 1 clamp(140px, 30%, 200px);
+	min-width: 0;
+}
+
+.td-select__button {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-radius: 10px;
+	border: 1px solid rgba(245, 245, 240, 0.2);
+	background: rgba(255, 255, 255, 0.03);
+	color: var(--light-text);
 	font-family: var(--font-body);
-	font-size: var(--fs-body-small-2);
-	font-weight: 600;
-	letter-spacing: 0.04em;
-	line-height: 1;
-	white-space: nowrap;
+	text-align: left;
 	cursor: pointer;
 	transition:
-		color 180ms ease,
 		border-color 180ms ease,
 		background 180ms ease;
 	-webkit-tap-highlight-color: transparent;
 }
-.td-filter__row--regions .td-chip {
-	padding: 6px 12px;
-	font-weight: 500;
+.td-select__caption {
+	flex: 0 0 auto;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--disabled-grey);
 }
+.td-select__value {
+	flex: 1 1 auto;
+	min-width: 0;
+	font-size: var(--fs-body-small-2);
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	/* Long Bundesland names must not stretch the control. */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: right;
+}
+.td-select__chevron {
+	flex: 0 0 auto;
+	width: 12px;
+	height: 12px;
+	color: var(--caption-grey);
+	transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.td-select.is-open .td-select__chevron {
+	transform: rotate(180deg);
+}
+
 @media (hover: hover) and (pointer: fine) {
-	.td-chip:hover {
-		color: var(--light-text);
-		border-color: rgba(245, 245, 240, 0.45);
+	.td-select__button:hover {
+		border-color: rgba(245, 245, 240, 0.4);
+		background: rgba(255, 255, 255, 0.06);
 	}
 }
-.td-chip.is-active {
-	color: var(--dark-text);
-	background: var(--hero-yellow);
+.td-select.is-open .td-select__button {
 	border-color: var(--hero-yellow);
 }
-.td-filter__row--regions .td-chip.is-active {
-	/* Outline rather than solid fill, so the active region reads as a
-	   refinement of the active country instead of competing with it. */
-	color: var(--hero-yellow);
-	background: transparent;
+/* An active narrowing is worth seeing at a glance without having to
+   read every control. */
+.td-select.is-filtered .td-select__button {
 	border-color: var(--hero-yellow);
+}
+.td-select.is-filtered .td-select__value {
+	color: var(--hero-yellow);
+}
+
+.td-select__panel {
+	position: absolute;
+	top: calc(100% + 6px);
+	left: 0;
+	right: 0;
+	z-index: 4;
+	display: flex;
+	flex-direction: column;
+	padding: 4px;
+	border-radius: 10px;
+	border: 1px solid rgba(245, 245, 240, 0.14);
+	background: #141414;
+	box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7);
+	max-height: 46vh;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	/* Collapsed state. Animating opacity/transform keeps this on the
+	   compositor; visibility (not display) so the transition can run. */
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-4px);
+	transition:
+		opacity 160ms ease,
+		transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+		visibility 0s linear 160ms;
+}
+.td-select.is-open .td-select__panel {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+	transition-delay: 0s;
+}
+
+.td-option {
+	display: block;
+	width: 100%;
+	padding: 9px 10px;
+	border: 0;
+	border-radius: 7px;
+	background: transparent;
+	color: var(--caption-grey);
+	font-family: var(--font-body);
+	font-size: var(--fs-body-small-2);
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	text-align: left;
+	cursor: pointer;
+	transition:
+		color 140ms ease,
+		background 140ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+@media (hover: hover) and (pointer: fine) {
+	.td-option:hover {
+		color: var(--light-text);
+		background: rgba(255, 255, 255, 0.06);
+	}
+}
+.td-option.is-active {
+	color: var(--dark-text);
+	background: var(--hero-yellow);
+	font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.td-select__panel,
+	.td-select__chevron {
+		transition: none;
+	}
 }
 
 .td-empty {
