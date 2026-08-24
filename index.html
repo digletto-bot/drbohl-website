@@ -567,12 +567,37 @@
           <div class="sp-eyebrow">Live Performances</div>
           <div class="sp-title">TOUR DATES</div>
         </div>
-        <!-- Filter row. Starts hidden and is only revealed by JS once
-             dates have loaded and their regions are known — a filter
-             bar sitting above a loading spinner would be dead UI. -->
+        <!-- Filter. Starts hidden and is revealed by JS only once dates
+             have loaded, since the options are built from the rendered
+             rows — a filter bar above a loading spinner would be dead
+             UI. Options are populated in js/tourDates.js. -->
         <div class="td-filter" id="tour-filter" hidden>
-          <div class="td-filter__row" role="group" aria-label="Nach Land filtern" id="tour-filter-countries"></div>
-          <div class="td-filter__row td-filter__row--regions" role="group" aria-label="Nach Bundesland filtern" id="tour-filter-regions"></div>
+          <div class="td-select" data-select="country" data-all-label="Alle Länder">
+            <button type="button" class="td-select__button" aria-expanded="false" aria-haspopup="listbox">
+              <span class="td-select__caption">Land</span>
+              <span class="td-select__value">Alle Länder</span>
+              <svg class="td-select__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="td-select__panel" role="listbox" aria-label="Land wählen"></div>
+          </div>
+
+          <div class="td-select" data-select="region" data-all-label="Alle Bundesländer">
+            <button type="button" class="td-select__button" aria-expanded="false" aria-haspopup="listbox">
+              <span class="td-select__caption">Bundesland</span>
+              <span class="td-select__value">Alle Bundesländer</span>
+              <svg class="td-select__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="td-select__panel" role="listbox" aria-label="Bundesland wählen"></div>
+          </div>
+
+          <div class="td-select" data-select="city" data-all-label="Alle Städte">
+            <button type="button" class="td-select__button" aria-expanded="false" aria-haspopup="listbox">
+              <span class="td-select__caption">Stadt</span>
+              <span class="td-select__value">Alle Städte</span>
+              <svg class="td-select__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="td-select__panel" role="listbox" aria-label="Stadt wählen"></div>
+          </div>
         </div>
         <div class="td-list" id="tour-list">
           <!-- Populated by JS from src/data/tourDates.js -->

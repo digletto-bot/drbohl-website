@@ -66,8 +66,9 @@ async function fetchTourDates() {
 
 /**
  * City → Bundesland lookup, resolved once per row at render time.
- * Filtering afterwards is pure DOM (rows carry data-country /
- * data-region), so switching a filter never refetches or re-renders.
+ * Filtering afterwards is pure DOM (rows carry data-country,
+ * data-region and data-city), so switching a filter never refetches
+ * or re-renders.
  *
  * IMPORTANT: this map is necessarily incomplete — it only knows the
  * cities listed here. An unmapped city resolves to '' and is treated
@@ -249,7 +250,7 @@ export async function renderTourDates(container) {
 				const btnEl = `<a href="${url}" class="${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}" draggable="false">${btnContent}</a>`;
 
 				return `
-        <div class="td-row" data-country="${country}" data-region="${region}">
+        <div class="td-row" data-country="${country}" data-region="${region}" data-city="${city}">
           <div class="td-time">
             <span class="td-date">${day}.${month}.</span>
             <span class="td-year">${year}</span>
@@ -321,101 +322,223 @@ function parseSheetDate(dateStr) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   FILTER — country, then Bundesland within that country
-   Filtering is pure DOM: rows already carry data-country and
-   data-region, so switching a filter never refetches and
-   never re-renders the list.
+   FILTER — three cascading fold-out selects
+   Land → Bundesland → Stadt.
+
+   Choosing a country narrows which Bundesländer and cities are
+   offered; choosing a Bundesland narrows the cities. The visitor can
+   stop at any level: pick a whole country, narrow to their region,
+   or go straight to their city.
+
+   Filtering is pure DOM — every row already carries data-country,
+   data-region and data-city — so changing a selection never refetches
+   and never re-renders the list.
    ══════════════════════════════════════════════════════════ */
 
 const COUNTRY_LABELS = { AT: 'Österreich', DE: 'Deutschland' };
+const ALL = '__all__';
 
-function chip(value, label, active) {
-	return `<button type="button" class="td-chip${active ? ' is-active' : ''}" data-value="${value}" aria-pressed="${active}">${label}</button>`;
+/**
+ * One fold-out select: a button showing the current value, and a
+ * panel of options revealed on click.
+ */
+class TourSelect {
+	/**
+	 * @param {HTMLElement} root - the .td-select wrapper
+	 * @param {(value: string) => void} onChange
+	 */
+	constructor(root, onChange) {
+		this.root = root;
+		this.button = root.querySelector('.td-select__button');
+		this.label = root.querySelector('.td-select__value');
+		this.panel = root.querySelector('.td-select__panel');
+		this.onChange = onChange;
+		this.value = ALL;
+		this.allLabel = root.dataset.allLabel || 'Alle';
+
+		this.button.addEventListener('click', (e) => {
+			e.stopPropagation();
+			this.toggle();
+		});
+
+		this.panel.addEventListener('click', (e) => {
+			const opt = e.target.closest('.td-option');
+			if (!opt) return;
+			this.select(opt.dataset.value);
+			this.close();
+		});
+
+		// Keyboard: Escape closes and returns focus to the button, so
+		// the control never traps a keyboard user inside the panel.
+		this.root.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && this.isOpen()) {
+				e.stopPropagation();
+				this.close();
+				this.button.focus();
+			}
+		});
+	}
+
+	isOpen() {
+		return this.root.classList.contains('is-open');
+	}
+
+	toggle() {
+		this.isOpen() ? this.close() : this.open();
+	}
+
+	open() {
+		// Only one panel open at a time — two overlapping fold-outs in a
+		// narrow column is unusable.
+		TourSelect.closeAll(this);
+		this.root.classList.add('is-open');
+		this.button.setAttribute('aria-expanded', 'true');
+	}
+
+	close() {
+		this.root.classList.remove('is-open');
+		this.button.setAttribute('aria-expanded', 'false');
+	}
+
+	/** @param {string} value */
+	select(value, silent = false) {
+		this.value = value;
+		const opt = this.panel.querySelector(`.td-option[data-value="${cssEscape(value)}"]`);
+		this.label.textContent = value === ALL ? this.allLabel : opt ? opt.textContent : this.allLabel;
+		this.panel.querySelectorAll('.td-option').forEach((o) => {
+			const on = o.dataset.value === value;
+			o.classList.toggle('is-active', on);
+			o.setAttribute('aria-selected', String(on));
+		});
+		this.root.classList.toggle('is-filtered', value !== ALL);
+		if (!silent) this.onChange(value);
+	}
+
+	/**
+	 * Rebuilds the option list. Keeps the current selection if it's
+	 * still valid, otherwise falls back to "all" — so narrowing the
+	 * country can't leave a stale, now-impossible city selected.
+	 * @param {string[]} options
+	 */
+	setOptions(options) {
+		this.panel.innerHTML =
+			option(ALL, this.allLabel) + options.map((o) => option(o, o)).join('');
+		const stillValid = options.includes(this.value);
+		this.select(stillValid ? this.value : ALL, true);
+		// A control offering only "all" is not a choice worth showing.
+		this.root.hidden = options.length < 1;
+	}
 }
 
-function setActive(row, btn) {
-	row.querySelectorAll('.td-chip').forEach((b) => {
-		const on = b === btn;
-		b.classList.toggle('is-active', on);
-		b.setAttribute('aria-pressed', String(on));
+TourSelect.instances = [];
+TourSelect.closeAll = function (except) {
+	TourSelect.instances.forEach((s) => {
+		if (s !== except) s.close();
 	});
+};
+
+function option(value, label) {
+	return `<button type="button" class="td-option" role="option" aria-selected="false" data-value="${escapeAttr(value)}">${label}</button>`;
+}
+
+function escapeAttr(v) {
+	return String(v).replace(/"/g, '&quot;');
+}
+
+/** Minimal attribute-selector escape for the values we generate. */
+function cssEscape(v) {
+	return String(v).replace(/["\\]/g, '\\$&');
 }
 
 /**
- * Wires up the filter controls for an already-rendered list.
+ * Wires up the filter for an already-rendered list.
  * No-ops safely if the filter markup isn't present.
  * @param {HTMLElement} container - the .td-list element
  */
 export function initTourFilter(container) {
 	const filter = document.getElementById('tour-filter');
-	const countryRow = document.getElementById('tour-filter-countries');
-	const regionRow = document.getElementById('tour-filter-regions');
-	if (!container || !filter || !countryRow || !regionRow) return;
+	if (!container || !filter) return;
 
 	const rows = Array.from(container.querySelectorAll('.td-row'));
 	if (!rows.length) return;
 
-	// Build the country → regions index from what's actually rendered,
-	// so the controls can never offer a filter that matches nothing,
-	// nor omit one that exists.
-	const index = new Map();
-	rows.forEach((row) => {
-		const c = row.dataset.country || '';
-		const r = row.dataset.region || '';
-		if (!c) return;
-		if (!index.has(c)) index.set(c, new Set());
-		if (r) index.get(c).add(r);
+	// Index what's actually rendered, so the controls can never offer a
+	// selection that matches nothing, nor omit one that exists.
+	const data = rows.map((row) => ({
+		row,
+		country: row.dataset.country || '',
+		region: row.dataset.region || '',
+		city: row.dataset.city || '',
+	}));
+
+	const countryEl = filter.querySelector('[data-select="country"]');
+	const regionEl = filter.querySelector('[data-select="region"]');
+	const cityEl = filter.querySelector('[data-select="city"]');
+	if (!countryEl || !regionEl || !cityEl) return;
+
+	let country = ALL;
+	let region = ALL;
+	let city = ALL;
+
+	const countrySel = new TourSelect(countryEl, (v) => {
+		country = v;
+		// Narrowing the country invalidates any region/city below it.
+		region = ALL;
+		city = ALL;
+		refreshDependent();
+		apply();
+	});
+	const regionSel = new TourSelect(regionEl, (v) => {
+		region = v;
+		city = ALL;
+		refreshCities();
+		apply();
+	});
+	const citySel = new TourSelect(cityEl, (v) => {
+		city = v;
+		apply();
+	});
+	TourSelect.instances = [countrySel, regionSel, citySel];
+
+	// Clicking outside any panel closes them — expected behaviour for a
+	// fold-out, and prevents a panel being left open behind a scroll.
+	document.addEventListener('click', (e) => {
+		if (!e.target.closest('.td-select')) TourSelect.closeAll(null);
 	});
 
-	const countries = [...index.keys()].sort();
-	let activeCountry = 'all';
-	let activeRegion = 'all';
+	const uniq = (arr) => [...new Set(arr.filter(Boolean))].sort((a, b) => a.localeCompare(b, 'de'));
 
-	// Fewer than two countries means the country switch is a control
-	// the visitor can't meaningfully use — don't render it.
-	if (countries.length < 2) {
-		countryRow.hidden = true;
-	} else {
-		countryRow.innerHTML =
-			chip('all', 'Alle', true) +
-			countries.map((c) => chip(c, COUNTRY_LABELS[c] || c, false)).join('');
+	const countries = uniq(data.map((d) => d.country));
+	countrySel.setOptions(countries);
+	// Country codes need friendly labels; the generic option builder
+	// uses the raw value, so patch the two country options after build.
+	countryEl.querySelectorAll('.td-option').forEach((o) => {
+		if (COUNTRY_LABELS[o.dataset.value]) o.textContent = COUNTRY_LABELS[o.dataset.value];
+	});
+	// Fewer than two countries means the control is pointless.
+	countryEl.hidden = countries.length < 2;
+
+	function inCountry(d) {
+		return country === ALL || d.country === country;
+	}
+	function inRegion(d) {
+		return region === ALL || d.region === region;
 	}
 
-	function renderRegions() {
-		// Regions are scoped to the active country. Under "Alle" we show
-		// the union, so the control stays useful without forcing the
-		// visitor to pick a country first.
-		const set = new Set();
-		if (activeCountry === 'all') {
-			index.forEach((regions) => regions.forEach((r) => set.add(r)));
-		} else {
-			(index.get(activeCountry) || new Set()).forEach((r) => set.add(r));
-		}
-		const regions = [...set].sort((a, b) => a.localeCompare(b, 'de'));
+	function refreshDependent() {
+		regionSel.setOptions(uniq(data.filter(inCountry).map((d) => d.region)));
+		refreshCities();
+	}
 
-		// A single region isn't a choice — hide rather than show a lone
-		// chip that does nothing.
-		if (regions.length < 2) {
-			regionRow.hidden = true;
-			regionRow.innerHTML = '';
-			activeRegion = 'all';
-			return;
-		}
-		regionRow.hidden = false;
-		regionRow.innerHTML =
-			chip('all', 'Alle Regionen', activeRegion === 'all') +
-			regions.map((r) => chip(r, r, activeRegion === r)).join('');
+	function refreshCities() {
+		citySel.setOptions(uniq(data.filter((d) => inCountry(d) && inRegion(d)).map((d) => d.city)));
 	}
 
 	function apply() {
 		let visible = 0;
-		rows.forEach((row) => {
-			const c = row.dataset.country || '';
-			const r = row.dataset.region || '';
-			const okCountry = activeCountry === 'all' || c === activeCountry;
-			const okRegion = activeRegion === 'all' || r === activeRegion;
-			const show = okCountry && okRegion;
-			row.hidden = !show;
+		data.forEach((d) => {
+			const show = inCountry(d) && inRegion(d) && (city === ALL || d.city === city);
+			d.row.hidden = !show;
 			if (show) visible++;
 		});
 
@@ -433,25 +556,7 @@ export function initTourFilter(container) {
 		}
 	}
 
-	countryRow.addEventListener('click', (e) => {
-		const btn = e.target.closest('.td-chip');
-		if (!btn) return;
-		activeCountry = btn.dataset.value;
-		activeRegion = 'all';
-		setActive(countryRow, btn);
-		renderRegions();
-		apply();
-	});
-
-	regionRow.addEventListener('click', (e) => {
-		const btn = e.target.closest('.td-chip');
-		if (!btn) return;
-		activeRegion = btn.dataset.value;
-		setActive(regionRow, btn);
-		apply();
-	});
-
-	renderRegions();
+	refreshDependent();
 	apply();
 	filter.hidden = false;
 }
