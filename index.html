@@ -567,6 +567,13 @@
           <div class="sp-eyebrow">Live Performances</div>
           <div class="sp-title">TOUR DATES</div>
         </div>
+        <!-- Filter row. Starts hidden and is only revealed by JS once
+             dates have loaded and their regions are known — a filter
+             bar sitting above a loading spinner would be dead UI. -->
+        <div class="td-filter" id="tour-filter" hidden>
+          <div class="td-filter__row" role="group" aria-label="Nach Land filtern" id="tour-filter-countries"></div>
+          <div class="td-filter__row td-filter__row--regions" role="group" aria-label="Nach Bundesland filtern" id="tour-filter-regions"></div>
+        </div>
         <div class="td-list" id="tour-list">
           <!-- Populated by JS from src/data/tourDates.js -->
         </div>

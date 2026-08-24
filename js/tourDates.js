@@ -10,18 +10,201 @@ const SHEET_ID = '1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk';
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
 
 /**
+ * Maps the sheet's header row to column indices, so rows are read by
+ * NAME rather than by position. Reading positionally means inserting a
+ * column anywhere but the end silently shifts every field after it.
+ * Matching is loose (lowercased, first word only) because the real
+ * headers carry inline documentation, e.g.
+ * "state (0 = normal | 1 = restkarten | 2 = ausverkauft)".
+ * @param {string} headerRow
+ * @returns {Record<string, number>}
+ */
+function mapColumns(headerRow) {
+	const cols = {};
+	parseCSVRow(headerRow).forEach((name, i) => {
+		const key = name.toLowerCase().trim().split(/[\s(]/)[0];
+		if (key && !(key in cols)) cols[key] = i;
+	});
+	return cols;
+}
+
+/**
  * Fetches and parses tour dates from Google Sheets CSV.
- * @returns {Promise<Array>}
+ * @returns {Promise<Array<object>>}
  */
 async function fetchTourDates() {
 	const res = await fetch(SHEET_URL);
 	const text = await res.text();
 
-	// Skip header row
-	const rows = text.trim().split('\n').slice(1);
+	const lines = text.trim().split('\n');
+	const cols = mapColumns(lines[0]);
+	const rows = lines.slice(1);
 	if (!rows.length) throw new Error('No tour dates found');
 
-	return rows.map(parseCSVRow);
+	return rows.map((row) => {
+		const cells = parseCSVRow(row);
+		const at = (key) => (cols[key] !== undefined ? (cells[cols[key]] ?? '') : '');
+		const city = at('city');
+		const country = normaliseCountry(at('country'));
+		return {
+			date: at('date'),
+			venue: at('venue'),
+			city,
+			url: at('url'),
+			status: at('state'),
+			// The note column has historically been used to mark the
+			// country ("Deutschland"). The country now lives in its own
+			// column and is surfaced only through the filter, so strip
+			// any country value out of the note rather than rendering it
+			// twice. Genuine notes are unaffected.
+			note: stripCountryFromNote(at('note')),
+			country,
+			region: regionFor(city),
+		};
+	});
+}
+
+/**
+ * City → Bundesland lookup, resolved once per row at render time.
+ * Filtering afterwards is pure DOM (rows carry data-country /
+ * data-region), so switching a filter never refetches or re-renders.
+ *
+ * IMPORTANT: this map is necessarily incomplete — it only knows the
+ * cities listed here. An unmapped city resolves to '' and is treated
+ * as "region unknown": it still appears under its country and under
+ * "Alle", it simply gets no region chip. A missing entry must never be
+ * able to hide a real tour date.
+ *
+ * Keys are lowercased and umlaut-folded (see regionKey) so
+ * "Köln" / "KÖLN" / "koeln" all match the same entry.
+ */
+const CITY_REGIONS = {
+	// ── Österreich ──
+	wien: 'Wien',
+	graz: 'Steiermark',
+	leoben: 'Steiermark',
+	linz: 'Oberösterreich',
+	wels: 'Oberösterreich',
+	steyr: 'Oberösterreich',
+	salzburg: 'Salzburg',
+	innsbruck: 'Tirol',
+	kitzbuehel: 'Tirol',
+	kufstein: 'Tirol',
+	dornbirn: 'Vorarlberg',
+	bregenz: 'Vorarlberg',
+	feldkirch: 'Vorarlberg',
+	klagenfurt: 'Kärnten',
+	villach: 'Kärnten',
+	'wiener neustadt': 'Niederösterreich',
+	'st. poelten': 'Niederösterreich',
+	'sankt poelten': 'Niederösterreich',
+	krems: 'Niederösterreich',
+	baden: 'Niederösterreich',
+	amstetten: 'Niederösterreich',
+	eisenstadt: 'Burgenland',
+	oberwart: 'Burgenland',
+
+	// ── Deutschland ──
+	berlin: 'Berlin',
+	hamburg: 'Hamburg',
+	bremen: 'Bremen',
+	muenchen: 'Bayern',
+	nuernberg: 'Bayern',
+	augsburg: 'Bayern',
+	regensburg: 'Bayern',
+	wuerzburg: 'Bayern',
+	stuttgart: 'Baden-Württemberg',
+	karlsruhe: 'Baden-Württemberg',
+	mannheim: 'Baden-Württemberg',
+	freiburg: 'Baden-Württemberg',
+	heidelberg: 'Baden-Württemberg',
+	koeln: 'Nordrhein-Westfalen',
+	duesseldorf: 'Nordrhein-Westfalen',
+	dortmund: 'Nordrhein-Westfalen',
+	essen: 'Nordrhein-Westfalen',
+	bochum: 'Nordrhein-Westfalen',
+	bonn: 'Nordrhein-Westfalen',
+	muenster: 'Nordrhein-Westfalen',
+	bielefeld: 'Nordrhein-Westfalen',
+	wuppertal: 'Nordrhein-Westfalen',
+	aachen: 'Nordrhein-Westfalen',
+	frankfurt: 'Hessen',
+	wiesbaden: 'Hessen',
+	kassel: 'Hessen',
+	darmstadt: 'Hessen',
+	mainz: 'Rheinland-Pfalz',
+	koblenz: 'Rheinland-Pfalz',
+	trier: 'Rheinland-Pfalz',
+	ludwigshafen: 'Rheinland-Pfalz',
+	saarbruecken: 'Saarland',
+	dresden: 'Sachsen',
+	leipzig: 'Sachsen',
+	chemnitz: 'Sachsen',
+	magdeburg: 'Sachsen-Anhalt',
+	halle: 'Sachsen-Anhalt',
+	erfurt: 'Thüringen',
+	jena: 'Thüringen',
+	weimar: 'Thüringen',
+	potsdam: 'Brandenburg',
+	cottbus: 'Brandenburg',
+	hannover: 'Niedersachsen',
+	braunschweig: 'Niedersachsen',
+	osnabrueck: 'Niedersachsen',
+	oldenburg: 'Niedersachsen',
+	goettingen: 'Niedersachsen',
+	kiel: 'Schleswig-Holstein',
+	luebeck: 'Schleswig-Holstein',
+	flensburg: 'Schleswig-Holstein',
+	rostock: 'Mecklenburg-Vorpommern',
+	schwerin: 'Mecklenburg-Vorpommern',
+};
+
+/**
+ * Normalises a city name for map lookup: lowercase, umlauts folded,
+ * punctuation stripped. Spaces are kept so multi-word cities match.
+ * @param {string} city
+ * @returns {string}
+ */
+function regionKey(city) {
+	return (city || '')
+		.toLowerCase()
+		.trim()
+		.replace(/ä/g, 'ae')
+		.replace(/ö/g, 'oe')
+		.replace(/ü/g, 'ue')
+		.replace(/ß/g, 'ss')
+		.replace(/[^a-z0-9. ]/g, '')
+		.replace(/\s+/g, ' ');
+}
+
+/**
+ * @param {string} city
+ * @returns {string} Bundesland, or '' when the city isn't mapped.
+ */
+function regionFor(city) {
+	return CITY_REGIONS[regionKey(city)] || '';
+}
+
+/**
+ * Accepts either ISO-ish codes or the German country names, since
+ * whoever maintains the sheet may reasonably type either.
+ * @param {string} raw
+ * @returns {'AT'|'DE'|''}
+ */
+function normaliseCountry(raw) {
+	const v = (raw || '').trim().toLowerCase();
+	if (!v) return '';
+	if (v === 'at' || v.startsWith('öster') || v.startsWith('oster') || v === 'austria') return 'AT';
+	if (v === 'de' || v.startsWith('deutsch') || v === 'germany') return 'DE';
+	return '';
+}
+
+/**
+ * @param {string} note
+ * @returns {string} '' when the note is only a country name.
+ */
+function stripCountryFromNote(note) {
+	return normaliseCountry(note) ? '' : (note || '').trim();
 }
 
 const LOADING_HTML = `
@@ -45,11 +228,11 @@ export async function renderTourDates(container) {
 		const tourDates = await fetchTourDates();
 
 		container.innerHTML = tourDates
-			.map(([dateStr, venue, city, url, stateNr, note]) => {
-				const { day, month, year } = parseSheetDate(dateStr);
+			.map(({ date, venue, city, url, status, note, country, region }) => {
+				const { day, month, year } = parseSheetDate(date);
 
 				let btnClass, btnContent;
-				switch (stateNr) {
+				switch (status) {
 					case '1':
 						btnClass = 'td-btn rest';
 						btnContent = 'Tickets';
@@ -66,7 +249,7 @@ export async function renderTourDates(container) {
 				const btnEl = `<a href="${url}" class="${btnClass}" target="_blank" rel="noopener" aria-label="Tickets für ${venue}" draggable="false">${btnContent}</a>`;
 
 				return `
-        <div class="td-row">
+        <div class="td-row" data-country="${country}" data-region="${region}">
           <div class="td-time">
             <span class="td-date">${day}.${month}.</span>
             <span class="td-year">${year}</span>
@@ -80,6 +263,10 @@ export async function renderTourDates(container) {
         </div>`;
 			})
 			.join('');
+
+		// Wire the filter only after rows exist — it builds its options
+		// by reading the rendered rows, so it must not run earlier.
+		initTourFilter(container);
 	} catch (error) {
 		console.error(error);
 		container.innerHTML = `
@@ -131,4 +318,140 @@ function parseSheetDate(dateStr) {
 			.padStart(2, '0'), // "Aug."
 		year: new Intl.DateTimeFormat('de-DE', { year: 'numeric' }).format(date), // "2026"
 	};
+}
+
+/* ══════════════════════════════════════════════════════════
+   FILTER — country, then Bundesland within that country
+   Filtering is pure DOM: rows already carry data-country and
+   data-region, so switching a filter never refetches and
+   never re-renders the list.
+   ══════════════════════════════════════════════════════════ */
+
+const COUNTRY_LABELS = { AT: 'Österreich', DE: 'Deutschland' };
+
+function chip(value, label, active) {
+	return `<button type="button" class="td-chip${active ? ' is-active' : ''}" data-value="${value}" aria-pressed="${active}">${label}</button>`;
+}
+
+function setActive(row, btn) {
+	row.querySelectorAll('.td-chip').forEach((b) => {
+		const on = b === btn;
+		b.classList.toggle('is-active', on);
+		b.setAttribute('aria-pressed', String(on));
+	});
+}
+
+/**
+ * Wires up the filter controls for an already-rendered list.
+ * No-ops safely if the filter markup isn't present.
+ * @param {HTMLElement} container - the .td-list element
+ */
+export function initTourFilter(container) {
+	const filter = document.getElementById('tour-filter');
+	const countryRow = document.getElementById('tour-filter-countries');
+	const regionRow = document.getElementById('tour-filter-regions');
+	if (!container || !filter || !countryRow || !regionRow) return;
+
+	const rows = Array.from(container.querySelectorAll('.td-row'));
+	if (!rows.length) return;
+
+	// Build the country → regions index from what's actually rendered,
+	// so the controls can never offer a filter that matches nothing,
+	// nor omit one that exists.
+	const index = new Map();
+	rows.forEach((row) => {
+		const c = row.dataset.country || '';
+		const r = row.dataset.region || '';
+		if (!c) return;
+		if (!index.has(c)) index.set(c, new Set());
+		if (r) index.get(c).add(r);
+	});
+
+	const countries = [...index.keys()].sort();
+	let activeCountry = 'all';
+	let activeRegion = 'all';
+
+	// Fewer than two countries means the country switch is a control
+	// the visitor can't meaningfully use — don't render it.
+	if (countries.length < 2) {
+		countryRow.hidden = true;
+	} else {
+		countryRow.innerHTML =
+			chip('all', 'Alle', true) +
+			countries.map((c) => chip(c, COUNTRY_LABELS[c] || c, false)).join('');
+	}
+
+	function renderRegions() {
+		// Regions are scoped to the active country. Under "Alle" we show
+		// the union, so the control stays useful without forcing the
+		// visitor to pick a country first.
+		const set = new Set();
+		if (activeCountry === 'all') {
+			index.forEach((regions) => regions.forEach((r) => set.add(r)));
+		} else {
+			(index.get(activeCountry) || new Set()).forEach((r) => set.add(r));
+		}
+		const regions = [...set].sort((a, b) => a.localeCompare(b, 'de'));
+
+		// A single region isn't a choice — hide rather than show a lone
+		// chip that does nothing.
+		if (regions.length < 2) {
+			regionRow.hidden = true;
+			regionRow.innerHTML = '';
+			activeRegion = 'all';
+			return;
+		}
+		regionRow.hidden = false;
+		regionRow.innerHTML =
+			chip('all', 'Alle Regionen', activeRegion === 'all') +
+			regions.map((r) => chip(r, r, activeRegion === r)).join('');
+	}
+
+	function apply() {
+		let visible = 0;
+		rows.forEach((row) => {
+			const c = row.dataset.country || '';
+			const r = row.dataset.region || '';
+			const okCountry = activeCountry === 'all' || c === activeCountry;
+			const okRegion = activeRegion === 'all' || r === activeRegion;
+			const show = okCountry && okRegion;
+			row.hidden = !show;
+			if (show) visible++;
+		});
+
+		let empty = container.querySelector('.td-empty');
+		if (!visible) {
+			if (!empty) {
+				empty = document.createElement('div');
+				empty.className = 'td-empty';
+				empty.textContent = 'Für diese Auswahl gibt es aktuell keine Termine.';
+				container.appendChild(empty);
+			}
+			empty.hidden = false;
+		} else if (empty) {
+			empty.hidden = true;
+		}
+	}
+
+	countryRow.addEventListener('click', (e) => {
+		const btn = e.target.closest('.td-chip');
+		if (!btn) return;
+		activeCountry = btn.dataset.value;
+		activeRegion = 'all';
+		setActive(countryRow, btn);
+		renderRegions();
+		apply();
+	});
+
+	regionRow.addEventListener('click', (e) => {
+		const btn = e.target.closest('.td-chip');
+		if (!btn) return;
+		activeRegion = btn.dataset.value;
+		setActive(regionRow, btn);
+		apply();
+	});
+
+	renderRegions();
+	apply();
+	filter.hidden = false;
 }

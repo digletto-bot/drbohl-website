@@ -1508,6 +1508,92 @@
 }
 
 /* Tour list */
+/* ══════════════════════════════════════════════
+   Tour dates — filter row
+   ══════════════════════════════════════════════ */
+.td-filter {
+	padding: 0 var(--side-pad) 4px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	flex-shrink: 0;
+}
+.td-filter__row {
+	display: flex;
+	gap: 8px;
+	/* Horizontal scroll rather than wrapping: with many regions a
+	   wrapping row would push the first tour date below the fold on a
+	   phone, which is the opposite of what a filter is for. */
+	overflow-x: auto;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	/* Bleeds to the card edges so chips scroll out to the very edge
+	   instead of stopping short inside the padding. */
+	margin-inline: calc(var(--side-pad) * -1);
+	padding-inline: var(--side-pad);
+	padding-bottom: 2px;
+	scroll-padding-inline: var(--side-pad);
+}
+.td-filter__row::-webkit-scrollbar {
+	display: none;
+}
+.td-filter__row--regions {
+	/* Visibly subordinate to the country row. */
+	opacity: 0.9;
+}
+
+.td-chip {
+	flex: 0 0 auto;
+	padding: 7px 14px;
+	border-radius: 999px;
+	border: 1px solid rgba(245, 245, 240, 0.22);
+	background: transparent;
+	color: var(--caption-grey);
+	font-family: var(--font-body);
+	font-size: var(--fs-body-small-2);
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	line-height: 1;
+	white-space: nowrap;
+	cursor: pointer;
+	transition:
+		color 180ms ease,
+		border-color 180ms ease,
+		background 180ms ease;
+	-webkit-tap-highlight-color: transparent;
+}
+.td-filter__row--regions .td-chip {
+	padding: 6px 12px;
+	font-weight: 500;
+}
+@media (hover: hover) and (pointer: fine) {
+	.td-chip:hover {
+		color: var(--light-text);
+		border-color: rgba(245, 245, 240, 0.45);
+	}
+}
+.td-chip.is-active {
+	color: var(--dark-text);
+	background: var(--hero-yellow);
+	border-color: var(--hero-yellow);
+}
+.td-filter__row--regions .td-chip.is-active {
+	/* Outline rather than solid fill, so the active region reads as a
+	   refinement of the active country instead of competing with it. */
+	color: var(--hero-yellow);
+	background: transparent;
+	border-color: var(--hero-yellow);
+}
+
+.td-empty {
+	padding: 40px 0 24px;
+	color: var(--caption-grey);
+	font-family: var(--font-body);
+	font-size: var(--fs-body-small);
+	letter-spacing: 0.04em;
+	text-align: center;
+}
+
 .td-list {
 	flex: 1;
 	min-height: 0;
