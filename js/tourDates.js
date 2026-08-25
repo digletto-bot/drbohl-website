@@ -403,13 +403,20 @@ class TourSelect {
 	/** @param {string} value */
 	select(value, silent = false) {
 		this.value = value;
-		const opt = this.panel.querySelector(`.td-option[data-value="${cssEscape(value)}"]`);
-		this.label.textContent = value === ALL ? this.allLabel : opt ? opt.textContent : this.allLabel;
+		// Find the matching option by iterating rather than by building an
+		// attribute selector: values contain umlauts and hyphens, and any
+		// escaping mistake there throws a SyntaxError out of querySelector,
+		// which aborts this method BEFORE onChange() runs — the panels look
+		// fine but nothing ever filters. Iterating cannot fail that way.
+		let matched = null;
 		this.panel.querySelectorAll('.td-option').forEach((o) => {
 			const on = o.dataset.value === value;
+			if (on) matched = o;
 			o.classList.toggle('is-active', on);
 			o.setAttribute('aria-selected', String(on));
 		});
+		this.label.textContent =
+			value === ALL ? this.allLabel : matched ? matched.textContent : this.allLabel;
 		this.root.classList.toggle('is-filtered', value !== ALL);
 		if (!silent) this.onChange(value);
 	}
@@ -443,11 +450,6 @@ function option(value, label) {
 
 function escapeAttr(v) {
 	return String(v).replace(/"/g, '&quot;');
-}
-
-/** Minimal attribute-selector escape for the values we generate. */
-function cssEscape(v) {
-	return String(v).replace(/["\\]/g, '\\$&');
 }
 
 /**
