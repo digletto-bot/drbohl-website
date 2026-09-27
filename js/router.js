@@ -22,7 +22,7 @@ const ROUTE_META = [
 	{
 		title: 'Showtime — TV & Streaming | Dr.Bohl',
 		description:
-			"Dr.Bohl im Fernsehen: Dancing Stars, Tiafe Typen, Was gibt's Neues? und Willkommen Österreich — alle TV-Auftritte im Überblick.",
+			"Dr.Bohl im Fernsehen: Dancing Stars, Tiafe Typen, Was gibt es Neues? und Willkommen Österreich — alle TV-Auftritte im Überblick.",
 	},
 	{
 		title: 'Musik — Dr.Bohl',

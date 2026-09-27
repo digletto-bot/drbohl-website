@@ -560,6 +560,38 @@
           <div class="sp-eyebrow">Live Performances</div>
           <div class="sp-title">TOUR DATES</div>
         </div>
+        <!-- Filter. Starts hidden and is revealed by JS only once dates
+             have loaded, since the options are built from the rendered
+             rows — a filter bar above a loading spinner would be dead
+             UI. Options are populated in js/tourDates.js. -->
+        <div class="td-filter" id="tour-filter" hidden>
+          <div class="td-select" data-select="country" data-all-label="Alle Länder">
+            <button type="button" class="td-select__button" aria-expanded="false" aria-haspopup="listbox">
+              <span class="td-select__caption">Land</span>
+              <span class="td-select__value">Alle Länder</span>
+              <svg class="td-select__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="td-select__panel" role="listbox" aria-label="Land wählen"></div>
+          </div>
+
+          <div class="td-select" data-select="region" data-all-label="Alle Bundesländer">
+            <button type="button" class="td-select__button" aria-expanded="false" aria-haspopup="listbox">
+              <span class="td-select__caption">Bundesland</span>
+              <span class="td-select__value">Alle Bundesländer</span>
+              <svg class="td-select__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="td-select__panel" role="listbox" aria-label="Bundesland wählen"></div>
+          </div>
+
+          <div class="td-select" data-select="city" data-all-label="Alle Städte">
+            <button type="button" class="td-select__button" aria-expanded="false" aria-haspopup="listbox">
+              <span class="td-select__caption">Stadt</span>
+              <span class="td-select__value">Alle Städte</span>
+              <svg class="td-select__chevron" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="td-select__panel" role="listbox" aria-label="Stadt wählen"></div>
+          </div>
+        </div>
         <div class="td-list" id="tour-list">
           <!-- Populated by JS from src/data/tourDates.js -->
         </div>
@@ -595,10 +627,9 @@
             <div class="kab-panel acc-panel" id="kab-panel-solo">
               <div class="kab-panel-inner acc-panel-inner">
                 <div class="kab-panel-content">
-                  <p>
-                    Jeder war’s mal, viele sind es. Viele wollen’s, wenige lang. Mickie besingt es und Han heißt so. SOLO.
-                    Erstmals hat es auch Paulus erwischt: Nach zwei bahnbrechenden Programmen mit seinem kongenialen Bruder muss er diesmal alleine ran. Er nutzt dies, um für alle Suchenden da draußen aufzuarbeiten, wovon er viele hatte: Dates. Das häufigst anvisierte Minenfeld dieser Welt.
-                    Anhand von fünf überlebten Tinder Dates werden Fehler, Red Flags und vor allem die eigene Vergangenheit aufgearbeitet. Von Opernball mit DJ Ötzi bis Maturareise Exzess, all die Storys, die im Zuge dieser Treffen erzählt wurden, landen nun gesammelt auf der Bühne. Ob das eine gute Idee ist?</p>
+                  <p>Jeder war’s mal, viele sind es. Viele wollen’s, wenige lang. Mickie besingt es und Han heißt so. SOLO.</p>
+                  <p>Erstmals hat es auch Paulus erwischt: Nach zwei bahnbrechenden Programmen mit seinem kongenialen Bruder muss er diesmal allein ran. Er nutzt dies, um für alle Suchenden da draußen aufzuarbeiten, wovon er viele hatte: Dates. Das häufigst anvisierte Minenfeld dieser Welt. Anhand von fünf überlebten Tinder Dates werden Fehler, Red Flags und vor allem die eigene Vergangenheit aufgearbeitet. Von Opernball mit DJ Ötzi bis Maturareise-Exzess, all die Storys, die im Zuge dieser Treffen erzählt wurden, landen nun gesammelt auf der Bühne.</p>
+                  <p>Ob das eine gute Idee ist?</p>
                 </div>
               </div>
             </div>
@@ -619,7 +650,9 @@
             <div class="kab-panel acc-panel" id="kab-panel-anabohlika">
               <div class="kab-panel-inner acc-panel-inner">
                 <div class="kab-panel-content">
-                  <p>Die Kult-Show im XXL-Format — Muckis und Pointen gleichermaßen aufgepumpt. Jetzt auf den bekannten Streaming-Plattformen abrufbar.</p>
+                  <p>Prostata-Untersuchungen bereiten Ihnen Sorgen? Drachen machen Ihnen Angst? Sie fürchten sich vor langen Autofahrten mit Ihrem Partner? Dann empfehlen wir: ANABOHLIKA.</p>
+                  <p>Wir müssen Sie allerdings enttäuschen, Sie werden damit leider nicht so wunderschön werden wie Arnold „The Oak“ Schwarzenegger. Aber das wird ja eh keiner. Außer vielleicht Hansi Ernst Hinterseer. Aber das ist ein anderes Thema.</p>
+                  <p>Nach dem großen Erfolg des ersten Programmes „Dr.Bohl – Live!“ folgt nun der zweite Streich des süßen, aber auch sexy Bruderpaars. Winkeln Sie die Beine an, entspannen Sie sich und denken Sie an etwas Schönes!</p>
                 </div>
               </div>
             </div>
@@ -641,7 +674,10 @@
             <div class="kab-panel acc-panel" id="kab-panel-live">
               <div class="kab-panel-inner acc-panel-inner">
                 <div class="kab-panel-content">
-                  <p>Der Klassiker, der alles begonnen hat. Zwei Brüder, ein Sofa, jede Menge Chaos — die Live-Show in voller Länge.</p>
+                  <p>Sie verstehen Piraten auch nicht? Ja wissen wir, blöde Frage eigentlich, natürlich verstehen Sie die nicht. Sind ja auch wirklich komische Typen, diese Piraten.</p>
+                  <p>Bis jetzt wirkt alles noch normal. Schon wieder zwei so Hawara, die Piraten nicht verstehen, was soll’s?</p>
+                  <p>Doch wir sind nicht wie alle anderen. Wir sind Macher! Und wir lassen uns nicht länger von der Piratenlobby auf den Schädel scheißen!</p>
+                  <p>Wir haben die Antworten, die Sie schon immer wollten! Also kommen Sie vorbei, damit diese unzähligen schlaflosen Nächte verdammt nochmal endlich ein Ende finden: Weil Sie jetzt wissen, dass Sie mit all Ihren Fragen nicht länger alleine sind.</p>
                 </div>
               </div>
             </div>
@@ -649,9 +685,9 @@
         </div>
 
         <section class="kab-newsletter">
-          <p class="kab-newsletter__text">Du willst nicht 24/7 die Seite refreshen für Tickets als wär's ein Coldplay Konzert?<br>Tickets sollten kein Privileg sein, sondern ein Grundrecht!</p>
+          <p class="kab-newsletter__text">Keine neuen Projekte verpassen.</p>
           <form id="newsletter-form" class="kab-signup">
-            <span class="kab-signup__label">Möld di an und I möld mi</span>
+            <span class="kab-signup__label">Jetzt für den Newsletter anmelden!</span>
             <div class="kab-signup__row">
               <input id="newsletter-input" type="email" placeholder="deine@email.at" required />
               <button type="submit" class="kab-signup__submit" aria-label="Anmelden">
@@ -667,10 +703,6 @@
             <img class="kab-crowd__img" src="assets/images/subpages/kabarett/subpage-kabarett-newsletter-cutout__1200x675.avif" alt="" loading="lazy" draggable="false" / decoding="async">
           </div>
           <div class="kab-crowd__shade"></div>
-          <blockquote class="kab-testimonial">
-            <span class="kab-testimonial__quote">„Bestes Kulturprogramm, meine Oma hat geweint.“</span>
-            <span class="kab-testimonial__stars" aria-hidden="true">★★★★★</span>
-          </blockquote>
         </section>
       </div>
     </article>
@@ -730,7 +762,7 @@
             <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-was-gibt-es-neues__640x360.avif" alt="" loading="lazy" draggable="false" / decoding="async">
             <div class="show-card__shade"></div>
             <button type="button" class="ghost-button show-card__cta cta">Stream Now</button>
-            <span class="show-card__title">Was gibt's Neues?</span>
+            <span class="show-card__title">Was gibt es Neues?</span>
           </div>
           <div class="show-card glow-border">
             <img class="show-card__img" src="assets/images/subpages/showtime/subpage-showtime-willkommen-oesterreich__640x360.avif" alt="" loading="lazy" draggable="false" / decoding="async">
@@ -871,7 +903,8 @@
               <div class="podcast-panel acc-panel" id="podcast-panel-bohlmobil">
               <div class="podcast-panel-inner acc-panel-inner">
                 <div class="podcast-panel-content">
-                  <p class="podcast-tile__desc">Benji und Bohl kurven im Auto der Mama durch Wien und liefern heiße Insider-Infos — natürlich uneinig, aber ur lustig.</p>
+                  <p class="podcast-tile__desc">Die sexy und auch lässigen Gebrüder Benji und Bohl fahren im Bohlmobil durch die schönen Straßen Wiens, geben dabei heiße Insiderinformationen, sind sich selten einig und einfach ure lustig!</p>
+                  <p class="podcast-tile__award"><span aria-hidden="true">🏆</span> 3x in Folge beim Ö3 Podcast Award ausgezeichnet</p>
                   <a class="spotify-badge podcast-tile__cta" href="https://open.spotify.com/show/6KQgaRmsRh817EZpx5rpwb?si=559afdeb00094b46" target="_blank" rel="noopener" aria-label="Auf Spotify hören" draggable="false">
                     <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                   </a>
@@ -965,13 +998,13 @@
               <div class="podcast-panel acc-panel" id="podcast-panel-bohlfragt">
               <div class="podcast-panel-inner acc-panel-inner">
                 <div class="podcast-panel-content">
-                  <p class="podcast-tile__desc">Was gibt's Schöneres als a gmiatliche Melange und a bissl Schmäh? Bohl bittet Promis zum Interview.</p>
+                  <p class="podcast-tile__desc">Was gibt es Schöneres als eine gemütliche Melange und bisschen Schmäh führen? Bohl bittet Promis zum Café und stellt endlich die Fragen, nach denen das Volk immer schon gelechzt hat.</p>
                   <a class="spotify-badge podcast-tile__cta" href="https://open.spotify.com/show/1SdGEJdyYuY9AlXpyHKerq" target="_blank" rel="noopener" aria-label="Auf Spotify hören" draggable="false">
                     <img src="assets/icons/Listen_on_Spotify.svg" alt="" loading="lazy" draggable="false" / decoding="async">
                   </a>
                   <div class="disco podcast-tile__list">
                     <p class="disco__label">Neueste Folgen</p>
-                    <div class="disco__item acc-item acc-card" data-sp="28eB8yIcbI85UpMZ13Fd9x" data-sp-kind="episode">
+                    <div class="disco__item acc-item acc-card" data-yt="Jihf45KVfLg" data-sp="28eB8yIcbI85UpMZ13Fd9x" data-sp-kind="episode">
                       <div class="disco__bar acc-bar">
                         <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/podcast/subpage-podcast-bohl-fragt__132x132.avif" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
@@ -989,11 +1022,12 @@
                       </div>
                       <div class="disco__panel acc-panel" id="disco-panel-28eB8yIcbI85UpMZ13Fd9x">
                         <div class="disco__panel-inner acc-panel-inner">
+                          <div class="disco__video"></div>
                           <div class="disco__spotify"></div>
                         </div>
                       </div>
                     </div>
-                    <div class="disco__item acc-item acc-card" data-sp="1gwTfFk2gxqjND41dVDf8d" data-sp-kind="episode">
+                    <div class="disco__item acc-item acc-card" data-yt="HNJ9NfZE3MY" data-sp="1gwTfFk2gxqjND41dVDf8d" data-sp-kind="episode">
                       <div class="disco__bar acc-bar">
                         <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/podcast/subpage-podcast-bohl-fragt__132x132.avif" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
@@ -1011,11 +1045,12 @@
                       </div>
                       <div class="disco__panel acc-panel" id="disco-panel-1gwTfFk2gxqjND41dVDf8d">
                         <div class="disco__panel-inner acc-panel-inner">
+                          <div class="disco__video"></div>
                           <div class="disco__spotify"></div>
                         </div>
                       </div>
                     </div>
-                    <div class="disco__item acc-item acc-card" data-sp="0ylORNkjoz3rr7PZG0wDH6" data-sp-kind="episode">
+                    <div class="disco__item acc-item acc-card" data-yt="_iyUKay7z58" data-sp="0ylORNkjoz3rr7PZG0wDH6" data-sp-kind="episode">
                       <div class="disco__bar acc-bar">
                         <img class="disco__thumb disco__thumb--square" src="assets/images/subpages/podcast/subpage-podcast-bohl-fragt__132x132.avif" alt="" loading="lazy" draggable="false" / decoding="async">
                         <div class="disco__text">
@@ -1033,6 +1068,7 @@
                       </div>
                       <div class="disco__panel acc-panel" id="disco-panel-0ylORNkjoz3rr7PZG0wDH6">
                         <div class="disco__panel-inner acc-panel-inner">
+                          <div class="disco__video"></div>
                           <div class="disco__spotify"></div>
                         </div>
                       </div>
@@ -1051,36 +1087,12 @@
     <article class="subpage-card is-next" data-index="6" aria-label="Shop">
       <div class="subpage-card-inner">
         <div class="subpage-overlay__title">Shop</div>
-        <div class="subpage-overlay__body">Limitierte Bohl100-Drops — immer nur 100 Stück. Be quick and join the club.</div>
+        <div class="subpage-overlay__body shop-intro">
+          <p>Produkte aus dem Hause und Geiste Bohl. 100 Stück. Immer nur 100 Stück.</p>
+          <p>Be quick and <a href="https://www.instagram.com/bohl.100/" target="_blank" rel="noopener" draggable="false">join the club!</a></p>
+        </div>
 
         <div class="shop-list">
-          <!-- Bohl2/100 — BOHL LITER -->
-          <div class="shop-product">
-            <a class="shop-product__image" href="https://www.weinco.at/inspiration/dr-bohl-liter-50001" target="_blank" rel="noopener" draggable="false">
-              <img src="assets/images/subpages/bohl100/shop-bohl-liter__504x504.avif" alt="Bohl Liter" loading="lazy" draggable="false" / decoding="async">
-              <span class="shop-product__image-badge shop-product__image-badge--available">Jetzt shoppen</span>
-            </a>
-            <div class="shop-product__body">
-              <p class="shop-product__num">Bohl2/100 · Getränk</p>
-              <h3 class="shop-product__title">Bohl Liter</h3>
-              <p class="shop-product__desc">Mit unserem zweiten Produkt wird der Traum eines jeden ehrlichen Dranglers nun Realität: Weisser Spritzer, die ganze Nacht! <b>Prost &amp; Liter, Liter!</b></p>
-            </div>
-          </div>
-
-          <!-- ANABOHLIKA — Shirts -->
-          <div class="shop-product">
-            <div class="shop-product__image shop-product__image--limited">
-              <img src="assets/images/subpages/bohl100/shop-anabohlika-shirt__500x500.avif" alt="Anabohlika Shirt" loading="lazy" draggable="false" / decoding="async">
-              <span class="shop-product__image-overlay"></span>
-              <span class="shop-product__image-badge shop-product__image-badge--limited">Bei Auftritten erhältlich</span>
-            </div>
-            <div class="shop-product__body">
-              <p class="shop-product__num">Anabohlika · Shirt</p>
-              <h3 class="shop-product__title">Anabohlika Shirts</h3>
-              <p class="shop-product__desc">Du siehst uns und willst auch den gestählten Körper eines jungen, griechischen Gottes? So sei es: <b>Anabohlika</b> macht's möglich! Nebenwirkungen sind lässige Eleganz, weicher Stuhlgang und Eifersucht.</p>
-            </div>
-          </div>
-
           <!-- Bohl1/100 — Shirt GRUPPO FKK DONAUINSEL -->
           <div class="shop-product">
             <div class="shop-product__image shop-product__image--soldout">
@@ -1091,7 +1103,20 @@
             <div class="shop-product__body">
               <p class="shop-product__num">Bohl1/100 · Shirt</p>
               <h3 class="shop-product__title">Gruppo FKK Donauinsel</h3>
-              <p class="shop-product__desc">Mir san auf da Insel daham! Für unser erstes Produkt gehen wir dorthin, wo es warm ums Herz wird — so warm, dass man sich gern der belastenden Fessel Alltagskleidung entledigt und volle Pracht zeigt, wie Gott sie schuf.</p>
+              <p class="shop-product__desc">Mir san auf da Insel daham! Für unser erstes Produkt gehen wir dorthin, wo es warm um’s Herz wird. So warm, dass man sich gern der belastenden Fessel-Alltagskleidung entledigt und volle Pracht zeigt, wie Gott sie schuf. <b>GRUPPO FKK DONAUINSEL!</b></p>
+            </div>
+          </div>
+
+          <!-- Bohl2/100 — BOHL LITER -->
+          <div class="shop-product">
+            <a class="shop-product__image" href="https://www.weinco.at/inspiration/dr-bohl-liter-50001" target="_blank" rel="noopener" draggable="false">
+              <img src="assets/images/subpages/bohl100/shop-bohl-liter__504x504.avif" alt="Bohl Liter" loading="lazy" draggable="false" / decoding="async">
+              <span class="shop-product__image-badge shop-product__image-badge--available">Jetzt shoppen</span>
+            </a>
+            <div class="shop-product__body">
+              <p class="shop-product__num">Bohl2/100 · Getränk</p>
+              <h3 class="shop-product__title">Bohl Liter</h3>
+              <p class="shop-product__desc">Mit unserem zweiten Produkt wird der Traum eines jeden ehrlichen Dranglers nun Realität: <b>WEISSER SPRITZER</b>, die ganze Nacht! <b>Prost &amp; Liter, Liter!</b></p>
             </div>
           </div>
 
@@ -1105,7 +1130,21 @@
             <div class="shop-product__body">
               <p class="shop-product__num">Bohl3/100 · Cap</p>
               <h3 class="shop-product__title">Bist Du Deppat</h3>
-              <p class="shop-product__desc">Den Moment für die Ewigkeit eingefangen mit unserem neuen, durchaus spontanen Produkt. Flagge zeigen für die ÖFB-Burschen, nicht nur bei dieser WM, sondern für immer! Wie immer gibt es original 100 Stück … be quick and join the club.</p>
+              <p class="shop-product__desc">Mit unserer neuen Cap, dem dritten Produkt, fangen wir den Moment für die Ewigkeit ein: <b>BIST DU DEPPAD!</b></p>
+            </div>
+          </div>
+
+          <!-- ANABOHLIKA — Shirts -->
+          <div class="shop-product">
+            <div class="shop-product__image shop-product__image--limited">
+              <img src="assets/images/subpages/bohl100/shop-anabohlika-shirt__500x500.avif" alt="Anabohlika Shirt" loading="lazy" draggable="false" / decoding="async">
+              <span class="shop-product__image-overlay"></span>
+              <span class="shop-product__image-badge shop-product__image-badge--limited">Bei Auftritten erhältlich</span>
+            </div>
+            <div class="shop-product__body">
+              <p class="shop-product__num">Special Edition · Shirt</p>
+              <h3 class="shop-product__title">Anabohlika Shirts</h3>
+              <p class="shop-product__desc">Du siehst uns und willst auch den gestählten Körper eines jungen, griechischen Gottes? So sei es: <b>Anabohlika</b> macht's möglich! Nebenwirkungen sind lässige Eleganz, weicher Stuhlgang und Eifersucht.</p>
             </div>
           </div>
         </div>
@@ -1190,7 +1229,11 @@
       <div class="subpage-card-inner">
         <div id="contact-view" class="subpage-card__view is-active">
           <div class="subpage-overlay__title view-switch" role="tablist" aria-label="Contact or About"><button type="button" class="view-switch__item is-active" data-view="contact" role="tab" aria-selected="true" onclick="showContactView()">Contact</button><span class="view-switch__sep" aria-hidden="true">|</span><button type="button" class="view-switch__item" data-view="about" role="tab" aria-selected="false" onclick="showAboutView()">About</button></div>
-          <div class="subpage-overlay__body">Anfragen, Buchungen, Kooperationen. Schreib uns.</div>
+          <div class="subpage-overlay__body contact-intro">
+            <p>Da wir super süß und super sexy sind, verstehen wir den Drang, mit uns in Kontakt treten zu wollen!</p>
+            <p>In unserer unendlichen Güte haben wir daher dieses revolutionäre Tool entwickeln lassen, welches der Menschheit ermöglicht, uns ein elektronisches Mail zukommen zu lassen.</p>
+            <p>Wir sind für alle Schweinereien zu haben!</p>
+          </div>
           <form id="contact-form" class="contact-form" novalidate>
             <label class="contact-form__field">
               <span>Email</span>
