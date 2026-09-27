@@ -3068,3 +3068,42 @@ a.shop-product__image:active .shop-product__image-badge--available {
 		display: none;
 	}
 }
+
+/* ── Pre-launch copy additions ── */
+/* Multi-paragraph show descriptions in the Kabarett fold-outs. */
+.kab-panel-content p + p {
+	margin-top: 0.9em;
+}
+/* Multi-paragraph intros (Shop, Contact). */
+.shop-intro p,
+.contact-intro p {
+	margin: 0 0 0.8em;
+}
+.shop-intro p:last-child,
+.contact-intro p:last-child {
+	margin-bottom: 0;
+}
+.shop-intro a {
+	color: var(--hero-yellow);
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	-webkit-tap-highlight-color: transparent;
+}
+.shop-intro a:hover {
+	color: var(--hover-yellow);
+}
+/* Bohlmobil award line — informational pill, not interactive. */
+.podcast-tile__award {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 16px;
+	padding: 6px 12px;
+	border: 1.5px solid var(--hero-yellow);
+	border-radius: 999px;
+	font-size: var(--fs-body-small-2);
+	font-style: italic;
+	line-height: 1.3;
+	color: var(--hero-yellow);
+}
