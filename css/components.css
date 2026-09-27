@@ -1524,8 +1524,8 @@
 .td-filter {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 8px;
-	padding: 0 var(--side-pad) 10px;
+	gap: 6px;
+	padding: 0 var(--side-pad) 8px;
 	flex-shrink: 0;
 	/* Panels are absolutely positioned against these, and must layer
 	   above the rows below without clipping. */
@@ -1546,8 +1546,10 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	padding: 8px 12px;
-	border-radius: 10px;
+	min-height: 32px;
+	padding: 4px 10px;
+	line-height: 1.2;
+	border-radius: 8px;
 	border: 1px solid rgba(245, 245, 240, 0.2);
 	background: rgba(255, 255, 255, 0.03);
 	color: var(--light-text);
@@ -1642,9 +1644,11 @@
 }
 
 .td-option {
-	display: block;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 	width: 100%;
-	padding: 9px 10px;
+	padding: 8px 10px;
 	border: 0;
 	border-radius: 7px;
 	background: transparent;
@@ -1667,9 +1671,35 @@
 	}
 }
 .td-option.is-active {
-	color: var(--dark-text);
-	background: var(--hero-yellow);
+	color: var(--light-text);
 	font-weight: 600;
+}
+/* Checkbox-style marker — signals that several options can be picked. */
+.td-option__check {
+	flex: 0 0 auto;
+	width: 14px;
+	height: 14px;
+	border-radius: 4px;
+	border: 1.5px solid rgba(245, 245, 240, 0.35);
+	position: relative;
+	transition:
+		background 140ms ease,
+		border-color 140ms ease;
+}
+.td-option.is-active .td-option__check {
+	background: var(--hero-yellow);
+	border-color: var(--hero-yellow);
+}
+.td-option.is-active .td-option__check::after {
+	content: '';
+	position: absolute;
+	left: 4px;
+	top: 1px;
+	width: 3px;
+	height: 7px;
+	border: solid var(--dark-text);
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1882,37 +1912,12 @@
 	}
 }
 
+/* Restverkauf — same button, orange instead of yellow. */
 .td-btn.rest {
-	overflow: visible;
+	background: var(--rest-orange);
 }
-
-.td-btn.rest::after {
-	content: 'Restverkauf';
-	position: absolute;
-	bottom: calc(100% + 7px);
-	left: 50%;
-	transform: translateX(calc(-50% + 10px)) rotate(3deg);
-	background: #b5211f;
-	color: #fff;
-	font-family: var(--font-body);
-	font-weight: 700;
-	font-size: 9px;
-	letter-spacing: 0.06em;
-	white-space: nowrap;
-	padding: 3px 8px;
-	border-radius: 4px;
-	pointer-events: none;
-}
-
-.td-btn.rest::before {
-	content: '';
-	position: absolute;
-	bottom: calc(100% + 0px);
-	left: 50%;
-	transform: translateX(calc(-50% + 10px)) rotate(3deg);
-	border: 4px solid transparent;
-	border-top-color: #b5211f;
-	pointer-events: none;
+.td-btn.rest:hover {
+	background: var(--rest-orange-hover);
 }
 
 /* Past shows */

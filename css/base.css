@@ -109,3 +109,11 @@ ol {
 		transition-duration: 0.01ms !important;
 	}
 }
+
+/* The `hidden` attribute must always win. Browsers implement it as a
+   low-priority UA `display: none`, so any author `display` rule (e.g.
+   `.td-row { display: grid }`) silently overrides it — which is what
+   made the tour filter look broken. */
+[hidden] {
+	display: none !important;
+}
