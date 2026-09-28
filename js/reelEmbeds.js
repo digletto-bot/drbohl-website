@@ -11,7 +11,9 @@
  */
 
 const EMBED_SRC = 'https://www.instagram.com/embed.js';
-const STATS_URL = '/assets/data/reel-stats.json';
+// Resolved relative to this file (js/ → ../assets/data/), never from the
+// domain root: the site must also work when served from a subfolder.
+const STATS_URL = new URL('../assets/data/reel-stats.json', import.meta.url).href;
 
 // Feather icons (MIT), stroke-based so they follow currentColor.
 const ICONS = {
