@@ -1,7 +1,10 @@
 /**
  * DR.BOHL — TOUR DATES
  * Tour dates are fetched from a Google Sheet with the following headers:
- * date | venue | city | url | state | note
+ * date | venue | city | url | state | note | Country | Bundesland
+ *
+ * Bundesland is optional: when filled it drives the region filter
+ * directly; when empty, the city is looked up in CITY_REGIONS.
  *
  * Date format from Google Sheets CSV export: M/D/YYYY (e.g. "8/15/2026")
  */
@@ -59,7 +62,7 @@ async function fetchTourDates() {
 			// twice. Genuine notes are unaffected.
 			note: stripCountryFromNote(at('note')),
 			country,
-			region: regionFor(city),
+			region: at('bundesland').trim() || regionFor(city),
 		};
 	});
 }
@@ -91,6 +94,9 @@ const CITY_REGIONS = {
 	innsbruck: 'Tirol',
 	kitzbuehel: 'Tirol',
 	kufstein: 'Tirol',
+	woergl: 'Tirol',
+	'st. johann in tirol': 'Tirol',
+	'sankt johann in tirol': 'Tirol',
 	dornbirn: 'Vorarlberg',
 	bregenz: 'Vorarlberg',
 	feldkirch: 'Vorarlberg',
@@ -100,6 +106,11 @@ const CITY_REGIONS = {
 	'st. poelten': 'Niederösterreich',
 	'sankt poelten': 'Niederösterreich',
 	krems: 'Niederösterreich',
+	'krems an der donau': 'Niederösterreich',
+	melk: 'Niederösterreich',
+	perchtoldsdorf: 'Niederösterreich',
+	oberwaltersdorf: 'Niederösterreich',
+	moedling: 'Niederösterreich',
 	baden: 'Niederösterreich',
 	amstetten: 'Niederösterreich',
 	eisenstadt: 'Burgenland',
