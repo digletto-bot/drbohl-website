@@ -627,7 +627,7 @@
 .reel-item {
 	min-width: 0;
 }
-/* Icon row above each reel — icons in hero yellow, counts in light text. */
+/* Icon row above each reel — icons and counts in hero yellow. */
 .reel-stats {
 	display: flex;
 	align-items: center;
@@ -649,7 +649,7 @@
 	font-size: var(--fs-body-small-2);
 	letter-spacing: 0.04em;
 	line-height: 1;
-	color: var(--light-text);
+	color: var(--hero-yellow);
 }
 
 @media (min-width: 600px) {
