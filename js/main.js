@@ -21,6 +21,7 @@ import {
    Contact/About content is built lazily on first visit to that slide, and
    Tour Dates are only fetched once that subpage is actually opened. */
 const TOUR_DATES_SLIDE_INDEX = 0;
+const SOCIAL_MEDIA_SLIDE_INDEX = 2;
 const KABARETT_SLIDE_INDEX = 1;
 const MUSIK_SLIDE_INDEX = 4;
 const PODCAST_SLIDE_INDEX = 5;
@@ -42,6 +43,15 @@ function ensureTourDatesLoaded() {
 	if (tourDatesLoaded) return;
 	tourDatesLoaded = true;
 	renderTourDates(document.getElementById('tour-list'));
+}
+
+/* Instagram's embed.js (and the reel stats row) load only once the Social
+   Media subpage is actually opened — 13 embeds are too heavy for first load. */
+let socialEmbedsRequested = false;
+function ensureSocialEmbeds() {
+	if (socialEmbedsRequested) return;
+	socialEmbedsRequested = true;
+	import('./reelEmbeds.js').then((m) => m.initReelEmbeds());
 }
 
 let kabarettInitialized = false;
@@ -162,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			ticketBtn?.classList.toggle('is-active', index === 0);
 			if (index === TOUR_DATES_SLIDE_INDEX && subpageOverlayIsOpen())
 				ensureTourDatesLoaded();
+			if (index === SOCIAL_MEDIA_SLIDE_INDEX && subpageOverlayIsOpen()) ensureSocialEmbeds();
 		},
 	});
 	ticketBtn?.classList.toggle('is-active', subpageSlider.currentIndex === 0);
@@ -389,6 +400,7 @@ window.openSubpage = function () {
 	history.pushState({ subpage: true }, '', window.location.href);
 	if (window.subpageSlider?.currentIndex === TOUR_DATES_SLIDE_INDEX)
 		ensureTourDatesLoaded();
+	if (window.subpageSlider?.currentIndex === SOCIAL_MEDIA_SLIDE_INDEX) ensureSocialEmbeds();
 };
 
 const subpageOverlayIsOpen = () =>
@@ -415,6 +427,7 @@ window.addEventListener('popstate', (e) => {
 		sp.setAttribute('aria-hidden', 'false');
 		if (window.subpageSlider?.currentIndex === TOUR_DATES_SLIDE_INDEX)
 			ensureTourDatesLoaded();
+		if (window.subpageSlider?.currentIndex === SOCIAL_MEDIA_SLIDE_INDEX) ensureSocialEmbeds();
 	} else if (sp.classList.contains('is-open')) {
 		hideSubpageOverlay(sp);
 		// Closing pops the pushState entry from openSubpage, landing back on
