@@ -1085,46 +1085,13 @@
    (cqw) rather than the viewport (vw, as the single-column Kabarett
    banner uses) so type scales correctly in the 2-column grid too. ── */
 
-.show-section-title {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5em;
-	padding: 1em var(--side-pad) 0.7em;
-	font-size: clamp(18px, 2.9vw, 22px);
-	font-weight: 700;
-	letter-spacing: 0.03em;
-	text-transform: uppercase;
-	color: var(--hover-yellow);
-}
-
-.subpage-overlay__title + .show-section-title {
-	padding-top: 3.5em;
-}
-
-.show-section-title::before,
-.show-section-title::after {
-	content: '';
-	width: clamp(50px, 12vw, 120px);
-	height: 1px;
-}
-
-.show-section-title::before {
-	background: linear-gradient(to right, transparent, #ddd6bb88);
-	background: linear-gradient(to right, transparent, rgba(242, 193, 46, 0.55));
-}
-.show-section-title::after {
-	background: linear-gradient(to left, transparent, #ddd6bb88);
-	background: linear-gradient(to left, transparent, rgba(242, 193, 46, 0.55));
-}
-
 .show-grid {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 36px;
 	/* Cards with several links grow when opened; don't stretch their row-mates. */
 	align-items: start;
-	padding: 16px var(--side-pad) 68px;
+	padding: 32px var(--side-pad) 68px;
 }
 @media (min-width: 600px) {
 	.show-grid {
