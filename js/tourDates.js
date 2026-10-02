@@ -3,7 +3,7 @@
  * Tour dates are fetched from a Google Sheet with the following headers:
  * date | venue | city | url | state | note
  *
- * Date format from Google Sheets CSV export: D/M/YYYY (e.g. "15/08/2026")
+ * Date format from Google Sheets CSV export: DD/MM/YYYY (e.g. "15/08/2026")
  */
 
 const SHEET_ID = '1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk';
@@ -16,6 +16,7 @@ const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq
 async function fetchTourDates() {
 	const res = await fetch(SHEET_URL);
 	const text = await res.text();
+	console.log(text);
 
 	// Skip header row
 	const rows = text.trim().split('\n').slice(1);
@@ -114,15 +115,12 @@ function parseCSVRow(row) {
 }
 
 /**
- * Parses a D/M/YYYY date string from Google Sheets into display parts.
- * If the second part can't be a month (> 12) the value is read as M/D/YYYY,
- * so rows exported in the other format still resolve to a valid date.
- * @param {string} dateStr - e.g. "26/11/2026" (or "8/15/2026")
+ * Parses a DD/MM/YYYY date string from Google Sheets into display parts.
+ * @param {string} dateStr - e.g. "26/11/2026"
  * @returns {{ day: string, month: string, year: string }}
  */
 function parseSheetDate(dateStr) {
-	let [day, month, year] = dateStr.split('/').map(Number);
-	if (month > 12) [day, month] = [month, day];
+	const [day, month, year] = dateStr.split('/').map(Number);
 	const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
 
 	return {
