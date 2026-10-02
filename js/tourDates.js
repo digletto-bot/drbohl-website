@@ -16,7 +16,6 @@ const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tq
 async function fetchTourDates() {
 	const res = await fetch(SHEET_URL);
 	const text = await res.text();
-	console.log(text);
 
 	// Skip header row
 	const rows = text.trim().split('\n').slice(1);
