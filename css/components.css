@@ -1159,6 +1159,8 @@
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 36px;
+	/* Cards with several links grow when opened; don't stretch their row-mates. */
+	align-items: start;
 	padding: 16px var(--side-pad) 68px;
 }
 @media (min-width: 600px) {
@@ -1212,8 +1214,11 @@
 	border-radius: 4px;
 	overflow: hidden;
 	container-type: inline-size;
-	aspect-ratio: 16 / 9;
 	background: #111;
+}
+.show-card__media {
+	position: relative;
+	aspect-ratio: 16 / 9;
 }
 
 .show-card__img {
@@ -1251,6 +1256,54 @@
 	left: 14px;
 	font-size: clamp(9px, 2.5cqw, 16px);
 	transform-origin: top left;
+	text-decoration: none;
+}
+
+/* Cards with several links: the CTA toggles a panel that grows the card.
+   0fr → 1fr animates the height without knowing it. */
+.show-card__links {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows 0.3s ease;
+}
+.show-card.is-open .show-card__links {
+	grid-template-rows: 1fr;
+}
+.show-card__links-inner {
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 0 5%;
+}
+.show-card.is-open .show-card__links-inner {
+	padding: 12px 5% 14px;
+}
+.show-card__link {
+	display: block;
+	padding: 10px 14px;
+	border: 1px solid rgba(218, 165, 53, 0.55);
+	border-radius: 6px;
+	color: var(--hero-yellow);
+	font-family: var(--font-body);
+	font-weight: 600;
+	font-size: clamp(12px, 3.6cqw, 16px);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition:
+		background 0.2s ease,
+		border-color 0.2s ease;
+}
+.show-card__link:hover,
+.show-card__link:focus-visible {
+	background: rgba(242, 193, 46, 0.12);
+	border-color: var(--hero-yellow);
+}
+@media (prefers-reduced-motion: reduce) {
+	.show-card__links {
+		transition: none;
+	}
 }
 
 /* ── About view (nested inside subpage card 8) ── */

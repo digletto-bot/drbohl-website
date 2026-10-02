@@ -333,8 +333,8 @@ function parseSheetDate(dateStr) {
 }
 
 /* ══════════════════════════════════════════════════════════
-   FILTER — three cascading multi-select fold-outs
-   Land → Bundesland → Stadt.
+   FILTER — two cascading multi-select fold-outs
+   Land → Bundesland.
 
    Each control holds a SET of values; an empty set means "Alle".
    Tapping an option toggles it (panel stays open so several can be
@@ -490,13 +490,11 @@ export function initTourFilter(container) {
 		row,
 		country: row.dataset.country || '',
 		region: row.dataset.region || '',
-		city: row.dataset.city || '',
 	}));
 
 	const countryEl = filter.querySelector('[data-select="country"]');
 	const regionEl = filter.querySelector('[data-select="region"]');
-	const cityEl = filter.querySelector('[data-select="city"]');
-	if (!countryEl || !regionEl || !cityEl) return;
+	if (!countryEl || !regionEl) return;
 
 	const countrySel = new TourSelect(
 		countryEl,
@@ -506,12 +504,8 @@ export function initTourFilter(container) {
 		},
 		(v) => COUNTRY_LABELS[v] || v,
 	);
-	const regionSel = new TourSelect(regionEl, () => {
-		refreshCities();
-		apply();
-	});
-	const citySel = new TourSelect(cityEl, apply);
-	TourSelect.instances = [countrySel, regionSel, citySel];
+	const regionSel = new TourSelect(regionEl, apply);
+	TourSelect.instances = [countrySel, regionSel];
 
 	if (!outsideClickBound) {
 		outsideClickBound = true;
@@ -531,16 +525,12 @@ export function initTourFilter(container) {
 
 	function refreshDependent() {
 		regionSel.setOptions(uniq(data.filter(inCountry).map((d) => d.region)));
-		refreshCities();
-	}
-	function refreshCities() {
-		citySel.setOptions(uniq(data.filter((d) => inCountry(d) && inRegion(d)).map((d) => d.city)));
 	}
 
 	function apply() {
 		let visible = 0;
 		data.forEach((d) => {
-			const show = inCountry(d) && inRegion(d) && citySel.accepts(d.city);
+			const show = inCountry(d) && inRegion(d);
 			d.row.hidden = !show;
 			if (show) visible++;
 		});
