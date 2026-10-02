@@ -52,7 +52,7 @@ export async function renderTourDates(container) {
 				switch (stateNr) {
 					case '1':
 						btnClass = 'td-btn rest';
-						btnContent = 'Tickets';
+						btnContent = 'Restverkauf';
 						break;
 					case '2':
 						btnClass = 'td-btn sold-out';
