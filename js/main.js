@@ -28,7 +28,13 @@ const PODCAST_SLIDE_INDEX = 5;
 const BOHL_ENTERTAINMENT_SLIDE_INDEX = 7;
 const CONTACT_SLIDE_INDEX = 8;
 
-const SOCIAL_PLATFORMS = new Set(['Facebook', 'Instagram', 'TikTok', 'YouTube', 'Spotify']);
+const SOCIAL_PLATFORMS = new Set([
+	'Facebook',
+	'Instagram',
+	'TikTok',
+	'YouTube',
+	'Spotify',
+]);
 
 let aboutInitialized = false;
 function ensureAboutInit() {
@@ -431,7 +437,9 @@ window.addEventListener('popstate', (e) => {
 /* ── About page copy ── */
 const ABOUT_LEAD = 'Vom gelben Pfannenwender zum Whackofatz';
 const ABOUT_PARAGRAPHS = [
-	`Paulus Bohl aka Dr.Bohl ist ein österreichischer Comedian, Content Creator, Musiker, Podcaster und Allround-Entertainer. Mit seinen Comedy-Videos erreicht er über Social Media ein Millionenpublikum, sein jüngster Song schaffte es auf Platz 9 der Österreicher Charts und mit seinem Kabarettprogramm steht er regelmäßig auf den größten Bühnen des Landes. Spätestens seit seinem zweiten Platz bei Dancing Stars 2025 hat er sich auch als gefragte TV-Persönlichkeit etabliert. Inzwischen baut der erst 29-jährige Jurist und Unternehmer mit Bohl Entertainment ein Kreativunternehmen an der Schnittstelle von Werbung und Unterhaltung auf.`,
+	`Paulus Bohl aka Dr.Bohl ist ein österreichischer Comedian, Content Creator, Musiker, Podcaster und Allround-Entertainer.`,
+	`Mit seinen Comedy-Videos erreicht er über Social Media ein Millionenpublikum, sein jüngster Song schaffte es auf Platz 9 der Österreicher Charts und mit seinem Kabarettprogramm steht er regelmäßig auf den größten Bühnen des Landes. Spätestens seit seinem zweiten Platz bei Dancing Stars 2025 hat er sich auch als gefragte TV-Persönlichkeit etabliert.`,
+	`Inzwischen baut der erst 29-jährige Jurist und Unternehmer mit Bohl Entertainment ein Kreativunternehmen an der Schnittstelle von Werbung und Unterhaltung auf.`,
 ];
 
 function buildAboutContent() {

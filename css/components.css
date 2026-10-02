@@ -1316,7 +1316,7 @@
 	color: var(--light-text);
 	font-size: 19px;
 	line-height: 1.5;
-	max-width: 480px;
+	max-width: 75ch;
 }
 .about-overlay__body p {
 	margin: 0 0 18px;
@@ -1332,6 +1332,10 @@
 	/* margin-bottom moved to .about-lead-mask — it sat inside the clip
 	   region here and would be masked away. */
 	margin-bottom: 0;
+}
+.subpage-overlay__body.contact-intro {
+	margin-top: 2em;
+	max-width: 80ch;
 }
 
 /* ══════════════════════════════════════════════
@@ -3054,12 +3058,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	.progress-nav {
 		justify-content: center;
 		padding: 0 calc(var(--side-pad) + 60px);
-	}
-}
-
-@media (min-width: 600px) {
-	.about-overlay__body {
-		max-width: 650px;
 	}
 }
 
