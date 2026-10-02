@@ -9,6 +9,7 @@ import Slider from './slider.js';
 import Router from './router.js';
 import Menu from './menu.js';
 import { renderTourDates } from './tourDates.js';
+import { initShowCards } from './showCards.js';
 import { trackEvent } from './analytics.js';
 import {
 	fitText,
@@ -81,6 +82,8 @@ function ensureBrochureInit() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+	initShowCards();
+
 	/* ── fitText ── */
 	/* ── fitText / loading screen ──
 	   fitText needs DrukCond metrics to size headlines correctly, so it
