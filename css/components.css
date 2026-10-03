@@ -2091,7 +2091,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
    MUSIK — Discography accordion
    ══════════════════════════════════════════════ */
 .disco {
-	padding: 12px var(--side-pad) 56px;
+	padding: 36px var(--side-pad) 56px;
 	margin: 0 auto;
 }
 .disco__label {
