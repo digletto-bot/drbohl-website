@@ -1768,7 +1768,7 @@
 	opacity: 0.7;
 }
 .be-impressum__title {
-	font-size: clamp(22px, 5vw, 32px);
+	font-size: clamp(26px, 6vw, 38px);
 }
 .be-impressum {
 	padding-bottom: 64px;
