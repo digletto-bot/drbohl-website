@@ -1773,7 +1773,7 @@
    thin yellow rule, Impressum.
    ══════════════════════════════════════════════ */
 .be-text {
-	max-width: 640px;
+	max-width: 80ch;
 }
 .be-text p {
 	margin: 0 0 1em;
