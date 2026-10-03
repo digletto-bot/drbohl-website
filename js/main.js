@@ -25,7 +25,6 @@ const TOUR_DATES_SLIDE_INDEX = 0;
 const KABARETT_SLIDE_INDEX = 1;
 const MUSIK_SLIDE_INDEX = 4;
 const PODCAST_SLIDE_INDEX = 5;
-const BOHL_ENTERTAINMENT_SLIDE_INDEX = 7;
 const CONTACT_SLIDE_INDEX = 8;
 
 const SOCIAL_PLATFORMS = new Set([
@@ -78,13 +77,6 @@ function ensurePodcastInit() {
 	if (podcastInitialized) return;
 	podcastInitialized = true;
 	initPodcastAccordion();
-}
-
-let brochureInitialized = false;
-function ensureBrochureInit() {
-	if (brochureInitialized) return;
-	brochureInitialized = true;
-	initBrochureReveal();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -152,9 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
 					// accordion markup (see e.g. index.html "Neueste Folgen"),
 					// so it needs the same init as the Musik subpage.
 					ensureMusikInit();
-					break;
-				case BOHL_ENTERTAINMENT_SLIDE_INDEX:
-					ensureBrochureInit();
 					break;
 			}
 		},
@@ -529,37 +518,6 @@ function initAboutReveal() {
 	);
 
 	body.querySelectorAll('.about-reveal').forEach((p) => observer.observe(p));
-}
-
-/* ── Bohl Entertainment brochure: scroll-reveal (subpage card 7) ── */
-function initBrochureReveal() {
-	const card = document.querySelector('.subpage-card[data-index="7"]');
-	if (!card) return;
-	card.addEventListener('dragstart', (e) => e.preventDefault());
-	const els = card.querySelectorAll('.be-reveal');
-	if (!els.length) return;
-
-	if (!('IntersectionObserver' in window)) {
-		els.forEach((el) => el.classList.add('is-visible'));
-		return;
-	}
-
-	const io = new IntersectionObserver(
-		(entries) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					entry.target.classList.add('is-visible');
-					io.unobserve(entry.target);
-				}
-			});
-		},
-		{ root: card, threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-	);
-
-	els.forEach((el, i) => {
-		el.style.transitionDelay = `${(i % 4) * 60}ms`;
-		io.observe(el);
-	});
 }
 
 /* ── Musik: discography accordion with lazy embeds ── */

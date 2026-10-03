@@ -1,0 +1,685 @@
+- generic [active]:
+  - generic [aria-hidden]:
+    - generic: DR.BOHL
+  - generic [ref=e1]:
+    - region "Dr.Bohl Navigation" [ref=e2]:
+      - navigation "Slide navigation" [ref=e3]:
+        - link "Home" [ref=e4] [cursor=pointer]:
+          - /url: /
+        - link "Kabarett" [ref=e5] [cursor=pointer]:
+          - /url: /kabarett
+        - link "Social Media" [ref=e6] [cursor=pointer]:
+          - /url: /social-media
+        - link "Showtime" [ref=e7] [cursor=pointer]:
+          - /url: /showtime
+        - link "Musik" [ref=e8] [cursor=pointer]:
+          - /url: /musik
+        - link "Podcast" [ref=e9] [cursor=pointer]:
+          - /url: /podcast
+        - link "Shop" [ref=e10] [cursor=pointer]:
+          - /url: /shop
+        - link "Bohl Entertainment" [ref=e11] [cursor=pointer]:
+          - /url: /bohl-entertainment
+        - link "Contact" [ref=e12] [cursor=pointer]:
+          - /url: /contact
+      - button "Menü öffnen" [ref=e13] [cursor=pointer]
+      - article "Home" [ref=e17]:
+        - generic [ref=e18]:
+          - img "Dr.Bohl" [ref=e19]
+          - generic [ref=e20]:
+            - generic [ref=e21]: DR.BOHL
+            - button "Alle Termine" [ref=e24] [cursor=pointer]
+          - generic [aria-hidden]: Swipe
+      - article "Kabarett" [ref=e25]:
+        - generic [ref=e26]:
+          - img "Kabarett" [ref=e27]
+          - generic [ref=e28]:
+            - generic [ref=e29]: KABARETT
+            - button "More" [ref=e32] [cursor=pointer]
+      - article "Social Media" [ref=e33]:
+        - generic [ref=e34]:
+          - img "Social Media" [ref=e35]
+          - generic [ref=e36]:
+            - generic [ref=e37]: SOCIAL MEDIA
+            - generic [ref=e39]:
+              - generic [ref=e40]:
+                - link "Facebook" [ref=e41] [cursor=pointer]:
+                  - /url: https://www.facebook.com/share/1D3Cdf1hv9/
+                - link "Instagram" [ref=e44] [cursor=pointer]:
+                  - /url: https://www.instagram.com/dr.bohl/
+                - link "TikTok" [ref=e47] [cursor=pointer]:
+                  - /url: https://www.tiktok.com/@dr.bohl
+                - link "YouTube" [ref=e50] [cursor=pointer]:
+                  - /url: https://www.youtube.com/@DrBohl
+                - link "Spotify" [ref=e53] [cursor=pointer]:
+                  - /url: https://open.spotify.com/artist/3521X7UerANEaB3utPets1?si=c2UK2k8PQnq5gkmOUYnZZA
+              - button "More" [ref=e56] [cursor=pointer]
+      - article "Showtime" [ref=e57]:
+        - generic [ref=e58]:
+          - img "Showtime" [ref=e59]
+          - generic [ref=e60]:
+            - generic [ref=e61]: SHOWTIME
+            - button "More" [ref=e64] [cursor=pointer]
+      - article "Musik" [ref=e65]:
+        - generic [ref=e66]:
+          - img "Dr.Bohl" [ref=e67]
+          - generic [ref=e68]:
+            - generic [ref=e69]: MUSIK
+            - button "More" [ref=e72] [cursor=pointer]
+      - article "Podcast" [ref=e73]:
+        - generic [ref=e74]:
+          - img "Podcast" [ref=e75]
+          - generic [ref=e76]:
+            - generic [ref=e77]: PODCAST
+            - button "More" [ref=e80] [cursor=pointer]
+      - article "Shop" [ref=e81]:
+        - generic [ref=e82]:
+          - img "Shop" [ref=e83]
+          - generic [ref=e84]:
+            - generic [ref=e85]: Shop
+            - button "More" [ref=e88] [cursor=pointer]
+      - article "Bohl Entertainment" [ref=e89]:
+        - generic [ref=e90]:
+          - img "Bohl Entertainment" [ref=e91]
+          - generic [ref=e92]:
+            - generic [ref=e93]: BOHL ENTERTAINMENT
+            - button "More" [ref=e96] [cursor=pointer]
+      - article "Contact" [ref=e97]:
+        - generic [ref=e98]:
+          - img "Contact" [ref=e99]
+          - button "Über Dr.Bohl" [ref=e100] [cursor=pointer]
+          - generic [ref=e101]:
+            - generic [ref=e102]: CONTACT & ABOUT
+            - button "Contact" [ref=e105] [cursor=pointer]
+    - button "Zurück"
+    - button "Weiter" [ref=e106] [cursor=pointer]
+    - dialog [aria-hidden] [ref=e109]:
+      - generic [ref=e110]:
+        - generic [ref=e111]:
+          - button [ref=e112] [cursor=pointer]: Dr.Bohl
+          - button [ref=e113] [cursor=pointer]
+        - generic [ref=e116]:
+          - generic [ref=e118]:
+            - button [ref=e119] [cursor=pointer]:
+              - generic [ref=e120]: Home
+              - generic: Home
+              - generic [ref=e121]: "01"
+            - button [ref=e122] [cursor=pointer]:
+              - generic [ref=e123]: Kabarett
+              - generic: Kabarett
+              - generic [ref=e124]: "02"
+            - button [ref=e125] [cursor=pointer]:
+              - generic [ref=e126]: Social Media
+              - generic: Social Media
+              - generic [ref=e127]: "03"
+            - button [ref=e128] [cursor=pointer]:
+              - generic [ref=e129]: Showtime
+              - generic: Showtime
+              - generic [ref=e130]: "04"
+            - button [ref=e131] [cursor=pointer]:
+              - generic [ref=e132]: Musik
+              - generic: Musik
+              - generic [ref=e133]: "05"
+            - button [ref=e134] [cursor=pointer]:
+              - generic [ref=e135]: Podcast
+              - generic: Podcast
+              - generic [ref=e136]: "06"
+            - button [ref=e137] [cursor=pointer]:
+              - generic [ref=e138]: Shop
+              - generic: Shop
+              - generic [ref=e139]: "07"
+            - button [ref=e140] [cursor=pointer]:
+              - generic [ref=e141]: Bohl Entertainment
+              - generic: Bohl Ent.
+              - generic [ref=e142]: "08"
+            - button [ref=e143] [cursor=pointer]:
+              - generic [ref=e144]: Contact
+              - generic: Contact
+              - generic [ref=e145]: "09"
+          - generic [ref=e147]:
+            - link [ref=e148] [cursor=pointer]:
+              - /url: /
+              - text: Home
+            - link [ref=e149] [cursor=pointer]:
+              - /url: /kabarett
+              - text: Kabarett
+            - link [ref=e150] [cursor=pointer]:
+              - /url: /social-media
+              - text: Socials
+            - link [ref=e151] [cursor=pointer]:
+              - /url: /showtime
+              - text: Showtime
+            - link [ref=e152] [cursor=pointer]:
+              - /url: /musik
+              - text: Musik
+            - link [ref=e153] [cursor=pointer]:
+              - /url: /podcast
+              - text: Podcast
+            - link [ref=e154] [cursor=pointer]:
+              - /url: /shop
+              - text: Shop
+            - link [ref=e155] [cursor=pointer]:
+              - /url: /bohl-entertainment
+              - text: Bohl Ent.
+            - link [ref=e156] [cursor=pointer]:
+              - /url: /contact
+              - text: Contact
+    - generic [aria-hidden] [ref=e157]:
+      - navigation [ref=e159]:
+        - link [ref=e160] [cursor=pointer]:
+          - /url: /
+        - link [ref=e161] [cursor=pointer]:
+          - /url: /kabarett
+        - link [ref=e162] [cursor=pointer]:
+          - /url: /social-media
+        - link [ref=e163] [cursor=pointer]:
+          - /url: /showtime
+        - link [ref=e164] [cursor=pointer]:
+          - /url: /musik
+        - link [ref=e165] [cursor=pointer]:
+          - /url: /podcast
+        - link [ref=e166] [cursor=pointer]:
+          - /url: /shop
+        - link [ref=e167] [cursor=pointer]:
+          - /url: /bohl-entertainment
+        - link [ref=e168] [cursor=pointer]:
+          - /url: /contact
+      - button [ref=e169] [cursor=pointer]
+      - region [ref=e173]:
+        - article [ref=e174]:
+          - generic [ref=e176]:
+            - generic [ref=e177]: // Live Performances
+            - generic [ref=e178]: TOUR DATES
+        - article [ref=e180]:
+          - generic [ref=e181]:
+            - generic [ref=e182]: Kabarett
+            - generic [ref=e183]:
+              - paragraph [ref=e184]: Komm her, du Gieriger!
+              - text: In Person noch ehrlicher, tiefer, wesentlich verschwitzter, angeblich witziger und je nach Sitzplatz auch ein bissl größer. Absolutes Kulterprogramm, da kannst auch die Mami und die Großödan mitnehmen. Schau dich mal um. Komm mach jetzt, trau dich.
+              - paragraph [ref=e185]: Mit großvärterlicher Liebe, Dr.Bohl
+            - generic [ref=e186]:
+              - generic [ref=e187]:
+                - generic [ref=e188]:
+                  - generic [ref=e190]:
+                    - generic [ref=e191]: Solo
+                    - button [ref=e192] [cursor=pointer]: Alle Termine
+                  - button [ref=e193] [cursor=pointer]
+                - generic [ref=e196]:
+                  - paragraph [ref=e197]: Jeder war’s mal, viele sind es. Viele wollen’s, wenige lang. Mickie besingt es und Han heißt so. SOLO.
+                  - paragraph [ref=e198]: "Erstmals hat es auch Paulus erwischt: Nach zwei bahnbrechenden Programmen mit seinem kongenialen Bruder muss er diesmal allein ran. Er nutzt dies, um für alle Suchenden da draußen aufzuarbeiten, wovon er viele hatte: Dates. Das häufigst anvisierte Minenfeld dieser Welt. Anhand von fünf überlebten Tinder Dates werden Fehler, Red Flags und vor allem die eigene Vergangenheit aufgearbeitet. Von Opernball mit DJ Ötzi bis Maturareise-Exzess, all die Storys, die im Zuge dieser Treffen erzählt wurden, landen nun gesammelt auf der Bühne."
+                  - paragraph [ref=e199]: Ob das eine gute Idee ist?
+              - generic [ref=e200]:
+                - generic [ref=e201]:
+                  - generic [ref=e203]: Anabohlika
+                  - button [ref=e205] [cursor=pointer]
+                - generic [ref=e208]:
+                  - paragraph [ref=e209]: "Prostata-Untersuchungen bereiten Ihnen Sorgen? Drachen machen Ihnen Angst? Sie fürchten sich vor langen Autofahrten mit Ihrem Partner? Dann empfehlen wir: ANABOHLIKA."
+                  - paragraph [ref=e210]: Wir müssen Sie allerdings enttäuschen, Sie werden damit leider nicht so wunderschön werden wie Arnold „The Oak“ Schwarzenegger. Aber das wird ja eh keiner. Außer vielleicht Hansi Ernst Hinterseer. Aber das ist ein anderes Thema.
+                  - paragraph [ref=e211]: Nach dem großen Erfolg des ersten Programmes „Dr.Bohl – Live!“ folgt nun der zweite Streich des süßen, aber auch sexy Bruderpaars. Winkeln Sie die Beine an, entspannen Sie sich und denken Sie an etwas Schönes!
+              - generic [ref=e212]:
+                - generic [ref=e213]:
+                  - generic [ref=e215]:
+                    - generic [ref=e216]: Dr.Bohl– Live!
+                    - button [ref=e217] [cursor=pointer]: Stream Now
+                  - button [ref=e218] [cursor=pointer]
+                - generic [ref=e221]:
+                  - paragraph [ref=e222]: Sie verstehen Piraten auch nicht? Ja wissen wir, blöde Frage eigentlich, natürlich verstehen Sie die nicht. Sind ja auch wirklich komische Typen, diese Piraten.
+                  - paragraph [ref=e223]: Bis jetzt wirkt alles noch normal. Schon wieder zwei so Hawara, die Piraten nicht verstehen, was soll’s?
+                  - paragraph [ref=e224]: Doch wir sind nicht wie alle anderen. Wir sind Macher! Und wir lassen uns nicht länger von der Piratenlobby auf den Schädel scheißen!
+                  - paragraph [ref=e225]: "Wir haben die Antworten, die Sie schon immer wollten! Also kommen Sie vorbei, damit diese unzähligen schlaflosen Nächte verdammt nochmal endlich ein Ende finden: Weil Sie jetzt wissen, dass Sie mit all Ihren Fragen nicht länger alleine sind."
+            - generic [ref=e226]:
+              - paragraph [ref=e227]: Keine neuen Projekte verpassen.
+              - generic [ref=e228]:
+                - generic [ref=e229]: Jetzt für den Newsletter anmelden!
+                - generic [ref=e230]:
+                  - textbox [ref=e231]:
+                    - /placeholder: deine@email.at
+                  - button [ref=e232] [cursor=pointer]
+        - article [ref=e237]:
+          - generic [ref=e238]:
+            - generic [ref=e239]: Social Media
+            - generic [ref=e243]:
+              - generic [ref=e244]:
+                - link [ref=e245] [cursor=pointer]:
+                  - /url: https://www.facebook.com/share/1D3Cdf1hv9/
+                - link [ref=e248] [cursor=pointer]:
+                  - /url: https://www.instagram.com/dr.bohl/
+                - link [ref=e251] [cursor=pointer]:
+                  - /url: https://www.tiktok.com/@dr.bohl
+                - link [ref=e254] [cursor=pointer]:
+                  - /url: https://www.youtube.com/@DrBohl
+                - link [ref=e257] [cursor=pointer]:
+                  - /url: https://open.spotify.com/artist/3521X7UerANEaB3utPets1?si=c2UK2k8PQnq5gkmOUYnZZA
+              - paragraph [ref=e261]: Vom Bohlmobil bis zur Bühne — am Handy is' Dr.Bohl im Dauereinsatz. Backstage-Schnipsel, spontane Interviews und der ein oder andere Schmäh, frisch aus'm Alltag zwischen Kabarett, Musik und Familienleben. Reinschauen, folgen, dabei sein — hier verpasst ma nix.
+            - generic [ref=e262]:
+              - blockquote [ref=e264]:
+                - generic [ref=e265]:
+                  - link [ref=e266] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DUONUsTjNwg/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e279]: View this post on Instagram
+                  - paragraph [ref=e297]:
+                    - link [ref=e298] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DUONUsTjNwg/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e300]:
+                - generic [ref=e301]:
+                  - link [ref=e302] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DcG5Y-pkVEr/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e315]: View this post on Instagram
+                  - paragraph [ref=e333]:
+                    - link [ref=e334] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DcG5Y-pkVEr/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e336]:
+                - generic [ref=e337]:
+                  - link [ref=e338] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/CrYGt43I9g6/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e351]: View this post on Instagram
+                  - paragraph [ref=e369]:
+                    - link [ref=e370] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/CrYGt43I9g6/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e372]:
+                - generic [ref=e373]:
+                  - link [ref=e374] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/CdlUuO8ok9H/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e387]: View this post on Instagram
+                  - paragraph [ref=e405]:
+                    - link [ref=e406] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/CdlUuO8ok9H/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e408]:
+                - generic [ref=e409]:
+                  - link [ref=e410] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/CeJYlWuoC1-/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e423]: View this post on Instagram
+                  - paragraph [ref=e441]:
+                    - link [ref=e442] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/CeJYlWuoC1-/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e444]:
+                - generic [ref=e445]:
+                  - link [ref=e446] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/C3YF55oos4w/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e459]: View this post on Instagram
+                  - paragraph [ref=e477]:
+                    - link [ref=e478] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/C3YF55oos4w/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e480]:
+                - generic [ref=e481]:
+                  - link [ref=e482] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DJL1hu1IgEY/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e495]: View this post on Instagram
+                  - paragraph [ref=e513]:
+                    - link [ref=e514] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DJL1hu1IgEY/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e516]:
+                - generic [ref=e517]:
+                  - link [ref=e518] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DTih6NHjDSU/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e531]: View this post on Instagram
+                  - paragraph [ref=e549]:
+                    - link [ref=e550] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DTih6NHjDSU/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e552]:
+                - generic [ref=e553]:
+                  - link [ref=e554] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DYALKfjDJgJ/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e567]: View this post on Instagram
+                  - paragraph [ref=e585]:
+                    - link [ref=e586] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DYALKfjDJgJ/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e588]:
+                - generic [ref=e589]:
+                  - link [ref=e590] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DZrRIm1jV4-/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e603]: View this post on Instagram
+                  - paragraph [ref=e621]:
+                    - link [ref=e622] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DZrRIm1jV4-/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e624]:
+                - generic [ref=e625]:
+                  - link [ref=e626] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DRsG-T3jKKU/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e639]: View this post on Instagram
+                  - paragraph [ref=e657]:
+                    - link [ref=e658] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DRsG-T3jKKU/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e660]:
+                - generic [ref=e661]:
+                  - link [ref=e662] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DABmpSko7pe/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e675]: View this post on Instagram
+                  - paragraph [ref=e693]:
+                    - link [ref=e694] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DABmpSko7pe/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+              - blockquote [ref=e696]:
+                - generic [ref=e697]:
+                  - link [ref=e698] [cursor=pointer]:
+                    - /url: https://www.instagram.com/reel/DUBa-HODL4U/?utm_source=ig_embed&utm_campaign=loading
+                    - generic [ref=e711]: View this post on Instagram
+                  - paragraph [ref=e729]:
+                    - link [ref=e730] [cursor=pointer]:
+                      - /url: https://www.instagram.com/reel/DUBa-HODL4U/?utm_source=ig_embed&utm_campaign=loading
+                      - text: A post shared by Dr.Bohl (@dr.bohl)
+        - article [ref=e731]:
+          - generic [ref=e732]:
+            - generic [ref=e733]: Showtime
+            - generic [ref=e734]: Fernsehen
+            - generic [ref=e735]:
+              - generic [ref=e737]:
+                - link [ref=e739] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?v=FqZNh3NIMTk
+                  - text: Stream Now
+                - generic [ref=e740]: Dancing Stars
+              - generic [ref=e742]:
+                - link [ref=e744] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?v=RtvhpUFxOsU
+                  - text: Stream Now
+                - generic [ref=e745]: Tiafe Typen
+              - generic [ref=e747]:
+                - link [ref=e749] [cursor=pointer]:
+                  - /url: https://tv.orf.at/program/orf1/wasgibtesn14288.html
+                  - text: Stream Now
+                - generic [ref=e750]: Was gibt es Neues?
+              - generic [ref=e752]:
+                - link [ref=e754] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?v=f3IdlAmrZpg&t=218s
+                  - text: Stream Now
+                - generic [ref=e755]: Willkommen Österreich
+            - generic [ref=e756]: Schabernack
+            - generic [ref=e757]:
+              - generic [ref=e759]:
+                - link [ref=e761] [cursor=pointer]:
+                  - /url: https://oe3.orf.at/sendungen/stories/3048380/
+                  - text: Placeholder
+                - generic [ref=e762]: Früstück bei mir
+              - generic [ref=e764]:
+                - link [ref=e766] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?v=lent3il6yeE&t=48s
+                  - text: Placeholder
+                - generic [ref=e767]: Kurier Romy
+              - generic [ref=e768]:
+                - generic [ref=e769]:
+                  - button [ref=e771] [cursor=pointer]: Placeholder
+                  - generic [ref=e772]: Opernball
+                - link [ref=e773] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?v=s0voLSGOymw
+                  - text: 2024 Highlights
+                - link [ref=e774] [cursor=pointer]:
+                  - /url: https://www.youtube.com/watch?v=qT32ft37HVw
+                  - text: 2026 Highlights
+              - generic [ref=e776]:
+                - link [ref=e778] [cursor=pointer]:
+                  - /url: https://www.instagram.com/reels/DRhz1wVDGnR/
+                  - text: Placeholder
+                - generic [ref=e779]: Disney
+        - article [ref=e780]:
+          - generic [ref=e781]:
+            - generic [ref=e782]: Musik
+            - generic [ref=e783]: Releases, Playlists und Hörproben von Dr.Bohl.
+            - generic [ref=e784]:
+              - paragraph [ref=e785]: Discography
+              - generic [ref=e787] [cursor=pointer]:
+                - generic [ref=e788]:
+                  - generic [ref=e790]:
+                    - text: Schnitzel
+                    - emphasis [ref=e791]: (all night long)
+                  - link [ref=e792]:
+                    - /url: https://open.spotify.com/track/3ygDjNYM0iOebN99xnmcLf
+                - button [ref=e793]
+                - generic [ref=e795]: "2026"
+              - generic [ref=e797] [cursor=pointer]:
+                - generic [ref=e798]:
+                  - generic [ref=e799]: Weisser Spritzer
+                  - link [ref=e801]:
+                    - /url: https://open.spotify.com/track/7w4lRwN9v1mMw5TXU5Z208
+                - button [ref=e802]
+                - generic [ref=e804]: "2025"
+              - generic [ref=e806] [cursor=pointer]:
+                - generic [ref=e807]:
+                  - generic [ref=e808]: Du Dummer
+                  - link [ref=e810]:
+                    - /url: https://open.spotify.com/track/5fKVrbQJzzMlQba234Y5JP
+                - button [ref=e811]
+                - generic [ref=e813]: "2025"
+        - article [ref=e814]:
+          - generic [ref=e815]:
+            - generic [ref=e816]: Podcast
+            - generic [ref=e817]: Zwei Shows, ein Bohl — Insider-Talk im Auto und Promi-Interviews bei der Melange.
+            - generic [ref=e818]:
+              - generic [ref=e822]:
+                - generic [ref=e823] [cursor=pointer]:
+                  - heading [level=3] [ref=e824]: Bohlmobil
+                  - button [ref=e825]
+                - generic [ref=e828]:
+                  - paragraph [ref=e829]: Die sexy und auch lässigen Gebrüder Benji und Bohl fahren im Bohlmobil durch die schönen Straßen Wiens, geben dabei heiße Insiderinformationen, sind sich selten einig und einfach ure lustig!
+                  - paragraph [ref=e830]:
+                    - generic [aria-hidden] [ref=e831]: 🏆
+                    - text: 3x in Folge beim Ö3 Podcast Award ausgezeichnet
+                  - link [ref=e832] [cursor=pointer]:
+                    - /url: https://open.spotify.com/show/6KQgaRmsRh817EZpx5rpwb?si=559afdeb00094b46
+                  - generic [ref=e833]:
+                    - paragraph [ref=e834]: Neueste Folgen
+                    - generic [ref=e836] [cursor=pointer]:
+                      - generic [ref=e837]:
+                        - generic [ref=e838]:
+                          - generic [ref=e839]:
+                            - text: Mondsee
+                            - emphasis [ref=e840]: "#93"
+                          - generic [ref=e841]: 17.07.
+                        - link [ref=e842]:
+                          - /url: https://open.spotify.com/episode/2oU2uuehyyZjc5NUJI3Dio
+                      - button [ref=e843]
+                    - generic [ref=e846] [cursor=pointer]:
+                      - generic [ref=e847]:
+                        - generic [ref=e848]:
+                          - generic [ref=e849]:
+                            - text: Nachts im Autohaus
+                            - emphasis [ref=e850]: "#92"
+                          - generic [ref=e851]: 15.06.
+                        - link [ref=e852]:
+                          - /url: https://open.spotify.com/episode/7KjHfXgsys83liWMpydOpG
+                      - button [ref=e853]
+                    - generic [ref=e856] [cursor=pointer]:
+                      - generic [ref=e857]:
+                        - generic [ref=e858]:
+                          - generic [ref=e859]:
+                            - text: Akademisches Gymnasium
+                            - emphasis [ref=e860]: "#91"
+                          - generic [ref=e861]: 18.05.
+                        - link [ref=e862]:
+                          - /url: https://open.spotify.com/episode/6YXqGOvKHd52peNt8b7Bu2
+                      - button [ref=e863]
+              - generic [ref=e868]:
+                - generic [ref=e869] [cursor=pointer]:
+                  - heading [level=3] [ref=e870]: Bohl Fragt
+                  - button [ref=e871]
+                - generic [ref=e874]:
+                  - paragraph [ref=e875]: Was gibt es Schöneres als eine gemütliche Melange und bisschen Schmäh führen? Bohl bittet Promis zum Café und stellt endlich die Fragen, nach denen das Volk immer schon gelechzt hat.
+                  - link [ref=e876] [cursor=pointer]:
+                    - /url: https://open.spotify.com/show/1SdGEJdyYuY9AlXpyHKerq
+                  - generic [ref=e877]:
+                    - paragraph [ref=e878]: Neueste Folgen
+                    - generic [ref=e880] [cursor=pointer]:
+                      - generic [ref=e881]:
+                        - generic [ref=e882]:
+                          - generic [ref=e883]: Andi Babler
+                          - generic [ref=e884]: 19.09.
+                        - link [ref=e885]:
+                          - /url: https://open.spotify.com/episode/28eB8yIcbI85UpMZ13Fd9x
+                      - button [ref=e886]
+                    - generic [ref=e889] [cursor=pointer]:
+                      - generic [ref=e890]:
+                        - generic [ref=e891]:
+                          - generic [ref=e892]: Beate Meinl-Reisinger
+                          - generic [ref=e893]: 19.09.
+                        - link [ref=e894]:
+                          - /url: https://open.spotify.com/episode/1gwTfFk2gxqjND41dVDf8d
+                      - button [ref=e895]
+                    - generic [ref=e898] [cursor=pointer]:
+                      - generic [ref=e899]:
+                        - generic [ref=e900]:
+                          - generic [ref=e901]: Werner Kogler
+                          - generic [ref=e902]: 19.09.
+                        - link [ref=e903]:
+                          - /url: https://open.spotify.com/episode/0ylORNkjoz3rr7PZG0wDH6
+                      - button [ref=e904]
+        - article [ref=e906]:
+          - generic [ref=e907]:
+            - generic [ref=e908]: Shop
+            - generic [ref=e909]:
+              - paragraph [ref=e910]: Produkte aus dem Hause und Geiste Bohl. 100 Stück. Immer nur 100 Stück.
+              - paragraph [ref=e911]:
+                - text: Be quick and
+                - link [ref=e912] [cursor=pointer]:
+                  - /url: https://www.instagram.com/bohl.100/
+                  - text: join the club!
+            - generic [ref=e913]:
+              - generic [ref=e914]:
+                - generic [ref=e915]: Ausverkauft
+                - generic [ref=e918]:
+                  - paragraph [ref=e919]: Bohl1/100 · Shirt
+                  - heading [level=3] [ref=e920]: Gruppo FKK Donauinsel
+                  - paragraph [ref=e921]: Mir san auf da Insel daham! Für unser erstes Produkt gehen wir dorthin, wo es warm um’s Herz wird. So warm, dass man sich gern der belastenden Fessel-Alltagskleidung entledigt und volle Pracht zeigt, wie Gott sie schuf. GRUPPO FKK DONAUINSEL!
+              - generic [ref=e922]:
+                - link [ref=e923] [cursor=pointer]:
+                  - /url: https://www.weinco.at/inspiration/dr-bohl-liter-50001
+                  - generic [ref=e925]: Jetzt shoppen
+                - generic [ref=e926]:
+                  - paragraph [ref=e927]: Bohl2/100 · Getränk
+                  - heading [level=3] [ref=e928]: Bohl Liter
+                  - paragraph [ref=e929]: "Mit unserem zweiten Produkt wird der Traum eines jeden ehrlichen Dranglers nun Realität: WEISSER SPRITZER, die ganze Nacht! Prost & Liter, Liter!"
+              - generic [ref=e930]:
+                - generic [ref=e931]: Ausverkauft
+                - generic [ref=e934]:
+                  - paragraph [ref=e935]: Bohl3/100 · Cap
+                  - heading [level=3] [ref=e936]: Bist Du Deppat
+                  - paragraph [ref=e937]: "Mit unserer neuen Cap, dem dritten Produkt, fangen wir den Moment für die Ewigkeit ein: BIST DU DEPPAD!"
+              - generic [ref=e938]:
+                - generic [ref=e939]: Bei Auftritten erhältlich
+                - generic [ref=e942]:
+                  - paragraph [ref=e943]: Special Edition · Shirt
+                  - heading [level=3] [ref=e944]: Anabohlika Shirts
+                  - paragraph [ref=e945]: "Du siehst uns und willst auch den gestählten Körper eines jungen, griechischen Gottes? So sei es: Anabohlika macht's möglich! Nebenwirkungen sind lässige Eleganz, weicher Stuhlgang und Eifersucht."
+        - article [ref=e946]:
+          - generic [ref=e947]:
+            - generic [ref=e950]:
+              - paragraph [ref=e951]: Entertainment · Produktion · Kreation
+              - heading [level=1] [ref=e952]: Bohl Entertainment
+              - paragraph [ref=e955]: Wir produzieren Unterhaltung, die bleibt. Von der Idee bis zur Bühne — alles aus einer Hand.
+            - generic [ref=e956]:
+              - generic: "02"
+              - paragraph [ref=e957]: Leistungen
+              - heading [level=2] [ref=e958]: Was wir machen
+              - paragraph [ref=e959]: "Sechs Disziplinen, ein Anspruch: Unterhaltung mit Substanz. Jedes Projekt wird inhouse konzipiert, produziert und veredelt."
+              - generic [ref=e960]:
+                - generic [ref=e961]:
+                  - generic [ref=e962]: "01"
+                  - heading [level=3] [ref=e963]: Kabarett
+                  - paragraph [ref=e964]: Bühnenprogramme mit Haltung — geschrieben, geprobt, getourt.
+                - generic [ref=e965]:
+                  - generic [ref=e966]: "02"
+                  - heading [level=3] [ref=e967]: Musik
+                  - paragraph [ref=e968]: Von der Studio-Produktion bis zum Live-Set. Eigene Releases, eigene Handschrift.
+                - generic [ref=e969]:
+                  - generic [ref=e970]: "03"
+                  - heading [level=3] [ref=e971]: Podcast
+                  - paragraph [ref=e972]: Formate mit Stimme und Standpunkt. Konzeption, Aufnahme, Distribution.
+                - generic [ref=e973]:
+                  - generic [ref=e974]: "04"
+                  - heading [level=3] [ref=e975]: Social Media
+                  - paragraph [ref=e976]: Content mit Reichweite. Plattformgerecht produziert, konsequent bespielt.
+                - generic [ref=e977]:
+                  - generic [ref=e978]: "05"
+                  - heading [level=3] [ref=e979]: Showtime
+                  - paragraph [ref=e980]: TV- und Streaming-Auftritte. Vor und hinter der Kamera zuhause.
+                - generic [ref=e981]:
+                  - generic [ref=e982]: "06"
+                  - heading [level=3] [ref=e983]: Shop
+                  - paragraph [ref=e984]: Das Eventformat. 100 Minuten Programm, null Kompromisse.
+            - generic [ref=e989]:
+              - generic: "03"
+              - paragraph [ref=e990]: Prozess & Haltung
+              - heading [level=2] [ref=e991]: Warum Bohl Entertainment?
+              - generic [ref=e992]:
+                - generic [ref=e993]:
+                  - heading [level=3] [ref=e994]: Konzept
+                  - paragraph [ref=e995]: Wir hören zu, denken quer und entwickeln die Idee, die trägt.
+                - generic [ref=e996]:
+                  - heading [level=3] [ref=e997]: Produktion
+                  - paragraph [ref=e998]: Eigene Technik, eigenes Team, eigener Anspruch. Kein Outsourcing der Verantwortung.
+                - generic [ref=e999]:
+                  - heading [level=3] [ref=e1000]: Veredelung
+                  - paragraph [ref=e1001]: Schnitt, Sound, Feinschliff — bis es sitzt. Und dann noch eine Runde.
+                - generic [ref=e1002]:
+                  - heading [level=3] [ref=e1003]: Premiere
+                  - paragraph [ref=e1004]: "Bühne, Stream oder Feed: Wir liefern dort ab, wo das Publikum ist."
+              - generic [ref=e1005]:
+                - paragraph [ref=e1006]: Was uns unterscheidet
+                - generic [ref=e1007]:
+                  - heading [level=3] [ref=e1008]: Alles inhouse
+                  - paragraph [ref=e1009]: Idee, Produktion und Vermarktung unter einem Dach — kurze Wege, volle Kontrolle.
+                - generic [ref=e1010]:
+                  - heading [level=3] [ref=e1011]: Echte Handschrift
+                  - paragraph [ref=e1012]: Kein Content von der Stange. Jedes Format trägt eine erkennbare Signatur.
+                - generic [ref=e1013]:
+                  - heading [level=3] [ref=e1014]: Publikum zuerst
+                  - paragraph [ref=e1015]: Wir produzieren nicht für Algorithmen, sondern für Menschen, die wiederkommen.
+            - generic [ref=e1016]:
+              - generic: "04"
+              - paragraph [ref=e1017]: Kontakt
+              - heading [level=2] [ref=e1018]: Lass uns reden.
+              - generic [ref=e1020]:
+                - paragraph [ref=e1021]: Ob Bühne, Stream oder Kampagne — erzähl uns, was du vorhast. Wir melden uns innerhalb von 48 Stunden.
+                - list [ref=e1022]:
+                  - listitem [ref=e1023]:
+                    - generic [ref=e1024]: E-Mail
+                    - link [ref=e1025] [cursor=pointer]:
+                      - /url: mailto:hello@bohl-entertainment.at
+                      - text: hello@bohl-entertainment.at
+                  - listitem [ref=e1026]:
+                    - generic [ref=e1027]: Telefon
+                    - link [ref=e1028] [cursor=pointer]:
+                      - /url: tel:+430000000000
+                      - text: +43 000 0000000
+                  - listitem [ref=e1029]:
+                    - generic [ref=e1030]: Web
+                    - text: www.bohl-entertainment.at
+                - link [ref=e1031] [cursor=pointer]:
+                  - /url: mailto:hello@bohl-entertainment.at
+                  - text: Projekt anfragen
+            - generic [ref=e1033]: "@drbohl · @bohlentertainment · YouTube / Spotify / Instagram / TikTok"
+        - article [ref=e1034]:
+          - generic [ref=e1036]:
+            - tablist [ref=e1037]:
+              - tab [selected] [ref=e1038] [cursor=pointer]: Contact
+              - generic [aria-hidden]: "|"
+              - tab [ref=e1039] [cursor=pointer]: About
+            - generic [ref=e1040]:
+              - paragraph [ref=e1041]: Da wir super süß und super sexy sind, verstehen wir den Drang, mit uns in Kontakt treten zu wollen!
+              - paragraph [ref=e1042]: In unserer unendlichen Güte haben wir daher dieses revolutionäre Tool entwickeln lassen, welches der Menschheit ermöglicht, uns ein elektronisches Mail zukommen zu lassen.
+              - paragraph [ref=e1043]: Wir sind für alle Schweinereien zu haben!
+            - generic [ref=e1044]:
+              - generic [ref=e1045]:
+                - generic [ref=e1046]: Email
+                - textbox [ref=e1047]:
+                  - /placeholder: deine@email.com
+              - generic [ref=e1048]:
+                - generic [ref=e1049]: Betreff
+                - textbox [ref=e1050]:
+                  - /placeholder: Worum geht's?
+              - generic [ref=e1051]:
+                - generic [ref=e1052]: Nachricht
+                - textbox [ref=e1053]:
+                  - /placeholder: Deine Nachricht...
+              - button [ref=e1055] [cursor=pointer]: Senden
+      - button [ref=e1056] [cursor=pointer]
+      - button [ref=e1063] [cursor=pointer]: Close
