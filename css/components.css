@@ -566,7 +566,7 @@
    legible over whatever's behind it in the photo. */
 .sm-feature {
 	position: relative;
-	margin: 24px var(--side-pad) clamp(16px, 3vw, 36px);
+	margin: 36px var(--side-pad) clamp(16px, 3vw, 36px);
 	padding: var(--side-pad);
 	overflow: hidden;
 	border-radius: 2px;
