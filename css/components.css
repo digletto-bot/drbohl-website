@@ -597,17 +597,6 @@
 .sm-feature__icons a {
 	max-width: clamp(42px, 14vw, 90px);
 }
-.sm-feature__text {
-	align-self: stretch;
-	text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-	text-align: center;
-}
-.sm-feature__text p {
-	margin: 0;
-	font-size: var(--fs-body);
-	line-height: 1.6;
-	color: var(--body-text);
-}
 
 .reel-wrapper {
 	display: grid;
@@ -633,13 +622,6 @@
 		bottom: 24px;
 		left: auto;
 		width: min(46%, 460px);
-	}
-	.sm-feature__text {
-		padding-right: 0.5em;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		text-align: right;
 	}
 	.social-icons.sm-feature__icons {
 		width: 100%;
