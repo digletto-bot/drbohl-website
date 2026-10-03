@@ -2225,7 +2225,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	grid-template-columns: 1fr 1fr;
 	align-items: start;
 	gap: 28px 20px;
-	padding: 4px var(--side-pad) 56px;
+	padding: 36px var(--side-pad) 56px;
 }
 @media (max-width: 800px) {
 	.podcast-grid {
