@@ -6,7 +6,7 @@
  * Bundesland is optional: when filled it drives the region filter
  * directly; when empty, the city is looked up in CITY_REGIONS.
  *
- * Date format from Google Sheets CSV export: M/D/YYYY (e.g. "8/15/2026")
+ * Date format from Google Sheets CSV export: DD/MM/YYYY (e.g. "15/08/2026")
  */
 
 const SHEET_ID = '1FlTrb6sJF1E4SqeKiYqBpwigV_2vvrUOejRe1unINQk';
@@ -313,12 +313,12 @@ function parseCSVRow(row) {
 }
 
 /**
- * Parses a M/D/YYYY date string from Google Sheets into display parts.
- * @param {string} dateStr - e.g. "8/15/2026"
+ * Parses a DD/MM/YYYY date string from Google Sheets into display parts.
+ * @param {string} dateStr - e.g. "26/11/2026"
  * @returns {{ day: string, month: string, year: string }}
  */
 function parseSheetDate(dateStr) {
-	const [month, day, year] = dateStr.split('/').map(Number);
+	const [day, month, year] = dateStr.split('/').map(Number);
 	const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
 
 	return {

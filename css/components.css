@@ -566,8 +566,8 @@
    legible over whatever's behind it in the photo. */
 .sm-feature {
 	position: relative;
-	margin: 24px var(--side-pad) 48px;
-	aspect-ratio: 9 / 16;
+	margin: 24px var(--side-pad) clamp(16px, 3vw, 36px);
+	padding: var(--side-pad);
 	overflow: hidden;
 	border-radius: 2px;
 }
@@ -580,14 +580,10 @@
 	display: block;
 }
 .sm-feature__overlay {
-	position: absolute;
-	top: 16px;
-	left: 16px;
-	right: 16px;
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
+	align-items: center;
 	gap: 14px;
 }
 /* Overrides .social-icons' own sizing (100%/514px wide — built for a
@@ -604,7 +600,7 @@
 .sm-feature__text {
 	align-self: stretch;
 	text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-	text-align: right;
+	text-align: center;
 }
 .sm-feature__text p {
 	margin: 0;
@@ -655,28 +651,22 @@
 @media (min-width: 600px) {
 	.sm-feature {
 		aspect-ratio: 16 / 9;
+		padding: 0;
 	}
 	.sm-feature__overlay {
+		position: absolute;
 		top: 24px;
 		right: 24px;
+		bottom: 24px;
 		left: auto;
 		width: min(46%, 460px);
 	}
-}
-
-@media (max-width: 599px) {
 	.sm-feature__text {
-		background: rgba(10, 10, 10, 0.9);
-		padding: 1.2em;
-		position: absolute;
+		padding-right: 0.5em;
 		left: 0;
 		right: 0;
 		bottom: 0;
-		text-align: center;
-	}
-	.sm-feature__overlay {
-		inset: 0;
-		padding-top: 18px;
+		text-align: right;
 	}
 	.social-icons.sm-feature__icons {
 		width: 100%;
@@ -826,7 +816,7 @@
 
 .full-screen-menu__footer {
 	width: 100%;
-	padding: 25px 0 15px 0;
+	padding: 25px 0 5px 0;
 	display: flex;
 	justify-content: center;
 }
@@ -847,7 +837,6 @@
 	justify-content: center;
 	gap: 6px 12px;
 	padding: 10px var(--side-pad);
-	background: #1c1c1c;
 	color: var(--hero-yellow);
 	font-family: var(--font-body);
 	font-size: 12px;
@@ -1147,46 +1136,13 @@
    (cqw) rather than the viewport (vw, as the single-column Kabarett
    banner uses) so type scales correctly in the 2-column grid too. ── */
 
-.show-section-title {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.5em;
-	padding: 1em var(--side-pad) 0.7em;
-	font-size: clamp(18px, 2.9vw, 22px);
-	font-weight: 700;
-	letter-spacing: 0.03em;
-	text-transform: uppercase;
-	color: var(--hover-yellow);
-}
-
-.subpage-overlay__title + .show-section-title {
-	padding-top: 3.5em;
-}
-
-.show-section-title::before,
-.show-section-title::after {
-	content: '';
-	width: clamp(50px, 12vw, 120px);
-	height: 1px;
-}
-
-.show-section-title::before {
-	background: linear-gradient(to right, transparent, #ddd6bb88);
-	background: linear-gradient(to right, transparent, rgba(242, 193, 46, 0.55));
-}
-.show-section-title::after {
-	background: linear-gradient(to left, transparent, #ddd6bb88);
-	background: linear-gradient(to left, transparent, rgba(242, 193, 46, 0.55));
-}
-
 .show-grid {
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: 36px;
 	/* Cards with several links grow when opened; don't stretch their row-mates. */
 	align-items: start;
-	padding: 16px var(--side-pad) 68px;
+	padding: 32px var(--side-pad) 68px;
 }
 @media (min-width: 600px) {
 	.show-grid {
@@ -1378,7 +1334,7 @@
 	color: var(--light-text);
 	font-size: 19px;
 	line-height: 1.5;
-	max-width: 480px;
+	max-width: 75ch;
 }
 .about-overlay__body p {
 	margin: 0 0 18px;
@@ -1394,6 +1350,10 @@
 	/* margin-bottom moved to .about-lead-mask — it sat inside the clip
 	   region here and would be masked away. */
 	margin-bottom: 0;
+}
+.subpage-overlay__body.contact-intro {
+	margin-top: 2em;
+	max-width: 80ch;
 }
 
 /* ══════════════════════════════════════════════
@@ -2019,10 +1979,7 @@
 
 /* Restverkauf — same button, orange instead of yellow. */
 .td-btn.rest {
-	background: var(--rest-orange);
-}
-.td-btn.rest:hover {
-	background: var(--rest-orange-hover);
+	background-color: var(--shop-yellow);
 }
 
 /* Past shows */
@@ -3038,12 +2995,6 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	}
 }
 
-@media (min-width: 600px) {
-	.about-overlay__body {
-		max-width: 650px;
-	}
-}
-
 @media (min-width: 1000px) {
 	.sm-feature__img {
 		position: relative;
@@ -3100,7 +3051,7 @@ a.shop-product__image:active .shop-product__image-badge--available {
 }
 /* Bohlmobil award line — informational pill, not interactive. */
 .podcast-tile__award {
-	display: inline-flex;
+	width: fit-content;
 	align-items: center;
 	gap: 8px;
 	margin: 0 0 16px;
