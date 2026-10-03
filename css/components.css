@@ -789,7 +789,7 @@
 
 .full-screen-menu__footer {
 	width: 100%;
-	padding: 25px 0 15px 0;
+	padding: 25px 0 5px 0;
 	display: flex;
 	justify-content: center;
 }
@@ -810,7 +810,6 @@
 	justify-content: center;
 	gap: 6px 12px;
 	padding: 10px var(--side-pad);
-	background: #1c1c1c;
 	color: var(--hero-yellow);
 	font-family: var(--font-body);
 	font-size: 12px;
