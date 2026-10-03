@@ -1813,7 +1813,7 @@
    color-coded, with a status-specific hover treatment.
    ══════════════════════════════════════════════ */
 .shop-list {
-	padding: 4px var(--side-pad) 56px;
+	padding: 24px var(--side-pad) 56px;
 	display: flex;
 	flex-direction: column;
 	gap: 24px;
