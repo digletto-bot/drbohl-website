@@ -2758,6 +2758,10 @@ a.shop-product__image:active .shop-product__image-badge--available {
 	.td-row {
 		grid-template-columns: clamp(60px, 10vw, 81px) 1fr 1fr auto;
 	}
+
+	.kab-shows {
+		padding: 68px var(--side-pad) 4px;
+	}
 }
 
 @media (min-width: 800px) {
