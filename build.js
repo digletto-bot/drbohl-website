@@ -83,7 +83,14 @@ async function minifyCss() {
 // once publish points at dist instead of ".". netlify.toml is excluded:
 // it's read from the base directory (repo root), not the publish directory.
 async function copyRootFiles() {
-	const files = ['_redirects', 'robots.txt', '404.html', 'sitemap.xml'];
+	const files = [
+		'_redirects',
+		'robots.txt',
+		'404.html',
+		'sitemap.xml',
+		'impressum.html',
+		'datenschutzerklaerung.html',
+	];
 	await Promise.all(
 		files.map((file) => fs.copyFile(path.join(ROOT, file), path.join(DIST, file)))
 	);

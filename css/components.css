@@ -1803,6 +1803,42 @@
 }
 
 /* ══════════════════════════════════════════════
+   LEGAL PAGES — standalone impressum.html /
+   datenschutzerklaerung.html (outside the slider).
+   body is overflow:hidden globally, so the page
+   scrolls itself.
+   ══════════════════════════════════════════════ */
+.legal-page {
+	height: 100dvh;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+.legal-page__inner {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-top: 32px;
+}
+.legal-page .be-impressum__title {
+	font-size: var(--fs-title);
+}
+/* "DATENSCHUTZERKLÄRUNG" measures ~5.85em in DrukCond (glyph advances +
+   0.01em tracking). Size = available width (100vw minus 2x side padding,
+   with slack for a scrollbar) / 6, capped at --fs-title's 132px max. */
+.legal-page .legal-page__title--long {
+	font-size: clamp(20px, calc((100vw - 56px) / 6), 132px);
+}
+.legal-page__back {
+	display: inline-block;
+	margin: 0 var(--side-pad) 24px;
+	font-size: 12px;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--hero-yellow);
+	text-decoration: none;
+}
+
+/* ══════════════════════════════════════════════
    SHOP — Bohl100 merch drops. Ported from the old
    drbohl.at/bohl100 image-left/description-right
    cards: one product per row, cover photo on one
